@@ -1,0 +1,17 @@
+.custom-navbar {
+    background: #122A4C; /* Color de fondo del Navbar */
+    justify-content:space-around;
+  }
+.custom-navbar a {
+    color: #fff; /* Color de letra de los enlaces del Navbar */
+    font-family: Arial, sans-serif; /* Fuente utilizada para los enlaces del Navbar */
+  }
+
+  .links-container {
+    justify-content:center;
+    display: flex;
+  }
+  
+  .izq-link {
+    flex: 1;
+  }

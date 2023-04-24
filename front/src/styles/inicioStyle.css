@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+.inicioContenedor {
+    height: 100vh;
+    
+}
+
+.bg-image {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Establecer la altura al 100% de la ventana del navegador */
+}
+
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Establecer la altura al 100% de la ventana del navegador */
+  }
+
+  .contenido {
+    text-align: center; /* Alinear el contenido del div al centro */
+    margin-top: 20px; /* Agregar un margen superior */
+  }
+
+.textoInicio{
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    margin: 0;
+    flex-grow: 1;
+    white-space:pre-wrap;
+}
+
+.inicioBoton {
+    background-color: rgba(255, 255, 255, 0.5); /* Establecer un color blanco con 50% de opacidad */
+    border-radius: 10px; /* Establecer bordes redondos */
+    border: none; /* Eliminar el borde del botón */
+    padding: 10px 20px; /* Establecer un relleno para el botón */
+    font-size: 16px; /* Establecer el tamaño de fuente del botón */
+    color: #ffffff; /* Establecer el color de texto del botón */
+}
