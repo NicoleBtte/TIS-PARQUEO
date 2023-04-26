@@ -12,9 +12,11 @@ axiosCliente.interceptors.request.use((config)=>{
 })
 
 axiosCliente.interceptors.response.use((response) => {
+    console.log(response)
     return response
   }, (error) => {
     const {response} = error;
+    console.log(response);
     if (response.status === 401) {
       localStorage.removeItem('ACCESS_TOKEN')
       // window.location.reload();

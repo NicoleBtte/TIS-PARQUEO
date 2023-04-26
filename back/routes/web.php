@@ -23,11 +23,11 @@ Route::get('/', function () {
     return view('login');
 })->name('login');
 
-Route::get('/signin', function () {
+/*Route::get('/signin', function () {
     return view('signin');
-});
+});*/
 
-Route::post('/', [ClienteController::class, 'store']);
+//Route::post('/', [ClienteController::class, 'store']);
 
 Route::get('/logrado', function() {
     return view('logrado');

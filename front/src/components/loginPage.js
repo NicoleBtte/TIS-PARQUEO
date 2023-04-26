@@ -12,12 +12,12 @@ const LoginPage = () => {
 		console.log(values);
 	
 		const payload = {
-			email: values.email,
+			ci: values.ci,
 			password: values.password
 		}
 		console.log(payload);
 	
-		/*axiosClient.post('/login', payload)
+		axiosClient.post('/login', payload)
       .then(({data}) => {
         setUser(data.user)
         setToken(data.token);
@@ -25,27 +25,32 @@ const LoginPage = () => {
       .catch((err) => {
         const response = err.response;
         console.log('El error en login es:')
-        console.log(response.data.message)
+        console.log(err)
         if (response && response.status === 422) {
           console.log(response.data.message)
         }
-      })*/
+      })
 	}
 
     return (
       <Formik
             initialValues={{
-              email:'',
+              ci:'',
               password:'',
 			      }}
 
             validate={(values) => {
 			    	    let errores = {};
                 // Validacion correo
-                if(!values.email){
+                /*if(!values.email){
                   errores.email = 'Por favor ingresa un correo electronico'
                 } else if(!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(values.email)){
                   errores.email = 'La dirección del correo no es válida.'
+                }*/
+                if(!values.ci){
+                  errors.ci = 'Por favor ingresa un número de C.I.'
+                } else if(isNaN(values.ci)){
+                  errors.ci = 'El número de C.I. solo puede contener números'
                 }
 
                 // Validacion contrasenia
@@ -63,14 +68,14 @@ const LoginPage = () => {
         {({ errores, touched }) => (
             <Form className='formulario'>
                 <div>
-                  <label htmlFor="correo">Correo electrónico:</label>
-                  <Field
-                    type="text" 
-                    id="correo" 
-                    name="email" 
-                  />
-                  <ErrorMessage name="email" component={() => (<div className="error">{errores.email}</div>)} />
-                </div> 
+					        <label htmlFor="ci">Número de C.I.:</label>
+					           <Field
+						            type="text" 
+						            id="ci" 
+						            name="ci" 
+					            />
+					        <ErrorMessage name="ci" component={() => (<div className="error">{errors.ci}</div>)} />
+				        </div>
                 <div>
                   <label htmlFor="contrasena">Contraseña:</label>
                   <Field

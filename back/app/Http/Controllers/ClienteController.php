@@ -17,7 +17,7 @@ class ClienteController extends Controller
     public function store(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'carnet' => 'required|unique:cliente,idcliente',
+            'ci' => 'required|unique:cliente,idcliente',
             /*'emailcliente' => 'required|unique:cliente,email_cliente'*/
         ]);
 
@@ -27,35 +27,37 @@ class ClienteController extends Controller
         ]);
     
         if ($validator->fails()) {
-            return redirect('fallido')
+            //return redirect('fallido')
+            /*return response()
                 ->withErrors($validator)
                 ->with('errors_json', $validator->errors()->toJson())
-                ->withInput();
+                ->withInput();*/
+                return response()->json($validator->errors()->toJson());
         }
         
 
         $registro=new Cliente;
-        $registro->idcliente=$request->carnet;
-        $registro->nombre_cliente='generico';//$request->name;
+        $registro->idcliente=$request->ci;
+        $registro->nombre_cliente=$request->name;
         $registro->estado_pago=null;
         $registro->monto_a_pagar=null;
         $registro->fecha_pagado=null;
         $registro->fecha_lim_pago=null;//DB::table('convocatoria')->orderBy('id', 'desc')->first()->fecha_pago;
         //$age = DB::table('users')->select('age')->latest('id')->value('age');
         
-        $registro->telf_cliente='89382803';//$request->telefono;
-        $registro->email_cliente=null;//$request->email;
+        $registro->telf_cliente=$request->telefono;
+        $registro->email_cliente=$request->email;
         $registro->password=Hash::make($request->password);
-        $registro->apellidos_cliente=null;//$request->apellidos;
-        $registro->direccion_cliente=null;//$request->direccion;
+        $registro->apellidos_cliente=$request->apellidos;
+        $registro->direccion_cliente=$request->direccion;
         $registro->unidad_trabajo=null;//$request->unidad;
         $registro->cargo_cliente=null;//$request->cargo;
         $registro->save();
 
-        Auth::login($registro);
+        //Auth::login($registro);
 
-        return redirect()->route('logrado')->with('Genial!','Se guardaron con exito');
-        //return response()->json(['message' => 'Usuario creado con éxito']);
+        //return redirect()->route('logrado')->with('Genial!','Se guardaron con exito');
+        return response()->json(['message' => 'Usuario creado con éxito']);
     }
 
     public function index(){
@@ -73,7 +75,7 @@ class ClienteController extends Controller
     public function update(Request $request, $id){
         $registro=Cliente::find($id);
         $registro->idcliente=$request->ci;
-        $registro->nombre_cliente=$request->nombre;
+        $registro->nombre_cliente=$request->name;
         $registro->estado_pago=$request->estado;
         $registro->monto_a_pagar=0;
         $registro->fecha_pagado=$request->fechapagado;
@@ -104,16 +106,28 @@ class ClienteController extends Controller
        $credentials =[
             
             'password' => $request->password,
-            'idcliente' => $request->carnet
+            'idcliente' => $request->ci,
         ];
         //$credentials = $request->only('idcliente', 'password');
-
-        if(Auth::attempt($credentials)){
-
-            $request->session()->regenerate();
-            return redirect()->intended(route('privado'));
-        }else{
-            return redirect('fallido');
+        /** @var \App\Models\Cliente $user */
+        $user = Cliente::where('idcliente', '=', $request->ci)->first();
+        //$user = Cliente::find($request->ci);
+        
+        
+    
+        if(isset($user->idcliente)){
+            if(Hash::check($request->password, $user->password)){
+                $token = $user->createToken('access_token')->plainTextToken;
+                return response()->json([
+                    'status'=> 1,
+                    'message'=>'login correcto',
+                    'access_token'=>$token,
+                ]);
+            }else{
+                return response()->json([
+                    'status'=>0,
+                    'message'=>'login Incorrecto',]);
+            }
         }
     }
 }

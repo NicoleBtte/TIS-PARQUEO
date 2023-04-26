@@ -15,17 +15,22 @@ const FormularioRegistro = () => {
 		const payload = {
 			name: values.name,
 			email: values.email,
+			apellidos: values.apellidos,
+			direccion: values.direccion,
+			telefono: values.telefono,
+			ci: values.ci,
 			password: values.password,
-			password_confirmation: values.ccontrasena
+			//password_confirmation: values.ccontrasena
 		}
 		console.log(payload);
 	
-		/*axiosClient.post('/register', payload)
+		axiosClient.post('/register', payload)
 			.then(({data}) => {
 				console.log('Se ejecuto axios en formulario')
 				//setUser(data.user)
 				//setToken(data.token);
-				console.log('Registro exitoso')
+				
+				console.log(data)
 			})
 			.catch(err => {
 				const response = err.response;
@@ -33,7 +38,7 @@ const FormularioRegistro = () => {
 				if (response && response.status === 422) {
 				  console.log(response.data.errors)
 				}
-			  })*/
+			  })
 	}
 
     return (

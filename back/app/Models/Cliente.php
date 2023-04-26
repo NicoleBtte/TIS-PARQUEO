@@ -7,6 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\PersonalAccessTokenResult;
+
+/*class Cliente extends Model
+{
+    public function crearToken()
+    {
+        $token = $this->createToken('Nombre del token');
+        
+        return new PersonalAccessTokenResult($token->token, $token->token->id, $token->accessToken);
+    }
+}*/
+
 
 
 class Cliente extends Authenticatable
@@ -26,5 +38,12 @@ class Cliente extends Authenticatable
     ];
     public function getAuthPassword(){
         return $this->password;
+    }
+
+    public function createToken()
+    {
+        $token = $this->createToken('access_token');
+        
+        return new PersonalAccessTokenResult($token->token, $token->token->id, $token->accessToken);
     }
 }
