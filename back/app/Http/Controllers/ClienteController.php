@@ -21,10 +21,10 @@ class ClienteController extends Controller
             /*'emailcliente' => 'required|unique:cliente,email_cliente'*/
         ]);
 
-        $validator->setCustomMessages([
+        /*$validator->setCustomMessages([
             'required' => 'El campo :attribute es obligatorio.',
             'unique' => 'El :attribute ":input" ya existe en la base de datos.',
-        ]);
+        ]);*/
     
         if ($validator->fails()) {
             //return redirect('fallido')
@@ -96,38 +96,53 @@ class ClienteController extends Controller
 
     public function destroy($id){
         $registro=Cliente::find($id);
-        $resitro->delete();
+        $registro->delete();
 
         return redirect()->route('clientes');
     }
 
-    public function login(Request $request){
-
-       $credentials =[
-            
+    public function login(Request $request)
+    {
+        $credentials = [
             'password' => $request->password,
             'idcliente' => $request->ci,
         ];
-        //$credentials = $request->only('idcliente', 'password');
-        /** @var \App\Models\Cliente $user */
+
         $user = Cliente::where('idcliente', '=', $request->ci)->first();
-        //$user = Cliente::find($request->ci);
-        
-        
-    
-        if(isset($user->idcliente)){
-            if(Hash::check($request->password, $user->password)){
-                $token = $user->createToken('access_token')->plainTextToken;
-                return response()->json([
-                    'status'=> 1,
-                    'message'=>'login correcto',
-                    'access_token'=>$token,
-                ]);
-            }else{
-                return response()->json([
-                    'status'=>0,
-                    'message'=>'login Incorrecto',]);
-            }
+
+        if ($user && Hash::check($request->password, $user->password)) {
+            auth()->login($user);
+
+            $token = $user->createToken('access_token')->plainTextToken;
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'login correcto',
+                'access_token' => $token,
+            ]);
+        } else {
+            return response()->json([
+                'status' => 0,
+                'message' => 'login Incorrecto',
+            ]);
         }
     }
+
+    public function logout()
+    {
+        $user = auth()->user();
+        if (!$user instanceof Cliente) {
+            return response()->json([
+                "status" => 0,
+                "msg" => "Usuario no encontrado"
+            ], 404);
+        }
+
+        $user->tokens()->delete();
+        return response()->json([
+            "status" => 1,
+            "msg" => "cierre sesion"
+        ]);
+    }
+
 }

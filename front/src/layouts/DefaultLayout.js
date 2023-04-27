@@ -24,13 +24,13 @@ const DefaultLayout = () => {
   }
 
   const onLogout = (ev) => {
-    /*ev.preventDefault()
+    ev.preventDefault()
 
     axiosClient.post('/logout')
       .then(() => {
         setUser({})
         setToken(null)
-      })*/
+      })
   }
 
   return (

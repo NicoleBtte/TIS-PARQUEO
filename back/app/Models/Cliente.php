@@ -24,7 +24,8 @@ use Laravel\Passport\PersonalAccessTokenResult;
 class Cliente extends Authenticatable
 {
     //use HasFactory;
-    use Notifiable;
+    use HasApiTokens, Notifiable;
+    protected $primaryKey = 'idcliente';
     protected $table = 'cliente';
     
     protected $fillable = ['idcliente', 'nombre_cliente', 'estado_pago', 
@@ -40,10 +41,10 @@ class Cliente extends Authenticatable
         return $this->password;
     }
 
-    public function createToken()
+    /*public function createToken()
     {
         $token = $this->createToken('access_token');
         
         return new PersonalAccessTokenResult($token->token, $token->token->id, $token->accessToken);
-    }
+    }*/
 }
