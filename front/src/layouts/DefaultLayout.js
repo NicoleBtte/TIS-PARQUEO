@@ -8,19 +8,13 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import '../styles/headerStyle.css';
 import '../styles/navbarStyle.css';
+import App from '../App';
 
 const DefaultLayout = () => {
-  const {user, token, setUser, setToken} = useStateContext()
-
-  /*useEffect(() => {
-    axiosClient.get('/user')
-      .then(({data}) => {
-         setUser(data)
-      })
-  }, [])*/
+  const {user, token, setUser, setToken, rol, setRol} = useStateContext()
 
   if (!token) {
-    return <Navigate to="/register"/>
+    return <Navigate to="/login"/>
   }
 
   const onLogout = (ev) => {
@@ -30,8 +24,47 @@ const DefaultLayout = () => {
       .then(() => {
         setUser({})
         setToken(null)
+        setRol(null)
       })
   }
+
+  let menu;
+  switch (rol) {
+    case "admin":
+      menu = (
+        <Nav className="me-auto">
+          <Nav.Link as={Link} to="/admin/convocatoria">Convocatoria</Nav.Link>
+          <Nav.Link as={Link} to="/admin/parqueo">Parqueo</Nav.Link>
+          <Nav.Link as={Link} to="/admin/asignacion">Asignar sitio</Nav.Link>
+        </Nav>
+      );
+      break;
+    case "operador":
+      menu = (
+        <Nav className="me-auto">
+          <Nav.Link as={Link} to="/operador/pagos">Pagos</Nav.Link>
+          <Nav.Link as={Link} to="/operador/pqr">GestionPQR</Nav.Link>
+        </Nav>
+      );
+      break;
+    case "guardia":
+      menu = (
+        <Nav className="me-auto">
+          <Nav.Link as={Link} to="/guardia/ingresos">Ingresos</Nav.Link>
+        </Nav>
+      );
+      break;
+    default:
+      //es cliente
+      menu = (
+        <Nav className="me-auto">
+          <Nav.Link as={Link} to="/cliente/misitio">Mi sitio</Nav.Link>
+          <Nav.Link as={Link} to="/cliente/redactar">Redactar</Nav.Link>
+          <Nav.Link as={Link} to="/cliente/mensajes">Mensajes</Nav.Link>
+        </Nav>
+      );
+  }
+
 
   return (
     <div>
@@ -50,10 +83,7 @@ const DefaultLayout = () => {
           <Container>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav className="me-auto">
-                <Nav.Link as={Link} to="/convocatoria">Convocatoria</Nav.Link>
-                <Nav.Link as={Link} to="/parqueo">Parqueo</Nav.Link>
-              </Nav>
+              {menu}
               <Nav>
                 <a href="#" onClick={onLogout} className='btn-logout'>Cerrar sesión</a>
               </Nav>

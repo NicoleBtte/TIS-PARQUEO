@@ -5,7 +5,7 @@ import { useStateContext } from '../contexts/ContextProvider.js';
 
 const LoginPage = () => {
   
-  const { setUser, setToken } = useStateContext();
+  const { setUser, setToken, setRol } = useStateContext();
 
 	const guardar = (values) =>{
 		console.log(values);
@@ -22,6 +22,8 @@ const LoginPage = () => {
         setUser(data.user)
         console.log(data.access_token)
         setToken(data.access_token);
+        console.log(data.rol)
+        setRol(data.rol);
       })
       .catch((err) => {
         const response = err.response;

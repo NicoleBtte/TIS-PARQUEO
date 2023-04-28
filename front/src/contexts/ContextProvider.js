@@ -5,12 +5,17 @@ const StateContext = createContext({
 	token: null,
 	setUser: () => {},
 	setToken: () => {},
+	rol: null,
+	setRol: () => {}
 });
 
 export const ContextProvider = ({ children }) => {
 	const [user, setUser] = useState({});
 	console.log('Hola desde el constext');
 	const [token, _setToken] = useState(localStorage.getItem('ACCESS_TOKEN')); //localStorage.getItem('ACCESS_TOKEN')
+	const [rol, _setRol] = useState(localStorage.getItem('ROL'));
+	console.log(rol);
+
 
 	const setToken = (token) => {
 		_setToken(token);
@@ -21,6 +26,15 @@ export const ContextProvider = ({ children }) => {
 		}
 	};
 
+	const setRol = (rol) => {
+		_setRol(rol);
+		if (rol) {
+			localStorage.setItem('ROL', rol);
+		} else {
+			localStorage.removeItem('ROL');
+		}
+	};
+
 	return (
 		<StateContext.Provider
 			value={{
@@ -28,6 +42,8 @@ export const ContextProvider = ({ children }) => {
 				setUser,
 				token,
 				setToken,
+				rol,
+				setRol
 			}}
 		>
 			{children}

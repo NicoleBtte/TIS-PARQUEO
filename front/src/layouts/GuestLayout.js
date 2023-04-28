@@ -7,16 +7,20 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import { Link } from 'react-router-dom';
 import { useStateContext } from '../contexts/ContextProvider';
-import router from '../router';
 import '../styles/headerStyle.css';
 import '../styles/navbarStyle.css'
 import logo from "../styles/images/logofcyt.png";
+import App from '../App';
 
 const GuestLayout = () => {
-  const { user, token } = useStateContext();
+  const { user, token, rol } = useStateContext();
+  let laruta = "/";
 
-  if (token) {
-    return <Navigate to="/" />;
+  if (token && rol) {
+    laruta = laruta+rol;
+    console.log(laruta);
+    console.log('Hay token');
+    return <Navigate to={laruta} />;
   }
 
   return (
@@ -49,7 +53,7 @@ const GuestLayout = () => {
       
       
       <section>
-          <Outlet></Outlet>
+        {!token && <Outlet />}
       </section>
     </div>
   );
