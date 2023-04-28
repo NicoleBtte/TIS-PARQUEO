@@ -14,7 +14,7 @@ class CreateConvocatoriasTable extends Migration
     public function up()
     {
         Schema::create('convocatorias', function (Blueprint $table) {
-            $table->id('idConvoactoria');
+            $table->id('idConvocatoria');
             $table->string('titulo');
             $table->string('descripcionConv');
             $table->integer('numeroDeZonas');

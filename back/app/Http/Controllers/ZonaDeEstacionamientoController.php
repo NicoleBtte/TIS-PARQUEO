@@ -7,87 +7,67 @@ use Illuminate\Http\Request;
 
 class ZonaDeEstacionamientoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $zonaDeEstacionamientos = ZonaDeEstacionamiento::all();
         return $zonaDeEstacionamientos;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'nombreZona' => ['required', 'unique:zonas_de_estacionamiento', 'string', 'min:5', 'max:16'],
+            'techo' => ['nullable', 'boolean'],
+            'arbol' => ['nullable', 'boolean'],
+            'tipoPiso' => ['nullable', 'string'],
+            'numero_de_sitios' => ['required', 'integer', 'min:0'],
+            'descripcionZona' => ['nullable', 'string']
+        ]);
+
         $zonaDeEstacionamiento = new ZonaDeEstacionamiento();
-        $zonaDeEstacionamiento->nombreZona = $request->nombreZona;
-        $zonaDeEstacionamiento->techo = $request->techo;
-        $zonaDeEstacionamiento->arbol = $request->arbol;
-        $zonaDeEstacionamiento->tipoPiso = $request->tipoPiso;
-        $zonaDeEstacionamiento->numero_de_sitios = $request->numero_de_sitios;
-        $zonaDeEstacionamiento->descripcionZona = $request->descripcionZona;
+        $zonaDeEstacionamiento->nombreZona = $validatedData['nombreZona'];
+        $zonaDeEstacionamiento->techo = $validatedData['techo'];
+        $zonaDeEstacionamiento->arbol = $validatedData['arbol'];
+        $zonaDeEstacionamiento->tipoPiso = $validatedData['tipoPiso'];
+        $zonaDeEstacionamiento->numero_de_sitios = $validatedData['numero_de_sitios'];
+        $zonaDeEstacionamiento->descripcionZona = $validatedData['descripcionZona'];
 
+        $zonaDeEstacionamiento->save();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ZonaDeEstacionamiento  $zonaDeEstacionamiento
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ZonaDeEstacionamiento $zonaDeEstacionamiento)
+    public function show($idZonaEstacionamiento)
     {
-        //
+        $zonaDeEstacionamiento = ZonaDeEstacionamiento::find($idZonaEstacionamiento);
+        return $zonaDeEstacionamiento;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ZonaDeEstacionamiento  $zonaDeEstacionamiento
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ZonaDeEstacionamiento $zonaDeEstacionamiento)
+    public function update(Request $request, $idZonaEstacionamiento)
     {
-        //
+        $zonaDeEstacionamiento = ZonaDeEstacionamiento::findOrFail($request->$idZonaEstacionamiento);
+
+        $validatedData = $request->validate([
+            'nombreZona' => ['required', 'unique:zonas_de_estacionamiento', 'string', 'min:5', 'max:16'],
+            'techo' => ['nullable', 'boolean'],
+            'arbol' => ['nullable', 'boolean'],
+            'tipoPiso' => ['nullable', 'string'],
+            'numero_de_sitios' => ['required', 'integer', 'min:0'],
+            'descripcionZona' => ['nullable', 'string']
+        ]);
+
+        $zonaDeEstacionamiento->nombreZona = $validatedData['nombreZona'];
+        $zonaDeEstacionamiento->techo = $validatedData['techo'];
+        $zonaDeEstacionamiento->arbol = $validatedData['arbol'];
+        $zonaDeEstacionamiento->tipoPiso = $validatedData['tipoPiso'];
+        $zonaDeEstacionamiento->numero_de_sitios = $validatedData['numero_de_sitios'];
+        $zonaDeEstacionamiento->descripcionZona = $validatedData['descripcionZona'];
+
+        $zonaDeEstacionamiento->save();
+        return $zonaDeEstacionamiento;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ZonaDeEstacionamiento  $zonaDeEstacionamiento
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ZonaDeEstacionamiento $zonaDeEstacionamiento)
+    public function destroy($idZonaEstacionamiento)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ZonaDeEstacionamiento  $zonaDeEstacionamiento
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ZonaDeEstacionamiento $zonaDeEstacionamiento)
-    {
-        //
+        $zonaDeEstacionamiento = ZonaDeEstacionamiento::destroy($idZonaEstacionamiento);
+        return $zonaDeEstacionamiento;
     }
 }

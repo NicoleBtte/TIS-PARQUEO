@@ -7,90 +7,52 @@ use Illuminate\Http\Request;
 
 class ParqueoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $parqueos = Parqueo::all();
         return $parqueos;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'nombreParqueo' => ['required', 'unique:parqueos', 'string', 'min:5', 'max:16'],
+            'numero_de_zonas' => ['required', 'integer', 'min:0'],
+            'mapaParqueo' => ['nullable', 'string']
+        ]);
+
         $parqueo = new Parqueo();
-        $parqueo->nombreParqueo = $request->nombreParqueo;
-        $parqueo->numero_de_zonas = $request->numero_de_zonas;
-        $parqueo->mapaParqueo = $request->mapaParqueo;
+        $parqueo->nombreParqueo = $validatedData['nombreParqueo'];
+        $parqueo->numero_de_zonas = $validatedData['numero_de_zonas'];
+        $parqueo->mapaParqueo = $validatedData['mapaParqueo'];
 
         $parqueo->save();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Parqueo  $parqueo
-     * @return \Illuminate\Http\Response
-     */
     public function show($idParqueo)
     {
         $parqueo = Parqueo::find($idParqueo);
         return $parqueo;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Parqueo  $parqueo
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Parqueo $parqueo)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Parqueo  $parqueo
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $idParqueo)
     {
         $parqueo = Parqueo::findOrFail($request->$idParqueo);
-        $parqueo->nombreParqueo = $request->nombreParqueo;
-        $parqueo->numero_de_zonas = $request->numero_de_zonas;
-        $parqueo->mapaParqueo = $request->mapaParqueo;
+        
+        $validatedData = $request->validate([
+            'nombreParqueo' => ['required', 'unique:parqueos', 'string', 'min:5', 'max:16'],
+            'numero_de_zonas' => ['required', 'integer', 'min:0'],
+            'mapaParqueo' => ['nullable', 'string']
+        ]);
+
+        $parqueo->nombreParqueo = $validatedData['nombreParqueo'];
+        $parqueo->numero_de_zonas = $validatedData['numero_de_zonas'];
+        $parqueo->mapaParqueo = $validatedData['mapaParqueo'];
 
         $parqueo->save();
         return $parqueo;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Parqueo  $parqueo
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($idParqueo)
     {
         $parqueo = Parqueo::destroy($idParqueo);

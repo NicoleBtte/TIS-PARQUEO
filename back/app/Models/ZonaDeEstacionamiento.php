@@ -13,6 +13,7 @@ class ZonaDeEstacionamiento extends Model
     use Notifiable;
     protected $table = 'zona_de_estacionamientos';
     
+    protected $primaryKey = 'idZonaEstacionamiento';
     protected $fillable = ['idZonaEstacionamiento', 'nombreZona', 'techo', 'arbol',
     'tipoPiso', 'numero_de_sitios', 'descripcionZona'];
 

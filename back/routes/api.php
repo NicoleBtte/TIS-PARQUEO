@@ -10,13 +10,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::controller(ConvocatoriaController::class)->group(function () {
-    Route::get('/convocatorias', 'index');
-    Route::post('/convocatoria', 'store');
-    Route::get('/convocatoria/{idConvocatoria}', 'show');
-    Route::put('/convocatoria/{idConvocatoria}', 'update');
-    Route::delete('/convocatoria/{idConvocatoria}', 'destroy');
-});
+Route::get('/convocatorias', [ConvocatoriaController::class, 'index']);
+Route::post('/convocatoria', [ConvocatoriaController::class, 'store']);
+Route::get('/convocatoria/{idConvocatoria}', [ConvocatoriaController::class, 'show']);
+Route::put('/convocatoria/{idConvocatoria}', [ConvocatoriaController::class, 'update']);
+Route::delete('/convocatoria/{idConvocatoria}', [ConvocatoriaController::class, 'destroy']);
 
 Route::controller(ParqueoController::class)->group(function () {
     Route::get('/parqueos', 'index');

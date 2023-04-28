@@ -13,7 +13,8 @@ class Convocatoria extends Model
     use Notifiable;
     protected $table = 'convocatorias';
     
-    protected $fillable = ['idConvoactoria', 'titulo', 'descripcionConv', 
+    protected $primaryKey = 'idConvocatoria';
+    protected $fillable = ['idConvocatoria', 'titulo', 'descripcionConv', 
     'numeroDeZonas', 'estado', 'fecha_actual', 'fecha_fin'];
 
     protected $hidden = [

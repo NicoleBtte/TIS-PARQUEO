@@ -501,6 +501,7 @@ class ComposerStaticInitf6dbd4841a4192f63784cff295fb4532
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\ConvocatoriaController' => __DIR__ . '/../..' . '/app/Http/Controllers/ConvocatoriaController.php',
         'App\\Http\\Controllers\\ParqueoController' => __DIR__ . '/../..' . '/app/Http/Controllers/ParqueoController.php',
+        'App\\Http\\Controllers\\ZonaDeEstacionamientoController' => __DIR__ . '/../..' . '/app/Http/Controllers/ZonaDeEstacionamientoController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
