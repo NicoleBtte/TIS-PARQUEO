@@ -28,6 +28,13 @@ class ZonaDeEstacionamientoController extends Controller
         //
     }
 
+    public function sitios($numSitios){
+        $idZona= DB::table('ZonaEstacionamiento')->latest('idzonaEstacionamiento')->first()->idzonaEstacionamiento;
+        $sitio= new SitioController;
+        $sitio->registroSitios($idZona, $numSitios);
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -38,13 +45,18 @@ class ZonaDeEstacionamientoController extends Controller
     {
         $zonaDeEstacionamiento = new ZonaDeEstacionamiento();
         $zonaDeEstacionamiento->nombreZona = $request->nombreZona;
-        $zonaDeEstacionamiento->techo = $request->techo;
-        $zonaDeEstacionamiento->arbol = $request->arbol;
+        $zonaDeEstacionamiento->techo =0;$request->techo;
+        $zonaDeEstacionamiento->arbol =0;// $request->arbol;
         $zonaDeEstacionamiento->tipoPiso = $request->tipoPiso;
         $zonaDeEstacionamiento->numero_de_sitios = $request->numero_de_sitios;
+        $numSitios= $request->numero_de_sitios;
         $zonaDeEstacionamiento->descripcionZona = $request->descripcionZona;
+        $zonaDeEstacionamiento->save();
 
+       sitios($numSitios);
     }
+
+    
 
     /**
      * Display the specified resource.

@@ -26,10 +26,12 @@ Route::controller(ParqueoController::class)->group(function () {
     Route::delete('/parqueo/{idParqueo}', 'destroy');
 });
 
-Route::controller(ZonaDeEstacionamientoController::class)->group(function () {
+/*Route::controller(ZonaDeEstacionamientoController::class)->group(function () {
     Route::get('/zonaDeEstacionamientos', 'index');
     Route::post('/zonaDeEstacionamiento', 'store');
     Route::get('/zonaDeEstacionamiento/{idZonaEstacionamiento}', 'show');
     Route::put('/zonaDeEstacionamiento/{idZonaEstacionamiento}', 'update');
     Route::delete('/zonaDeEstacionamiento/{idZonaEstacionamiento}', 'destroy');
-});
+});*/
+
+Route::post('/zonaEstacionamiento', [ZonaDeEstacionamientoController::class, 'store']);
