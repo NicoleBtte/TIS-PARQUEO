@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\EntradasSalidasController;
 use Illuminate\Support\Facades\Session;
 
 /*
@@ -46,3 +47,9 @@ Route::get('/sessions', function () {
 
     return response()->json(compact('sessions'));
 })->name('sessions');
+
+Route::post('/entrada', [EntradasSalidasController::class, 'RegistroEntrada']);
+Route::post('/salida', [EntradasSalidasController::class, 'RegistroSalida']);
+Route::get('/entrada', function(){
+    return view('EntradaSalida');
+});
