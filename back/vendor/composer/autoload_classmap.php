@@ -11,8 +11,6 @@ return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\ConvocatoriaController' => $baseDir . '/app/Http/Controllers/ConvocatoriaController.php',
     'App\\Http\\Controllers\\ParqueoController' => $baseDir . '/app/Http/Controllers/ParqueoController.php',
-    'App\\Http\\Controllers\\SitioController' => $baseDir . '/app/Http/Controllers/SitioController.php',
-    'App\\Http\\Controllers\\ZonaDeEstacionamientoController' => $baseDir . '/app/Http/Controllers/ZonaDeEstacionamientoController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\EncryptCookies' => $baseDir . '/app/Http/Middleware/EncryptCookies.php',
