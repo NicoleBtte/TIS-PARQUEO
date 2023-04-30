@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import ClienteSitio from './admin/clienteSitio';
 
 const AsignacionPage = () => {
   
   return (
     <div>
-      Asignar sitios
+      <ClienteSitio/>
     </div>
   );
 }

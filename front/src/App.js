@@ -9,12 +9,16 @@ import ParqueoPage from './components/parqueoPage';
 import NotFound from './components/notFoundPage';
 import GuestLayout from './layouts/GuestLayout';
 import AsignacionPage from './components/asignacionPage';
+import SitiosDisponibles from './components/admin/sitiosDisp';
 import PagosPage from './components/pagosPage';
 import PqrPage from './components/pqrPage';
 import IngresosPage from './components/ingresosPage';
 import MisitioPage from './components/misitioPage';
 import MensajesPage from './components/mensajesPage';
 import RedactarPage from './components/redactarPage';
+import FormularioRegistro from './components/formularioRegistro';
+import ResponderForm from './components/operador-mensajes/responderForm';
+import ResponseForm from './components/cliente-mensajes/responseForm';
 
 function App() {
   return (
@@ -36,6 +40,7 @@ function App() {
               <Route path='/admin/convocatoria' element={<ConvocatoriaPage />} />
               <Route path='/admin/parqueo' element={<ParqueoPage />} />
               <Route path='/admin/asignacion' element={<AsignacionPage />} />
+              <Route path='/admin/asignacion/id/:id' element={<SitiosDisponibles />} />
             </Route>
             {/* Rutas para el operador */}
             <Route
@@ -49,6 +54,7 @@ function App() {
               <Route index element={<PagosPage />} />
               <Route path='/operador/pagos' element={<PagosPage />} />
               <Route path='/operador/pqr' element={<PqrPage />} />
+              <Route path='/operador/pqr/responder/id/:id/name/:name' element={<ResponderForm />} />
             </Route>
             {/* Rutas para el guardia */}
             <Route
@@ -75,6 +81,7 @@ function App() {
               <Route path='/cliente/misitio' element={<MisitioPage />} />
               <Route path='/cliente/redactar' element={<RedactarPage />} />
               <Route path='/cliente/mensajes' element={<MensajesPage />} />
+              <Route path='/cliente/mensajes/responder/id/:id/name/:name' element={<ResponseForm />} />
             </Route>
 
             {/* Rutas para el guest */}

@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
+import HistorialQuejas from './operador-mensajes/historialQuejas';
 
 const PqrPage = () => {
-  
 
   return (
     <div>
-      Pqr
+      <HistorialQuejas></HistorialQuejas>
     </div>
   );
 }
