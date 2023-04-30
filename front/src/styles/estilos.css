@@ -1,0 +1,174 @@
+@import url("https://fonts.googleapis.com/css2?family=Kodchasan:ital,wght@0,600;1,600&family=Roboto:wght@400;500;700&display=swap");
+
+.table-container-cs {
+  background-color: #fdfdfc;
+  margin-top: 64px;
+  overflow-y: scroll;
+}
+
+.content-rigth {
+  display: flex;
+  justify-content: right;
+  margin-top: 32px;
+}
+
+.botones-cs {
+  background-color: #122a4c !important;
+  border-radius: 20px !important;
+  color: #fdfdfc !important;
+}
+
+.submit-btn {
+  color: #fdfdfc !important;
+  border: none !important;
+}
+
+.boton-detalle {
+  background-color: #ff1a00 !important;
+  border-radius: 10px !important;
+  font-size: 10px !important;
+  color: #fdfdfc !important;
+}
+
+.table-container-cs thead {
+  background-color: #122a4c;
+}
+
+.table-container-cs thead th {
+  color: #fdfdfc;
+}
+.MuiTypography-root MuiTypography-h1 css-1ymi8lp-MuiTypography-rootñ {
+  display: flex;
+}
+
+.container-form {
+  background: rgba(82, 144, 232, 0.1);
+  margin-top: 24px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.image-location {
+  max-width: 100px;
+  height: auto;
+}
+
+.modal-body {
+  margin-top: 20px;
+  height: 300px;
+  width: 400px;
+  background: rgba(82, 144, 232, 0.1);
+}
+
+.container-1 {
+  display: flex;
+}
+
+.container-2 {
+  background: rgba(82, 144, 232, 0.1);
+}
+.h1 {
+  display: flex;
+}
+.caracteristicas {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-modal {
+  background-color: #122a4c !important;
+  color: #fdfdfc !important;
+}
+.text-center {
+  text-align: center;
+}
+.close-btn {
+  background-color: #ff1a00 !important;
+  color: #fdfdfc !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.errores p {
+  color: #ff1a00 !important;
+}
+button.swal2-confirm.swal2-styled {
+  background-color: #122a4c90 !important;
+}
+
+.form-control {
+  margin: 20px;
+}
+
+:root {
+  --primary-color: #122a4c;
+  --secondary-color: #5290e810;
+  --light-color: #fdfdfc;
+  --border-color: #f0eff5;
+  --shadow-color: #9d99aa42;
+}
+
+body {
+  font-family: "Roboto", sans-serif !important;
+  font-size: 16px !important;
+}
+
+.bg-c-primary th {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+.bg-c-secondary td,
+.bg-c-secondary th {
+  background-color: var(--secondary-color) !important;
+  vertical-align: middle;
+}
+
+/* Formulario pago */
+
+.pago-form {
+  max-width: 320px;
+}
+
+.box {
+  background-color: white;
+  box-shadow: 0 0 16px var(--shadow-color);
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.bx-icon {
+  font-size: 2rem;
+  color: var(--primary-color);
+}
+
+.btn-personal {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+  border-radius: 100px !important;
+  padding: 0.4rem 1rem !important;
+}
+
+.primary-color {
+  color: var(--primary-color);
+}
+
+.btn-none-style {
+  border: none;
+  background-color: transparent;
+  font-size: 1.5rem;
+}
+
+.link-none-styles {
+  color: inherit;
+  text-decoration: none;
+}
+
+.d-flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
