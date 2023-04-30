@@ -4,16 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Sitio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class SitioController extends Controllers
+class SitioController extends Controller
 {
-   public function registroSitios($id, $numSitios) {
+   public function registroSitios($id,$numSitios) {
     $i=1;    
     while($i<=$numSitios){
         $sitio = new Sitio();
         $sitio->zonaEstacionamiento_idzonaEstacionamiento=$id;
         $sitio->numero=$i;
         $sitio->save();
+        sleep(0.5);
+
+
 
         $i++;
         
@@ -22,11 +26,11 @@ class SitioController extends Controllers
    }
 
 
-   public function asignarSitio(Request $request){
+   public static function asignarSitio($idCliente){
 
     
       $sitioParaAsignar= DB::table('sitio')->whereNull('cliente_idcliente')->first()->idSitio;
-      DB::table('sitio')->where('idSitio',$sitioParaAsignar)-> update(['cliente_idcliente'=>$request->idcliente]);
+      DB::table('sitio')->where('idSitio',$sitioParaAsignar)-> update(['cliente_idcliente'=>$idcliente]);
    }
 
 
@@ -47,7 +51,12 @@ class SitioController extends Controllers
    }
 
 
-   public function reasignar($cliente){
+   public function reasignar($idcliente, $idsitio){
+      $sitio = Sitio::where('id', $idSitio)->first();
+      $sitio->setAttribute('cliente_idcliente', $idcliente);
+
+      $sitio->save();
+
 
 
    }
@@ -59,7 +68,7 @@ class SitioController extends Controllers
     ->wherenNull('cliente_idcliente')
     ->join('zonaEstacionamiento', 'sitio.zonaEstacionamiento_idzonaEstacionamiento', '=', 'zonaEstacionamiento.idzonaEstacionamiento')
     ->join('parqueo', 'zonaEstacionamiento.parqueo_idparqueo', '=', 'parqueo.idparqueo')
-    ->select('parqueo.nombre_parqueo', 'zonaEstacionamiento.nombre_zona_estacionamiento','sitio.numero')
+    ->select('idsitio','parqueo.nombre_parqueo', 'zonaEstacionamiento.nombre_zona_estacionamiento','sitio.numero')
                 ->get();
 
    return response()->json(json_encode($arreglo2));    

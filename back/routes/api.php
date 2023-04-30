@@ -5,6 +5,8 @@ use App\Http\Controllers\ParqueoController;
 use App\Http\Controllers\ZonaDeEstacionamientoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\SitioController;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -32,4 +34,20 @@ Route::controller(ParqueoController::class)->group(function () {
     Route::delete('/zonaDeEstacionamiento/{idZonaEstacionamiento}', 'destroy');
 });*/
 
-Route::post('/zonaEstacionamiento', [ZonaDeEstacionamientoController::class, 'store']);
+Route::post('/zona', [ZonaDeEstacionamientoController::class, 'store']);
+Route::get('/zona', function(){
+    return view('zona');
+});
+/**Route::get('/sitio/{numSitios}', function ($numSitios) {
+    $idZona= DB::table('zonaEstacionamiento')->latest('idzonaEstacionamiento')->first()->idzonaEstacionamiento;
+    $sitio= new SitioController;
+    $sitio->registroSitios($idZona, $numSitios);
+    return view('zona');
+ **/
+Route::get('/sitio/{numSitios}', function ($numSitios) {
+    $idZona = DB::table('zonaEstacionamiento')->latest('idzonaEstacionamiento')->value('idzonaEstacionamiento');
+    $sitioController = new SitioController();
+    $sitioController->registroSitios($idZona, $numSitios);
+    return view('zona');
+});
+Route::post('/crearSitio',[SitioController::class,'registroSitios']);

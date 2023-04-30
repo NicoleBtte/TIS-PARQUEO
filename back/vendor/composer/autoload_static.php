@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit69791c222b67f2920f6b7d4dab2464e6
+class ComposerStaticInit19bf3c586a4c2f921b451fe5ac1546f0
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -319,8 +319,8 @@ class ComposerStaticInit69791c222b67f2920f6b7d4dab2464e6
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -501,6 +501,8 @@ class ComposerStaticInit69791c222b67f2920f6b7d4dab2464e6
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\ConvocatoriaController' => __DIR__ . '/../..' . '/app/Http/Controllers/ConvocatoriaController.php',
         'App\\Http\\Controllers\\ParqueoController' => __DIR__ . '/../..' . '/app/Http/Controllers/ParqueoController.php',
+        'App\\Http\\Controllers\\SitioController' => __DIR__ . '/../..' . '/app/Http/Controllers/SitioController.php',
+        'App\\Http\\Controllers\\ZonaDeEstacionamientoController' => __DIR__ . '/../..' . '/app/Http/Controllers/ZonaDeEstacionamientoController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -5383,10 +5385,10 @@ class ComposerStaticInit69791c222b67f2920f6b7d4dab2464e6
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit69791c222b67f2920f6b7d4dab2464e6::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit69791c222b67f2920f6b7d4dab2464e6::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit69791c222b67f2920f6b7d4dab2464e6::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit69791c222b67f2920f6b7d4dab2464e6::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit19bf3c586a4c2f921b451fe5ac1546f0::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit19bf3c586a4c2f921b451fe5ac1546f0::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit19bf3c586a4c2f921b451fe5ac1546f0::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit19bf3c586a4c2f921b451fe5ac1546f0::$classMap;
 
         }, null, ClassLoader::class);
     }
