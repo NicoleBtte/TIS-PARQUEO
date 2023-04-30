@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EntradasSalidasController;
+use App\Http\Controllers\PagoController;
 use Illuminate\Support\Facades\Session;
 
 /*
@@ -53,3 +54,5 @@ Route::post('/salida', [EntradasSalidasController::class, 'RegistroSalida']);
 Route::get('/entrada', function(){
     return view('EntradaSalida');
 });
+
+Route::post('/pagar', [PagoController::class, 'RegistroPago']);
