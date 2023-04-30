@@ -38,16 +38,5 @@ Route::post('/zona', [ZonaDeEstacionamientoController::class, 'store']);
 Route::get('/zona', function(){
     return view('zona');
 });
-/**Route::get('/sitio/{numSitios}', function ($numSitios) {
-    $idZona= DB::table('zonaEstacionamiento')->latest('idzonaEstacionamiento')->first()->idzonaEstacionamiento;
-    $sitio= new SitioController;
-    $sitio->registroSitios($idZona, $numSitios);
-    return view('zona');
- **/
-Route::get('/sitio/{numSitios}', function ($numSitios) {
-    $idZona = DB::table('zonaEstacionamiento')->latest('idzonaEstacionamiento')->value('idzonaEstacionamiento');
-    $sitioController = new SitioController();
-    $sitioController->registroSitios($idZona, $numSitios);
-    return view('zona');
-});
+
 Route::post('/crearSitio',[SitioController::class,'registroSitios']);
