@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Table } from "react-bootstrap";
 import {Link, useParams} from "react-router-dom";
 import App from '../../App';
+import axiosCliente from '../../axios-client';
 
 const ClienteSitio = () => {
     const [filas, setFilas] = useState([]);
@@ -70,6 +71,16 @@ const ClienteSitio = () => {
         setLoading(true)
         setFilas(clientesSitios);
         setLoading(false)
+        
+        /*setLoading(true)
+        axiosCliente.get('/clientesitios')
+          .then(({ data }) => {
+            setLoading(false)
+            setFilas(data.data)
+          })
+          .catch(() => {
+            setLoading(false)
+          })*/
     }
 
     return (
@@ -101,7 +112,7 @@ const ClienteSitio = () => {
                 <td>{u.nombrezona}</td>
                 <td>{u.nombresitio}</td>
                 <td>
-                  <Button as={Link}  to={'/admin/asignacion/id/:' + u.idcliente} variant="warning">Editar</Button>
+                  <Button as={Link}  to={'/admin/asignacion/id/' + u.idcliente+'/nc/'+u.nombrecliente+'/p/'+u.nombreparqueo+'/z/'+u.nombrezona+'/s/'+u.nombresitio} variant="warning">Editar</Button>
                 </td>
               </tr>
             ))}

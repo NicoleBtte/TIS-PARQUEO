@@ -9,7 +9,7 @@ import ParqueoPage from './components/parqueoPage';
 import NotFound from './components/notFoundPage';
 import GuestLayout from './layouts/GuestLayout';
 import AsignacionPage from './components/asignacionPage';
-import SitiosDisponibles from './components/admin/sitiosDisp';
+import SitiosDisponibles from './components/admin-asig/sitiosDisp';
 import PagosPage from './components/pagosPage';
 import PqrPage from './components/pqrPage';
 import IngresosPage from './components/ingresosPage';
@@ -40,7 +40,7 @@ function App() {
               <Route path='/admin/convocatoria' element={<ConvocatoriaPage />} />
               <Route path='/admin/parqueo' element={<ParqueoPage />} />
               <Route path='/admin/asignacion' element={<AsignacionPage />} />
-              <Route path='/admin/asignacion/id/:id' element={<SitiosDisponibles />} />
+              <Route path='/admin/asignacion/id/:id/nc/:nc/p/:p/z/:z/s/:s' element={<SitiosDisponibles />} />
             </Route>
             {/* Rutas para el operador */}
             <Route

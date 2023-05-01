@@ -3,12 +3,14 @@ import { Button, Table } from "react-bootstrap";
 import {Link, useParams} from "react-router-dom";
 import App from '../../App';
 import MensajeModal from './mensaje';
+import axiosCliente from '../../axios-client';
 
 const HistorialQuejas = () => {
   const [filas, setFilas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [mensajeSeleccionado, setMensajeSeleccionado] = useState(null);
   const [modalShow, setModalShow] = useState(false);
+  const idUsuario = localStorage.getItem('ID_USER');
 
   useEffect(() => {
     getFilas();
@@ -36,10 +38,22 @@ const HistorialQuejas = () => {
     setLoading(true);
     setFilas(mensajes);
     setLoading(false);
+
+    //con axios
+    /*setLoading(true)
+      axiosCliente.get('/notificaciones')
+        .then(({ data }) => {
+          setLoading(false)
+          setFilas(data.data)
+        })
+        .catch(() => {
+          setLoading(false)
+        })*/
   };
 
   const handleVerMasClick = (mensaje) => {
     setMensajeSeleccionado(mensaje);
+    setModalShow(true);
   };
 
   useEffect(() => {

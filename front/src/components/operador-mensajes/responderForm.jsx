@@ -1,28 +1,49 @@
 import Button from 'react-bootstrap/Button';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import axiosCliente from '../../axios-client';
 
 const ResponderForm = () => {
-  
+    const idUsuario = localStorage.getItem('ID_USER');
     const {id, name} = useParams();
+    const navigate = useNavigate();
+
+    const enviarMensaje = (values) =>{
+      console.log(values);
+      const payload = {
+        idemisor: idUsuario,
+        idreceptor: id,
+        titulo: values.titulo,
+        descripcion: values.descripcion
+      }
+      console.log(payload);
+    
+      /*axiosCliente.post('/notificaciones', payload)
+        .then(({data}) => {    
+          //que hacer despues      
+          console.log(data)
+        })
+        .catch(err => {
+          const response = err.response;
+          console.log(response.data.message)
+          if (response && response.status === 422) {
+            console.log(response.data.errors)
+          }
+          })*/
+    }
 
     return (
       <>
-      <h1>Cliente: {name}</h1>
+      <h4>Responder</h4>
+      <p>Cliente: {name}</p>
       <Formik
         initialValues={{
-          destino: '',
           titulo: '',
           descripcion:''
         }}
 
         validate={(values) => {
           let errors = {};
-
-          // Validacion destinatario
-          if(!values.destino){
-            errors.destino = 'Por favor ingrese un receptor'
-          }
 
           // Validacion titulo
           if(!values.titulo){
@@ -37,19 +58,10 @@ const ResponderForm = () => {
           }
         return errors;
       }}
-
+          onSubmit = {enviarMensaje}
         >
         {({ errors, touched }) => (
             <Form className='formulario'>
-                <div>
-                  <label htmlFor="nombre">Nombre del receptor:</label>
-                  <Field
-                    type="text" 
-                    id="destino" 
-                    name="destino" 
-                  />
-                  <ErrorMessage name="destino" component={() => (<div className="error">{errors.destino}</div>)} />
-                </div>
                 <div>
                   <label htmlFor="titulo">Titulo:</label>
                   <Field

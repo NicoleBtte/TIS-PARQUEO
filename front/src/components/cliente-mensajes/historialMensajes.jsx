@@ -3,6 +3,7 @@ import { Button, Table } from "react-bootstrap";
 import {Link, useParams} from "react-router-dom";
 import App from '../../App';
 import MensajeModal from './mensajeModal';
+import axiosCliente from '../../axios-client';
 
 const HistorialMensajes = () => {
     const [filas, setFilas] = useState([]);
@@ -36,10 +37,22 @@ const HistorialMensajes = () => {
       setLoading(true);
       setFilas(mensajes);
       setLoading(false);
+
+      //con axios
+    /*setLoading(true)
+      axiosCliente.get('/notificaciones')
+        .then(({ data }) => {
+          setLoading(false)
+          setFilas(data.data)
+        })
+        .catch(() => {
+          setLoading(false)
+        })*/
     };
   
     const handleVerMasClick = (mensaje) => {
       setMensajeSeleccionado(mensaje);
+      setModalShow(true);
     };
   
     useEffect(() => {

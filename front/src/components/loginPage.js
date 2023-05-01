@@ -5,7 +5,7 @@ import { useStateContext } from '../contexts/ContextProvider.js';
 
 const LoginPage = () => {
   
-  const { setUser, setToken, setRol } = useStateContext();
+  const { setUser, setToken, setRol, setID } = useStateContext();
 
 	const guardar = (values) =>{
 		console.log(values);
@@ -18,8 +18,8 @@ const LoginPage = () => {
 	
 		axiosClient.post('/login', payload)
       .then(({data}) => {
-        console.log(data.user)
-        setUser(data.user)
+        console.log(data.idusuario)
+        setID(data.idusuario)
         console.log(data.access_token)
         setToken(data.access_token);
         console.log(data.rol)

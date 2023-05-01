@@ -4,9 +4,13 @@ import HistorialQuejas from './operador-mensajes/historialQuejas';
 const PqrPage = () => {
 
   return (
-    <div>
-      <HistorialQuejas></HistorialQuejas>
-    </div>
+    <>
+      <h4>Historial de peticiones y quejas</h4>
+      <div>
+        <HistorialQuejas></HistorialQuejas>
+      </div>
+    </>
+    
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import RedactarForm from './cliente-mensajes/redactarForm';
 
 const RedactarPage = () => {

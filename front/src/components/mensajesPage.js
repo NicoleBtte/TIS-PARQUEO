@@ -5,9 +5,13 @@ const MensajesPage = () => {
   
 
   return (
-    <div>
-      <HistorialMensajes></HistorialMensajes>
-    </div>
+    <>
+      <h4>Historial de mensajes</h4>
+      <div>
+        <HistorialMensajes></HistorialMensajes>
+      </div>
+    </>
+
   );
 }
 
