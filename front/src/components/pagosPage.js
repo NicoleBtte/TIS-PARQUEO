@@ -21,9 +21,12 @@ function PagosPage() {
     setPagos(pagos.filter((pago) => pago.id !== id));
   }
 
-  //useEffect(() => {
-  //	() => setPagos();
-  //}, [pagos]);
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/pagos")
+      .then((response) => response.json()) //loconvierto un json el json
+      .then((result) => setPagos(result)) //aqui uso json
+      .catch((error) => console.log("error", error));
+  }, []);
 
   return (
     <div className="container">

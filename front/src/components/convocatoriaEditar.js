@@ -7,12 +7,12 @@ import { validarDescripcion, validarTitulo } from "../helpers/validadores";
 function ConvocatoriaEditar() {
   const [formData, setFormData] = useState({
     titulo: "",
-    descripcion: "",
+    descripcionConv: "",
     estado: 0,
-    nCupos: 1,
+    numeroDeZonas: 1,
     archivoPdf: null,
-    fechaInicio: null,
-    fechaFin: null,
+    fecha_actual: null,
+    fecha_fin: null,
   });
 
   //Swal.fire('', 'El registro se ha completado exitoso', '');
@@ -20,17 +20,17 @@ function ConvocatoriaEditar() {
 
   const [validar, setValidar] = useState({
     tituloB: false,
-    descripcionB: false,
+    descripcionConvB: false,
   });
 
   const {
     titulo,
-    descripcion,
-    nCupos,
+    descripcionConv,
+    numeroDeZonas,
     estado,
     archivoPdf,
-    fechaInicio,
-    fechaFin,
+    fecha_actual,
+    fecha_fin,
   } = formData;
 
   //
@@ -43,11 +43,11 @@ function ConvocatoriaEditar() {
       }
     }
 
-    if (e.target.name === "descripcion") {
+    if (e.target.name === "descripcionConv") {
       if (!validarDescripcion(e.target.value)) {
-        setValidar({ ...validar, descripcionB: true });
+        setValidar({ ...validar, descripcionConvB: true });
       } else {
-        setValidar({ ...validar, descripcionB: false });
+        setValidar({ ...validar, descripcionConvB: false });
       }
     }
 
@@ -57,42 +57,43 @@ function ConvocatoriaEditar() {
 
   const handleSubmit = (
     titulo,
-    descripcion,
+    descripcionConv,
     estado,
-    nCupos,
-    fechaInicio,
-    fechaFin,
+    numeroDeZonas,
+    fecha_actual,
+    fecha_fin,
     archivoPdf
   ) => {
     console.log(
       titulo,
-      descripcion,
+      descripcionConv,
       estado,
-      nCupos,
-      fechaInicio,
-      fechaFin,
+      numeroDeZonas,
+      fecha_actual,
+      fecha_fin,
       archivoPdf
     );
 
-    fetch("", {
+    fetch("http://127.0.0.1:8000/convocatorias", {
       method: "PUT" /* or PATCH */,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         titulo: titulo,
-        descripcion: descripcion,
+        descripcionConv: descripcionConv,
         estado: estado,
-        nCupos: nCupos,
-        fechaInicio: fechaInicio,
-        fechaFin: fechaFin,
+        numeroDeZonas: numeroDeZonas,
+        fecha_actual: fecha_actual,
+        fecha_fin: fecha_fin,
       }),
     })
       .then((res) => res.json())
       .then(console.log);
   };
   React.useEffect(() => {
-    fetch("")
-      .then((res) => res.json())
-      .then(console.log);
+    fetch("http://127.0.0.1:8000/convocatorias")
+      .then((response) => response.json()) //loconvierto un json el json
+      .then((result) => setFormData(result)) //aqui uso json
+      .catch((error) => console.log("error", error));
   }, []);
 
   return (
@@ -113,20 +114,20 @@ function ConvocatoriaEditar() {
             </div>
             <div className="form-group col-md-6">
               <input
-                name="descripcion"
+                name="descripcionConv"
                 type="text"
                 className="form-control"
-                id="descripcion"
-                placeholder="Descripcion"
+                id="descripcionConv"
+                placeholder="descripcionConv"
                 onChange={handleOnchange}
               ></input>
             </div>
           </div>
           <div className="form-group">
             <input
-              name="nCupos"
+              name="numeroDeZonas"
               type="number"
-              id="nCupos"
+              id="numeroDeZonas"
               className="form-control"
               min="1"
               max="100"
@@ -148,20 +149,20 @@ function ConvocatoriaEditar() {
             </div>
             <div className="form-group">
               <input
-                name="fechaInicio"
+                name="fecha_actual"
                 type="date"
                 className="form-control"
-                id="fechaInicio"
+                id="fecha_actual"
                 placeholder="Fecha IInicio"
                 onChange={handleOnchange}
               ></input>
             </div>
             <div className="form-group">
               <input
-                name="fechaFin"
+                name="fecha_fin"
                 type="date"
                 className="form-control"
-                id="fechaFin"
+                id="fecha_fin"
                 placeholder="Fecha fin"
                 onChange={handleOnchange}
               ></input>
@@ -185,11 +186,11 @@ function ConvocatoriaEditar() {
             onClick={() =>
               handleSubmit(
                 titulo,
-                descripcion,
-                nCupos,
+                descripcionConv,
+                numeroDeZonas,
                 estado,
-                fechaInicio,
-                fechaFin,
+                fecha_actual,
+                fecha_fin,
                 archivoPdf
               )
             }

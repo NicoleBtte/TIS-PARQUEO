@@ -1,7 +1,7 @@
 import React from "react";
 import imagen from "../assets/qrUmss.png";
 
-function PqrPage() {
+function QrPage() {
   return (
     <div>
       <h1 className="text-center">Realiza tus pagos de una manera mas facil</h1>
@@ -23,4 +23,4 @@ function PqrPage() {
   );
 }
 
-export default PqrPage;
+export default QrPage;

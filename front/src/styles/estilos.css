@@ -172,3 +172,7 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+
+.modal-header .btn-close {
+  margin: 0;
+}

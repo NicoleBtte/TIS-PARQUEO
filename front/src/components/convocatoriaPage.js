@@ -5,51 +5,12 @@ import "../styles/estilos.css";
 
 const ConvocatoriaPage = () => {
   const [convocatorias, setConvocatorias] = React.useState([
-    {
-      titulo: "Convocatoria 1",
-      descripcion: "descripcion 1",
-      estado: "Activo",
-      cupos: "30",
-      fechaInicio: "11/11/23",
-      fechaFin: "11/11/23",
-    },
-    {
-      titulo: "Convocatoria 1",
-      descripcion: "descripcion 1",
-      estado: "Activo",
-      cupos: "30",
-      fechaInicio: "11/11/23",
-      fechaFin: "11/11/23",
-    },
-    {
-      titulo: "Convocatoria 1",
-      descripcion: "descripcion 1",
-      estado: "Activo",
-      cupos: "30",
-      fechaInicio: "11/11/23",
-      fechaFin: "11/11/23",
-    },
-    {
-      titulo: "Convocatoria 1",
-      descripcion: "descripcion 1",
-      estado: "Activo",
-      cupos: "30",
-      fechaInicio: "11/11/23",
-      fechaFin: "11/11/23",
-    },
-    {
-      titulo: "Convocatoria 1",
-      descripcion: "descripcion 1",
-      estado: "Activo",
-      cupos: "30",
-      fechaInicio: "11/11/23",
-      fechaFin: "11/11/23",
-    },
+    { titulo: "Convocatoria1" },
   ]);
 
   function deleteConvocatoria(id) {
     setConvocatorias(
-      convocatorias.filter((convocatoria) => convocatoria.tit !== id)
+      convocatorias.filter((convocatoria) => convocatoria.titulo !== id)
     );
     fetch("", {
       method: "DELETE",
@@ -60,8 +21,8 @@ const ConvocatoriaPage = () => {
 
   React.useEffect(() => {
     fetch("http://127.0.0.1:8000/convocatorias")
-      .then((response) => response.text())
-      .then((result) => console.log(result))
+      .then((response) => response.json()) //loconvierto un json el json
+      .then((result) => setConvocatorias(result)) //aqui uso json
       .catch((error) => console.log("error", error));
   }, []);
 
@@ -82,12 +43,12 @@ const ConvocatoriaPage = () => {
         <tbody>
           {convocatorias.map((convocatoria, index) => (
             <tr key={index}>
-              <td>{convocatoria.tit}</td>
-              <td>{convocatoria.des}</td>
-              <td>{convocatoria.est}</td>
-              <td>{convocatoria.cupos}</td>
-              <td>{convocatoria.finicio}</td>
-              <td>{convocatoria.ffin}</td>
+              <td>{convocatoria.titulo}</td>
+              <td>{convocatoria.descripcionConv}</td>
+              <td>{convocatoria.estado}</td>
+              <td>{convocatoria.numeroDeZonas}</td>
+              <td>{convocatoria.fecha_actual}</td>
+              <td>{convocatoria.fecha_fin}</td>
               <td>
                 <Link to={`/pdf`}>
                   <Button className="boton-detalle" variant="primary">

@@ -20,9 +20,9 @@ import ConvocatoriaEditar from "./components/convocatoriaEditar";
 import FormularioParqueo from "./components/formularioParqueo";
 import ParqueoEditar from "./components/parqueoEditar";
 import ZonaParqueo from "./components/zonasParqueo";
-import FormularioModal from "./components/formularioModal";
 import PagosClientes from "./components/pagosClientes";
 import FormularioPago from "./components/formularioPago";
+import MisPagosPage from "./components/misPagosPage";
 
 function App() {
   return (
@@ -60,10 +60,6 @@ function App() {
               />
               <Route path="/admin/parqueo-editar" element={<ParqueoEditar />} />
               <Route path="/admin/zonas-parqueo" element={<ZonaParqueo />} />
-              <Route
-                path="/admin/formulario-modal"
-                element={<FormularioModal />}
-              />
             </Route>
             {/* Rutas para el operador */}
             <Route
@@ -111,6 +107,7 @@ function App() {
               <Route path="/cliente/misitio" element={<MisitioPage />} />
               <Route path="/cliente/redactar" element={<RedactarPage />} />
               <Route path="/cliente/mensajes" element={<MensajesPage />} />
+              <Route path="/cliente/mis-pagos" element={<MisPagosPage />} />
             </Route>
 
             {/* Rutas para el guest */}

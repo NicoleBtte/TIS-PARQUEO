@@ -1,44 +1,43 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { Button, Container, Table } from "react-bootstrap";
+import "../styles/estilos.css";
 
-function createData(tit, ncupos, acc) {
-  return { tit, ncupos, acc };
-}
-
-const rows = [
-  createData("Parqueo 1", 4),
-  createData("Parqueo 2", 3),
-  createData("Parqueo 3", 8),
-];
-
-export default function ParqueoTable() {
-  const [parqueos, setParqueos] = useState(rows);
+const ParqueoPage = () => {
+  const [parqueos, setParqueos] = React.useState([
+    { nombreParqueo: "parqueo1" },
+  ]);
 
   function deleteParqueo(id) {
-    setParqueos(parqueos.filter((parqueo) => parqueo.tit !== id));
+    setParqueos(parqueos.filter((parqueo) => parqueo.nombre !== id));
     fetch("", {
       method: "DELETE",
     })
       .then((res) => res.json())
       .then(console.log);
   }
+
+  React.useEffect(() => {
+    fetch("http://127.0.0.1:8000/parqueos")
+      .then((response) => response.json()) //loconvierto un json el json
+      .then((result) => setParqueos(result)) //aqui uso json
+      .catch((error) => console.log("error", error));
+  }, []);
   return (
     <Container>
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>Titulo</th>
-            <th>N° Cupos</th>
+            <th>Nombre</th>
+            <th>N° Zonas</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           {parqueos.map((parqueo, index) => (
             <tr key={index}>
-              <td>{parqueo.tit}</td>
-              <td>{parqueo.ncupos}</td>
+              <td>{parqueo.nombreParqueo}</td>
+              <td>{parqueo.numero_de_zonas}</td>
               <td>
                 <Link to={`/parqueo/${index}/detalle`}>
                   <Button variant="primary" className="boton-detalle">
@@ -47,7 +46,7 @@ export default function ParqueoTable() {
                 </Link>
                 <Button
                   variant="danger"
-                  onClick={() => deleteParqueo(parqueo.tit)}
+                  onClick={() => deleteParqueo(parqueo.nombre)}
                 >
                   Eliminar
                 </Button>
@@ -70,4 +69,6 @@ export default function ParqueoTable() {
       </div>
     </Container>
   );
-}
+};
+
+export default ParqueoPage;

@@ -3,31 +3,21 @@ import { Container } from "react-bootstrap";
 import { validarNombre } from "../helpers/validadores";
 
 function ParqueoEditar() {
-  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    nombre: "",
-    mapa: "",
-    cantZonas: 1,
-    archivoImg: null,
+    nombreParqueo: "",
+    numero_de_zonas: 1,
+    mapaParqueo: null,
   });
-  const [validar, setValidar] = useState({ nombreB: false });
+  const [validar, setValidar] = useState({ nombreParqueoB: false });
 
-  const { nombre, cantZonas, archivoImg } = formData;
-
-  const [file, setFile] = useState();
-
-  const handleFileChange = (event) => {
-    if (event.target.files) {
-      setFile(event.target.files[0]);
-    }
-  };
+  const { nombreParqueo, numero_de_zonas, mapaParqueo } = formData;
 
   const handleOnchange = (e) => {
-    if (e.target.name === "nombre") {
+    if (e.target.name === "nombreParqueo") {
       if (!validarNombre(e.target.value)) {
-        setValidar({ ...validar, nombreB: true });
+        setValidar({ ...validar, nombreParqueoB: true });
       } else {
-        setValidar({ ...validar, nombreB: false });
+        setValidar({ ...validar, nombreParqueoB: false });
       }
     }
 
@@ -35,24 +25,29 @@ function ParqueoEditar() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (nombre, cantZonas, archivoImg) => {
-    console.log(nombre, cantZonas, archivoImg);
-    setLoading(true);
-    alert(`datos formularios:::, ${nombre}, ${cantZonas}, ${archivoImg}`);
-    fetch("", {
+  const handleSubmit = (nombreParqueo, numero_de_zonas, mapaParqueo) => {
+    console.log(nombreParqueo, numero_de_zonas, mapaParqueo);
+
+    alert(
+      `datos formularios:::, ${nombreParqueo}, ${numero_de_zonas}, ${mapaParqueo}`
+    );
+    fetch("http://127.0.0.1:8000/parqueos", {
       method: "PUT" /* or PATCH */,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        title: "iPhone Galaxy +1",
+        nombreParqueo: nombreParqueo,
+        numero_de_zonas: numero_de_zonas,
+        mapaParqueo: mapaParqueo,
       }),
     })
       .then((res) => res.json())
       .then(console.log);
   };
   React.useEffect(() => {
-    fetch("")
-      .then((res) => res.json())
-      .then(console.log);
+    fetch("http://127.0.0.1:8000/parqueos")
+      .then((response) => response.json()) //loconvierto un json el json
+      .then((result) => setFormData(result)) //aqui uso json
+      .catch((error) => console.log("error", error));
   }, []);
 
   return (
@@ -63,37 +58,48 @@ function ParqueoEditar() {
             <div className="form-group col-md-6">
               <input
                 className="form-control"
-                label="Nombre"
+                label="nombreParqueo"
                 type="text"
-                name="nombre"
-                id="nombre"
+                name="nombreParqueo"
+                id="nombreParqueo"
                 helperText={
-                  !validar.nombreB ? "" : "Solo se aceptan numeros y letras"
+                  !validar.nombreParqueoB
+                    ? ""
+                    : "Solo se aceptan numeros y letras"
                 }
+                onChange={handleOnchange}
               />
             </div>
             <div className="form-group">
               <input
-                name="nZonas"
+                name="numero_de_zonas"
                 type="number"
-                id="nZonas"
+                id="numero_de_zonas"
                 className="form-control"
                 min="1"
                 max="100"
+                onChange={handleOnchange}
               />
             </div>
             <div className="form-group col-md-4">
               <label for="archivoPdf">Subir imagen</label>
               <input
                 type="file"
-                name="archivoImg"
-                value={archivoImg}
+                name="mapaParqueo"
+                value={mapaParqueo}
                 className="form-control-file"
                 accept="application/jpg/png"
-                id="archivoImg"
+                id="mapaParqueo"
+                onChange={handleOnchange}
               />
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={() =>
+                handleSubmit(nombreParqueo, numero_de_zonas, mapaParqueo)
+              }
+            >
               Actualizar
             </button>
           </div>

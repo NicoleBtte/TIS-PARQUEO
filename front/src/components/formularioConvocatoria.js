@@ -7,12 +7,12 @@ import { validarDescripcion, validarTitulo } from "../helpers/validadores";
 function FormularioConvocatoria() {
   const [formData, setFormData] = useState({
     titulo: "",
-    descripcion: "",
-    estado: 0,
-    nCupos: 1,
+    descripcionConv: "",
+    estado: "Activo",
+    numeroDeZonas: 1,
     archivoPdf: null,
-    fechaInicio: null,
-    fechaFin: null,
+    fecha_actual: null,
+    fecha_fin: null,
   });
 
   //Swal.fire('', 'El registro se ha completado exitoso', '');
@@ -20,17 +20,17 @@ function FormularioConvocatoria() {
 
   const [validar, setValidar] = useState({
     tituloB: false,
-    descripcionB: false,
+    descripcionConvB: false,
   });
 
   const {
     titulo,
-    descripcion,
-    nCupos,
+    descripcionConv,
+    numeroDeZonas,
     estado,
     archivoPdf,
-    fechaInicio,
-    fechaFin,
+    fecha_actual,
+    fecha_fin,
   } = formData;
 
   //
@@ -45,9 +45,9 @@ function FormularioConvocatoria() {
 
     if (e.target.name === "descripcion") {
       if (!validarDescripcion(e.target.value)) {
-        setValidar({ ...validar, descripcionB: true });
+        setValidar({ ...validar, descripcionConvB: true });
       } else {
-        setValidar({ ...validar, descripcionB: false });
+        setValidar({ ...validar, descripcionConvB: false });
       }
     }
 
@@ -55,44 +55,37 @@ function FormularioConvocatoria() {
     setFormData({ ...formData, [e.target.name]: e.target.value }); //
   };
 
-  const handleDate = (value, name) => {
-    console.log({ value });
-    console.log(typeof value);
-    setFormData({ ...formData, [name]: value });
-  };
-
   const handleSubmit = (
     titulo,
-    descripcion,
+    descripcionConv,
     estado,
-    nCupos,
-    fechaInicio,
-    fechaFin,
+    numeroDeZonas,
+    fecha_actual,
+    fecha_fin,
     archivoPdf
   ) => {
     console.log(
       titulo,
-      descripcion,
+      descripcionConv,
       estado,
-      nCupos,
-      fechaInicio,
-      fechaFin,
+      numeroDeZonas,
+      fecha_actual,
+      fecha_fin,
       archivoPdf
     );
-
     alert(
-      `datos formularios:::, ${titulo}, ${descripcion}, ${estado}, ${nCupos}, ${fechaInicio}, ${fechaFin}`
+      `datos formularios:::, ${titulo}, ${descripcionConv}, ${estado}, ${numeroDeZonas}, ${fecha_actual}, ${fecha_fin}`
     );
-    fetch("", {
+    fetch("http://127.0.0.1:8000/convocatorias", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         titulo: titulo,
-        descripcion: descripcion,
+        descripcionConv: descripcionConv,
         estado: estado,
-        nCupos: nCupos,
-        fechaInicio: fechaInicio,
-        fechaFin: fechaFin,
+        numeroDeZonas: numeroDeZonas,
+        fecha_actual: fecha_actual,
+        fecha_fin: fecha_fin,
 
         /* other product data */
       }),
@@ -117,20 +110,20 @@ function FormularioConvocatoria() {
             </div>
             <div className="form-group col-md-6">
               <input
-                name="descripcion"
+                name="descripcionConv"
                 type="text"
                 className="form-control"
-                id="descripcion"
-                placeholder="Descripcion"
+                id="descripcionConv"
+                placeholder="descripcionConv"
                 onChange={handleOnchange}
               ></input>
             </div>
           </div>
           <div className="form-group">
             <input
-              name="nCupos"
+              name="numeroDeZonas"
               type="number"
-              id="nCupos"
+              id="numeroDeZonas"
               className="form-control"
               min="1"
               max="100"
@@ -142,30 +135,31 @@ function FormularioConvocatoria() {
             <div className="form-group col-md-4">
               <label for="estado">Estado</label>
               <select
+                name="estado"
                 id="estado"
                 className="form-control"
                 onChange={handleOnchange}
               >
-                <option selected>Activo</option>
+                <option>Activo</option>
                 <option>Inactivo</option>
               </select>
             </div>
             <div className="form-group">
               <input
-                name="fechaInicio"
+                name="fecha_actual"
                 type="date"
                 className="form-control"
-                id="fechaInicio"
+                id="fecha_actual"
                 placeholder="Fecha IInicio"
                 onChange={handleOnchange}
               ></input>
             </div>
             <div className="form-group">
               <input
-                name="fechaFin"
+                name="fecha_fin"
                 type="date"
                 className="form-control"
-                id="fechaFin"
+                id="fecha_fin"
                 placeholder="Fecha fin"
                 onChange={handleOnchange}
               ></input>
@@ -189,11 +183,11 @@ function FormularioConvocatoria() {
             onClick={() =>
               handleSubmit(
                 titulo,
-                descripcion,
-                nCupos,
+                descripcionConv,
+                numeroDeZonas,
                 estado,
-                fechaInicio,
-                fechaFin,
+                fecha_actual,
+                fecha_fin,
                 archivoPdf
               )
             }
