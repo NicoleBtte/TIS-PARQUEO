@@ -10,7 +10,11 @@ class ConvocatoriaController extends Controller
     public function index()
     {
         $convocatorias = Convocatoria::all();
-        return $convocatorias;
+        if( $convocatorias->isEmpty()){
+            return response()->json(['message' => 'No se encontraron convocatorias'], 404);
+        } else {
+            return response()->json(['data' =>  $convocatorias], 200);
+        }
     }
     public function store(Request $request)
     {
@@ -31,13 +35,30 @@ class ConvocatoriaController extends Controller
         $convocatoria->fecha_actual = $validatedData['fecha_actual'];
         $convocatoria->fecha_fin = $validatedData['fecha_fin'];
 
-        $convocatoria->save();
+        try {
+            $convocatoria->save();
+            return response()->json([
+                'success' => true,
+                'message' => 'Convocatoria creada con éxito',
+                'data' => $convocatoria->toArray()
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al crear la convocatoria',
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 
     public function show($idConvocatoria)
     {
         $convocatoria = Convocatoria::find($idConvocatoria);
-        return $convocatoria;
+        if ($convocatoria) {
+            return response()->json(['data' =>$convocatoria], 200);
+        } else {
+            return response()->json(['error' => 'No se encontró la convocatoria'], 404);
+        }
     }
     public function update(Request $request, $idConvocatoria)
     {
@@ -59,10 +80,21 @@ class ConvocatoriaController extends Controller
         $convocatoria->fecha_actual = $validatedData['fecha_actual'];
         $convocatoria->fecha_fin = $validatedData['fecha_fin'];
 
-        $convocatoria->save();
+        if($convocatoria) {
+            $convocatoria->save();
+            return response()->json(['message' => 'Convocatoria actualizada correctamente.']);
+        } else {
+            return response()->json(['message' => 'No se encontró la convocatoria a actualizar.'], 404);
+        }
     }
     public function destroy($idConvocatoria)
     {
-        $convocatoria = Convocatoria::destroy($idConvocatoria);
+        $convocatoria = Convocatoria::find($idConvocatoria);
+        if($convocatoria) {
+            $convocatoria = Convocatoria::destroy($idConvocatoria);
+            return response()->json(['message' => 'Convocatoria eliminada correctamente.']);
+        } else {
+            return response()->json(['message' => 'No se encontró la convocatoria a eliminar.'], 404);
+        }
     }
 }

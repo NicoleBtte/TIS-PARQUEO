@@ -12,7 +12,11 @@ class ZonaDeEstacionamientoController extends Controller
     public function index()
     {
         $zonaDeEstacionamientos = ZonaDeEstacionamiento::all();
-        return $zonaDeEstacionamientos;
+        if($zonaDeEstacionamientos->isEmpty()){
+            return response()->json(['message' => 'No hay zonas de estacionamiento registradas.'], 404);
+        } else {
+            return response()->json(['data' => $zonaDeEstacionamientos], 200);
+        }
     }
     public function sitios($numSitios){
         $idZona= DB::table('zonaEstacionamiento')->latest('idzonaEstacionamiento')->first()->idzonaEstacionamiento;
@@ -42,18 +46,33 @@ class ZonaDeEstacionamientoController extends Controller
         $zonaDeEstacionamiento->numero_de_sitios = $request->numero_de_sitios;
         $numSitios= $request->numero_de_sitios;
         $zonaDeEstacionamiento->descripcion = $request->descripcionZona;
-        $zonaDeEstacionamiento->save();
+        //$zonaDeEstacionamiento->save();
+        try {
+            $zonaDeEstacionamiento->save();
+            $this->sitios($numSitios);
+            return response()->json([
+                'success' => true,
+                'message' => 'Zona de estacionamiento creada con éxito',
+                'data' => $zonaDeEstacionamiento->toArray()
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al crear la zona de estacionamiento',
+                'error' => $e->getMessage()
+            ]);
+        }
 
-       $this->sitios($numSitios);
+       //$this->sitios($numSitios);
     }
-
-    
 
     public function show($idZonaEstacionamiento){
         $zonaDeEstacionamiento = ZonaDeEstacionamiento::find($idZonaEstacionamiento);
-        return $zonaDeEstacionamiento;
-
-        $zonaDeEstacionamiento->save();
+        if ($zonaDeEstacionamiento) {
+            return response()->json(['data' =>$zonaDeEstacionamiento], 200);
+        } else {
+            return response()->json(['error' => 'No se encontró la zona de estacionamiento'], 404);
+        }
     }
 
     public function update(Request $request, $idZonaEstacionamiento)
@@ -76,13 +95,22 @@ class ZonaDeEstacionamientoController extends Controller
         $zonaDeEstacionamiento->numero_de_sitios = $validatedData['numero_de_sitios'];
         $zonaDeEstacionamiento->descripcionZona = $validatedData['descripcionZona'];
 
-        $zonaDeEstacionamiento->save();
-        return $zonaDeEstacionamiento;
+        if($zonaDeEstacionamiento) {
+            $zonaDeEstacionamiento->save();
+            return response()->json(['message' => 'Zona de estacionamiento actualizada correctamente.']);
+        } else {
+            return response()->json(['message' => 'No se encontró la zona de estacionamiento a actualizar.'], 404);
+        }
     }
 
     public function destroy($idZonaEstacionamiento)
     {
-        $zonaDeEstacionamiento = ZonaDeEstacionamiento::destroy($idZonaEstacionamiento);
-        return $zonaDeEstacionamiento;
+        $zonaDeEstacionamiento = ZonaDeEstacionamiento::find($idZonaEstacionamiento);
+        if ($zonaDeEstacionamiento) {
+            $zonaDeEstacionamiento = ZonaDeEstacionamiento::destroy($idZonaEstacionamiento);
+            return response()->json(['message' => 'La zona de estacionamiento ha sido eliminada.']);
+        } else {
+            return response()->json(['message' => 'No se pudo eliminar la zona de estacionamiento.']);
+        }
     }
 }
