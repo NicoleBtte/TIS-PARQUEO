@@ -66,10 +66,10 @@ class ClienteController extends Controller
         return view('clientes',compact('registro'));
     }
 
-    public function show($id){
-        $registro=Cliente::find($id);
+    public function show(Request $request){
+        $estado=Cliente::find($request->carnet);
 
-        return view('clienteid', compact('registro'));
+        return response()->json($estado);
     }
 
     public function update(Request $request, $id){

@@ -14,7 +14,7 @@ class PagoController extends Controller
     //public $id=0;
     public function RegistroPago(Request $request){
         $cliente = Cliente::find($request->carnet);
-        
+        $msg='Ocurrio un error, vuelva a intentarlo mas tarde';
         if($cliente){
             $deuda=$cliente->monto_a_pagar;
             $multa=$cliente->multa;
@@ -25,6 +25,8 @@ class PagoController extends Controller
                 //$pago->idtransaccion=$id;
                 $pago->monto=$monto;
                 $pago->fechaPago=Carbon::today()->format('Y-m-d');
+                $ruta = Storage::disk('uploads')->putFile('comprobantes', $archivo);
+                $pago->comprobante = $ruta;
                 $pago->cliente_idcliente=$request->carnet;
                 $pago->reporte_idreporte=DB::table('reporte')->latest('idreporte')->first()->idreporte;
                 $pago->save();
@@ -61,4 +63,28 @@ class PagoController extends Controller
         return response()->json(['message'=>$msg]);
     }
 
+    public function consultaPagos(){
+        $consultaPago= Pago::all();
+        //$json=json_encode($consultaPago);
+        //return view('verPagos')->with('json', $json);
+        return response()->json(json_encode($consulta));
+    }
+
+    public function consultaEstadoClientes(){
+        $consultaCliente=Cliente::all();
+        return response()->json(json_encode($consultaCliente));
+    }
+
+    public function updatePago(Request $request){
+        $actualizar=Pago::find($request->idtransaccion);
+        $archivo = $request->file('imagen');
+        $msg=$actualizar->guardarArchivo($archivo);
+        return response()->json(['message'=>"Archivo guardado en la ruta {$msg}"]);
+    }
+
+    public function eliminarPago(Request $request){
+        $eliminar=Pago::find($request->idtransaccion);
+        $eliminar->delete();
+        return response()->json(['message'=>'Registro borrado con exito']);
+    }
 }

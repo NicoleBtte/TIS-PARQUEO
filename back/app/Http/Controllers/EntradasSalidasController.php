@@ -42,6 +42,11 @@ class EntradasSalidasController extends Controller
         return response()->json(['msg'=>'Genial, se actualizo con exito']);
     }
 
+    public function ConsultaEntradasSalidas(){
+        $consulta = HistorialEntradasSalidas::all();
+        return response()->json(json_encode($consulta));
+    }
+
     //store
     //index
     //update

@@ -35,7 +35,7 @@ Route::get('/signin', function () {
 });
 Route::post('/register', [ClienteController::class, 'store']);
 Route::post('/login', [ClienteController::class, 'login']);
-
+Route::post('/showcliente', [ClienteController::class, 'show']);
 
 Route::get('/sessions', function () {
     $sessions = collect(Session::all())->map(function ($session) {
@@ -51,8 +51,16 @@ Route::get('/sessions', function () {
 
 Route::post('/entrada', [EntradasSalidasController::class, 'RegistroEntrada']);
 Route::post('/salida', [EntradasSalidasController::class, 'RegistroSalida']);
+Route::get('/consultaEntradasSalidas', [EntradasSalidasController::class, 'ConsultaEntradasSalidas']);
 Route::get('/entrada', function(){
     return view('EntradaSalida');
 });
 
 Route::post('/pagar', [PagoController::class, 'RegistroPago']);
+Route::get('/consultaPagos', [PagoController::class, 'consultaPagos']);
+Route::post('/updatePago', [PagoController::class, 'updatePago']);
+Route::get('/updatePago', function(){
+    return view('updatePago');
+});
+Route::delete('/eliminarPago', [PagoController::class, 'eliminarPago']);
+Route::get('/consultaEstadoClientes', [PagoController::class, 'consultaEstadoClientes']);
