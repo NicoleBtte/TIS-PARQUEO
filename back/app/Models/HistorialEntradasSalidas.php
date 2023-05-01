@@ -11,7 +11,7 @@ class HistorialEntradasSalidas extends Model
     public $timestamps = false;
     protected $table='historial_entradas_salidas';
     protected $fillable=['idhistorial', 'hora_ingreso_hist', 'hora_salida_hist', 'fecha_ingreso', 'fecha_salida',
-    'cliente_id_cliente'];
+    'cliente_idcliente'];
 
     /*public function cliente(){
         return $this->belongsTo(Cliente::class, 'cliente_idcliente');

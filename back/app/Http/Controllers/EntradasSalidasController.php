@@ -25,7 +25,7 @@ class EntradasSalidasController extends Controller
         $entrada->hora_salida_hist=null;//$request->horasalida;
         $entrada->fecha_ingreso=Carbon::today()->format('Y-m-d');//$request->fechaentrada;
         $entrada->fecha_salida=null;//$request->fechasalida;
-        $entrada->cliente_id_cliente=$request->idcliente;//DB::table('auto')->select('cliente_idcliente')->where('placa_auto',$request->placa)->first();
+        $entrada->cliente_idcliente=$request->idcliente;//DB::table('auto')->select('cliente_idcliente')->where('placa_auto',$request->placa)->first();
         $entrada->save();
         
         return response()->json(['msg'=>'Genial, se guardo con exito']);
@@ -35,7 +35,7 @@ class EntradasSalidasController extends Controller
         $horaactual=Carbon::now()->format('H:i:s');
         $fechaactual=Carbon::today()->format('Y-m-d');
         DB::table('historial_entradas_salidas')
-                ->where('cliente_id_cliente', $request->idcliente)
+                ->where('cliente_idcliente', $request->idcliente)
                 ->whereNull('fecha_salida')
                 ->update(['hora_salida_hist' => $horaactual, 'fecha_salida' => $fechaactual]);
 

@@ -25,6 +25,7 @@ class PagoController extends Controller
                 //$pago->idtransaccion=$id;
                 $pago->monto=$monto;
                 $pago->fechaPago=Carbon::today()->format('Y-m-d');
+                $archivo = $request->file('imagen');
                 $ruta = Storage::disk('uploads')->putFile('comprobantes', $archivo);
                 $pago->comprobante = $ruta;
                 $pago->cliente_idcliente=$request->carnet;
@@ -67,7 +68,7 @@ class PagoController extends Controller
         $consultaPago= Pago::all();
         //$json=json_encode($consultaPago);
         //return view('verPagos')->with('json', $json);
-        return response()->json(json_encode($consulta));
+        return response()->json(json_encode($consultaPago));
     }
 
     public function consultaEstadoClientes(){
