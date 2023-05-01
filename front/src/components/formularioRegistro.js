@@ -39,6 +39,8 @@ const FormularioRegistro = () => {
 				  console.log(response.data.errors)
 				}
 			  })
+
+			navigate('/login');
 	}
 
     return (

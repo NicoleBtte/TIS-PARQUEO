@@ -90,7 +90,7 @@ const RedactarForm = () => {
         >
         {({ errors, touched, handleChange, values }) => (
             <Form className='formulario'>
-            <div>
+                <div>
                   <label htmlFor="option">Opción:</label>
                   <Field as="select" id="option" name="option">
                     <option value="">Seleccione una opción</option>
