@@ -25,6 +25,7 @@ class ConvocatoriaController extends Controller
             'estado_convocatoria' => ['required', 'integer', 'min:0', 'max:1'],
             'fecha_inicio' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin'],
             'fecha_fin' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_inicio'],
+            'fecha_pago' => ['required', 'date'],
         ]);
 
         $convocatoria = new Convocatoria();
@@ -34,6 +35,7 @@ class ConvocatoriaController extends Controller
         $convocatoria->estado_convocatoria = $validatedData['estado_convocatoria'];
         $convocatoria->fecha_inicio = $validatedData['fecha_inicio'];
         $convocatoria->fecha_fin = $validatedData['fecha_fin'];
+        $convocatoria->fecha_pago = $validatedData['fecha_pago'];
 
         try {
             $convocatoria->save();
@@ -72,6 +74,7 @@ class ConvocatoriaController extends Controller
             'estado_convocatoria' => ['required', 'integer', 'min:0', 'max:1'],
             'fecha_inicio' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin'],
             'fecha_fin' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_inicio'],
+            'fecha_pago' => ['required', 'date'],
         ]);
         $convocatoria->titulo = $validatedData['titulo'];
         $convocatoria->descripcion_convocatoria = $validatedData['descripcion_convocatoria'];
@@ -79,6 +82,7 @@ class ConvocatoriaController extends Controller
         $convocatoria->estado_convocatoria = $validatedData['estado_convocatoria'];
         $convocatoria->fecha_inicio = $validatedData['fecha_inicio'];
         $convocatoria->fecha_fin = $validatedData['fecha_fin'];
+        $convocatoria->fecha_pago = $validatedData['fecha_pago'];
 
         if($convocatoria) {
             $convocatoria->save();
