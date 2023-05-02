@@ -68,11 +68,11 @@ function IngresosPage() {
   return (
     <div className="container">
       <div className="d-flex-between my-4">
-        <h1 className="my-0 fs-2">Pagos</h1>
+        <h1 className="my-0 fs-2">Ingresos</h1>
         <div>
           <Link
             className="link-none-styles btn-personal py-2"
-            to="/pagos/agregar"
+            to="/guardia/ingresos/registrar"
           >
             Registrar Ingreso
           </Link>

@@ -32,7 +32,7 @@ const MisPagos = () => {
       <div className="d-flex-between my-4">
         <h1 className="my-0 fs-2">Mis Pagos</h1>
         <div>
-          <Link className="link-none-styles btn-personal py-2" to="/pagar-link">
+          <Link className="link-none-styles btn-personal py-2" to="/cliente/pagos-qr">
             Pagar
           </Link>
         </div>

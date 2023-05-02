@@ -59,7 +59,7 @@ const DefaultLayout = () => {
       //es cliente
       menu = (
         <Nav className="me-auto">
-          <Nav.Link as={Link} to="/cliente/misitio">Mi sitio</Nav.Link>
+          <Nav.Link as={Link} to="/cliente/mis-pagos">Mis pagos</Nav.Link>
           <Nav.Link as={Link} to="/cliente/redactar">Redactar</Nav.Link>
           <Nav.Link as={Link} to="/cliente/mensajes">Mensajes</Nav.Link>
         </Nav>

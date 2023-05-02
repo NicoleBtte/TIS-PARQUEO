@@ -27,6 +27,8 @@ import SitiosDisponibles from './components/admin-asig/sitiosDisp';
 import FormularioRegistro from './components/formularioRegistro';
 import ResponderForm from './components/operador-mensajes/responderForm';
 import ResponseForm from './components/cliente-mensajes/responseForm';
+import QrPage from "./components/qrPage";
+import IngresosForm from "./components/formularioIngreso";
 
 function App() {
   return (
@@ -45,13 +47,13 @@ function App() {
             >
               <Route index element={<ConvocatoriaPage />} />
               <Route path="/admin/convocatoria" element={<ConvocatoriaPage />}/>
+              <Route path="/admin/formulario-convocatoria" element={<FormularioConvocatoria />}/>
               <Route path="/admin/parqueo" element={<ParqueoPage />} />
               <Route path="/admin/asignacion" element={<AsignacionPage />} />
-              <Route path="/admin/formulario-convocatoria" element={<FormularioConvocatoria />}/>
-              <Route path="/admin/convocatoria-editar" element={<ConvocatoriaEditar />}/>
+              <Route path="/admin/formulario-convocatoria/:id/editar" element={<ConvocatoriaEditar />}/>
               <Route path="/admin/formulario-parqueo" element={<FormularioParqueo />}/>
-              <Route path="/admin/parqueo-editar" element={<ParqueoEditar />} />
-              <Route path="/admin/zonas-parqueo" element={<ZonaParqueo />} />
+              <Route path="/admin/parqueo/:id/editar" element={<ParqueoEditar />} />
+              <Route path="/admin/parqueo/:id/detalle" element={<ZonaParqueo />} />
               <Route path='/admin/asignacion/id/:id/nc/:nc/p/:p/z/:z/s/:s' element={<SitiosDisponibles />} />
             </Route>
             {/* Rutas para el operador */}
@@ -81,6 +83,7 @@ function App() {
             >
               <Route index element={<IngresosPage />} />
               <Route path="/guardia/ingresos" element={<IngresosPage />} />
+              <Route path="/guardia/ingresos/registrar" element={<IngresosForm />} />
             </Route>
             {/* Rutas para el cliente */}
             <Route
@@ -96,6 +99,7 @@ function App() {
               <Route path="/cliente/redactar" element={<RedactarPage />} />
               <Route path="/cliente/mensajes" element={<MensajesPage />} />
               <Route path="/cliente/mis-pagos" element={<MisPagosPage />} />
+              <Route path="/cliente/pagos-qr" element={<QrPage />} />
               <Route path='/cliente/mensajes/responder/id/:id/name/:name' element={<ResponseForm />} />
             </Route>
 

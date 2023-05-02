@@ -56,7 +56,7 @@ const ConvocatoriaPage = () => {
                   </Button>
                 </Link>
 
-                <Link to={`/convocatoria/${index}/editar`}>
+                <Link to={`/admin/formulario-convocatoria/${index}/editar`}>
                   <Button variant="secondary">Editar</Button>
                 </Link>
 
@@ -72,7 +72,7 @@ const ConvocatoriaPage = () => {
         </tbody>
       </Table>
       <div className="content-rigth">
-        <Link to={"/formularioConv"}>
+        <Link to={"/admin/formulario-convocatoria"}>
           <Button className="botones-cs" variant="success">
             Crear Convocatoria{" "}
           </Button>

@@ -39,7 +39,7 @@ const ParqueoPage = () => {
               <td>{parqueo.nombreParqueo}</td>
               <td>{parqueo.numero_de_zonas}</td>
               <td>
-                <Link to={`/parqueo/${index}/detalle`}>
+                <Link to={`/admin/parqueo/${index}/detalle`}>
                   <Button variant="primary" className="boton-detalle">
                     Ver detalles
                   </Button>
@@ -50,7 +50,7 @@ const ParqueoPage = () => {
                 >
                   Eliminar
                 </Button>
-                <Link to={`/parqueo/${index}/editar`}>
+                <Link to={`/admin/parqueo/${index}/editar`}>
                   <Button variant="warning" className="boton-editar">
                     Editar
                   </Button>
@@ -61,7 +61,7 @@ const ParqueoPage = () => {
         </tbody>
       </Table>
       <div className="content-rigth">
-        <Link className="botones-cs" to={"/formularioPar"}>
+        <Link className="botones-cs" to={"/admin/formulario-parqueo"}>
           <Button variant="success" className="botones-cs">
             Agregar Parqueo
           </Button>
