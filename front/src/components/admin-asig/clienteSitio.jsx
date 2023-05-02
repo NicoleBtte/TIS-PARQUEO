@@ -12,75 +12,75 @@ const ClienteSitio = () => {
         getFilas();
       }, [])
 
-    // Arreglo de objetos con datos aleatorios
-    const clientesSitios = [
+
+      const clientesSitios = [
         { 
             idcliente: 1,
-            nombrecliente: "Juan Pérez",
+            nombre_cliente: "Juan Pérez",
             idparqueo: 1,
-            nombreparqueo: "Parqueo Planta 1",
+            nombre_parqueo: "Parqueo Planta 1",
             idzona: 3,
-            nombrezona: "Zona Sur",
+            nombre_zona_estacionamiento: "Zona Sur",
             idsitio: 5,
-            nombresitio: "Sitio A"
+            numero: "Sitio A"
         },
         { 
             idcliente: 2,
-            nombrecliente: "María González",
+            nombre_cliente: "María González",
             idparqueo: 2,
-            nombreparqueo: "Parqueo Planta 2",
+            nombre_parqueo: "Parqueo Planta 2",
             idzona: 2,
-            nombrezona: "Zona Centro",
+            nombre_zona_estacionamiento: "Zona Centro",
             idsitio: 3,
-            nombresitio: "Sitio B"
+            numero: "Sitio B"
         },
         { 
             idcliente: 3,
-            nombrecliente: "Pedro García",
+            nombre_cliente: "Pedro García",
             idparqueo: 3,
-            nombreparqueo: "Parqueo Planta 3",
+            nombre_parqueo: "Parqueo Planta 3",
             idzona: 1,
-            nombrezona: "Zona Norte",
+            nombre_zona_estacionamiento: "Zona Norte",
             idsitio: 2,
-            nombresitio: "Sitio C"
+            numero: "Sitio C"
         },
         { 
             idcliente: 4,
-            nombrecliente: "Luisa Martínez",
+            nombre_cliente: "Luisa Martínez",
             idparqueo: 4,
-            nombreparqueo: "Parqueo Planta 4",
+            nombre_parqueo: "Parqueo Planta 4",
             idzona: 3,
-            nombrezona: "Zona Sur",
+            nombre_zona_estacionamiento: "Zona Sur",
             idsitio: 4,
-            nombresitio: "Sitio D"
+            numero: "Sitio D"
         },
         { 
             idcliente: 5,
-            nombrecliente: "Sofía Ramírez",
+            nombre_cliente: "Sofía Ramírez",
             idparqueo: 5,
-            nombreparqueo: "Parqueo Planta 5",
+            nombre_parqueo: "Parqueo Planta 5",
             idzona: 2,
-            nombrezona: "Zona Centro",
+            nombre_zona_estacionamiento: "Zona Centro",
             idsitio: 1,
-            nombresitio: "Sitio E"
+            numero: "Sitio E"
         }
     ];
-  
 
     const getFilas = () => {
         setLoading(true)
-        setFilas(clientesSitios);
-        setLoading(false)
+        //setFilas(clientesSitios);
+        //setLoading(false)
         
-        /*setLoading(true)
-        axiosCliente.get('/clientesitios')
+        setLoading(true)
+        axiosCliente.get('/consultaClienteSitio')
           .then(({ data }) => {
+            console.log(data)
             setLoading(false)
-            setFilas(data.data)
+            setFilas(JSON.parse(data))
           })
           .catch(() => {
             setLoading(false)
-          })*/
+          })
     }
 
     return (
@@ -107,12 +107,12 @@ const ClienteSitio = () => {
             <tbody>
             {filas.map(u => (
               <tr key={u.idcliente}>
-                <td>{u.nombrecliente}</td>
-                <td>{u.nombreparqueo}</td>
-                <td>{u.nombrezona}</td>
-                <td>{u.nombresitio}</td>
+                <td>{u.nombre_cliente}</td>
+                <td>{u.nombre_parqueo}</td>
+                <td>{u.nombre_zona_estacionamiento}</td>
+                <td>{u.numero}</td>
                 <td>
-                  <Button as={Link}  to={'/admin/asignacion/id/' + u.idcliente+'/nc/'+u.nombrecliente+'/p/'+u.nombreparqueo+'/z/'+u.nombrezona+'/s/'+u.nombresitio} variant="warning">Editar</Button>
+                  <Button as={Link}  to={'/admin/asignacion/id/' + u.idcliente+'/nc/'+u.nombre_cliente+'/p/'+u.nombre_parqueo+'/z/'+u.nombre_zona_estacionamiento+'/s/'+u.numero} variant="warning">Editar</Button>
                 </td>
               </tr>
             ))}
