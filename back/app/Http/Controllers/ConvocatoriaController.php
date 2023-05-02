@@ -101,4 +101,10 @@ class ConvocatoriaController extends Controller
             return response()->json(['message' => 'No se encontró la convocatoria a eliminar.'], 404);
         }
     }
+    public function registrarseConvo($idConvocatoria)
+    {
+        $convocatoria = Convocatoria::find($idConvocatoria);
+        $convocatoria->numero_cupos = $convocatoria->numero_cupos - 1;
+        $convocatoria->save();
+    }
 }

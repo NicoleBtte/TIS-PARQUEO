@@ -73,15 +73,10 @@ Route::get('/parqueo/{idParqueo}', [ParqueoController::class ,'show']);
 Route::put('/parqueo/{idParqueo}',  [ParqueoController::class ,'update']);
 Route::delete('/parqueo/{idParqueo}', [ParqueoController::class ,'destroy']);
 
-
-/*Route::controller(ZonaDeEstacionamientoController::class)->group(function () {
-    Route::get('/zonaDeEstacionamientos', 'index');
-    Route::post('/zonaDeEstacionamiento', 'store');
-    Route::get('/zonaDeEstacionamiento/{idZonaEstacionamiento}', 'show');
-    Route::put('/zonaDeEstacionamiento/{idZonaEstacionamiento}', 'update');
-    Route::delete('/zonaDeEstacionamiento/{idZonaEstacionamiento}', 'destroy');
-});*/
-
+Route::get('/zonaDeEstacionamientos', [ZonaDeEstacionamientoController::class,'index']);
+Route::get('/zonaDeEstacionamiento/{idZonaEstacionamiento}', [ZonaDeEstacionamientoController::class,'show']);
+Route::put('/zonaDeEstacionamiento/{idZonaEstacionamiento}', [ZonaDeEstacionamientoController::class,'update']);
+Route::delete('/zonaDeEstacionamiento/{idZonaEstacionamiento}', [ZonaDeEstacionamientoController::class,'destroy']);
 Route::post('/zona', [ZonaDeEstacionamientoController::class, 'store']);
 Route::get('/zona', function(){
     return view('zona');
