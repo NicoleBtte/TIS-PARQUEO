@@ -199,6 +199,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`notificaciones` (
   `receptor_notif` VARCHAR(50) NULL,
   `titulo_notif` VARCHAR(45) NULL,
   `mensaje_notif` VARCHAR(145) NULL,
+  `fecha_notif` DATE NULL,
   `administrador_idadministrador` INT NOT NULL,
   `cliente_idcliente` INT NOT NULL,
   `operador_idoperador` INT NOT NULL,

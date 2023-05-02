@@ -12,7 +12,7 @@ class Convocatoria extends Model
     //use HasFactory;
     use Notifiable;
     protected $table = 'convocatorias';
-    
+    public $timestamps = false;
     protected $primaryKey = 'idConvocatoria';
     protected $fillable = ['idConvocatoria', 'titulo', 'fecha_inicio', 'fecha_fin', 'descripcion_convocatoria', 
     'numero_cupos', 'estado_convocatoria',  'fecha_pago'];

@@ -12,7 +12,7 @@ class Parqueo extends Model
     //use HasFactory;
     use Notifiable;
     protected $table = 'parqueos';
-    
+    public $timestamps = false;
     protected $primaryKey = 'idParqueo';
     protected $fillable = ['idParqueo', 'nombre_parqueo', 'administrador_idadministrador', 'numero_de_zonas', 'mapa_parqueo'];
 

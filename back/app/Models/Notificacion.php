@@ -10,7 +10,7 @@ class Notificacion extends Model
     protected $table = 'notificaciones';
 
     protected $primaryKey = 'idnotificaciones';
-
+    public $timestamps = false;
     protected $fillable = [
         'idnotificaciones',
         'emisor_notif',

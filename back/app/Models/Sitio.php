@@ -9,5 +9,6 @@ class Sitio extends Model
 {
     use HasFactory;
     protected $table= 'sitio';
+    public $timestamps = false;
     protected $fillable = ['zonaEstacionamiento_idzonaEstacionamiento','cliente_idcliente','numero'];
 }
