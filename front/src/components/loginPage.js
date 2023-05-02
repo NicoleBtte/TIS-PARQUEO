@@ -4,22 +4,38 @@ import axiosClient from '../axios-client.js'
 import { useStateContext } from '../contexts/ContextProvider.js';
 
 const LoginPage = () => {
-  
-  const { setUser, setToken, setRol } = useStateContext();
+  const [selectedRole, setSelectedRole] = useState('cliente');
+  const { setUser, setToken, setRol, setID } = useStateContext();
 
 	const guardar = (values) =>{
 		console.log(values);
+    let apiruta = '';
 	
 		const payload = {
 			ci: values.ci,
 			password: values.password
 		}
 		console.log(payload);
+
+    if(selectedRole==='cliente'){
+      apiruta = '/login/cliente'
+    }else{
+      if(selectedRole==='admin'){
+        apiruta = '/login/admin'
+      }else{
+        if(selectedRole==='operador'){
+          apiruta = '/login/operador'
+        }else{
+          apiruta = '/login/guardia'
+        }
+      }
+    }
+    console.log('Apiruta',apiruta);
 	
 		axiosClient.post('/login', payload)
       .then(({data}) => {
-        console.log(data.user)
-        setUser(data.user)
+        console.log(data.idusuario)
+        setID(data.idusuario)
         console.log(data.access_token)
         setToken(data.access_token);
         console.log(data.rol)
@@ -36,10 +52,13 @@ const LoginPage = () => {
 	}
 
     return (
+      <>
+      <h4>Iniciar sesion</h4>
       <Formik
           initialValues={{
             ci:'',
-            password:''
+            password:'',
+            loginus: selectedRole,
           }}
 
           validate={(values) => {
@@ -64,6 +83,13 @@ const LoginPage = () => {
             >
             {({ errors, touched }) => (
                 <Form className='formulario'>
+                  <label htmlFor="rol">Rol:</label>
+                      <select name="rol" id="rol" value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
+                        <option value="cliente">Cliente</option>
+                        <option value="operador">Operador</option>
+                        <option value="guardia">Guardia</option>
+                        <option value="admin">Administrador</option>
+                      </select>
                   <div>
                       <label htmlFor="ci">Número de C.I.:</label>
                       <Field
@@ -86,6 +112,7 @@ const LoginPage = () => {
                 </Form>
             )}
           </Formik>
+        </>
     );
 }
 

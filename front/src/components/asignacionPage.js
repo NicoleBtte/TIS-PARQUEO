@@ -1,11 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import ClienteSitio from './admin-asig/clienteSitio';
 
 const AsignacionPage = () => {
   
   return (
-    <div>
-      Asignar sitios
-    </div>
+    <>
+      <h4>Clientes</h4>
+      <div>
+        <ClienteSitio/>
+      </div>
+    </>
+    
   );
 }
 

@@ -23,6 +23,10 @@ import ZonaParqueo from "./components/zonasParqueo";
 import PagosClientes from "./components/pagosClientes";
 import FormularioPago from "./components/formularioPago";
 import MisPagosPage from "./components/misPagosPage";
+import SitiosDisponibles from './components/admin-asig/sitiosDisp';
+import FormularioRegistro from './components/formularioRegistro';
+import ResponderForm from './components/operador-mensajes/responderForm';
+import ResponseForm from './components/cliente-mensajes/responseForm';
 
 function App() {
   return (
@@ -40,26 +44,15 @@ function App() {
               }
             >
               <Route index element={<ConvocatoriaPage />} />
-              <Route
-                path="/admin/convocatoria"
-                element={<ConvocatoriaPage />}
-              />
+              <Route path="/admin/convocatoria" element={<ConvocatoriaPage />}/>
               <Route path="/admin/parqueo" element={<ParqueoPage />} />
               <Route path="/admin/asignacion" element={<AsignacionPage />} />
-              <Route
-                path="/admin/formulario-convocatoria"
-                element={<FormularioConvocatoria />}
-              />
-              <Route
-                path="/admin/convocatoria-editar"
-                element={<ConvocatoriaEditar />}
-              />
-              <Route
-                path="/admin/formulario-parqueo"
-                element={<FormularioParqueo />}
-              />
+              <Route path="/admin/formulario-convocatoria" element={<FormularioConvocatoria />}/>
+              <Route path="/admin/convocatoria-editar" element={<ConvocatoriaEditar />}/>
+              <Route path="/admin/formulario-parqueo" element={<FormularioParqueo />}/>
               <Route path="/admin/parqueo-editar" element={<ParqueoEditar />} />
               <Route path="/admin/zonas-parqueo" element={<ZonaParqueo />} />
+              <Route path='/admin/asignacion/id/:id/nc/:nc/p/:p/z/:z/s/:s' element={<SitiosDisponibles />} />
             </Route>
             {/* Rutas para el operador */}
             <Route
@@ -72,15 +65,10 @@ function App() {
             >
               <Route index element={<PagosPage />} />
               <Route path="/operador/pagos" element={<PagosPage />} />
-              <Route
-                path="/operador/pagos-clientes"
-                element={<PagosClientes />}
-              />
-              <Route
-                path="/operador/formulario-pago"
-                element={<FormularioPago />}
-              />
+              <Route path="/operador/pagos-clientes" element={<PagosClientes />}/>
+              <Route path="/operador/formulario-pago" element={<FormularioPago />}/>
               <Route path="/operador/pqr" element={<PqrPage />} />
+              <Route path='/operador/pqr/responder/id/:id/name/:name' element={<ResponderForm />} />
             </Route>
             {/* Rutas para el guardia */}
             <Route
@@ -108,6 +96,7 @@ function App() {
               <Route path="/cliente/redactar" element={<RedactarPage />} />
               <Route path="/cliente/mensajes" element={<MensajesPage />} />
               <Route path="/cliente/mis-pagos" element={<MisPagosPage />} />
+              <Route path='/cliente/mensajes/responder/id/:id/name/:name' element={<ResponseForm />} />
             </Route>
 
             {/* Rutas para el guest */}

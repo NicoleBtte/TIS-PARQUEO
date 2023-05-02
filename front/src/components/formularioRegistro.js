@@ -8,36 +8,37 @@ const FormularioRegistro = () => {
   const { setUser, setToken } = useStateContext();
   const navigate = useNavigate();
 
-  const guardar = (values) => {
-    console.log(values);
-    const payload = {
-      name: values.name,
-      email: values.email,
-      apellidos: values.apellidos,
-      direccion: values.direccion,
-      telefono: values.telefono,
-      ci: values.ci,
-      password: values.password,
-      //password_confirmation: values.ccontrasena
-    };
-    console.log(payload);
+	const guardar = (values) =>{
+		console.log(values);
+		const payload = {
+			name: values.name,
+			email: values.email,
+			apellidos: values.apellidos,
+			direccion: values.direccion,
+			telefono: values.telefono,
+			ci: values.ci,
+			password: values.password,
+			//password_confirmation: values.ccontrasena
+		}
+		console.log(payload);
+	
+		axiosClient.post('/register', payload)
+			.then(({data}) => {
+				console.log('Se ejecuto axios en formulario')
+				//setUser(data.user)
+				//setToken(data.token);
+				
+				console.log(data)
+			})
+			.catch(err => {
+				const response = err.response;
+				console.log(response.data.message)
+				if (response && response.status === 422) {
+				  console.log(response.data.errors)
+				}
+			  })
 
-    axiosClient
-      .post("/register", payload)
-      .then(({ data }) => {
-        console.log("Se ejecuto axios en formulario");
-        //setUser(data.user)
-        //setToken(data.token);
-
-        console.log(data);
-      })
-      .catch((err) => {
-        const response = err.response;
-        console.log(response.data.message);
-        if (response && response.status === 422) {
-          console.log(response.data.errors);
-        }
-      });
+			navigate('/login');
   };
 
   return (

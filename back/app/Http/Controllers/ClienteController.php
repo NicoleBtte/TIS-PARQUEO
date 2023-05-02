@@ -119,8 +119,9 @@ class ClienteController extends Controller
                 'status' => 1,
                 'message' => 'login correcto',
                 'access_token' => $token,
-                'rol' => 'cliente',
-            ]);
+                'rol' => 'operador',
+                'idusuario' => $user->idcliente // agrega esta línea
+            ]);            
         } else {
             return response()->json([
                 'status' => 0,

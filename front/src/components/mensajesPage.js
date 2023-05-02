@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
+import HistorialMensajes from './cliente-mensajes/historialMensajes';
 
 const MensajesPage = () => {
   
 
   return (
-    <div>
-      Mensajes
-    </div>
+    <>
+      <h4>Historial de mensajes</h4>
+      <div>
+        <HistorialMensajes></HistorialMensajes>
+      </div>
+    </>
+
   );
 }
 

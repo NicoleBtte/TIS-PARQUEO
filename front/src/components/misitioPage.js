@@ -4,9 +4,12 @@ const MisitioPage = () => {
   
 
   return (
-    <div>
-      Mi sitio
-    </div>
+    <>
+      <div>
+        Mi sitio
+      </div>
+    </>
+    
   );
 }
 

@@ -11,7 +11,7 @@ import '../styles/navbarStyle.css';
 import App from '../App';
 
 const DefaultLayout = () => {
-  const {user, token, setUser, setToken, rol, setRol} = useStateContext()
+  const {user, token, setUser, setToken, rol, setRol, id, setID} = useStateContext()
 
   if (!token) {
     return <Navigate to="/login"/>
@@ -25,6 +25,7 @@ const DefaultLayout = () => {
         setUser({})
         setToken(null)
         setRol(null)
+        setID(null)
       })
   }
 

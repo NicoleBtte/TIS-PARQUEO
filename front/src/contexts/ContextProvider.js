@@ -3,10 +3,12 @@ import { createContext, useContext, useState } from 'react';
 const StateContext = createContext({
 	currentUser: null,
 	token: null,
+	rol: null,
+	iduser: null,
 	setUser: () => {},
 	setToken: () => {},
-	rol: null,
-	setRol: () => {}
+	setRol: () => {},
+	setID: () => {}
 });
 
 export const ContextProvider = ({ children }) => {
@@ -14,8 +16,7 @@ export const ContextProvider = ({ children }) => {
 	console.log('Hola desde el constext');
 	const [token, _setToken] = useState(localStorage.getItem('ACCESS_TOKEN')); //localStorage.getItem('ACCESS_TOKEN')
 	const [rol, _setRol] = useState(localStorage.getItem('ROL'));
-	console.log(rol);
-
+	const [iduser, _setID] = useState(localStorage.getItem('ID_USER'));
 
 	const setToken = (token) => {
 		_setToken(token);
@@ -35,6 +36,15 @@ export const ContextProvider = ({ children }) => {
 		}
 	};
 
+	const setID = (id) => {
+		_setID(id);
+		if (id) {
+			localStorage.setItem('ID_USER', id);
+		} else {
+			localStorage.removeItem('ID_USER');
+		}
+	};
+
 	return (
 		<StateContext.Provider
 			value={{
@@ -43,7 +53,9 @@ export const ContextProvider = ({ children }) => {
 				token,
 				setToken,
 				rol,
-				setRol
+				setRol,
+				iduser,
+				setID
 			}}
 		>
 			{children}
