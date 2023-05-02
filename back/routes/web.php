@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\EntradasSalidasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,3 +53,5 @@ Route::get('/fallido', function(){
 Route::get('/privado', function(){
     return view('privado');
 })->middleware('auth')->name('privado');
+
+

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitb70ef91e8d4abca63700290f1cc9f148
+class ComposerStaticInit8613fea59ef2bdc8c15ce1b892c035a9
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -505,6 +505,13 @@ class ComposerStaticInitb70ef91e8d4abca63700290f1cc9f148
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\ClienteController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClienteController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\ConvocatoriaController' => __DIR__ . '/../..' . '/app/Http/Controllers/ConvocatoriaController.php',
+        'App\\Http\\Controllers\\EntradasSalidasController' => __DIR__ . '/../..' . '/app/Http/Controllers/EntradasSalidasController.php',
+        'App\\Http\\Controllers\\NotificacionController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotificacionController.php',
+        'App\\Http\\Controllers\\PagoController' => __DIR__ . '/../..' . '/app/Http/Controllers/PagoController.php',
+        'App\\Http\\Controllers\\ParqueoController' => __DIR__ . '/../..' . '/app/Http/Controllers/ParqueoController.php',
+        'App\\Http\\Controllers\\SitioController' => __DIR__ . '/../..' . '/app/Http/Controllers/SitioController.php',
+        'App\\Http\\Controllers\\ZonaDeEstacionamientoController' => __DIR__ . '/../..' . '/app/Http/Controllers/ZonaDeEstacionamientoController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -515,7 +522,14 @@ class ComposerStaticInitb70ef91e8d4abca63700290f1cc9f148
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Models\\Cliente' => __DIR__ . '/../..' . '/app/Models/Cliente.php',
+        'App\\Models\\Convocatoria' => __DIR__ . '/../..' . '/app/Models/Convocatoria.php',
+        'App\\Models\\HistorialEntradasSalidas' => __DIR__ . '/../..' . '/app/Models/HistorialEntradasSalidas.php',
+        'App\\Models\\Notificacion' => __DIR__ . '/../..' . '/app/Models/Notificacion.php',
+        'App\\Models\\Pago' => __DIR__ . '/../..' . '/app/Models/Pago.php',
+        'App\\Models\\Parqueo' => __DIR__ . '/../..' . '/app/Models/Parqueo.php',
+        'App\\Models\\Sitio' => __DIR__ . '/../..' . '/app/Models/Sitio.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
+        'App\\Models\\ZonaDeEstacionamiento' => __DIR__ . '/../..' . '/app/Models/ZonaDeEstacionamiento.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -5403,10 +5417,10 @@ class ComposerStaticInitb70ef91e8d4abca63700290f1cc9f148
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitb70ef91e8d4abca63700290f1cc9f148::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitb70ef91e8d4abca63700290f1cc9f148::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitb70ef91e8d4abca63700290f1cc9f148::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitb70ef91e8d4abca63700290f1cc9f148::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit8613fea59ef2bdc8c15ce1b892c035a9::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit8613fea59ef2bdc8c15ce1b892c035a9::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit8613fea59ef2bdc8c15ce1b892c035a9::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit8613fea59ef2bdc8c15ce1b892c035a9::$classMap;
 
         }, null, ClassLoader::class);
     }
