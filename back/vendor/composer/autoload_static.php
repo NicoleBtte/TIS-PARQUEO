@@ -505,8 +505,6 @@ class ComposerStaticInit3910001f1daa2e34cad2708c7a224b93
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\ClienteController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClienteController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
-        'App\\Http\\Controllers\\EntradasSalidasController' => __DIR__ . '/../..' . '/app/Http/Controllers/EntradasSalidasController.php',
-        'App\\Http\\Controllers\\PagoController' => __DIR__ . '/../..' . '/app/Http/Controllers/PagoController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -516,10 +514,8 @@ class ComposerStaticInit3910001f1daa2e34cad2708c7a224b93
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
-        'App\\Models\\Cliente' => __DIR__ . '/../..' . '/app/Models/Cliente.php',
-        'App\\Models\\HistorialEntradasSalidas' => __DIR__ . '/../..' . '/app/Models/HistorialEntradasSalidas.php',
-        'App\\Models\\Pago' => __DIR__ . '/../..' . '/app/Models/Pago.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
+        'App\\Models\\ZonaDeEstacionamiento' => __DIR__ . '/../..' . '/app/Models/ZonaDeEstacionamiento.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -5407,10 +5403,10 @@ class ComposerStaticInit3910001f1daa2e34cad2708c7a224b93
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit3910001f1daa2e34cad2708c7a224b93::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit3910001f1daa2e34cad2708c7a224b93::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit3910001f1daa2e34cad2708c7a224b93::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit3910001f1daa2e34cad2708c7a224b93::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInita34da9b43251dfa5f82c94d556854349::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita34da9b43251dfa5f82c94d556854349::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInita34da9b43251dfa5f82c94d556854349::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInita34da9b43251dfa5f82c94d556854349::$classMap;
 
         }, null, ClassLoader::class);
     }
