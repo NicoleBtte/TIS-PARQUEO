@@ -8,6 +8,7 @@ import CardInfo from './cardInfo';
 const SitiosDisponibles = () => {
     const [filas, setFilas] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState(null);
     const { id, nc, p, z, s } = useParams();
     const navigate = useNavigate();
     
@@ -16,7 +17,7 @@ const SitiosDisponibles = () => {
       }, [])
 
     // Arreglo de objetos con datos aleatorios
-    const sitiosDisponibles = [
+    /*const sitiosDisponibles = [
         { 
             idparqueo: 1,
             nombreparqueo: "Parqueo Planta 1",
@@ -33,28 +34,33 @@ const SitiosDisponibles = () => {
             idsitio: 3,
             numerositio: "Sitio B"
         }
-    ];
+    ];*/
   
 
     const getFilas = () => {
         setLoading(true);
-        setFilas(sitiosDisponibles);//Estatico--->cambiar
-        setLoading(false);
+        /*setFilas(sitiosDisponibles);//Estatico--->cambiar
+        setLoading(false);*/
 
-        /*axiosCliente.get('/sitios disponibles')
+        axiosCliente.get('/consultaSitios')
         .then(({ data }) => {
+          console.log(data)
           setLoading(false)
-          setFilas(data.data)
+          setFilas(JSON.parse(data))
         })
         .catch(() => {
           setLoading(false)
-        })*/
+        })
     }
 
-    const asignarSitio = (clienteID, nombreparqueo, nombrezona, numerositio) => {
-      console.log('Se asigno al usuario '+clienteID+"p: "+nombreparqueo+"z: "+nombrezona+"s: "+numerositio);
-      /*if (clienteID) {
-        axiosCliente.put(`/users/${user.id}`, user)
+    const asignarSitio = (clienteID, idsitio) => {
+      console.log('Se asigno al usuario '+clienteID+"p: "+idsitio);
+      const payload = {
+        idcliente: clienteID,
+        idsitio: idsitio,
+      }
+      if (clienteID) {
+        axiosCliente.post(`/reasignarSitio`, payload)
           .then(() => {
               console.log('Se ha editado el usuario')
               navigate('/admin/asignacion')
@@ -65,7 +71,7 @@ const SitiosDisponibles = () => {
               setErrors(response.data.errors)
             }
           })
-      }*/
+      }
       navigate('/admin/asignacion');
     }
 
@@ -113,12 +119,12 @@ const SitiosDisponibles = () => {
           {!loading &&
             <tbody>
             {filas.map(u => (
-              <tr key={u.idparqueo}>
-                <td>{u.nombreparqueo}</td>
-                <td>{u.nombrezona}</td>
-                <td>{u.numerositio}</td>
+              <tr key={u.idsitio}>
+                <td>{u.nombre_parqueo}</td>
+                <td>{u.nombre_zona_estacionamiento}</td>
+                <td>{u.numero}</td>
                 <td>
-                  <Button onClick={() => asignarSitio(id, u.nombreparqueo, u.nombrezona, u.numerositio)} variant="warning">Asignar este sitio</Button>
+                  <Button onClick={() => asignarSitio(id, u.idsitio)} variant="warning">Asignar este sitio</Button>
                 </td>
               </tr>
             ))}

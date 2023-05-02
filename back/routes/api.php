@@ -82,6 +82,9 @@ Route::get('/zona', function(){
     return view('zona');
 });
 Route::post('/crearSitio',[SitioController::class,'registroSitios']);
+Route::get('/consultaClienteSitio',[SitioController::class,'listaClientes']);
+Route::get('/consultaSitios',[SitioController::class,'listaSitios']);
+Route::post('/reasignarSitio',[SitioController::class,'reasignar']);
 
 Route::post('/notificaciones',[NotificacionController::class, 'store']);
 Route::get('/notificaciones',[NotificacionController::class, 'indexSent']);

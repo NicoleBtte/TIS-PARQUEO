@@ -30,7 +30,7 @@ class SitioController extends Controller
 
     
       $sitioParaAsignar= DB::table('sitio')->whereNull('cliente_idcliente')->first()->idSitio;
-      DB::table('sitio')->where('idSitio',$sitioParaAsignar)-> update(['cliente_idcliente'=>$idcliente]);
+      DB::table('sitio')->where('idSitio',$sitioParaAsignar)-> update(['cliente_idcliente'=>$idCliente]);
    }
 
 
@@ -39,7 +39,7 @@ class SitioController extends Controller
      * nombre, paqueo, zona, sitio
     */
     $arreglo=DB::table('sitio')
-    ->wherenNotNull('cliente_idcliente')
+    ->whereNotNull('cliente_idcliente')
     ->join('zonaEstacionamiento', 'sitio.zonaEstacionamiento_idzonaEstacionamiento', '=', 'zonaEstacionamiento.idzonaEstacionamiento')
     ->join('cliente', 'sitio.cliente_idcliente', '=', 'cliente.idcliente')
     ->join('parqueo', 'zonaEstacionamiento.parqueo_idparqueo', '=', 'parqueo.idparqueo')
@@ -51,10 +51,11 @@ class SitioController extends Controller
    }
 
 
-   public function reasignar($idcliente, $idsitio){
-      $sitio = Sitio::where('id', $idSitio)->first();
-      $sitio->setAttribute('cliente_idcliente', $idcliente);
-
+   public function reasignar(Request $request){
+      DB::table('sitio')->where('cliente_idcliente',$request->idcliente)->update(['cliente_idcliente'=>null]);
+      $sitio = Sitio::find($request->idsitio);
+      $sitio->cliente_idcliente = $request->idcliente;
+      
       $sitio->save();
 
 
@@ -65,7 +66,7 @@ class SitioController extends Controller
    public function listaSitios(){
 
      $arreglo2=DB::table('sitio')
-    ->wherenNull('cliente_idcliente')
+    ->whereNull('cliente_idcliente')
     ->join('zonaEstacionamiento', 'sitio.zonaEstacionamiento_idzonaEstacionamiento', '=', 'zonaEstacionamiento.idzonaEstacionamiento')
     ->join('parqueo', 'zonaEstacionamiento.parqueo_idparqueo', '=', 'parqueo.idparqueo')
     ->select('idsitio','parqueo.nombre_parqueo', 'zonaEstacionamiento.nombre_zona_estacionamiento','sitio.numero')
