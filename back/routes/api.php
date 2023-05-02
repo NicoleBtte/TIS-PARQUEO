@@ -4,14 +4,14 @@ use App\Http\Controllers\ConvocatoriaController;
 use App\Http\Controllers\ParqueoController;
 use App\Http\Controllers\ZonaDeEstacionamientoController;
 use App\Http\Controllers\NotificacionController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SitioController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EntradasSalidasController;
 use App\Http\Controllers\PagoController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\SitioController;
 
 /*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -60,14 +60,6 @@ Route::get('/updatePago', function(){
 Route::delete('/eliminarPago', [PagoController::class, 'eliminarPago']);
 Route::get('/consultaEstadoClientes', [PagoController::class, 'consultaEstadoClientes']);
 
-Route::post('/pagar', [PagoController::class, 'RegistroPago']);
-Route::get('/consultaPagos', [PagoController::class, 'consultaPagos']);
-Route::post('/updatePago', [PagoController::class, 'updatePago']);
-Route::get('/updatePago', function(){
-    return view('updatePago');
-});
-Route::delete('/eliminarPago', [PagoController::class, 'eliminarPago']);
-Route::get('/consultaEstadoClientes', [PagoController::class, 'consultaEstadoClientes']);
 
 Route::get('/convocatorias', [ConvocatoriaController::class, 'index']);
 Route::post('/convocatoria', [ConvocatoriaController::class, 'store']);
