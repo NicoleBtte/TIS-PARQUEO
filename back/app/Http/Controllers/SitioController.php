@@ -56,9 +56,6 @@ class SitioController extends Controller
       $sitio->setAttribute('cliente_idcliente', $idcliente);
 
       $sitio->save();
-
-
-
    }
 
 

@@ -13,13 +13,14 @@ class ConvocatoriaController extends Controller
         if( $convocatorias->isEmpty()){
             return response()->json(['message' => 'No se encontraron convocatorias'], 404);
         } else {
-            return response()->json(['data' =>  $convocatorias], 200);
+            return response()->json([$convocatorias], 200);
         }
     }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'titulo' => ['required', 'string', 'min:5', 'max:16', 'unique:convocatorias'],
+            'titulo' => ['required', 'string', 'min:5', 'max:16', 'unique:convocatoria'],
             'descripcion_convocatoria' => ['required', 'string'],
             'numero_cupos' => ['required', 'integer', 'min:0'],
             'estado_convocatoria' => ['required', 'integer', 'min:0', 'max:1'],
@@ -36,19 +37,16 @@ class ConvocatoriaController extends Controller
         $convocatoria->fecha_inicio = $validatedData['fecha_inicio'];
         $convocatoria->fecha_fin = $validatedData['fecha_fin'];
         $convocatoria->fecha_pago = $validatedData['fecha_pago'];
-
-        try {
+        if($convocatoria){
             $convocatoria->save();
             return response()->json([
                 'success' => true,
                 'message' => 'Convocatoria creada con éxito',
-                'data' => $convocatoria->toArray()
             ]);
-        } catch (\Exception $e) {
+        }else{
             return response()->json([
                 'success' => false,
                 'message' => 'Error al crear la convocatoria',
-                'error' => $e->getMessage()
             ]);
         }
     }
@@ -57,7 +55,7 @@ class ConvocatoriaController extends Controller
     {
         $convocatoria = Convocatoria::find($idConvocatoria);
         if ($convocatoria) {
-            return response()->json(['data' =>$convocatoria], 200);
+            return response()->json([$convocatoria], 200);
         } else {
             return response()->json(['error' => 'No se encontró la convocatoria'], 404);
         }
@@ -68,7 +66,7 @@ class ConvocatoriaController extends Controller
         $convocatoria = Convocatoria::findOrFail($idConvocatoria);
 
         $validatedData = $request->validate([
-            'titulo' => ['required', 'string', 'min:5', 'max:16', 'unique:convocatorias'],
+            'titulo' => ['required', 'string', 'min:5', 'max:16', 'unique:convocatoria'],
             'descripcion_convocatoria' => ['required', 'string'],
             'numero_cupos' => ['required', 'integer', 'min:0'],
             'estado_convocatoria' => ['required', 'integer', 'min:0', 'max:1'],
@@ -101,6 +99,7 @@ class ConvocatoriaController extends Controller
             return response()->json(['message' => 'No se encontró la convocatoria a eliminar.'], 404);
         }
     }
+
     public function registrarseConvo($idConvocatoria)
     {
         $convocatoria = Convocatoria::find($idConvocatoria);

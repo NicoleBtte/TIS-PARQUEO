@@ -13,7 +13,7 @@ class ParqueoController extends Controller
         if( $parqueos->isEmpty()){
             return response()->json(['message' => 'No se encontraron parqueos.'], 404);
         } else {
-            return response()->json(['data' =>  $parqueos], 200);
+            return response()->json([$parqueos], 200);
         }
     }
 
@@ -50,7 +50,7 @@ class ParqueoController extends Controller
     {
         $parqueo = Parqueo::find($idParqueo);
         if ($parqueo) {
-            return response()->json(['data' =>$parqueo], 200);
+            return response()->json([$parqueo], 200);
         } else {
             return response()->json(['error' => 'No se encontró el parqueo'], 404);
         }
