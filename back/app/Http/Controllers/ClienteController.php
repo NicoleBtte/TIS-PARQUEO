@@ -119,7 +119,7 @@ class ClienteController extends Controller
                 'status' => 1,
                 'message' => 'login correcto',
                 'access_token' => $token,
-                'rol' => 'guardia',
+                'rol' => 'admin',
                 'idusuario' => $user->idcliente // agrega esta línea
             ]);            
         } else {
