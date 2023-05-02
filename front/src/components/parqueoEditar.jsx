@@ -1,23 +1,38 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import { validarNombre } from "../helpers/validadores";
+import axiosClient from "../axios-client.js";
+import { useParams } from "react-router-dom";
+/*{
+  "idParqueo": 1,
+  "nombre_parqueo": "prueba parqueo",
+  "administrador_idadministrador": 1,
+  "mapa_parqueo": "asdfkhgfdasdfg",
+  "numero_de_zonas": 2
+}*/
 
 function ParqueoEditar() {
   const [formData, setFormData] = useState({
-    nombreParqueo: "",
-    numero_de_zonas: 1,
-    mapaParqueo: null,
+    nombre_parqueo: "",
+    numero_de_zonas: null,
+    mapa_parqueo: null,
+    administrador_idadministrador: null,
   });
-  const [validar, setValidar] = useState({ nombreParqueoB: false });
+  const [validar, setValidar] = useState({ nombre_parqueoB: false });
 
-  const { nombreParqueo, numero_de_zonas, mapaParqueo } = formData;
+  const {
+    nombre_parqueo,
+    administrador_idadministrador,
+    numero_de_zonas,
+    mapa_parqueo,
+  } = formData;
 
   const handleOnchange = (e) => {
-    if (e.target.name === "nombreParqueo") {
+    if (e.target.name === "nombre_parqueo") {
       if (!validarNombre(e.target.value)) {
-        setValidar({ ...validar, nombreParqueoB: true });
+        setValidar({ ...validar, nombre_parqueoB: true });
       } else {
-        setValidar({ ...validar, nombreParqueoB: false });
+        setValidar({ ...validar, nombre_parqueoB: false });
       }
     }
 
@@ -25,30 +40,40 @@ function ParqueoEditar() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (nombreParqueo, numero_de_zonas, mapaParqueo) => {
-    console.log(nombreParqueo, numero_de_zonas, mapaParqueo);
+  const params = useParams();
+
+  const handleSubmit = (e) => {
+    console.log(
+      nombre_parqueo,
+      administrador_idadministrador,
+      numero_de_zonas,
+      mapa_parqueo
+    );
 
     alert(
-      `datos formularios:::, ${nombreParqueo}, ${numero_de_zonas}, ${mapaParqueo}`
+      `datos formularios:::, ${nombre_parqueo},${administrador_idadministrador}, ${numero_de_zonas}, ${mapa_parqueo}`
     );
-    fetch("http://127.0.0.1:8000/parqueos", {
-      method: "PUT" /* or PATCH */,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        nombreParqueo: nombreParqueo,
-        numero_de_zonas: numero_de_zonas,
-        mapaParqueo: mapaParqueo,
-      }),
-    })
-      .then((res) => res.json())
-      .then(console.log);
+    axiosClient
+      .put("/parqueo/" + params.id, {
+        nombre_parqueo,
+        numero_de_zonas,
+        mapa_parqueo,
+        administrador_idadministrador,
+      })
+      .then((res) => console.log(res.data))
+      .catch((error) => console.log(error));
+    e.preventDefault();
   };
   React.useEffect(() => {
-    fetch("http://127.0.0.1:8000/parqueos")
-      .then((response) => response.json()) //loconvierto un json el json
-      .then((result) => setFormData(result)) //aqui uso json
+    axiosClient
+      .get("/parqueo/" + params.id)
+      .then((response) => {
+        const result = response.data.data;
+        console.log(result);
+        setFormData(result);
+      })
       .catch((error) => console.log("error", error));
-  }, []);
+  }, [params.id]);
 
   return (
     <Container>
@@ -58,16 +83,11 @@ function ParqueoEditar() {
             <div className="form-group col-md-6">
               <input
                 className="form-control"
-                label="nombreParqueo"
                 type="text"
-                name="nombreParqueo"
-                id="nombreParqueo"
-                helperText={
-                  !validar.nombreParqueoB
-                    ? ""
-                    : "Solo se aceptan numeros y letras"
-                }
+                name="nombre_parqueo"
+                id="nombre_parqueo"
                 onChange={handleOnchange}
+                defaultValue={nombre_parqueo}
               />
             </div>
             <div className="form-group">
@@ -79,25 +99,31 @@ function ParqueoEditar() {
                 min="1"
                 max="100"
                 onChange={handleOnchange}
+                defaultValue={numero_de_zonas}
               />
             </div>
             <div className="form-group col-md-4">
               <label for="archivoPdf">Subir imagen</label>
               <input
-                type="file"
-                name="mapaParqueo"
-                value={mapaParqueo}
+                type="text"
+                name="mapa_parqueo"
                 className="form-control-file"
                 accept="application/jpg/png"
-                id="mapaParqueo"
+                id="mapa_parqueo"
                 onChange={handleOnchange}
+                defaultValue={mapa_parqueo}
               />
             </div>
             <button
               type="submit"
               className="btn btn-primary"
               onClick={() =>
-                handleSubmit(nombreParqueo, numero_de_zonas, mapaParqueo)
+                handleSubmit(
+                  nombre_parqueo,
+                  administrador_idadministrador,
+                  numero_de_zonas,
+                  mapa_parqueo
+                )
               }
             >
               Actualizar
