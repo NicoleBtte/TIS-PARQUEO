@@ -17,6 +17,7 @@ class Notificacion extends Model
         'receptor_notif',
         'titulo_notif',
         'mensaje_notif',
+        'fecha_notif',
         'administrador_idadministrador',
         'cliente_idcliente',
         'operador_idoperador',

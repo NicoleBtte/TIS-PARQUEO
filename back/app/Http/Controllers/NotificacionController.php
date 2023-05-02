@@ -5,27 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Notificacion;
 use App\Models\Administrador;
 use App\Models\Cliente;
+use App\Models\Operador;
 use Illuminate\Http\Request;
 
 
 class NotificacionController extends Controller
 {
-    /*public function index(Request $request)
-    {
-        $user = $request->user();
-        $notifications = $user->notifications()->paginate(10);
-        $response = [];
-        foreach ($notifications as $notification) {
-            $response[] = [
-                'id' => $notification->id,
-                'emisor' => $notification->data['emisor_notif'],
-                'mensaje' => $notification->data['mensaje_notif'],
-                'fecha' => $notification->created_at->format('d/m/Y H:i:s')
-            ];
-        }
-        return response()->json($response);
-    }*/
-
     public function indexSent(Request $request)
     {
         $rol = $request->rol;
