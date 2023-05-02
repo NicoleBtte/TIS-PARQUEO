@@ -20,19 +20,19 @@ class ConvocatoriaController extends Controller
     {
         $validatedData = $request->validate([
             'titulo' => ['required', 'string', 'min:5', 'max:16', 'unique:convocatorias'],
-            'descripcionConv' => ['required', 'string'],
-            'numeroDeZonas' => ['required', 'integer', 'min:0'],
-            'estado' => ['required', 'integer', 'min:0', 'max:1'],
-            'fecha_actual' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin'],
-            'fecha_fin' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_actual'],
+            'descripcion_convocatoria' => ['required', 'string'],
+            'numero_cupos' => ['required', 'integer', 'min:0'],
+            'estado_convocatoria' => ['required', 'integer', 'min:0', 'max:1'],
+            'fecha_inicio' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin'],
+            'fecha_fin' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_inicio'],
         ]);
 
         $convocatoria = new Convocatoria();
         $convocatoria->titulo = $validatedData['titulo'];
-        $convocatoria->descripcionConv = $validatedData['descripcionConv'];
-        $convocatoria->numeroDeZonas = $validatedData['numeroDeZonas'];
-        $convocatoria->estado = $validatedData['estado'];
-        $convocatoria->fecha_actual = $validatedData['fecha_actual'];
+        $convocatoria->descripcion_convocatoria = $validatedData['descripcion_convocatoria'];
+        $convocatoria->numero_cupos = $validatedData['numero_cupos'];
+        $convocatoria->estado_convocatoria = $validatedData['estado_convocatoria'];
+        $convocatoria->fecha_inicio = $validatedData['fecha_inicio'];
         $convocatoria->fecha_fin = $validatedData['fecha_fin'];
 
         try {
@@ -67,17 +67,17 @@ class ConvocatoriaController extends Controller
 
         $validatedData = $request->validate([
             'titulo' => ['required', 'string', 'min:5', 'max:16', 'unique:convocatorias'],
-            'descripcionConv' => ['required', 'string'],
-            'numeroDeZonas' => ['required', 'integer', 'min:0'],
-            'estado' => ['required', 'integer', 'min:0', 'max:1'],
-            'fecha_actual' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin'],
-            'fecha_fin' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_actual'],
+            'descripcion_convocatoria' => ['required', 'string'],
+            'numero_cupos' => ['required', 'integer', 'min:0'],
+            'estado_convocatoria' => ['required', 'integer', 'min:0', 'max:1'],
+            'fecha_inicio' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin'],
+            'fecha_fin' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_inicio'],
         ]);
         $convocatoria->titulo = $validatedData['titulo'];
-        $convocatoria->descripcionConv = $validatedData['descripcionConv'];
-        $convocatoria->numeroDeZonas = $validatedData['numeroDeZonas'];
-        $convocatoria->estado = $validatedData['estado'];
-        $convocatoria->fecha_actual = $validatedData['fecha_actual'];
+        $convocatoria->descripcion_convocatoria = $validatedData['descripcion_convocatoria'];
+        $convocatoria->numero_cupos = $validatedData['numero_cupos'];
+        $convocatoria->estado_convocatoria = $validatedData['estado_convocatoria'];
+        $convocatoria->fecha_inicio = $validatedData['fecha_inicio'];
         $convocatoria->fecha_fin = $validatedData['fecha_fin'];
 
         if($convocatoria) {

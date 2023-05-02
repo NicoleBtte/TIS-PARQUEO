@@ -14,8 +14,8 @@ class Convocatoria extends Model
     protected $table = 'convocatorias';
     
     protected $primaryKey = 'idConvocatoria';
-    protected $fillable = ['idConvocatoria', 'titulo', 'descripcionConv', 
-    'numeroDeZonas', 'estado', 'fecha_actual', 'fecha_fin'];
+    protected $fillable = ['idConvocatoria', 'titulo', 'fecha_inicio', 'fecha_fin', 'descripcion_convocatoria', 
+    'numero_cupos', 'estado_convocatoria',  'fecha_pago'];
 
     protected $hidden = [
         'password',

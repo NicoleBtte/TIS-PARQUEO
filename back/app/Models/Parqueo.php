@@ -14,7 +14,7 @@ class Parqueo extends Model
     protected $table = 'parqueos';
     
     protected $primaryKey = 'idParqueo';
-    protected $fillable = ['idParqueo', 'nombreParqueo', 'numero_de_zonas', 'mapaParqueo'];
+    protected $fillable = ['idParqueo', 'nombre_parqueo', 'administrador_idadministrador', 'numero_de_zonas', 'mapa_parqueo'];
 
     protected $hidden = [
         'password',
@@ -22,5 +22,10 @@ class Parqueo extends Model
     ];
     public function getAuthPassword(){
         return $this->password;
+    }
+    
+    public function administrador()
+    {
+        return $this->belongsTo(Administrador::class);
     }
 }

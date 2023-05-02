@@ -97,7 +97,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`cliente` (
   `idcliente` INT NOT NULL,
   `nombre_cliente` VARCHAR(50) NOT NULL,
-  `estado_pago` TINYINT NULL,
+  `estado_convocatoria_pago` TINYINT NULL,
   `monto_a_pagar` DOUBLE NULL,
   `fecha_pagado` DATE NULL,
   `fecha_lim_pago` DATE NULL,
@@ -254,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`transaccion` (
   `fecha_pago_mes` DATE NULL,
   `fecha_lim_pago` DATE NULL,
   `multa` DOUBLE NULL,
-  `estado_pago` TINYINT NULL,
+  `estado_convocatoria_pago` TINYINT NULL,
   `monto_a_pagar` DOUBLE NULL,
   `cliente_idcliente` INT NOT NULL,
   `reporte_idreporte` INT NOT NULL,
