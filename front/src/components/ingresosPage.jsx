@@ -1,69 +1,29 @@
-import { useState, useEffect } from "react";
+import * as React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import axiosClient from "../axios-client.js";
+import { Button } from "react-bootstrap";
+
+/*{\"idhistorial\":1,\
+"hora_ingreso_hist\":null,\
+"hora_salida_hist\":null,\
+"fecha_ingreso\":\"2023-05-02\",\
+"fecha_salida\":\"2023-05-02\",\
+"cliente_idcliente\":1111}*/
 
 function IngresosPage() {
-  const [ingresosSalidas, setIngresosSalidas] = useState([
-    {
-      id: 1,
-      cliente: "Cliente Name Last Name",
-      placa: 165,
-      entrada: "10/22/33",
-      salida: "10/22/33",
-    },
-    {
-      id: 2,
-      cliente: "Cliente Name Last Name",
-      placa: 165,
-      entrada: "10/22/33",
-      salida: "10/22/33",
-    },
-    {
-      id: 3,
-      cliente: "Cliente Name Last Name",
-      placa: 165,
-      entrada: "10/22/33",
-      salida: "10/22/33",
-    },
-    {
-      id: 4,
-      cliente: "Cliente Name Last Name",
-      placa: 165,
-      entrada: "10/22/33",
-      salida: "10/22/33",
-    },
-    {
-      id: 5,
-      cliente: "Cliente Name Last Name",
-      placa: 165,
-      entrada: "10/22/33",
-      salida: "10/22/33",
-    },
-    {
-      id: 6,
-      cliente: "Cliente Name Last Name",
-      placa: 165,
-      entrada: "10/22/33",
-      salida: "10/22/33",
-    },
-    {
-      id: 7,
-      cliente: "Cliente Name Last Name",
-      placa: 165,
-      entrada: "10/22/33",
-      salida: "10/22/33",
-    },
-    {
-      id: 8,
-      cliente: "Cliente Name Last Name",
-      placa: 165,
-      entrada: "10/22/33",
-      salida: "10/22/33",
-    },
-  ]);
+  const [ingresosSalidas, setIngresosSalidas] = useState([]);
 
-  //useEffect(() => {
-  //	() => setPagos();
-  //}, [pagos]);
+  React.useEffect(() => {
+    axiosClient
+      .get("/consultaEntradasSalidas")
+      .then((response) => {
+        const result = response.data.data;
+        console.log(result);
+        setIngresosSalidas(result);
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
 
   return (
     <div className="container">
@@ -89,14 +49,14 @@ function IngresosPage() {
             </tr>
           </thead>
           <tbody className="bg-c-secondary">
-            {ingresosSalidas.map((pago) => (
-              <tr key={pago.id}>
-                <td>{pago.cliente}</td>
-                <td>{pago.placa}</td>
-                <td>{pago.entrada}</td>
-                <td>{pago.salida}</td>
+            {/*{ingresosSalidas.map((ingresosSalidas) => (
+              <tr key={ingresosSalidas.idhistorial}>
+                <td>{ingresosSalidas.cliente_idcliente}</td>
+                <td>{ingresosSalidas.placa}</td>
+                <td>{ingresosSalidas.fecha_ingreso}</td>
+                <td> {ingresosSalidas.fecha_salida == null? <Button>Registrar Salida</Button> : ingresosSalidas.fecha_salida}</td>
               </tr>
-            ))}
+            ))}*/}
           </tbody>
         </table>
       </div>

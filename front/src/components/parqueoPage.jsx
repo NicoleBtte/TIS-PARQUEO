@@ -2,27 +2,38 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Table } from "react-bootstrap";
 import "../styles/estilos.css";
+import axiosClient from "../axios-client.js";
+
+/*{
+  "idParqueo": 1,
+  "nombre_parqueo": "prueba parqueo",
+  "administrador_idadministrador": 1,
+  "mapa_parqueo": "asdfkhgfdasdfg",
+  "numero_de_zonas": 2
+}*/
 
 const ParqueoPage = () => {
-  const [parqueos, setParqueos] = React.useState([
-    { nombreParqueo: "parqueo1" },
-  ]);
+  const [parqueos, setParqueos] = React.useState([]);
 
   function deleteParqueo(id) {
-    setParqueos(parqueos.filter((parqueo) => parqueo.nombre !== id));
-    fetch("", {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then(console.log);
+    setParqueos(parqueos.filter((parqueo) => parqueo.idParqueo !== id));
+    axiosClient
+      .delete("/parqueo/" + id, {})
+      .then((res) => console.log(res.data))
+      .catch((error) => console.log(error));
   }
 
   React.useEffect(() => {
-    fetch("http://127.0.0.1:8000/parqueos")
-      .then((response) => response.json()) //loconvierto un json el json
-      .then((result) => setParqueos(result)) //aqui uso json
+    axiosClient
+      .get("/parqueos")
+      .then((response) => {
+        const result = response.data.data;
+        console.log(result);
+        setParqueos(result);
+      })
       .catch((error) => console.log("error", error));
   }, []);
+
   return (
     <Container>
       <Table striped bordered hover>
@@ -34,23 +45,23 @@ const ParqueoPage = () => {
           </tr>
         </thead>
         <tbody>
-          {parqueos.map((parqueo, index) => (
-            <tr key={index}>
-              <td>{parqueo.nombreParqueo}</td>
+          {parqueos.map((parqueo) => (
+            <tr key={parqueo.idParqueo}>
+              <td>{parqueo.nombre_parqueo}</td>
               <td>{parqueo.numero_de_zonas}</td>
               <td>
-                <Link to={`/admin/parqueo/${index}/detalle`}>
+                <Link to={`/admin/parqueo/${parqueo.idParqueo}/detalle`}>
                   <Button variant="primary" className="boton-detalle">
                     Ver detalles
                   </Button>
                 </Link>
                 <Button
                   variant="danger"
-                  onClick={() => deleteParqueo(parqueo.nombre)}
+                  onClick={() => deleteParqueo(parqueo.idParqueo)}
                 >
                   Eliminar
                 </Button>
-                <Link to={`/admin/parqueo/${index}/editar`}>
+                <Link to={`/admin/parqueo/${parqueo.idParqueo}/editar`}>
                   <Button variant="warning" className="boton-editar">
                     Editar
                   </Button>

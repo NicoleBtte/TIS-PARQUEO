@@ -1,18 +1,30 @@
 import React, { useState } from "react";
-
+import axiosClient from "../axios-client.js";
 import { Container } from "react-bootstrap";
 import { validarDescripcion, validarTitulo } from "../helpers/validadores";
 //import Swal from "sweetalert2";
 
+/*{
+            "idConvocatoria": 1,
+            "titulo": "convocatoria prueba",
+            "fecha_inicio": "2023-05-01",
+            "fecha_fin": "2023-05-02",
+            "descripcion_convocatoria": "puerbassssssssss",
+            "fecha_pago": "2023-06-01",
+            "numero_cupos": 20,
+            "estado_convocatoria": 1
+        }*/
+
 function FormularioConvocatoria() {
   const [formData, setFormData] = useState({
     titulo: "",
-    descripcionConv: "",
-    estado: "Activo",
-    numeroDeZonas: 1,
+    descripcion_convocatoria: "",
+    estado_convocatoria: 1,
+    numero_cupos: 1,
     archivoPdf: null,
-    fecha_actual: null,
+    fecha_inicio: null,
     fecha_fin: null,
+    fecha_pago: null,
   });
 
   //Swal.fire('', 'El registro se ha completado exitoso', '');
@@ -20,17 +32,18 @@ function FormularioConvocatoria() {
 
   const [validar, setValidar] = useState({
     tituloB: false,
-    descripcionConvB: false,
+    descripcion_convocatoriaB: false,
   });
 
   const {
     titulo,
-    descripcionConv,
-    numeroDeZonas,
-    estado,
+    descripcion_convocatoria,
+    numero_cupos,
+    estado_convocatoria,
     archivoPdf,
-    fecha_actual,
+    fecha_inicio,
     fecha_fin,
+    fecha_pago,
   } = formData;
 
   //
@@ -45,9 +58,9 @@ function FormularioConvocatoria() {
 
     if (e.target.name === "descripcion") {
       if (!validarDescripcion(e.target.value)) {
-        setValidar({ ...validar, descripcionConvB: true });
+        setValidar({ ...validar, descripcion_convocatoriaB: true });
       } else {
-        setValidar({ ...validar, descripcionConvB: false });
+        setValidar({ ...validar, descripcion_convocatoriaB: false });
       }
     }
 
@@ -55,47 +68,39 @@ function FormularioConvocatoria() {
     setFormData({ ...formData, [e.target.name]: e.target.value }); //
   };
 
-  const handleSubmit = (
-    titulo,
-    descripcionConv,
-    estado,
-    numeroDeZonas,
-    fecha_actual,
-    fecha_fin,
-    archivoPdf
-  ) => {
+  const handleSubmit = (e) => {
     console.log(
       titulo,
-      descripcionConv,
-      estado,
-      numeroDeZonas,
-      fecha_actual,
+      descripcion_convocatoria,
+      estado_convocatoria,
+      numero_cupos,
+      fecha_inicio,
       fecha_fin,
+      fecha_pago,
       archivoPdf
     );
     alert(
-      `datos formularios:::, ${titulo}, ${descripcionConv}, ${estado}, ${numeroDeZonas}, ${fecha_actual}, ${fecha_fin}`
+      `datos formularios:::, ${titulo}, ${descripcion_convocatoria}, ${estado_convocatoria}, ${numero_cupos}, ${fecha_inicio}, ${fecha_fin}`
     );
-    fetch("http://127.0.0.1:8000/convocatorias", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+    axiosClient
+      .post("/convocatoria", {
         titulo: titulo,
-        descripcionConv: descripcionConv,
-        estado: estado,
-        numeroDeZonas: numeroDeZonas,
-        fecha_actual: fecha_actual,
+        descripcion_convocatoria: descripcion_convocatoria,
+        estado_convocatoria: estado_convocatoria,
+        numero_cupos: numero_cupos,
+        fecha_inicio: fecha_inicio,
         fecha_fin: fecha_fin,
-
-        /* other product data */
-      }),
-    });
+        fecha_pago: fecha_pago,
+      })
+      .then((res) => console.log(res.data))
+      .catch((error) => console.log(error));
+    e.preventDefault();
   };
 
   return (
     <Container>
       <div className="container-form">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-group col-md-6">
               <input
@@ -110,20 +115,20 @@ function FormularioConvocatoria() {
             </div>
             <div className="form-group col-md-6">
               <input
-                name="descripcionConv"
+                name="descripcion_convocatoria"
                 type="text"
                 className="form-control"
-                id="descripcionConv"
-                placeholder="descripcionConv"
+                id="descripcion_convocatoria"
+                placeholder="descripcion_convocatoria"
                 onChange={handleOnchange}
               ></input>
             </div>
           </div>
           <div className="form-group">
             <input
-              name="numeroDeZonas"
+              name="numero_cupos"
               type="number"
-              id="numeroDeZonas"
+              id="numero_cupos"
               className="form-control"
               min="1"
               max="100"
@@ -133,23 +138,24 @@ function FormularioConvocatoria() {
 
           <div className="form-row">
             <div className="form-group col-md-4">
-              <label for="estado">Estado</label>
+              <label for="estado_convocatoria">estado_convocatoria</label>
               <select
-                name="estado"
-                id="estado"
+                name="estado_convocatoria"
+                id="estado_convocatoria"
                 className="form-control"
                 onChange={handleOnchange}
+                defaultValue={formData.estado_convocatoria}
               >
-                <option>Activo</option>
-                <option>Inactivo</option>
+                <option value={1}>Activo</option>
+                <option value={0}>Inactivo</option>
               </select>
             </div>
             <div className="form-group">
               <input
-                name="fecha_actual"
+                name="fecha_inicio"
                 type="date"
                 className="form-control"
-                id="fecha_actual"
+                id="fecha_inicio"
                 placeholder="Fecha IInicio"
                 onChange={handleOnchange}
               ></input>
@@ -161,6 +167,16 @@ function FormularioConvocatoria() {
                 className="form-control"
                 id="fecha_fin"
                 placeholder="Fecha fin"
+                onChange={handleOnchange}
+              ></input>
+            </div>
+            <div className="form-group">
+              <input
+                name="fecha_pago"
+                type="date"
+                className="form-control"
+                id="fecha_pago"
+                placeholder="Fecha Pago"
                 onChange={handleOnchange}
               ></input>
             </div>
@@ -177,21 +193,7 @@ function FormularioConvocatoria() {
               />
             </div>
           </div>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            onClick={() =>
-              handleSubmit(
-                titulo,
-                descripcionConv,
-                numeroDeZonas,
-                estado,
-                fecha_actual,
-                fecha_fin,
-                archivoPdf
-              )
-            }
-          >
+          <button type="submit" className="btn btn-primary">
             Agregar
           </button>
         </form>

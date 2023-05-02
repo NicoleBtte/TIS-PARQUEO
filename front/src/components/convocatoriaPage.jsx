@@ -2,27 +2,39 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { Container, Button, Table } from "react-bootstrap";
 import "../styles/estilos.css";
+import axiosClient from "../axios-client.js";
 
 const ConvocatoriaPage = () => {
-  const [convocatorias, setConvocatorias] = React.useState([
-    { titulo: "Convocatoria1" },
-  ]);
+  /*{
+            "idConvocatoria": 1,
+            "titulo": "convocatoria prueba",
+            "fecha_inicio": "2023-05-01",
+            "fecha_fin": "2023-05-02",
+            "descripcion_convocatoria": "puerbassssssssss",
+            "fecha_pago": "2023-06-01",
+            "numero_cupos": 20,
+            "estado_convocatoria": 1
+        }*/
+  const [convocatorias, setConvocatorias] = React.useState([]);
 
   function deleteConvocatoria(id) {
     setConvocatorias(
-      convocatorias.filter((convocatoria) => convocatoria.titulo !== id)
+      convocatorias.filter((convocatoria) => convocatoria.idConvocatoria !== id)
     );
-    fetch("", {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then(console.log);
+    axiosClient
+      .delete("/convocatoria/" + id, {})
+      .then((res) => console.log(res.data))
+      .catch((error) => console.log(error));
   }
 
   React.useEffect(() => {
-    fetch("http://127.0.0.1:8000/convocatorias")
-      .then((response) => response.json()) //loconvierto un json el json
-      .then((result) => setConvocatorias(result)) //aqui uso json
+    axiosClient
+      .get("/convocatorias")
+      .then((response) => {
+        const result = response.data.data;
+        console.log(result);
+        setConvocatorias(result);
+      })
       .catch((error) => console.log("error", error));
   }, []);
 
@@ -42,12 +54,12 @@ const ConvocatoriaPage = () => {
         </thead>
         <tbody>
           {convocatorias.map((convocatoria, index) => (
-            <tr key={index}>
+            <tr key={convocatoria.idConvocatoria}>
               <td>{convocatoria.titulo}</td>
-              <td>{convocatoria.descripcionConv}</td>
-              <td>{convocatoria.estado}</td>
-              <td>{convocatoria.numeroDeZonas}</td>
-              <td>{convocatoria.fecha_actual}</td>
+              <td>{convocatoria.descripcion_convocatoria}</td>
+              <td>{convocatoria.estado_convocatoria}</td>
+              <td>{convocatoria.numero_cupos}</td>
+              <td>{convocatoria.fecha_inicio}</td>
               <td>{convocatoria.fecha_fin}</td>
               <td>
                 <Link to={`/pdf`}>
@@ -56,13 +68,17 @@ const ConvocatoriaPage = () => {
                   </Button>
                 </Link>
 
-                <Link to={`/admin/formulario-convocatoria/${index}/editar`}>
+                <Link
+                  to={`/admin/formulario-convocatoria/${convocatoria.idConvocatoria}/editar`}
+                >
                   <Button variant="secondary">Editar</Button>
                 </Link>
 
                 <Button
                   variant="danger"
-                  onClick={() => deleteConvocatoria(convocatoria.tit)}
+                  onClick={() =>
+                    deleteConvocatoria(convocatoria.idConvocatoria)
+                  }
                 >
                   Eliminar
                 </Button>
