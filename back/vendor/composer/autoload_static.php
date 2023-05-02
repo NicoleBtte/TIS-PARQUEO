@@ -320,8 +320,8 @@ class ComposerStaticInitc505be6b9bff93b7f219979ea028f77f
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -522,6 +522,7 @@ class ComposerStaticInitc505be6b9bff93b7f219979ea028f77f
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Models\\Administrador' => __DIR__ . '/../..' . '/app/Models/Administrador.php',
         'App\\Models\\Cliente' => __DIR__ . '/../..' . '/app/Models/Cliente.php',
         'App\\Models\\Convocatoria' => __DIR__ . '/../..' . '/app/Models/Convocatoria.php',
         'App\\Models\\HistorialEntradasSalidas' => __DIR__ . '/../..' . '/app/Models/HistorialEntradasSalidas.php',
