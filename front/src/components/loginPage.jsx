@@ -18,21 +18,21 @@ const LoginPage = () => {
 		console.log(payload);
 
     if(selectedRole==='cliente'){
-      apiruta = '/login/cliente'
+      apiruta = '/login'
     }else{
       if(selectedRole==='admin'){
-        apiruta = '/login/admin'
+        apiruta = '/loginadmin'
       }else{
         if(selectedRole==='operador'){
-          apiruta = '/login/operador'
+          apiruta = '/loginoperador'
         }else{
-          apiruta = '/login/guardia'
+          apiruta = '/loginguardia'
         }
       }
     }
     console.log('Apiruta',apiruta);
 	
-		axiosClient.post('/login', payload)
+		axiosClient.post(apiruta, payload)
       .then(({data}) => {
         console.log(data.idusuario)
         setID(data.idusuario)

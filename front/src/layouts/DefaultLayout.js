@@ -19,8 +19,24 @@ const DefaultLayout = () => {
 
   const onLogout = (ev) => {
     ev.preventDefault()
+    let apiruta = '';
+    const theRol = localStorage.getItem('ROL')
 
-    axiosClient.post('/logout')
+    if(theRol==='cliente'){
+      apiruta = '/logout'
+    }else{
+      if(theRol==='admin'){
+        apiruta = '/logoutadmin'
+      }else{
+        if(theRol==='operador'){
+          apiruta = '/logoutoperador'
+        }else{
+          apiruta = '/logoutguardia'
+        }
+      }
+    }
+
+    axiosClient.post(apiruta)
       .then(() => {
         setUser({})
         setToken(null)
