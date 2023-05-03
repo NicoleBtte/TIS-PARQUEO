@@ -16,13 +16,13 @@ function ParqueoEditar() {
     nombre_parqueo: "",
     numero_de_zonas: null,
     mapa_parqueo: null,
-    administrador_idadministrador: null,
+    //administrador_idadministrador: null,
   });
   const [validar, setValidar] = useState({ nombre_parqueoB: false });
 
   const {
     nombre_parqueo,
-    administrador_idadministrador,
+    //administrador_idadministrador,
     numero_de_zonas,
     mapa_parqueo,
   } = formData;
@@ -45,20 +45,19 @@ function ParqueoEditar() {
   const handleSubmit = (e) => {
     console.log(
       nombre_parqueo,
-      administrador_idadministrador,
+      //administrador_idadministrador,
       numero_de_zonas,
       mapa_parqueo
     );
 
     alert(
-      `datos formularios:::, ${nombre_parqueo},${administrador_idadministrador}, ${numero_de_zonas}, ${mapa_parqueo}`
+      `datos formularios:::, ${nombre_parqueo}, ${numero_de_zonas}, ${mapa_parqueo}`
     );
     axiosClient
       .put("/parqueo/" + params.id, {
         nombre_parqueo,
         numero_de_zonas,
         mapa_parqueo,
-        administrador_idadministrador,
       })
       .then((res) => console.log(res.data))
       .catch((error) => console.log(error));
@@ -78,7 +77,7 @@ function ParqueoEditar() {
   return (
     <Container>
       <div className="container-form">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-group col-md-6">
               <input
@@ -114,19 +113,8 @@ function ParqueoEditar() {
                 defaultValue={mapa_parqueo}
               />
             </div>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              onClick={() =>
-                handleSubmit(
-                  nombre_parqueo,
-                  administrador_idadministrador,
-                  numero_de_zonas,
-                  mapa_parqueo
-                )
-              }
-            >
-              Actualizar
+            <button type="submit" className="btn btn-primary">
+              Agregar
             </button>
           </div>
         </form>

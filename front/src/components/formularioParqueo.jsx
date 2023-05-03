@@ -107,9 +107,9 @@ function FormularioParqueo() {
             */}
             <div className="form-group">
               <input
-                name="nZonas"
+                name="numero_de_zonas"
                 type="number"
-                id="nZonas"
+                id="numero_de_zonas"
                 className="form-control"
                 min="1"
                 max="100"
