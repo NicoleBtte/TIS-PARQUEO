@@ -93,5 +93,6 @@ Route::get('/consultaSitios',[SitioController::class,'listaSitios']);
 Route::post('/reasignarSitio',[SitioController::class,'reasignar']);
 
 Route::post('/notificaciones',[NotificacionController::class, 'store']);
-Route::get('/notificaciones',[NotificacionController::class, 'indexSent']);
-Route::get('/notificaciones',[NotificacionController::class, 'indexReceived']);
+Route::post('/notificacionesResp',[NotificacionController::class, 'storeRespuesta']);
+Route::get('/notificacionesEnvia',[NotificacionController::class, 'indexSent']);
+Route::get('/notificacionesRecibe',[NotificacionController::class, 'indexReceived']);

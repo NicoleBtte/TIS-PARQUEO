@@ -10,44 +10,28 @@ const HistorialMensajes = () => {
     const [loading, setLoading] = useState(false);
     const [mensajeSeleccionado, setMensajeSeleccionado] = useState(null);
     const [modalShow, setModalShow] = useState(false);
+    const idUsuario = localStorage.getItem('ID_USER');
   
     useEffect(() => {
       getFilas();
     }, []);
-  
-    // Arreglo de objetos con datos aleatorios
-    const mensajes = [
-      {
-        idemisor: 1,
-        fecha: "2022-01-01",
-        titulo: "Mensaje de prueba 1",
-        descripcion: "Esta es una descripcion de prueba para el mensaje 1",
-        emisor: "Juan Pérez"
-      },
-      {
-        idemisor: 2,
-        fecha: "2022-02-15",
-        titulo: "Mensaje de prueba 2",
-        descripcion: "Esta es una descripcion de prueba para el mensaje 2",
-        emisor: "María González"
-      }
-    ];
+
   
     const getFilas = () => {
-      setLoading(true);
+      /*setLoading(true);
       setFilas(mensajes);
-      setLoading(false);
+      setLoading(false);*/
 
       //con axios
-    /*setLoading(true)
-      axiosCliente.get('/notificaciones')
+      setLoading(true)
+      axiosCliente.get('/notificacionesRecibe',idUsuario)
         .then(({ data }) => {
           setLoading(false)
-          setFilas(data.data)
+          setFilas(JSON.parse(data))
         })
         .catch(() => {
           setLoading(false)
-        })*/
+        })
     };
   
     const handleVerMasClick = (mensaje) => {
@@ -83,9 +67,9 @@ const HistorialMensajes = () => {
             <tbody>
               {filas.map((mensaje) => (
                 <tr key={mensaje.idemisor}>
-                  <td>{mensaje.fecha}</td>
-                  <td>{mensaje.titulo}</td>
-                  <td>{mensaje.emisor}</td>
+                  <td>{mensaje.fecha_notif}</td>
+                  <td>{mensaje.titulo_notif}</td>
+                  <td>{mensaje.emisor_notif}</td>
                   <td>
                     <Button
                       onClick={() => handleVerMasClick(mensaje)}
@@ -99,10 +83,10 @@ const HistorialMensajes = () => {
               {modalShow && (
                 <MensajeModal
                   idemisor={mensajeSeleccionado.idemisor}
-                  nameemisor={mensajeSeleccionado.emisor}
-                  titulo={mensajeSeleccionado.titulo}
-                  descripcion={mensajeSeleccionado.descripcion}
-                  fecha={mensajeSeleccionado.fecha}
+                  nameemisor={mensajeSeleccionado.emisor_notif}
+                  titulo={mensajeSeleccionado.titulo_notif}
+                  descripcion={mensajeSeleccionado.mensaje_notif}
+                  fecha={mensajeSeleccionado.fecha_notif}
                   show={modalShow}
                   onHide={() => {
                     setModalShow(false);

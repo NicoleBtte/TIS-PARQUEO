@@ -31,7 +31,7 @@ const DefaultLayout = () => {
         if(theRol==='operador'){
           apiruta = '/logoutoperador'
         }else{
-          apiruta = '/logoutguardia'
+          apiruta = '/logout'
         }
       }
     }

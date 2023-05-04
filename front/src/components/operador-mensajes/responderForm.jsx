@@ -13,12 +13,12 @@ const ResponderForm = () => {
       const payload = {
         idemisor: idUsuario,
         idreceptor: id,
-        titulo: values.titulo,
-        descripcion: values.descripcion
+        titulo_notif: values.titulo,
+        mensaje_notif: values.descripcion,
       }
       console.log(payload);
     
-      /*axiosCliente.post('/notificaciones', payload)
+      axiosCliente.post('/notificaciones', payload)
         .then(({data}) => {    
           //que hacer despues      
           console.log(data)
@@ -29,7 +29,7 @@ const ResponderForm = () => {
           if (response && response.status === 422) {
             console.log(response.data.errors)
           }
-          })*/
+          })
     }
 
     return (
