@@ -6,6 +6,8 @@ use App\Http\Controllers\ZonaDeEstacionamientoController;
 use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\SitioController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\OperadorController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EntradasSalidasController;
 use App\Http\Controllers\PagoController;
 use Illuminate\Http\Request;
@@ -22,6 +24,8 @@ Route::middleware('auth:sanctum')->group(function(){
     });
     //Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/logout', [ClienteController::class, 'logout']);
+    Route::post('/logoutadmin', [AdminController::class, 'logout']);
+    Route::post('/logoutoperador', [OperadorController::class, 'logout']);
 });
 
 
@@ -30,6 +34,8 @@ Route::get('/signin', function () {
 });
 Route::post('/register', [ClienteController::class, 'store']);
 Route::post('/login', [ClienteController::class, 'login']);
+Route::post('/loginadmin', [AdminController::class, 'login']);
+Route::post('/loginoperador', [OperadorController::class, 'login']);
 Route::post('/showcliente', [ClienteController::class, 'show']);
 
 Route::get('/sessions', function () {

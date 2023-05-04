@@ -8,6 +8,11 @@ use App\Models\Cliente;
 use App\Models\Operador;
 use App\Notifications\NotificacionNueva;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class NotificacionController extends Controller
 {
@@ -17,23 +22,23 @@ class NotificacionController extends Controller
         $id = $request->idemisor;
         if($rol == "admin"){
             $administrador = Administrador::find($id);
-            $notificaciones = DB::table('notificaciones')
+            $notificacion = DB::table('notificacion')
                 ->where('data->emisor_notif', $administrador->nombre_administrador)
                 ->paginate(10);
         }elseif($rol == "operador"){
             $operador = Operador::find($id);
-            $notificaciones = DB::table('notificaciones')
+            $notificacion = DB::table('notificacion')
                 ->where('data->emisor_notif', $operador->nombre_operador)
                 ->paginate(10);
         }else{
             $cliente = Cliente::find($id);
-            $notificaciones = DB::table('notificaciones')
+            $notificacion = DB::table('notificacion')
                 ->where('data->emisor_notif', $cliente->nombre_cliente)
                 ->paginate(10);
         }
         $response = [];
 
-        foreach ($notificaciones as $notificacion) {
+        foreach ($notificacion as $notificacion) {
         $response[] = $notificacion->data;
         }
         return response()->json($response);
@@ -45,23 +50,23 @@ class NotificacionController extends Controller
         $id = $request->idreceptor;
         if($rol == "admin"){
             $administrador = Administrador::find($id);
-            $notificaciones = DB::table('notificaciones')
+            $notificacion = DB::table('notificacion')
                 ->where('data->receptor_notif', $administrador->nombre_administrador)
                 ->paginate(10);
         }elseif($rol == "operador"){
             $operador = Operador::find($id);
-            $notificaciones = DB::table('notificaciones')
+            $notificacion = DB::table('notificacion')
                 ->where('data->receptor_notif', $operador->nombre_operador)
                 ->paginate(10);
         }else{
             $cliente = Cliente::find($id);
-            $notificaciones = DB::table('notificaciones')
+            $notificacion = DB::table('notificacion')
                 ->where('data->receptor_notif', $cliente->nombre_cliente)
                 ->paginate(10);
         }
         $response = [];
 
-        foreach ($notificaciones as $notificacion) {
+        foreach ($notificacion as $notificacion) {
         $response[] = $notificacion->data;
         }
         return response()->json($response);

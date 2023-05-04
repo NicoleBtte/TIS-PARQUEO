@@ -98,7 +98,7 @@ class ClienteController extends Controller
         $registro=Cliente::find($id);
         $registro->delete();
 
-        return redirect()->route('clientes');
+        return response()->json(['message' => 'Usuario eliminado con éxito']);
     }
 
     public function login(Request $request)
@@ -119,7 +119,7 @@ class ClienteController extends Controller
                 'status' => 1,
                 'message' => 'login correcto',
                 'access_token' => $token,
-                'rol' => 'admin',
+                'rol' => 'cliente',
                 'idusuario' => $user->idcliente // agrega esta línea
             ]);            
         } else {

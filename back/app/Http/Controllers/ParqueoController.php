@@ -20,7 +20,7 @@ class ParqueoController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nombre_parqueo' => ['required', 'unique:parqueos', 'string', 'min:5', 'max:16'],
+            'nombre_parqueo' => ['required', 'unique:parqueo', 'string', 'min:5', 'max:16'],
             'numero_de_zonas' => ['required', 'integer', 'min:0'],
             'mapa_parqueo' => ['nullable', 'string']
         ]);
@@ -61,7 +61,7 @@ class ParqueoController extends Controller
         $parqueo = Parqueo::findOrFail($request->$idParqueo);
         
         $validatedData = $request->validate([
-            'nombre_parqueo' => ['required', 'unique:parqueos', 'string', 'min:5', 'max:16'],
+            'nombre_parqueo' => ['required', 'string', 'min:5', 'max:16'],
             'numero_de_zonas' => ['required', 'integer', 'min:0'],
             'mapa_parqueo' => ['nullable', 'string']
         ]);
