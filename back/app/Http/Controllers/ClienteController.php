@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cliente;
+use App\Http\Controllers\SitioController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,13 @@ use Illuminate\Support\Facades\Validator;
 class ClienteController extends Controller
 {
     //
+    public static function registrarPlaca(Request $request){
+        DB::table('auto')->insert([
+            'placa_auto' => $request->placa,
+            'cliente_idcliente' => $request->ci,
+        ]);
+    }
+
     public function store(Request $request){
 
         $validator = Validator::make($request->all(), [
@@ -41,6 +49,8 @@ class ClienteController extends Controller
         $registro->nombre_cliente=$request->name;
         $registro->estado_pago=null;
         $registro->monto_a_pagar=null;
+        //$registro->total=12000;
+        //$registro->saldo=12000;
         $registro->fecha_pagado=null;
         $registro->fecha_lim_pago=null;//DB::table('convocatoria')->orderBy('id', 'desc')->first()->fecha_pago;
         //$age = DB::table('users')->select('age')->latest('id')->value('age');
@@ -52,12 +62,17 @@ class ClienteController extends Controller
         $registro->direccion_cliente=$request->direccion;
         $registro->unidad_trabajo=null;//$request->unidad;
         $registro->cargo_cliente=null;//$request->cargo;
+        
         $registro->save();
+        
+        $sitioAsignado=SitioController::asignarSitio($request->ci);
+
+        $this->registrarPlaca($request);
 
         //Auth::login($registro);
 
         //return redirect()->route('logrado')->with('Genial!','Se guardaron con exito');
-        return response()->json(['message' => 'Usuario creado con éxito']);
+        return response()->json(['message' => "Usuario creado con éxito con {$sitioAsignado}"]);
     }
 
     public function index(){

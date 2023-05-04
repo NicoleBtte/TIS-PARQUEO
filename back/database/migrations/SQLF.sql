@@ -23,9 +23,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`administrador` (
   `telf_administrador` VARCHAR(12) NULL,
   `email_administrador` VARCHAR(35) NULL,
   `pass_administrador` VARCHAR(12) NULL,
-  PRIMARY KEY (`idadministrador`),
-  UNIQUE INDEX `idadministrador_UNIQUE` (`idadministrador` ASC) ,
-  UNIQUE INDEX `email_administrador_UNIQUE` (`email_administrador` ASC) )
+  PRIMARY KEY (`idadministrador`))
 ENGINE = InnoDB;
 
 
@@ -33,12 +31,13 @@ ENGINE = InnoDB;
 -- Table `mydb`.`parqueo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`parqueo` (
-  `idparqueo` INT NOT NULL,
-  `nombre_parqueo` VARCHAR(15) NULL,
+  `idParqueo` INT NOT NULL AUTO_INCREMENT,
+  `nombre_parqueo` VARCHAR(15) NOT NULL,
   `administrador_idadministrador` INT NOT NULL,
-  `mapa` BLOB NULL,
-  PRIMARY KEY (`idparqueo`),
-  INDEX `fk_parqueo_administrador1_idx` (`administrador_idadministrador` ASC) ,
+  `mapa_parqueo` VARCHAR(100) NULL,
+  `numero_de_zonas` INT NULL,
+  PRIMARY KEY (`idParqueo`),
+  INDEX `fk_parqueo_administrador1_idx` (`administrador_idadministrador` ASC)  ,
   CONSTRAINT `fk_parqueo_administrador1`
     FOREIGN KEY (`administrador_idadministrador`)
     REFERENCES `mydb`.`administrador` (`idadministrador`)
@@ -51,19 +50,19 @@ ENGINE = InnoDB;
 -- Table `mydb`.`zonaEstacionamiento`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`zonaEstacionamiento` (
-  `idzonaEstacionamiento` INT NOT NULL,
+  `idzonaEstacionamiento` INT NOT NULL AUTO_INCREMENT,
   `nombre_zona_estacionamiento` VARCHAR(25) NOT NULL,
-  `cant_estacionamientos` INT NOT NULL,
   `parqueo_idparqueo` INT NOT NULL,
-  `techo` TINYINT NOT NULL,
-  `arboles_cerca` TINYINT NOT NULL,
+  `techo` TINYINT NULL,
+  `arboles_cerca` TINYINT NULL,
   `tipo_de_piso` VARCHAR(15) NULL,
   `descripcion` VARCHAR(45) NULL,
+  `numero_de_sitios` INT NOT NULL,
   PRIMARY KEY (`idzonaEstacionamiento`),
-  INDEX `fk_zonaEstacionamiento_parqueo1_idx` (`parqueo_idparqueo` ASC) ,
+  INDEX `fk_zonaEstacionamiento_parqueo1_idx` (`parqueo_idparqueo` ASC)  ,
   CONSTRAINT `fk_zonaEstacionamiento_parqueo1`
     FOREIGN KEY (`parqueo_idparqueo`)
-    REFERENCES `mydb`.`parqueo` (`idparqueo`)
+    REFERENCES `mydb`.`parqueo` (`idParqueo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -79,8 +78,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`guardia` (
   `zonaEstacionamiento_idzonaEstacionamiento` INT NOT NULL,
   `pass_guardia` VARCHAR(12) NULL,
   PRIMARY KEY (`idguardia`),
-  INDEX `fk_guardia_zonaEstacionamiento1_idx` (`zonaEstacionamiento_idzonaEstacionamiento` ASC) ,
-  UNIQUE INDEX `idguardia_UNIQUE` (`idguardia` ASC) ,
+  INDEX `fk_guardia_zonaEstacionamiento1_idx` (`zonaEstacionamiento_idzonaEstacionamiento` ASC)  ,
   CONSTRAINT `fk_guardia_zonaEstacionamiento1`
     FOREIGN KEY (`zonaEstacionamiento_idzonaEstacionamiento`)
     REFERENCES `mydb`.`zonaEstacionamiento` (`idzonaEstacionamiento`)
@@ -96,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cliente` (
   `idcliente` INT NOT NULL,
   `nombre_cliente` VARCHAR(50) NOT NULL,
   `estado_pago` TINYINT NULL,
-  `monto_a_pagar` DOUBLE NULL,
+  `monto_a_pagar` INT NULL,
   `fecha_pagado` DATE NULL,
   `fecha_lim_pago` DATE NULL,
   `telf_cliente` VARCHAR(15) NULL,
@@ -106,11 +104,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cliente` (
   `direccion_cliente` VARCHAR(45) NULL,
   `unidad_trabajo` VARCHAR(20) NULL,
   `cargo_cliente` VARCHAR(45) NULL,
-  `updated_at` DATETIME NULL,
-  `created_at` DATETIME NULL,
-  PRIMARY KEY (`idcliente`),
-  UNIQUE INDEX `email_cliente_UNIQUE` (`email_cliente` ASC) ,
-  UNIQUE INDEX `idcliente_UNIQUE` (`idcliente` ASC) )
+  PRIMARY KEY (`idcliente`))
 ENGINE = InnoDB;
 
 
@@ -118,14 +112,14 @@ ENGINE = InnoDB;
 -- Table `mydb`.`historial_entradas_salidas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`historial_entradas_salidas` (
-  `idhistorial` INT NOT NULL,
+  `idhistorial` INT NOT NULL AUTO_INCREMENT,
   `hora_ingreso_hist` TIME NULL,
   `hora_salida_hist` TIME NULL,
   `fecha_ingreso` DATE NULL,
   `fecha_salida` DATE NULL,
   `cliente_idcliente` INT NOT NULL,
   PRIMARY KEY (`idhistorial`),
-  INDEX `fk_historial_entradas_salidas_cliente1_idx` (`cliente_idcliente` ASC) ,
+  INDEX `fk_historial_entradas_salidas_cliente1_idx` (`cliente_idcliente` ASC)  ,
   CONSTRAINT `fk_historial_entradas_salidas_cliente1`
     FOREIGN KEY (`cliente_idcliente`)
     REFERENCES `mydb`.`cliente` (`idcliente`)
@@ -145,12 +139,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`operador` (
   `pass_operador` VARCHAR(12) NULL,
   `parqueo_idparqueo` INT NOT NULL,
   PRIMARY KEY (`idoperador`),
-  INDEX `fk_operador_parqueo1_idx` (`parqueo_idparqueo` ASC) ,
-  UNIQUE INDEX `idoperador_UNIQUE` (`idoperador` ASC) ,
-  UNIQUE INDEX `email_operador_UNIQUE` (`email_operador` ASC) ,
+  INDEX `fk_operador_parqueo1_idx` (`parqueo_idparqueo` ASC)  ,
   CONSTRAINT `fk_operador_parqueo1`
     FOREIGN KEY (`parqueo_idparqueo`)
-    REFERENCES `mydb`.`parqueo` (`idparqueo`)
+    REFERENCES `mydb`.`parqueo` (`idParqueo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -160,12 +152,12 @@ ENGINE = InnoDB;
 -- Table `mydb`.`reporte`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`reporte` (
-  `idreporte` INT NOT NULL,
-  `ingreso_mes` FLOAT NULL,
+  `idreporte` INT NOT NULL AUTO_INCREMENT,
+  `ingreso_mes` INT NULL,
   `mes` DATE NULL,
   `operador_idoperador` INT NOT NULL,
   PRIMARY KEY (`idreporte`),
-  INDEX `fk_reporte_operador1_idx` (`operador_idoperador` ASC) ,
+  INDEX `fk_reporte_operador1_idx` (`operador_idoperador` ASC)  ,
   CONSTRAINT `fk_reporte_operador1`
     FOREIGN KEY (`operador_idoperador`)
     REFERENCES `mydb`.`operador` (`idoperador`)
@@ -178,13 +170,13 @@ ENGINE = InnoDB;
 -- Table `mydb`.`sitio`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`sitio` (
-  `idsitio` INT NOT NULL,
-  `zonaEstacionamiento_idzonaEstacionamiento` INT NOT NULL,
+  `idsitio` INT NOT NULL AUTO_INCREMENT,
+  `zonaEstacionamiento_idzonaEstacionamiento` INT NULL,
   `cliente_idcliente` INT NULL,
   `numero` INT NULL,
-  PRIMARY KEY (`idsitio`, `cliente_idcliente`),
-  INDEX `fk_parqueo_zonaEstacionamiento_idx` (`zonaEstacionamiento_idzonaEstacionamiento` ASC) ,
-  INDEX `fk_parqueo_cliente1_idx` (`cliente_idcliente` ASC) ,
+  PRIMARY KEY (`idsitio`),
+  INDEX `fk_parqueo_zonaEstacionamiento_idx` (`zonaEstacionamiento_idzonaEstacionamiento` ASC)  ,
+  INDEX `fk_parqueo_cliente1_idx` (`cliente_idcliente` ASC)  ,
   CONSTRAINT `fk_parqueo_zonaEstacionamiento`
     FOREIGN KEY (`zonaEstacionamiento_idzonaEstacionamiento`)
     REFERENCES `mydb`.`zonaEstacionamiento` (`idzonaEstacionamiento`)
@@ -202,15 +194,18 @@ ENGINE = InnoDB;
 -- Table `mydb`.`notificaciones`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`notificaciones` (
-  `idnotificaciones` INT NOT NULL,
+  `idnotificaciones` INT NOT NULL AUTO_INCREMENT,
   `emisor_notif` VARCHAR(50) NULL,
   `receptor_notif` VARCHAR(50) NULL,
+  `titulo_notif` VARCHAR(45) NULL,
   `mensaje_notif` VARCHAR(145) NULL,
   `administrador_idadministrador` INT NOT NULL,
   `cliente_idcliente` INT NOT NULL,
+  `operador_idoperador` INT NOT NULL,
   PRIMARY KEY (`idnotificaciones`),
-  INDEX `fk_notificaciones_administrador1_idx` (`administrador_idadministrador` ASC) ,
-  INDEX `fk_notificaciones_cliente1_idx` (`cliente_idcliente` ASC) ,
+  INDEX `fk_notificaciones_administrador1_idx` (`administrador_idadministrador` ASC)  ,
+  INDEX `fk_notificaciones_cliente1_idx` (`cliente_idcliente` ASC)  ,
+  INDEX `fk_notificaciones_operador1_idx` (`operador_idoperador` ASC)  ,
   CONSTRAINT `fk_notificaciones_administrador1`
     FOREIGN KEY (`administrador_idadministrador`)
     REFERENCES `mydb`.`administrador` (`idadministrador`)
@@ -220,6 +215,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`notificaciones` (
     FOREIGN KEY (`cliente_idcliente`)
     REFERENCES `mydb`.`cliente` (`idcliente`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_notificaciones_operador1`
+    FOREIGN KEY (`operador_idoperador`)
+    REFERENCES `mydb`.`operador` (`idoperador`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -228,14 +228,14 @@ ENGINE = InnoDB;
 -- Table `mydb`.`turno`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`turno` (
-  `idturno` INT NOT NULL,
+  `idturno` INT NOT NULL AUTO_INCREMENT,
   `dia_turno` VARCHAR(9) NOT NULL,
   `hora_inicio_turno` TIME NOT NULL,
   `hora_fin_turno` TIME NOT NULL,
   `nombre_turno` VARCHAR(15) NOT NULL,
   `guardia_idguardia` INT NOT NULL,
   PRIMARY KEY (`idturno`),
-  INDEX `fk_turno_guardia1_idx` (`guardia_idguardia` ASC) ,
+  INDEX `fk_turno_guardia1_idx` (`guardia_idguardia` ASC)  ,
   CONSTRAINT `fk_turno_guardia1`
     FOREIGN KEY (`guardia_idguardia`)
     REFERENCES `mydb`.`guardia` (`idguardia`)
@@ -248,17 +248,15 @@ ENGINE = InnoDB;
 -- Table `mydb`.`transaccion`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`transaccion` (
-  `idtransaccion` INT NOT NULL,
-  `fecha_pago_mes` DATE NULL,
-  `fecha_lim_pago` DATE NULL,
-  `multa` DOUBLE NULL,
-  `estado_pago` TINYINT NULL,
-  `monto_a_pagar` DOUBLE NULL,
+  `idtransaccion` INT NOT NULL AUTO_INCREMENT,
+  `fechaPago` DATE NULL,
+  `monto` INT NULL,
+  `comprobante` VARCHAR(100) NULL,
   `cliente_idcliente` INT NOT NULL,
   `reporte_idreporte` INT NOT NULL,
   PRIMARY KEY (`idtransaccion`),
-  INDEX `fk_transaccion_cliente1_idx` (`cliente_idcliente` ASC) ,
-  INDEX `fk_transaccion_reporte1_idx` (`reporte_idreporte` ASC) ,
+  INDEX `fk_transaccion_cliente1_idx` (`cliente_idcliente` ASC)  ,
+  INDEX `fk_transaccion_reporte1_idx` (`reporte_idreporte` ASC)  ,
   CONSTRAINT `fk_transaccion_cliente1`
     FOREIGN KEY (`cliente_idcliente`)
     REFERENCES `mydb`.`cliente` (`idcliente`)
@@ -276,13 +274,15 @@ ENGINE = InnoDB;
 -- Table `mydb`.`convocatoria`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`convocatoria` (
-  `idconvocatoria` INT NOT NULL,
-  `titulo_convocatoria` VARCHAR(45) NOT NULL,
-  `fecha_inicio_convocatoria` DATE NOT NULL,
-  `fecha_fin_convocatoria` DATE NULL,
-  `descripcion_convocatoria` VARCHAR(1000) NULL,
-  `fecha_pago` DATE NULL,
-  PRIMARY KEY (`idconvocatoria`))
+  `idConvocatoria` INT NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(45) NOT NULL,
+  `fecha_inicio` DATE NOT NULL,
+  `fecha_fin` DATE NOT NULL,
+  `descripcion_convocatoria` VARCHAR(100) NULL,
+  `fecha_pago` DATE NOT NULL,
+  `numero_cupos` INT NULL,
+  `estado_convocatoria` INT NULL,
+  PRIMARY KEY (`idConvocatoria`))
 ENGINE = InnoDB;
 
 
@@ -293,8 +293,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`zonaEstacionamiento_has_convocatoria` (
   `zonaEstacionamiento_idzonaEstacionamiento` INT NOT NULL,
   `convocatoria_idconvocatoria` INT NOT NULL,
   PRIMARY KEY (`zonaEstacionamiento_idzonaEstacionamiento`, `convocatoria_idconvocatoria`),
-  INDEX `fk_zonaEstacionamiento_has_convocatoria_convocatoria1_idx` (`convocatoria_idconvocatoria` ASC) ,
-  INDEX `fk_zonaEstacionamiento_has_convocatoria_zonaEstacionamiento_idx` (`zonaEstacionamiento_idzonaEstacionamiento` ASC) ,
+  INDEX `fk_zonaEstacionamiento_has_convocatoria_convocatoria1_idx` (`convocatoria_idconvocatoria` ASC)  ,
+  INDEX `fk_zonaEstacionamiento_has_convocatoria_zonaEstacionamiento_idx` (`zonaEstacionamiento_idzonaEstacionamiento` ASC)  ,
   CONSTRAINT `fk_zonaEstacionamiento_has_convocatoria_zonaEstacionamiento1`
     FOREIGN KEY (`zonaEstacionamiento_idzonaEstacionamiento`)
     REFERENCES `mydb`.`zonaEstacionamiento` (`idzonaEstacionamiento`)
@@ -302,7 +302,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`zonaEstacionamiento_has_convocatoria` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_zonaEstacionamiento_has_convocatoria_convocatoria1`
     FOREIGN KEY (`convocatoria_idconvocatoria`)
-    REFERENCES `mydb`.`convocatoria` (`idconvocatoria`)
+    REFERENCES `mydb`.`convocatoria` (`idConvocatoria`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -312,11 +312,11 @@ ENGINE = InnoDB;
 -- Table `mydb`.`auto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`auto` (
-  `idauto` INT NOT NULL,
+  `idauto` INT NOT NULL AUTO_INCREMENT,
   `placa_auto` VARCHAR(8) NULL,
   `cliente_idcliente` INT NOT NULL,
   PRIMARY KEY (`idauto`),
-  INDEX `fk_auto_cliente1_idx` (`cliente_idcliente` ASC) ,
+  INDEX `fk_auto_cliente1_idx` (`cliente_idcliente` ASC)  ,
   CONSTRAINT `fk_auto_cliente1`
     FOREIGN KEY (`cliente_idcliente`)
     REFERENCES `mydb`.`cliente` (`idcliente`)

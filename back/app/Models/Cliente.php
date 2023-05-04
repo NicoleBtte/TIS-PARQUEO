@@ -27,7 +27,7 @@ class Cliente extends Authenticatable
     use HasApiTokens, Notifiable;
     protected $primaryKey = 'idcliente';
     protected $table = 'cliente';
-    
+    public $timestamps=false;
     protected $fillable = ['idcliente', 'nombre_cliente', 'estado_pago', 
     'monto_a_pagar', 'fecha_pagado', 'fecha_lim_pago', 'telf_cliente', 
     'email_cliente', 'password', 'apellidos_cliente', 'direccion_cliente','unidad_trabajo', 
