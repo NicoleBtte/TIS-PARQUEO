@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class Notificacion extends Model
 {
@@ -15,6 +17,8 @@ class Notificacion extends Model
         'idnotificaciones',
         'emisor_notif',
         'receptor_notif',
+        'idemisor',
+        'idreceptor',
         'titulo_notif',
         'mensaje_notif',
         'fecha_notif',

@@ -6,8 +6,8 @@ use App\Models\Notificacion;
 use App\Models\Administrador;
 use App\Models\Cliente;
 use App\Models\Operador;
+use App\Notifications\NotificacionNueva;
 use Illuminate\Http\Request;
-
 
 class NotificacionController extends Controller
 {
@@ -69,34 +69,32 @@ class NotificacionController extends Controller
 
     public function store(Request $request)
     {
+        $idUser = $request->id;
+        $idparqueo = $request->idparqueo;
+        $cliente = Cliente::find($idUser);
+        $operador = Operador::find($idparqueo);
+        
         $notificacion = new Notificacion();
-        $notificacion->emisor_notif = Auth::user()->name;
-        $notificacion->mensaje_notif = $request->input('mensaje_notif');
-        $notificacion->operador_idoperador = $request->input('operador_idoperador');
-        $notificacion->cliente_idcliente = $request->input('cliente_idcliente');
+        $notificacion->emisor_notif = $cliente->nombre_cliente;
+        $notificacion->repector_notif = $operador->nombre_operador;
+        $notificacion->idemisor = $cliente->idcliente;
+        $notificacion->idreceptor = $operador->idoperador;
+        $notificacion->titulo_notif = $request->titulo_notif;
+        $notificacion->mensaje_notif = $request->mensaje_notif;
+        $notificacion->fecha_notif = date('Y-m-d');
         $notificacion->save();
 
-        $receptor = null;
-        if ($notificacion->operador_idoperador) {
-            $receptor = 'operador';
-        } elseif ($notificacion->cliente_idcliente) {
-            $receptor = 'cliente';
-        }
-
-        if ($receptor) {
-            $mensaje = [
-                'id_notificacion' => $notificaciones->idnotificaciones,
-                'mensaje_notif' => $notificaciones->mensaje_notif,
-                'emisor_notif' => $notificaciones->emisor_notif,
-            ];
-            $notificacionReceptor = new NotificacionNueva($mensaje);
-            Notification::route('broadcast', $receptor)->notify($notificacionReceptor);
-        }
+        /*$emisor = $notificacion->emisor_notif;
+        $titulo = $notificacion->titulo_notif;
+        $mensaje = $notificacion->mensaje_notif;
+        $id = $operador->idoperador;
+        $notificacionReceptor = new NotificacionNueva($emisor, $titulo, $mensaje);
+        Notification::route('broadcast', 'user.'.$id)->notify($notificacionReceptor);*/
 
         return response()->json([
             'success' => true,
             'message' => 'Notificación creada exitosamente',
-            'data' => $notificaciones
+            'data' => $notificacion
         ]);
     }
 }

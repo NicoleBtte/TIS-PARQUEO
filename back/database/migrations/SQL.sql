@@ -193,10 +193,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`notificaciones`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`notificaciones` (
+CREATE TABLE IF NOT EXISTS `mydb`.`notificacion` (
   `idnotificaciones` INT NOT NULL AUTO_INCREMENT,
   `emisor_notif` VARCHAR(50) NULL,
   `receptor_notif` VARCHAR(50) NULL,
+  `idemisor` INT NOT NULL,
+  `idreceptor` INT NOT NULL,
   `titulo_notif` VARCHAR(45) NULL,
   `mensaje_notif` VARCHAR(145) NULL,
   `fecha_notif` DATE NULL,
