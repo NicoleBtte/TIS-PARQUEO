@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import {FormGroup, FormControl} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import '../../styles/formStyle.css';
 
 const RedactarForm = () => {
     const [options, setOptions] = useState([]);

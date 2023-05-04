@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import axiosClient from '../axios-client.js'
 import { useStateContext } from '../contexts/ContextProvider.js';
+import '../styles/formStyle.css';
 
 const LoginPage = () => {
   const [selectedRole, setSelectedRole] = useState('cliente');
@@ -52,7 +53,8 @@ const LoginPage = () => {
 	}
 
     return (
-      <>
+      <div className='bigestContainer'>
+      <div className="formContainer">
       <h4>Iniciar sesion</h4>
       <Formik
           initialValues={{
@@ -83,14 +85,14 @@ const LoginPage = () => {
             >
             {({ errors, touched }) => (
                 <Form className='formulario'>
-                  <label htmlFor="rol">Rol:</label>
-                      <select name="rol" id="rol" value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
+                  <label className="speciallabel" htmlFor="rol" >Iniciar sesión como:</label>
+                      <select className="combobox" name="rol" id="rol" value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
                         <option value="cliente">Cliente</option>
                         <option value="operador">Operador</option>
                         <option value="guardia">Guardia</option>
                         <option value="admin">Administrador</option>
                       </select>
-                  <div>
+                  <div className="myform-group">
                       <label htmlFor="ci">Número de C.I.:</label>
                       <Field
                         type="text" 
@@ -99,7 +101,7 @@ const LoginPage = () => {
                       />
                       <ErrorMessage name="ci" component={() => (<div className="error">{errors.ci}</div>)} />
                   </div>
-                  <div>
+                  <div className="myform-group">
                       <label htmlFor="contrasena">Contraseña:</label>
                       <Field
                         type="password" 
@@ -108,11 +110,15 @@ const LoginPage = () => {
                       />
                       <ErrorMessage name="password" component={() => (<div className="error">{errors.password}</div>)} />
                     </div>
-                    <button type="submit">Ingresar</button>
+                    <div className="boton-container">
+                      <button type="submit">Ingresar</button>
+                    </div>
+                    
                 </Form>
             )}
           </Formik>
-        </>
+        </div>
+        </div>
     );
 }
 

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import axiosClient from "../axios-client.js";
 import { useStateContext } from "../contexts/ContextProvider.js";
+import '../styles/formStyle.css';
 
 const FormularioRegistro = () => {
   const { setUser, setToken } = useStateContext();
@@ -42,6 +43,8 @@ const FormularioRegistro = () => {
   };
 
   return (
+    <div className="formContainer">
+    <h4>Registro</h4>
     <Formik
       initialValues={{
         name: "",
@@ -135,7 +138,7 @@ const FormularioRegistro = () => {
     >
       {({ errors, touched }) => (
         <Form className="formulario">
-          <div>
+          <div className="myform-group">
             <label htmlFor="nombre">Nombre:</label>
             <Field type="text" id="nombre" name="name" />
             <ErrorMessage
@@ -143,7 +146,7 @@ const FormularioRegistro = () => {
               component={() => <div className="error">{errors.name}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="apellidos">Apellidos:</label>
             <Field type="text" id="apellidos" name="apellidos" />
             <ErrorMessage
@@ -151,7 +154,7 @@ const FormularioRegistro = () => {
               component={() => <div className="error">{errors.apellidos}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="ci">Número de C.I.:</label>
             <Field type="text" id="ci" name="ci" />
             <ErrorMessage
@@ -159,7 +162,7 @@ const FormularioRegistro = () => {
               component={() => <div className="error">{errors.ci}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="direccion">Dirección:</label>
             <Field type="text" id="direccion" name="direccion" />
             <ErrorMessage
@@ -167,7 +170,7 @@ const FormularioRegistro = () => {
               component={() => <div className="error">{errors.direccion}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="telefono">Teléfono:</label>
             <Field type="text" id="telefono" name="telefono" />
             <ErrorMessage
@@ -175,7 +178,7 @@ const FormularioRegistro = () => {
               component={() => <div className="error">{errors.telefono}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="correo">Correo electrónico:</label>
             <Field type="text" id="correo" name="email" />
             <ErrorMessage
@@ -183,7 +186,7 @@ const FormularioRegistro = () => {
               component={() => <div className="error">{errors.email}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="placa">Placa del vehículo:</label>
             <Field type="text" id="placa" name="placa" />
             <ErrorMessage
@@ -191,7 +194,7 @@ const FormularioRegistro = () => {
               component={() => <div className="error">{errors.placa}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="contrasena">Contraseña:</label>
             <Field type="password" id="contrasena" name="password" />
             <ErrorMessage
@@ -199,7 +202,7 @@ const FormularioRegistro = () => {
               component={() => <div className="error">{errors.password}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="ccontrasena">Repetir contraseña:</label>
             <Field type="password" id="ccontrasena" name="ccontrasena" />
             <ErrorMessage
@@ -209,10 +212,13 @@ const FormularioRegistro = () => {
               )}
             />
           </div>
-          <button type="submit">Enviar</button>
+          <div className="boton-container">
+            <button type="submit">Enviar</button>
+          </div>
         </Form>
       )}
     </Formik>
+    </div>
   );
 };
 

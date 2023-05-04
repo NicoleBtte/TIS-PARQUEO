@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosCliente from '../../axios-client';
+import '../../styles/formStyle.css';
 
 const ResponseForm = () => {
     const {id, name} = useParams();
