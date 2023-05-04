@@ -89,4 +89,5 @@ Route::get('/zona', function(){
 Route::post('/crearSitio',[SitioController::class,'registroSitios']);
 
 Route::post('/notificaciones',[NotificacionController::class, 'store']);
-Route::get('/notificaciones',[NotificacionController::class, 'index']);
+Route::get('/notificaciones',[NotificacionController::class, 'indexSent']);
+Route::get('/notificaciones',[NotificacionController::class, 'indexReceived']);
