@@ -54,6 +54,8 @@ const FormularioRegistro = () => {
         telefono: "",
         email: "",
         placa: "",
+        unidad: "",
+        cargo: "",
         password: "",
         ccontrasena: "",
       }}
@@ -111,6 +113,20 @@ const FormularioRegistro = () => {
           errors.placa = "Por favor ingresa la placa de su vehículo";
         } else if (!/\d{4}[A-Z]{3}$/i.test(values.placa)) {
           errors.placa = "La placa debe contener 4 numeros y 3 letras seguidas";
+        }
+
+        // Validacion unidad
+        if (!values.unidad) {
+          errors.unidad = "Por favor ingrese la unidad en la que trabaja";
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.unidad)) {
+          errors.unidad = "La unidad solo puede contener letras y espacios";
+        }
+        
+        // Validacion cargo
+        if (!values.cargo) {
+          errors.cargo = "Por favor ingrese un cargo";
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.cargo)) {
+          errors.cargo = "El cargo solo puede contener letras y espacios";
         }
 
         // Validacion contrasenia
@@ -192,6 +208,22 @@ const FormularioRegistro = () => {
             <ErrorMessage
               name="placa"
               component={() => <div className="error">{errors.placa}</div>}
+            />
+          </div>
+          <div className="myform-group">
+            <label htmlFor="unidad">Unidad de trabajo:</label>
+            <Field type="text" id="unidad" name="unidad" />
+            <ErrorMessage
+              name="unidad"
+              component={() => <div className="error">{errors.unidad}</div>}
+            />
+          </div>
+          <div className="myform-group">
+            <label htmlFor="cargo">Cargo:</label>
+            <Field type="text" id="cargo" name="cargo" />
+            <ErrorMessage
+              name="cargo"
+              component={() => <div className="error">{errors.cargo}</div>}
             />
           </div>
           <div className="myform-group">
