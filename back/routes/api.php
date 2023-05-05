@@ -72,6 +72,7 @@ Route::post('/convocatoria', [ConvocatoriaController::class, 'store']);
 Route::get('/convocatoria/{idConvocatoria}', [ConvocatoriaController::class, 'show']);
 Route::put('/convocatoria/{idConvocatoria}', [ConvocatoriaController::class, 'update']);
 Route::delete('/convocatoria/{idConvocatoria}', [ConvocatoriaController::class, 'destroy']);
+Route::get('/convocatoriaActual', [ConvocatoriaController::class, 'consultarConvocatoriaActiva']);
 
 Route::get('/parqueos', [ParqueoController::class ,'index']);
 Route::post('/parqueo',  [ParqueoController::class ,'store']);
@@ -93,5 +94,6 @@ Route::get('/consultaSitios',[SitioController::class,'listaSitios']);
 Route::post('/reasignarSitio',[SitioController::class,'reasignar']);
 
 Route::post('/notificaciones',[NotificacionController::class, 'store']);
-Route::get('/notificaciones',[NotificacionController::class, 'indexSent']);
-Route::get('/notificaciones',[NotificacionController::class, 'indexReceived']);
+Route::post('/notificacionesResp',[NotificacionController::class, 'storeRespuesta']);
+Route::get('/notificacionesEnvia',[NotificacionController::class, 'indexSent']);
+Route::get('/notificacionesRecibe',[NotificacionController::class, 'indexReceived']);

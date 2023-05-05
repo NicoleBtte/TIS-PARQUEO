@@ -15,7 +15,7 @@ class ZonaDeEstacionamientoController extends Controller
         if($zonaDeEstacionamientos->isEmpty()){
             return response()->json(['message' => 'No hay zonas de estacionamiento registradas.'], 404);
         } else {
-            return response()->json(['data' => $zonaDeEstacionamientos], 200);
+            return response()->json([$zonaDeEstacionamientos], 200);
         }
     }
     public function sitios($numSitios){
@@ -69,7 +69,7 @@ class ZonaDeEstacionamientoController extends Controller
     public function show($idZonaEstacionamiento){
         $zonaDeEstacionamiento = ZonaDeEstacionamiento::find($idZonaEstacionamiento);
         if ($zonaDeEstacionamiento) {
-            return response()->json(['data' =>$zonaDeEstacionamiento], 200);
+            return response()->json([$zonaDeEstacionamiento], 200);
         } else {
             return response()->json(['error' => 'No se encontró la zona de estacionamiento'], 404);
         }

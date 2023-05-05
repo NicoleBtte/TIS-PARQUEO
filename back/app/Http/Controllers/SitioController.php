@@ -26,11 +26,13 @@ class SitioController extends Controller
    }
 
 
-   public static function asignarSitio($idCliente){
+   public static function asignarSitio(int $idCliente){
 
     
-      $sitioParaAsignar= DB::table('sitio')->whereNull('cliente_idcliente')->first()->idSitio;
-      DB::table('sitio')->where('idSitio',$sitioParaAsignar)-> update(['cliente_idcliente'=>$idCliente]);
+      $sitioParaAsignar= DB::table('sitio')->whereNull('cliente_idcliente')->first();
+      $IDsitio=$sitioParaAsignar->idsitio;
+      DB::table('sitio')->where('idsitio',$IDsitio)-> update(['cliente_idcliente'=>$idCliente]);
+      return "sitio{$sitioParaAsignar->numero} en la zona {$sitioParaAsignar->zonaEstacionamiento_idzonaEstacionamiento}";
    }
 
 
@@ -57,9 +59,6 @@ class SitioController extends Controller
       $sitio->cliente_idcliente = $request->idcliente;
       
       $sitio->save();
-
-
-
    }
 
 
