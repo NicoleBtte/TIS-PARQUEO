@@ -105,11 +105,25 @@ class ConvocatoriaController extends Controller
         }
     }
 
-    public function registrarseConvo($idConvocatoria)
+    public function registrarseConvo()
     {
-        $convocatoria = Convocatoria::find($idConvocatoria);
-        $convocatoria->numero_cupos = $convocatoria->numero_cupos - 1;
-        $convocatoria->save();
+        $convocatoria = Convocatoria::where('estado_convocatoria', '=', 1)->first();
+        if ($convocatoria->numero_cupos > 0) {
+            $convocatoria->numero_cupos = $convocatoria->numero_cupos - 1;
+            if($convocatoria->numero_cupos == 0){
+                $convocatoria->estado_convocatoria = 0;
+            }
+            $convocatoria->save();
+            return response()->json(json_encode([
+                'success' => true,
+                'message' => 'Se resto un cupo del total',
+            ]));
+        } else {
+            return response()->json(json_encode([
+                'success' => false,
+                'message' => 'No hay cupos disponibles'
+            ]));
+        }
     }
 
      public function consultarConvocatoriaActiva(){
@@ -118,9 +132,9 @@ class ConvocatoriaController extends Controller
             ->select('convocatoria.*')
             ->first();
         if ($convocatoria) {
-            return response()->json([$convocatoria], 200);
+            return response()->json(json_encode($convocatoria));
         } else {
-            return response()->json(['error' => 'No se encontró la convocatoria'], 404);
+            return response()->json(json_encode(null));
         }
      }
 }
