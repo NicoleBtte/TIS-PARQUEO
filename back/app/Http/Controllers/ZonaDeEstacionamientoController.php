@@ -77,23 +77,23 @@ class ZonaDeEstacionamientoController extends Controller
 
     public function update(Request $request, $idZonaEstacionamiento)
     {
-        $zonaDeEstacionamiento = ZonaDeEstacionamiento::findOrFail($request->$idZonaEstacionamiento);
+        $zonaDeEstacionamiento = ZonaDeEstacionamiento::findOrFail($idZonaEstacionamiento);
 
         $validatedData = $request->validate([
-            'nombreZona' => ['required', 'unique:zonaEstacionamiento', 'string', 'min:5', 'max:16'],
-            'techo' => ['nullable', 'boolean'],
-            'arbol' => ['nullable', 'boolean'],
-            'tipoPiso' => ['nullable', 'string'],
-            'numero_de_sitios' => ['required', 'integer', 'min:0'],
-            'descripcionZona' => ['nullable', 'string']
+           // 'nombre_zona_estacionamiento' => ['required', 'string', 'min:5', 'max:16'],
+            'techo' => ['nullable', 'integer', 'min:0', 'max:1'],
+            'arboles_cerca' => ['nullable', 'integer', 'min:0', 'max:1'],
+            'tipo_de_piso' => ['nullable', 'string'],
+            'numero_de_sitios' => ['nullable', 'integer', 'min:0'],
+            'descripcion' => ['nullable', 'string']
         ]);
 
-        $zonaDeEstacionamiento->nombreZona = $validatedData['nombreZona'];
+       // $zonaDeEstacionamiento->nombre_zona_estacionamiento = $validatedData['nombre_zona_estacionamiento'];
         $zonaDeEstacionamiento->techo = $validatedData['techo'];
-        $zonaDeEstacionamiento->arbol = $validatedData['arbol'];
-        $zonaDeEstacionamiento->tipoPiso = $validatedData['tipoPiso'];
+        $zonaDeEstacionamiento->arboles_cerca = $validatedData['arboles_cerca'];
+        $zonaDeEstacionamiento->tipo_de_piso = $validatedData['tipo_de_piso'];
         $zonaDeEstacionamiento->numero_de_sitios = $validatedData['numero_de_sitios'];
-        $zonaDeEstacionamiento->descripcionZona = $validatedData['descripcionZona'];
+        $zonaDeEstacionamiento->descripcion = $validatedData['descripcion'];
 
         if($zonaDeEstacionamiento) {
             $zonaDeEstacionamiento->save();

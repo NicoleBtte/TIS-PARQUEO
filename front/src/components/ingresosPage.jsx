@@ -14,11 +14,29 @@ import { Button } from "react-bootstrap";
 function IngresosPage() {
   const [ingresosSalidas, setIngresosSalidas] = useState([]);
 
+  const [formData, setFormData] = useState({
+    cliente_idcliente: "",
+  });
+
+  const { cliente_idcliente } = formData;
+
+  const handleSubmit = (e) => {
+    console.log(cliente_idcliente);
+    alert(`datos formularios:::, ${cliente_idcliente}`);
+    axiosClient
+      .post("'/salida", {
+        cliente_idcliente,
+      })
+      .then((res) => console.log(res.data))
+      .catch((error) => console.log(error));
+    e.preventDefault();
+  };
+
   React.useEffect(() => {
     axiosClient
       .get("/consultaEntradasSalidas")
       .then((response) => {
-        const result = response.data.data;
+        const result = response.data;
         console.log(result);
         setIngresosSalidas(result);
       })
@@ -43,20 +61,25 @@ function IngresosPage() {
           <thead className="bg-c-primary">
             <tr>
               <th className="fw-medium">Cliente</th>
-              <th className="fw-medium">Placa</th>
               <th className="fw-medium">Entrada</th>
               <th className="fw-medium">Salida</th>
             </tr>
           </thead>
           <tbody className="bg-c-secondary">
-            {/*{ingresosSalidas.map((ingresosSalidas) => (
-              <tr key={ingresosSalidas.idhistorial}>
-                <td>{ingresosSalidas.cliente_idcliente}</td>
-                <td>{ingresosSalidas.placa}</td>
-                <td>{ingresosSalidas.fecha_ingreso}</td>
-                <td> {ingresosSalidas.fecha_salida == null? <Button>Registrar Salida</Button> : ingresosSalidas.fecha_salida}</td>
+            {ingresosSalidas.map((ingresoSalida) => (
+              <tr key={ingresoSalida.idhistorial}>
+                <td>{ingresoSalida.cliente_idcliente}</td>
+                <td>{ingresoSalida.fecha_ingreso}</td>
+                <td>
+                  {" "}
+                  {ingresoSalida.fecha_salida == null ? (
+                    <Button onClick={handleSubmit}>Registrar Salida</Button>
+                  ) : (
+                    ingresoSalida.fecha_salida
+                  )}
+                </td>
               </tr>
-            ))}*/}
+            ))}
           </tbody>
         </table>
       </div>

@@ -1,6 +1,7 @@
 //import { useEffect } from 'react';
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axiosClient from "../axios-client.js";
 
 const MisPagos = () => {
   const [estadoPago, setEstadoPago] = useState({
@@ -11,28 +12,28 @@ const MisPagos = () => {
     multa: "Descripcion de Multa",
   });
 
-  const [pagos, setPagos] = useState([
-    { id: 1, fecha: "10/22/33", monto: 1500, tipoPago: "Efectivo" },
-    { id: 2, fecha: "10/22/33", monto: 1500, tipoPago: "Efectivo" },
-    { id: 3, fecha: "10/22/33", monto: 1500, tipoPago: "Efectivo" },
-    { id: 4, fecha: "10/22/33", monto: 1500, tipoPago: "Efectivo" },
-    { id: 5, fecha: "10/22/33", monto: 1500, tipoPago: "Efectivo" },
-    { id: 6, fecha: "10/22/33", monto: 1500, tipoPago: "Efectivo" },
-    { id: 7, fecha: "10/22/33", monto: 1500, tipoPago: "Efectivo" },
-    { id: 8, fecha: "10/22/33", monto: 1500, tipoPago: "Efectivo" },
-  ]);
+  const [pagos, setPagos] = useState([]);
 
-  /*useEffect(() => {
-		() => setPagos();
-		() => setEstadoPago();
-	}, [pagos]);*/
+  /*React.useEffect(() => {
+    axiosClient
+      .get("/showcliente")
+      .then((response) => {
+        const result = response.data.data;
+        console.log(result);
+        setEstadoPago(result);
+      })
+      .catch((error) => console.log("error", error));
+  }, []);*/
 
   return (
     <div className="container">
       <div className="d-flex-between my-4">
         <h1 className="my-0 fs-2">Mis Pagos</h1>
         <div>
-          <Link className="link-none-styles btn-personal py-2" to="/cliente/pagos-qr">
+          <Link
+            className="link-none-styles btn-personal py-2"
+            to="/cliente/pagos-qr"
+          >
             Pagar
           </Link>
         </div>

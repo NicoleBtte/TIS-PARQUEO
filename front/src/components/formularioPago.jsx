@@ -1,12 +1,16 @@
 import { useState } from "react";
+import axiosClient from "../axios-client.js";
 
 function PagoForm() {
   const [formValue, setFormValue] = useState({
-    idClient: "",
-    monto: 0,
-    tipoPago: 1,
+    cliente_idcliente: "",
+    monto: null,
+    tipo_de_pago: 1,
     comprobante: "",
   });
+
+  const { cliente_idcliente, monto, tipo_de_pago, comprobante } = formValue;
+
   const handleInputChange = ({ target }) => {
     let value = target.value;
     if (target.name === "monto" || target.name === "tipoPago") {
@@ -17,14 +21,26 @@ function PagoForm() {
       [target.name]: value,
     });
   };
-  const handleCreate = (e) => {
+  const handleSubmit = (e) => {
+    console.log(tipo_de_pago, monto, cliente_idcliente, comprobante);
+    alert(
+      `datos formularios:::, ${cliente_idcliente}, ${monto}, ${tipo_de_pago}, ${comprobante}`
+    );
+    axiosClient
+      .post("/pagar", {
+        cliente_idcliente: cliente_idcliente,
+        monto: monto,
+        tipo_de_pago: tipo_de_pago,
+        comprobante: comprobante,
+      })
+      .then((res) => console.log(res.data))
+      .catch((error) => console.log(error));
     e.preventDefault();
-    console.log({ formValue });
   };
 
   return (
     <div className="container">
-      <form className="pago-form box mx-auto my-4" onSubmit={handleCreate}>
+      <form className="pago-form box mx-auto my-4" onSubmit={handleSubmit}>
         <fieldset>
           <legend className="text-center  fw-medium primary-color">
             Agregar Pago
@@ -42,7 +58,6 @@ function PagoForm() {
               id="idClient"
               type="text"
               onChange={handleInputChange}
-              defaultValue={formValue.idClient}
             />
           </div>
           <div className="mb-3">
@@ -58,7 +73,6 @@ function PagoForm() {
               type="number"
               name="monto"
               onChange={handleInputChange}
-              defaultValue={formValue.monto}
             />
           </div>
           <div className="d-flex-container">
@@ -73,7 +87,6 @@ function PagoForm() {
                 className="form-select"
                 name="tipoPago"
                 id="tipoPago"
-                defaultValue={formValue.tipoPago}
                 onChange={handleInputChange}
               >
                 <option value="1">Efectivo</option>
@@ -93,7 +106,6 @@ function PagoForm() {
                 name="comprobante"
                 type="file"
                 hidden
-                defaultValue={formValue.comprobante}
                 onChange={handleInputChange}
               />
             </div>

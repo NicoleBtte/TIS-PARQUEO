@@ -158,12 +158,13 @@ function ConvocatoriaEditar() {
               <label for="estado_convocatoria">estado_convocatoria</label>
               <select
                 id="estado_convocatoria"
+                name="estado_convocatoria"
                 className="form-control"
                 onChange={handleOnchange}
-                defaultValue={estado_convocatoria}
+                value={estado_convocatoria}
               >
-                <option selected>Activo</option>
-                <option>Inactivo</option>
+                <option value={1}>Activo</option>
+                <option value={0}>Inactivo</option>
               </select>
             </div>
             <div className="form-group">

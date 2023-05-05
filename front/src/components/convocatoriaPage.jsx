@@ -57,7 +57,9 @@ const ConvocatoriaPage = () => {
             <tr key={convocatoria.idConvocatoria}>
               <td>{convocatoria.titulo}</td>
               <td>{convocatoria.descripcion_convocatoria}</td>
-              <td>{convocatoria.estado_convocatoria}</td>
+              <td>
+                {convocatoria.estado_convocatoria === 0 ? "Inactivo" : "Activo"}
+              </td>
               <td>{convocatoria.numero_cupos}</td>
               <td>{convocatoria.fecha_inicio}</td>
               <td>{convocatoria.fecha_fin}</td>
