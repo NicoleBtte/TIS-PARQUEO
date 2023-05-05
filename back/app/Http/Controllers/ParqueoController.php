@@ -13,7 +13,8 @@ class ParqueoController extends Controller
         if( $parqueos->isEmpty()){
             return response()->json(['message' => 'No se encontraron parqueos.'], 404);
         } else {
-            return response()->json([$parqueos], 200);
+            //return response()->json([$parqueos], 200);
+            return response()->json(json_encode($parqueos));
         }
     }
 

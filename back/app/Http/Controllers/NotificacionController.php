@@ -23,7 +23,7 @@ class NotificacionController extends Controller
         if( $notificaciones->isEmpty()){
             return response()->json(['message' => 'No se encontraron notificaciones'], 404);
         } else {
-            return response()->json([$notificaciones], 200);
+            return response()->json(json_encode($notificaciones));
         }
     }
 
@@ -34,7 +34,7 @@ class NotificacionController extends Controller
         if( $notificaciones->isEmpty()){
             return response()->json(['message' => 'No se encontraron notificaciones'], 404);
         } else {
-            return response()->json([$notificaciones], 200);
+            return response()->json(json_encode($notificaciones));
         }
     }
 

@@ -6,12 +6,13 @@ import axiosCliente from '../../axios-client';
 
 const RedactarForm = () => {
     const [options, setOptions] = useState([]);
+    const [selectedOption, setSelectedOption] = useState('');
     const navigate = useNavigate();
     const idUsuario = localStorage.getItem('ID_USER');
 
     useEffect(() => {
       getoptions();
-    },)
+    },[])
 
     const opciones = [
       {
@@ -20,24 +21,29 @@ const RedactarForm = () => {
       }
     ]
 
-    const getoptions = () => {
-      setOptions(opciones);//Estatico--->cambiar
+    const handleOptionChange = (event) => {
+      setSelectedOption(event.target.value);
+    }
 
-      /*axiosCliente.get('/parqueos')
+    const getoptions = () => {
+      //setOptions(opciones);//Estatico--->cambiar
+
+      axiosCliente.get('/parqueos')
       .then(({ data }) => {
         setOptions(JSON.parse(data))
         console.log(JSON.parse(data))
       })
       .catch(() => {
         //setLoading(false)
-      })*/
+        console.log('Algo salio mal');
+      })
     }
 
     const enviarMensaje = (values) =>{
       console.log(values);
       const payload = {
         id: idUsuario,
-        idparqueo: values.idParqueo,
+        idparqueo: selectedOption,
         titulo_notif: values.titulo,
         mensaje_notif: values.descripcion,
         
@@ -63,9 +69,9 @@ const RedactarForm = () => {
       <h4>Redactar petición/queja</h4>
       <Formik
         initialValues={{
-          option: '',
+          option: null,
           titulo: '',
-          descripcion:''
+          descripcion:'',
         }}
 
         validate={(values) => {
@@ -90,7 +96,7 @@ const RedactarForm = () => {
             <Form className='formulario'>
                 <div>
                   <label htmlFor="option">Opción:</label>
-                  <Field as="select" id="option" name="option">
+                  <Field as="select" id="option" name="option" onChange={handleOptionChange} value={selectedOption}>
                     <option value="">Seleccione una opción</option>
                     {options.map((opcion) => (
                       <option key={opcion.idParqueo} value={opcion.idParqueo}>

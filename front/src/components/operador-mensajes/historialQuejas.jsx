@@ -35,13 +35,13 @@ const HistorialQuejas = () => {
   ];*/
 
   const getFilas = () => {
-    /*setLoading(true);
-    setFilas(mensajes);
-    setLoading(false);*/
+    const payload ={
+      id: idUsuario,
+    }
 
     //con axios
     setLoading(true)
-      axiosCliente.get('/notificacionesRecibe',idUsuario)
+      axiosCliente.get('/notificacionesRecibe', { params: payload })
         .then(({ data }) => {
           setLoading(false)
           setFilas(JSON.parse(data))

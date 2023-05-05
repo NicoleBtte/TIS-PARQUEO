@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitc505be6b9bff93b7f219979ea028f77f
+class ComposerStaticInitdda8f8df9144fd49a3c444b19c26e023
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -326,8 +326,8 @@ class ComposerStaticInitc505be6b9bff93b7f219979ea028f77f
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -509,6 +509,7 @@ class ComposerStaticInitc505be6b9bff93b7f219979ea028f77f
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminController.php',
         'App\\Http\\Controllers\\ClienteController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClienteController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\ConvocatoriaController' => __DIR__ . '/../..' . '/app/Http/Controllers/ConvocatoriaController.php',
@@ -539,6 +540,7 @@ class ComposerStaticInitc505be6b9bff93b7f219979ea028f77f
         'App\\Models\\Sitio' => __DIR__ . '/../..' . '/app/Models/Sitio.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\ZonaDeEstacionamiento' => __DIR__ . '/../..' . '/app/Models/ZonaDeEstacionamiento.php',
+        'App\\Notifications\\NotificacionNueva' => __DIR__ . '/../..' . '/app/Notifications/NotificacionNueva.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -5433,10 +5435,10 @@ class ComposerStaticInitc505be6b9bff93b7f219979ea028f77f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitc505be6b9bff93b7f219979ea028f77f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitc505be6b9bff93b7f219979ea028f77f::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitc505be6b9bff93b7f219979ea028f77f::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitc505be6b9bff93b7f219979ea028f77f::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitdda8f8df9144fd49a3c444b19c26e023::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitdda8f8df9144fd49a3c444b19c26e023::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitdda8f8df9144fd49a3c444b19c26e023::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitdda8f8df9144fd49a3c444b19c26e023::$classMap;
 
         }, null, ClassLoader::class);
     }

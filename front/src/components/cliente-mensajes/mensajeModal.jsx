@@ -36,10 +36,10 @@ const MensajeModal = (props) => {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>Cerrar</Button>
-            <Button as={Link} to={'/cliente/mensajes/responder/id/' + id + '/name/' + encodeURIComponent(name)} variant="warning">Responder</Button>
           </Modal.Footer>
         </Modal>
     );
   }
-  
+  //<Button as={Link} to={'/cliente/mensajes/responder/id/' + id + '/name/' + encodeURIComponent(name)} variant="warning">Responder</Button>
+
   export default MensajeModal

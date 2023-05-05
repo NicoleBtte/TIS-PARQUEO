@@ -18,7 +18,7 @@ const ResponderForm = () => {
       }
       console.log(payload);
     
-      axiosCliente.post('/notificaciones', payload)
+      axiosCliente.post('/notificacionesResp', payload)
         .then(({data}) => {    
           //que hacer despues      
           console.log(data)

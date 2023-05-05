@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Http\\Controllers\\AdminController' => $baseDir . '/app/Http/Controllers/AdminController.php',
     'App\\Http\\Controllers\\ClienteController' => $baseDir . '/app/Http/Controllers/ClienteController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\ConvocatoriaController' => $baseDir . '/app/Http/Controllers/ConvocatoriaController.php',
@@ -38,6 +39,7 @@ return array(
     'App\\Models\\Sitio' => $baseDir . '/app/Models/Sitio.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\ZonaDeEstacionamiento' => $baseDir . '/app/Models/ZonaDeEstacionamiento.php',
+    'App\\Notifications\\NotificacionNueva' => $baseDir . '/app/Notifications/NotificacionNueva.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',

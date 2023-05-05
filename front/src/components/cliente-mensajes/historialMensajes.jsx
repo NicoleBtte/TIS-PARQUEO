@@ -18,13 +18,12 @@ const HistorialMensajes = () => {
 
   
     const getFilas = () => {
-      /*setLoading(true);
-      setFilas(mensajes);
-      setLoading(false);*/
-
-      //con axios
+    //con axios
+      const payload ={
+        id: idUsuario
+      }
       setLoading(true)
-      axiosCliente.get('/notificacionesRecibe',idUsuario)
+      axiosCliente.get('/notificacionesRecibe', { params: payload })
         .then(({ data }) => {
           setLoading(false)
           setFilas(JSON.parse(data))

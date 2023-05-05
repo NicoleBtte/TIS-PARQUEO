@@ -18,7 +18,7 @@ const ResponseForm = () => {
       }
       console.log(payload);
     
-      /*axiosCliente.post('/notificaciones', payload)
+      axiosCliente.post('/notificacionesResp', payload)
         .then(({data}) => {    
           //que hacer despues      
           console.log(data)
@@ -29,7 +29,7 @@ const ResponseForm = () => {
           if (response && response.status === 422) {
             console.log(response.data.errors)
           }
-          })*/
+          })
     }
 
     return (
