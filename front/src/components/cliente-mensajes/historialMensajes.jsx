@@ -4,6 +4,7 @@ import {Link, useParams} from "react-router-dom";
 import App from '../../App';
 import MensajeModal from './mensajeModal';
 import axiosCliente from '../../axios-client';
+import '../../styles/tableStyle.css'
 
 const HistorialMensajes = () => {
     const [filas, setFilas] = useState([]);
@@ -63,8 +64,9 @@ const HistorialMensajes = () => {
   
     return (
       <>
-        <Table responsive>
-          <thead>
+      <div>
+        <Table responsive className='mytable'>
+          <thead className='tableHeader'>
             <tr>
               <th>Fecha</th>
               <th>Titulo</th>
@@ -74,7 +76,7 @@ const HistorialMensajes = () => {
           </thead>
           {loading && (
             <tbody>
-              <tr>
+              <tr className='misFilas'>
                 <td colSpan="5">Loading...</td>
               </tr>
             </tbody>
@@ -82,11 +84,11 @@ const HistorialMensajes = () => {
           {!loading && (
             <tbody>
               {filas.map((mensaje) => (
-                <tr key={mensaje.idemisor}>
-                  <td>{mensaje.fecha}</td>
-                  <td>{mensaje.titulo}</td>
-                  <td>{mensaje.emisor}</td>
-                  <td>
+                <tr className='misFilas' key={mensaje.idemisor}>
+                  <td className='miTd'>{mensaje.fecha}</td>
+                  <td className='miTd'>{mensaje.titulo}</td>
+                  <td className='miTd'>{mensaje.emisor}</td>
+                  <td className='miTd'>
                     <Button
                       onClick={() => handleVerMasClick(mensaje)}
                       variant="warning"
@@ -112,6 +114,7 @@ const HistorialMensajes = () => {
             </tbody>
           )}
         </Table>
+        </div>
       </>
     );
   };

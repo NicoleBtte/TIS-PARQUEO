@@ -53,7 +53,7 @@ const LoginPage = () => {
 	}
 
     return (
-      <div className='bigestContainer'>
+      <div className='bigestContainerLogin'>
       <div className="formContainer">
       <h4>Iniciar sesion</h4>
       <Formik

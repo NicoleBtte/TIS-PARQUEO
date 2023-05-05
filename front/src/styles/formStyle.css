@@ -1,9 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
-.bigestContainer {
+.bigestContainerLogin {
   flex-direction: column;
   justify-content: center; /* Alinea el formulario al centro horizontal */
   padding-top: 8%;
+  height: 100vh;
+}
+
+.bigestContainerRedactar {
+  flex-direction: column;
+  justify-content: center; /* Alinea el formulario al centro horizontal */
+  padding-top: 5%;
   height: 100vh;
 }
 
@@ -72,5 +79,9 @@
   .speciallabel{
     font-size: 17px;
     font-family: 'Poppins', sans-serif;
+  }
+
+  .bigInput {
+    height: 90px;
   }
   
