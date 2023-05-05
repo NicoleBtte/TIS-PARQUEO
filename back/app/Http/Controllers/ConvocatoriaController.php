@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Convocatoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class ConvocatoriaController extends Controller
 {
@@ -106,4 +111,16 @@ class ConvocatoriaController extends Controller
         $convocatoria->numero_cupos = $convocatoria->numero_cupos - 1;
         $convocatoria->save();
     }
+
+     public function consultarConvocatoriaActiva(){
+        $convocatoria = DB::table('convocatoria')
+            ->where('convocatoria.estado_convocatoria', '=', 1)
+            ->select('convocatoria.*')
+            ->first();
+        if ($convocatoria) {
+            return response()->json([$convocatoria], 200);
+        } else {
+            return response()->json(['error' => 'No se encontró la convocatoria'], 404);
+        }
+     }
 }

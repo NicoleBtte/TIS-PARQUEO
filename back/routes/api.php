@@ -72,6 +72,7 @@ Route::post('/convocatoria', [ConvocatoriaController::class, 'store']);
 Route::get('/convocatoria/{idConvocatoria}', [ConvocatoriaController::class, 'show']);
 Route::put('/convocatoria/{idConvocatoria}', [ConvocatoriaController::class, 'update']);
 Route::delete('/convocatoria/{idConvocatoria}', [ConvocatoriaController::class, 'destroy']);
+Route::get('/convocatoriaActual', [ConvocatoriaController::class, 'consultarConvocatoriaActiva']);
 
 Route::get('/parqueos', [ParqueoController::class ,'index']);
 Route::post('/parqueo',  [ParqueoController::class ,'store']);
