@@ -3,6 +3,8 @@ import { Button, Table } from "react-bootstrap";
 import {Link, useParams} from "react-router-dom";
 import App from '../../App';
 import axiosCliente from '../../axios-client';
+import '../../styles/tableStyle.css'
+import '../../styles/botonesStyle.css'
 
 const ClienteSitio = () => {
     const [filas, setFilas] = useState([]);
@@ -84,8 +86,8 @@ const ClienteSitio = () => {
     }
 
     return (
-        <Table responsive>
-          <thead>
+        <Table responsive className='mytable'>
+          <thead className='tableHeader'>
             <tr>
                 <th>Cliente</th>
                 <th>Parqueo</th>
@@ -96,7 +98,7 @@ const ClienteSitio = () => {
           </thead>
           {loading &&
             <tbody>
-            <tr>
+            <tr className='misFilas'>
               <td colSpan="5">
                 Loading...
               </td>
@@ -106,13 +108,15 @@ const ClienteSitio = () => {
           {!loading &&
             <tbody>
             {filas.map(u => (
-              <tr key={u.idcliente}>
-                <td>{u.nombre_cliente}</td>
-                <td>{u.nombre_parqueo}</td>
-                <td>{u.nombre_zona_estacionamiento}</td>
-                <td>{u.numero}</td>
-                <td>
-                  <Button as={Link}  to={'/admin/asignacion/id/' + u.idcliente+'/nc/'+u.nombre_cliente+'/p/'+u.nombre_parqueo+'/z/'+u.nombre_zona_estacionamiento+'/s/'+u.numero} variant="warning">Editar</Button>
+              <tr className='misFilas' key={u.idcliente}>
+                <td className='miTd'>{u.nombre_cliente}</td>
+                <td className='miTd'>{u.nombre_parqueo}</td>
+                <td className='miTd'>{u.nombre_zona_estacionamiento}</td>
+                <td className='miTd'>{u.numero}</td>
+                <td className='miTd'>
+                  <Button className='naranjaBoton' as={Link} to={'/admin/asignacion/id/' + u.idcliente+'/nc/'+u.nombre_cliente+'/p/'+u.nombre_parqueo+'/z/'+u.nombre_zona_estacionamiento+'/s/'+u.numero}>
+                    Editar
+                  </Button>
                 </td>
               </tr>
             ))}

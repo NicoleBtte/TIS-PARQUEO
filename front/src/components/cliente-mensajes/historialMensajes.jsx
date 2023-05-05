@@ -91,7 +91,7 @@ const HistorialMensajes = () => {
                   <td className='miTd'>
                     <Button
                       onClick={() => handleVerMasClick(mensaje)}
-                      variant="warning"
+                      className='celesteBoton'
                     >
                       Ver mas
                     </Button>

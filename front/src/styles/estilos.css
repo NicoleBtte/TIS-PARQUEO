@@ -54,12 +54,7 @@
   height: auto;
 }
 
-.modal-body {
-  margin-top: 20px;
-  height: 300px;
-  width: 400px;
-  background: rgba(82, 144, 232, 0.1);
-}
+
 
 .container-1 {
   display: flex;

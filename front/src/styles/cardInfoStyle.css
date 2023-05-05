@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+.infoContainer {
+    margin: 2%; /* centra el contenedor horizontalmente */
+    font-family: 'Poppins', sans-serif;
+}
+
+.infoContainer p{
+    margin: 0px;
+}

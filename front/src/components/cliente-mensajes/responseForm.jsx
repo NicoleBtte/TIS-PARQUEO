@@ -35,8 +35,10 @@ const ResponseForm = () => {
 
     return (
       <>
+      <div className='bigestContainerRedactar'>
+      <div className="formContainer">
       <h4>Responder</h4>
-      <p>Destinatario: {name}</p>
+      <p className='destinatarioText'>Destinatario: {name}</p>
       <Formik
         initialValues={{
           titulo: '',
@@ -63,7 +65,7 @@ const ResponseForm = () => {
         >
         {({ errors, touched }) => (
             <Form className='formulario'>
-                <div>
+                <div className="myform-group">
                   <label htmlFor="titulo">Titulo:</label>
                   <Field
                     type="text" 
@@ -72,20 +74,24 @@ const ResponseForm = () => {
                   />
                   <ErrorMessage name="titulo" component={() => (<div className="error">{errors.titulo}</div>)} />
                 </div>
-                <div>
+                <div className="myform-group">
                   <label htmlFor="ci">Descripcion:</label>
                   <Field
                     type="text" 
                     id="descripcion" 
                     name="descripcion" 
+                    className="bigInput"
                   />
                   <ErrorMessage name="descripcion" component={() => (<div className="error">{errors.descripcion}</div>)} />
                 </div>
-
-                <button type="submit">Enviar</button>
+                <div className="boton-container">
+                  <button type="submit">Enviar</button>
+                </div>
             </Form>
         )}
       </Formik>
+      </div>
+      </div>
       </>
       );
   }

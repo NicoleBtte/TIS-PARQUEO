@@ -4,10 +4,12 @@ import { useStateContext } from '../contexts/ContextProvider';
 import axiosClient from "../axios-client.js";
 import { Navigate, Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
+import { Button } from "react-bootstrap";
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import '../styles/headerStyle.css';
 import '../styles/navbarStyle.css';
+import '../styles/logoutButtonStyle.css';
 import App from '../App';
 
 const DefaultLayout = () => {
@@ -102,7 +104,7 @@ const DefaultLayout = () => {
             <Navbar.Collapse id="responsive-navbar-nav">
               {menu}
               <Nav>
-                <a href="#" onClick={onLogout} className='btn-logout'>Cerrar sesión</a>
+                <Button href="#" onClick={onLogout} className='mylogoutButton'>Cerrar sesión</Button>
               </Nav>
             </Navbar.Collapse>
           </Container>

@@ -3,14 +3,14 @@
 .mytable {
     border-collapse: separate;
     border-spacing: 0;
-    border-radius: 10px;
+    border-radius: 15px;
     overflow: hidden;
     font-family: 'Poppins', sans-serif;
   }
   
   /* Estilos para las celdas de los encabezados */
 .tableHeader {
-    background-color: blue;
+    background-color: #122A4C;
     color: white;
     text-align: center;
     padding: 8px;
@@ -19,13 +19,13 @@
   
   /* Estilos para las filas pares de la tabla */
   .misFilas {
-    background-color: yellow;
+    background-color: #ECF2FA;
   }
   
   
   /* Estilos para las celdas de la tabla */
   .miTd {
     padding: 8px;
-    border: 1px solid red;
+    border: 1px solid #D4DAE1;
     text-align: center;
   }

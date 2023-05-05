@@ -1,4 +1,5 @@
 import React from 'react'
+import '../../styles/cardInfoStyle.css'
 
 function CardInfo(props) {
     const nombreCliente = props.cliente;
@@ -7,12 +8,12 @@ function CardInfo(props) {
     const numeroSitio = props.sitio;
 
   return (
-    <>
+    <div className='infoContainer'>
         <p>Cliente: {nombreCliente}</p>
         <p>Parqueo: {nombreParqueo}</p>
         <p>Zona de estacionamiento: {nombreZona}</p>
         <p>Numero de sitio: {numeroSitio}</p>
-    </>
+    </div>
   )
 }
 

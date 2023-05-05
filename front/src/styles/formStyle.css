@@ -54,7 +54,7 @@
   button[type="submit"] {
     margin-top: 5%;
     background-color: #122A4C;
-    border-radius: 10px;
+    border-radius: 15px;
     border: none;
     color: white;
     cursor: pointer;
@@ -83,5 +83,9 @@
 
   .bigInput {
     height: 90px;
+  }
+
+  .destinatarioText {
+    font-family: 'Poppins', sans-serif;
   }
   

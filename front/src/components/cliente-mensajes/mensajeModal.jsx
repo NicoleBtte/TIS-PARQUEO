@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import {Link, useParams, Navigate} from "react-router-dom";
+import '../../styles/botonesStyle.css';
+import '../../styles/mensajeModalStyle.css';
 
 const MensajeModal = (props) => {
   const id = props.idemisor;
@@ -23,20 +25,22 @@ const MensajeModal = (props) => {
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >
-          <Modal.Header closeButton>
+          <Modal.Header className='modalMensajeHeader' closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
               Mensaje
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <h4>{titulo}</h4>
-            <p>
-              {descripcion}
-            </p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>Cerrar</Button>
-            <Button as={Link} to={'/cliente/mensajes/responder/id/' + id + '/name/' + encodeURIComponent(name)} variant="warning">Responder</Button>
+          <div className='modalMensajeBody'>
+            <Modal.Body className='myMensajeModalBody'>
+              <h4>{titulo}</h4>
+                <p>
+                {descripcion}
+                </p>
+              </Modal.Body>
+          </div>
+          <Modal.Footer className='modalMensajeFooter'>
+            <Button className='grisBoton' onClick={handleClose}>Cerrar</Button>
+            <Button className='verdeBoton' as={Link} to={'/cliente/mensajes/responder/id/' + id + '/name/' + encodeURIComponent(name)}>Responder</Button>
           </Modal.Footer>
         </Modal>
     );

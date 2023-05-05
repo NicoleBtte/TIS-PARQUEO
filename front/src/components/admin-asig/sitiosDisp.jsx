@@ -4,6 +4,9 @@ import {Link, useParams, useNavigate} from "react-router-dom";
 import App from '../../App';
 import axiosCliente from '../../axios-client';
 import CardInfo from './cardInfo';
+import '../../styles/tablePageStyle.css'
+import '../../styles/tableStyle.css'
+import '../../styles/botonesStyle.css'
 
 const SitiosDisponibles = () => {
     const [filas, setFilas] = useState([]);
@@ -96,41 +99,45 @@ const SitiosDisponibles = () => {
           zona = {z}
           sitio = {s}
         />
-        <h4>Sitios disponibles</h4>
-        <Button onClick={() => removeSitio(id)} variant="warning">Dejar sin sitio</Button>
-        <Table responsive>
-          <thead>
-            <tr>
-                <th>Parqueo</th>
-                <th>Zona de estacionamiento</th>
-                <th>Sitio</th>
-                <th>Acciones</th>
-            </tr>
-          </thead>
-          {loading &&
-            <tbody>
-            <tr>
-              <td colSpan="5">
-                Loading...
-              </td>
-            </tr>
-            </tbody>
-          }
-          {!loading &&
-            <tbody>
-            {filas.map(u => (
-              <tr key={u.idsitio}>
-                <td>{u.nombre_parqueo}</td>
-                <td>{u.nombre_zona_estacionamiento}</td>
-                <td>{u.numero}</td>
-                <td>
-                  <Button onClick={() => asignarSitio(id, u.idsitio)} variant="warning">Asignar este sitio</Button>
+        <div className='tablePageContainer'>
+          <div className='titleBottonContainer'>
+            <h4>Sitios disponibles</h4>
+            <Button className='rojoBoton' onClick={() => removeSitio(id)}>Dejar sin sitio</Button>
+          </div>
+          <Table responsive className='mytable'>
+            <thead className='tableHeader'>
+              <tr>
+                  <th>Parqueo</th>
+                  <th>Zona de estacionamiento</th>
+                  <th>Sitio</th>
+                  <th>Acciones</th>
+              </tr>
+            </thead>
+            {loading &&
+              <tbody>
+              <tr className='misFilas'>
+                <td colSpan="5">
+                  Loading...
                 </td>
               </tr>
-            ))}
-            </tbody>
-          }
-        </Table>
+              </tbody>
+            }
+            {!loading &&
+              <tbody>
+              {filas.map(u => (
+                <tr className='misFilas' key={u.idsitio}>
+                  <td className='miTd'>{u.nombre_parqueo}</td>
+                  <td className='miTd'>{u.nombre_zona_estacionamiento}</td>
+                  <td className='miTd'>{u.numero}</td>
+                  <td className='miTd'>
+                    <Button className='naranjaBoton' onClick={() => asignarSitio(id, u.idsitio)}>Asignar este sitio</Button>
+                  </td>
+                </tr>
+              ))}
+              </tbody>
+            }
+          </Table>
+        </div>
       </>
         
       );
