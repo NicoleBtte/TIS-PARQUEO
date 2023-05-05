@@ -16,21 +16,23 @@ class PagoController extends Controller
         $cliente = Cliente::find($request->carnet);
         $msg='Ocurrio un error, vuelva a intentarlo mas tarde';
         if($cliente){
+            $saldo=$cliente->saldo;
             $deuda=$cliente->monto_a_pagar;
             $multa=$cliente->multa;
             $monto=$request->monto;
-            if($monto<=($deuda+$multa)){
+            if($monto<=($deuda+$multa+$saldo)){
                 //$id++;
                 $pago=new Pago;
                 //$pago->idtransaccion=$id;
                 $pago->monto=$monto;
                 $pago->fechaPago=Carbon::today()->format('Y-m-d');
-                $archivo = $request->file('imagen');
+                /*$archivo = $request->file('imagen');
                 $ruta = Storage::disk('uploads')->putFile('comprobantes', $archivo);
-                $pago->comprobante = $ruta;
+                $pago->comprobante = $ruta;*/
+                $pago->comprobante = null;
                 $pago->cliente_idcliente=$request->carnet;
                 $pago->reporte_idreporte=DB::table('reporte')->latest('idreporte')->first()->idreporte;
-                $pago->save();
+                //$pago->save();
                 $cliente->fecha_pagado=Carbon::today()->format('Y-m-d');
                 if($monto<$multa){
                     $cliente->multa=$multa-$monto;
@@ -51,9 +53,37 @@ class PagoController extends Controller
                         $cliente->estado_pago=1;
                         $cliente->save();
                         $msg='Guardado exitoso, el cliente esta al dia';
+                    }else if((($monto-$multa)>$deuda)){
+                        $cliente->monto_a_pagar=0;
+                        $cliente->estado_pago=1;
+                        $adelanto=$monto-($deuda+$multa);
+                        $mesAdelantado=($adelanto/100);
+                        $cliente->mesAdelantado=(($cliente->mesAdelantado)+$mesAdelantado);
+                        DB::table('cliente')->where('idcliente', $request->carnet)->update([
+                            'fecha_lim_pago' => DB::raw("DATE_ADD(fecha_lim_pago, INTERVAL {$mesAdelantado} MONTH)")
+                        ]);
+                    
+                        if($adelanto>=(0.5*$saldo)){
+                            $cliente->saldo=$saldo-$adelanto;
+                            $cliente->save();
+                            $pago->descuento='10%';
+                            $pago->devolucion=$monto*0.1;
+                            $msg='Guardado exitoso, el cliente esta al dia e hizo un pago adelantado que merece un 10% de descuento';
+                        }else if(($adelanto<(0.5*$saldo)) && ($adelanto>=(0.25*$saldo))){
+                            $cliente->saldo=$saldo-$adelanto;
+                            $cliente->save();
+                            $pago->descuento='5%';
+                            $pago->devolucion=$monto*0.05;
+                            $msg='Guardado exitoso, el cliente esta al dia e hizo un pago adelantado que merece un 5% de descuento';
+                        }else{
+                            $cliente->saldo=$saldo-$adelanto;
+                            $cliente->save();
+                            $msg='Guardado exitoso, el cliente esta al dia e hizo un pago adelantado pequeño';
+                        }
                     }
                     
                 }
+                $pago->save();
             }else{
                 $msg='Error: el monto excede la deuda total del cliente';
             }

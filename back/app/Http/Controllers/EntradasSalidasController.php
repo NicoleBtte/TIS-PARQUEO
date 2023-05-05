@@ -20,10 +20,10 @@ class EntradasSalidasController extends Controller
         //$id=$id+1;
         //$cliente = Cliente::find($request->idcliente);
         $entrada=new HistorialEntradasSalidas;
-        $entrada->idhistorial=$request->id;
-        $entrada->hora_ingreso_hist=Carbon::now()->format('H:i:s');//$request->horaentrada;
+        //$entrada->idhistorial=$request->id;
+        $entrada->hora_ingreso_hist=//Carbon::now()->format('H:i:s');//$request->horaentrada;
         $entrada->hora_salida_hist=null;//$request->horasalida;
-        $entrada->fecha_ingreso=Carbon::today()->format('Y-m-d');//$request->fechaentrada;
+        $entrada->fecha_ingreso=date('Y-m-d H:i:s');//Carbon::today()->format('Y-m-d');//$request->fechaentrada;
         $entrada->fecha_salida=null;//$request->fechasalida;
         $entrada->cliente_idcliente=$request->idcliente;//DB::table('auto')->select('cliente_idcliente')->where('placa_auto',$request->placa)->first();
         $entrada->save();
@@ -32,12 +32,12 @@ class EntradasSalidasController extends Controller
     }
 
     public function RegistroSalida(Request $request){
-        $horaactual=Carbon::now()->format('H:i:s');
-        $fechaactual=Carbon::today()->format('Y-m-d');
+        //$horaactual=Carbon::now()->format('H:i:s');
+        $fechaactual=date('Y-m-d H:i:s');//Carbon::today()->format('Y-m-d');
         DB::table('historial_entradas_salidas')
                 ->where('cliente_idcliente', $request->idcliente)
                 ->whereNull('fecha_salida')
-                ->update(['hora_salida_hist' => $horaactual, 'fecha_salida' => $fechaactual]);
+                ->update(['fecha_salida' => $fechaactual]);
 
         return response()->json(['msg'=>'Genial, se actualizo con exito']);
     }
