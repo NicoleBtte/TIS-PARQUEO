@@ -87,15 +87,6 @@ const LoginPage = () => {
         }}
         onSubmit={guardar}
       >
-        {({ errors, touched }) => (
-          <Form className="formulario">
-            <label htmlFor="rol">Rol:</label>
-            <select
-              name="rol"
-              id="rol"
-              value={selectedRole}
-              onChange={(e) => setSelectedRole(e.target.value)}
-            >
             {({ errors, touched }) => (
                 <Form className='formulario'>
                   <label className="speciallabel" htmlFor="rol" >Iniciar sesión como:</label>

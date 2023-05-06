@@ -104,7 +104,7 @@ function FormularioConvocatoria() {
         <form onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="myform-group ">
-              <label htmlFor="titulo">Titulo</label>
+              <label htmlFor="titulo">Titulo:</label>
               <input
                 name="titulo"
                 type="text"
@@ -116,7 +116,7 @@ function FormularioConvocatoria() {
               <span>{validar.tituloB ? "los datos son incorrectos" : ""}</span>
             </div>
             <div className="myform-group ">
-              <label htmlFor="descripcion_convocatoria">Descripcion</label>
+              <label htmlFor="descripcion_convocatoria">Descripcion:</label>
               <input
                 name="descripcion_convocatoria"
                 type="text"
@@ -128,7 +128,7 @@ function FormularioConvocatoria() {
             </div>
           </div>
           <div className="myform-group">
-            <label htmlFor="numero_cupos">Numero de cupos</label>
+            <label htmlFor="numero_cupos">Numero de cupos:</label>
             <input
               name="numero_cupos"
               type="number"
@@ -142,7 +142,7 @@ function FormularioConvocatoria() {
 
           <div className="form-row">
             <div className="myform-group ">
-              <label for="estado_convocatoria">Estado</label>
+              <label for="estado_convocatoria">Estado:</label>
               <select
                 name="estado_convocatoria"
                 id="estado_convocatoria"
@@ -155,7 +155,7 @@ function FormularioConvocatoria() {
               </select>
             </div>
             <div className="myform-group">
-              <label htmlFor="fecha_inicio">Fecha inicio</label>
+              <label htmlFor="fecha_inicio">Fecha inicio:</label>
               <input
                 name="fecha_inicio"
                 type="date"
@@ -166,7 +166,7 @@ function FormularioConvocatoria() {
               ></input>
             </div>
             <div className="myform-group">
-              <label htmlFor="fecha_fin">Fecha fin</label>
+              <label htmlFor="fecha_fin">Fecha fin:</label>
               <input
                 name="fecha_fin"
                 type="date"
@@ -177,7 +177,7 @@ function FormularioConvocatoria() {
               ></input>
             </div>
             <div className="myform-group">
-              <label htmlFor="fecha_pago">Fecha pago</label>
+              <label htmlFor="fecha_pago">Fecha pago:</label>
               <input
                 name="fecha_pago"
                 type="date"
@@ -188,7 +188,7 @@ function FormularioConvocatoria() {
               ></input>
             </div>
             <div className="myform-group ">
-              <label for="archivoPdf">Subir archivo</label>
+              <label for="archivoPdf">Subir archivo:</label>
               <input
                 type="file"
                 name="archivoPdf"
@@ -200,9 +200,12 @@ function FormularioConvocatoria() {
               />
             </div>
           </div>
-          <button type="submit" className="btn btn-primary">
-            Agregar
-          </button>
+          <div className="boton-container">
+              <button type="submit" className="btn btn-primary">
+                Agregar
+              </button>
+          </div>
+
         </form>
       </div>
     </Container>

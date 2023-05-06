@@ -1,0 +1,30 @@
+.celesteBotonC {
+    border-radius: 20px !important;
+    background-color: #33B4E5 !important;
+    border-color: transparent !important;
+    width: 50% !important;
+}
+.verdeBotonC {
+    border-radius: 20px !important;
+    background-color: #01C851 !important;
+    border-color: transparent !important;
+    width: 20% !important;
+}
+.naranjaBotonC {
+    border-radius: 20px !important;
+    background-color: #FF8800 !important; 
+    border-color: transparent !important;
+    width: 25% !important;
+}
+.rojoBotonC {
+    border-radius: 20px !important;
+    background-color: #FF1A00 !important;
+    border-color: transparent !important;
+    width: 25%;
+}
+.grisBotonC {
+    border-radius: 20px !important;
+    background-color: #918A95 !important;
+    border-color: transparent !important;
+    width: 20% !important;
+}

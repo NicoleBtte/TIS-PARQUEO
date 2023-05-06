@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { Button, Container, Table } from "react-bootstrap";
 import "../styles/estilos.css";
 import "../styles/tableStyle.css";
-import "../styles/botonesStyle.css";
 import "../styles/tablePageStyle.css";
+import '../styles/parqueoBotones.css'
 import axiosClient from "../axios-client.js";
 
 /*{
@@ -40,8 +40,15 @@ const ParqueoPage = () => {
 
   return (
     <Container className="tablePageContainer">
-      <h1 className="tittleContainer">Lista Parqueos</h1>
-      <Table striped bordered hover className="mytable">
+    <div className='titleBottonContainer'>
+      <h2 className="tittleContainer">Lista Parqueos</h2>
+        <Link to={"/admin/formulario-parqueo"}>
+          <Button className="botones-cs">
+            Agregar Parqueo
+          </Button>
+        </Link>
+    </div>
+      <Table responsive className="mytable">
         <thead className="tableHeader">
           <tr>
             <th className="fw-medium">Nombre</th>
@@ -52,33 +59,29 @@ const ParqueoPage = () => {
         <tbody>
           {parqueos.map((parqueo) => (
             <tr className="misFilas" key={parqueo.idParqueo}>
-              <td className="myTd text-center">{parqueo.nombre_parqueo}</td>
-              <td className="myTd text-center">{parqueo.numero_de_zonas}</td>
-              <td className="myTd text-center">
+              <td className="miTd text-center">{parqueo.nombre_parqueo}</td>
+              <td className="miTd text-center">{parqueo.numero_de_zonas}</td>
+              <td className="miTd text-center">
                 <Link to={`/admin/parqueo/${parqueo.idParqueo}/detalle`}>
-                  <Button className="celesteBoton">Ver detalles</Button>
+                  <Button className="celesteBotonP">Ver detalles</Button>
                 </Link>
+                &nbsp;
+                <Link to={`/admin/parqueo/${parqueo.idParqueo}/editar`}>
+                  <Button className="naranjaBotonP">Editar</Button>
+                </Link>
+                &nbsp;
                 <Button
-                  className="rojoBoton"
+                  className="rojoBotonP"
                   onClick={() => deleteParqueo(parqueo.idParqueo)}
                 >
                   Eliminar
                 </Button>
-                <Link to={`/admin/parqueo/${parqueo.idParqueo}/editar`}>
-                  <Button className="naranjaBoton">Editar</Button>
-                </Link>
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
-      <div className="content-rigth">
-        <Link className="botones-cs" to={"/admin/formulario-parqueo"}>
-          <Button variant="success" className="botones-cs">
-            Agregar Parqueo
-          </Button>
-        </Link>
-      </div>
+      
     </Container>
   );
 };

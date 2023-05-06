@@ -68,9 +68,9 @@ const HistorialMensajes = () => {
             <tbody>
               {filas.map((mensaje) => (
                 <tr className='misFilas' key={mensaje.idemisor}>
-                  <td className='miTd'>{mensaje.fecha}</td>
-                  <td className='miTd'>{mensaje.titulo}</td>
-                  <td className='miTd'>{mensaje.emisor}</td>
+                  <td className='miTd'>{mensaje.fecha_notif}</td>
+                  <td className='miTd'>{mensaje.titulo_notif}</td>
+                  <td className='miTd'>{mensaje.emisor_notif}</td>
                   <td className='miTd'>
                     <Button
                       onClick={() => handleVerMasClick(mensaje)}

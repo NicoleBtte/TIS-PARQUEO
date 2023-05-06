@@ -40,7 +40,6 @@ const MensajeModal = (props) => {
           </div>
           <Modal.Footer className='modalMensajeFooter'>
             <Button className='grisBoton' onClick={handleClose}>Cerrar</Button>
-            <Button className='verdeBoton' as={Link} to={'/cliente/mensajes/responder/id/' + id + '/name/' + encodeURIComponent(name)}>Responder</Button>
           </Modal.Footer>
         </Modal>
     );

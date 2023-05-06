@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Container, Button, Table } from "react-bootstrap";
 import "../styles/estilos.css";
 import "../styles/tableStyle.css";
-import "../styles/botonesStyle.css";
+import "../styles/convocatoriaBotones.css";
 import "../styles/tablePageStyle.css";
 import axiosClient from "../axios-client.js";
 
@@ -44,7 +44,7 @@ const ConvocatoriaPage = () => {
   return (
     <Container className="tablePageContainer">
       <h1 className="tittleContainer">Lista convocatorias</h1>
-      <Table striped bordered hover className="mytable">
+      <Table responsive className="mytable">
         <thead className="tableHeader">
           <tr>
             <th>Titulo</th>
@@ -59,27 +59,27 @@ const ConvocatoriaPage = () => {
         <tbody>
           {convocatorias.map((convocatoria) => (
             <tr className="misFilas" key={convocatoria.idConvocatoria}>
-              <td className="myTd">{convocatoria.titulo}</td>
-              <td className="myTd">{convocatoria.descripcion_convocatoria}</td>
-              <td className="myTd">
+              <td className="miTd">{convocatoria.titulo}</td>
+              <td className="miTd">{convocatoria.descripcion_convocatoria}</td>
+              <td className="miTd">
                 {convocatoria.estado_convocatoria === 0 ? "Inactivo" : "Activo"}
               </td>
-              <td className="myTd">{convocatoria.numero_cupos}</td>
-              <td className="myTd">{convocatoria.fecha_inicio}</td>
-              <td className="myTd">{convocatoria.fecha_fin}</td>
-              <td className="myTd">
+              <td className="miTd">{convocatoria.numero_cupos}</td>
+              <td className="miTd">{convocatoria.fecha_inicio}</td>
+              <td className="miTd">{convocatoria.fecha_fin}</td>
+              <td className="miTd">
                 <Link to={`/pdf`}>
-                  <Button className="celesteBoton">Ver Convocatoria</Button>
+                  <Button className="celesteBotonC">Ver Convocatoria</Button>
                 </Link>
 
                 <Link
                   to={`/admin/formulario-convocatoria/${convocatoria.idConvocatoria}/editar`}
                 >
-                  <Button className="naranjaBoton">Editar</Button>
+                  <Button className="naranjaBotonC">Editar</Button>
                 </Link>
 
                 <Button
-                  className="rojoBoton"
+                  className="rojoBotonC"
                   onClick={() =>
                     deleteConvocatoria(convocatoria.idConvocatoria)
                   }

@@ -99,7 +99,7 @@ const RedactarForm = () => {
             <Form className='formulario'>
                 <div>
                   <label className="speciallabel" htmlFor="option">Opción:</label>
-                  <Field as="select" id="option" name="option" onChange={handleOptionChange} value={selectedOption}>
+                  <Field className="combobox" as="select" id="option" name="option" onChange={handleOptionChange} value={selectedOption}>
                     <option value="">Seleccione una opción</option>
                     {options.map((opcion) => (
                       <option key={opcion.idParqueo} value={opcion.idParqueo}>

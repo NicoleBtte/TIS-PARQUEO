@@ -9,6 +9,7 @@ import "../styles/tablePageStyle.css";
 import { Container } from "react-bootstrap";
 
 const MisPagos = () => {
+  const idusuario = localStorage.getItem('ID_USER');
   const [estadoPago, setEstadoPago] = useState({
     estado_pago: "",
     fecha_lim_pago: "",
@@ -25,7 +26,7 @@ const MisPagos = () => {
   useEffect(() => {
     axiosClient
       .post("/showcliente", {
-        carnet: 123456,
+        carnet: idusuario,
       })
       .then((response) => {
         const result = response.data;
@@ -38,7 +39,7 @@ const MisPagos = () => {
   useEffect(() => {
     axiosClient
       .post("/consultaPagosCliente", {
-        idcliente: 123456,
+        idcliente: idusuario,
       })
       .then((response) => {
         const result = response.data;
