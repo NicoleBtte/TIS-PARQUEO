@@ -71,7 +71,7 @@ class ConvocatoriaController extends Controller
         $convocatoria = Convocatoria::findOrFail($idConvocatoria);
 
         $validatedData = $request->validate([
-            'titulo' => ['required', 'string', 'min:5', 'max:16', 'unique:convocatorias'],
+            'titulo' => ['required', 'string', 'min:5', 'max:16'],
             'descripcion_convocatoria' => ['required', 'string'],
             'numero_cupos' => ['required', 'integer', 'min:0'],
             'estado_convocatoria' => ['required', 'integer', 'min:0', 'max:1'],

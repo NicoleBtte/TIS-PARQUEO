@@ -29,8 +29,8 @@ function IngresosForm() {
   };
 
   return (
-    <div className="container">
-      <form className="pago-form box mx-auto my-4" onSubmit={handleSubmit}>
+    <div className="formContainer ">
+      <form onSubmit={handleSubmit}>
         <fieldset>
           <legend className="text-center  fw-medium primary-color">
             Registrar Ingreso

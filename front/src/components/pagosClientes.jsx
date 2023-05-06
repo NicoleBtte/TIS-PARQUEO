@@ -7,21 +7,22 @@ import axiosClient from "../axios-client.js";
 const PagosCliente = () => {
   const [clientes, setClientes] = useState([]);
 
-  /*React.useEffect(() => {
+  React.useEffect(() => {
     axiosClient
       .get("/consultaEstadoClientes")
       .then((response) => {
-        const result = response.data.data;
+        let result = response.data;
+        result = JSON.parse(result);
         console.log(result);
         setClientes(result);
       })
       .catch((error) => console.log("error", error));
-  }, []);*/
+  }, []);
 
   return (
     <div className="container">
       <div className="d-flex-between my-4">
-        <h1 className="my-0 fs-2">Pagos</h1>
+        <h1 className="my-0 fs-2">Pagos por cliente</h1>
         <div>
           <Link
             className="link-none-styles btn-personal py-2"
@@ -32,7 +33,7 @@ const PagosCliente = () => {
         </div>
       </div>
       <div>
-        <table className="table">
+        <table className="mytable w-100">
           <thead className="bg-c-primary">
             <tr>
               <th className="fw-medium">Cliente</th>
@@ -51,9 +52,9 @@ const PagosCliente = () => {
                 <td>{cliente.nombre_cliente}</td>
                 <td>{cliente.monto_a_pagar}</td>
                 <td>{cliente.fecha_pagado}</td>
-                <td>{cliente.fecha_lim_cliente}</td>
-                <td>{cliente.estado_cliente}</td>
-                <td>{cliente.multa}</td>
+                <td>{cliente.fecha_lim_pago}</td>
+                <td>{cliente.estado_pago === 1 ? "Deudor" : "Solvente"}</td>
+                <td>0</td>
                 <td>{cliente.descuento}</td>
                 <td>{cliente.total}</td>
               </tr>

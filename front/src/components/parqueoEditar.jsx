@@ -3,6 +3,7 @@ import { Container } from "react-bootstrap";
 import { validarNombre } from "../helpers/validadores";
 import axiosClient from "../axios-client.js";
 import { useParams } from "react-router-dom";
+import "../styles/formStyle.css";
 /*{
   "idParqueo": 1,
   "nombre_parqueo": "prueba parqueo",
@@ -67,19 +68,20 @@ function ParqueoEditar() {
     axiosClient
       .get("/parqueo/" + params.id)
       .then((response) => {
-        const result = response.data.data;
-        console.log(result);
-        setFormData(result);
+        const result = response.data;
+        console.log(result[0]);
+        setFormData(result[0]);
       })
       .catch((error) => console.log("error", error));
   }, [params.id]);
 
   return (
     <Container>
-      <div className="container-form">
+      <div className="formContainer">
         <form onSubmit={handleSubmit}>
           <div className="form-row">
-            <div className="form-group col-md-6">
+            <div className="myform-group ">
+              <label htmlFor="nombre_parqueo">Nombre del parqueo</label>
               <input
                 className="form-control"
                 type="text"
@@ -89,7 +91,8 @@ function ParqueoEditar() {
                 defaultValue={nombre_parqueo}
               />
             </div>
-            <div className="form-group">
+            <div className="myform-group">
+              <label htmlFor="numero_de_zonas">Numero de zonas</label>
               <input
                 name="numero_de_zonas"
                 type="number"
@@ -101,7 +104,7 @@ function ParqueoEditar() {
                 defaultValue={numero_de_zonas}
               />
             </div>
-            <div className="form-group col-md-4">
+            <div className="myform-group ">
               <label for="archivoPdf">Subir imagen</label>
               <input
                 type="text"
@@ -114,7 +117,7 @@ function ParqueoEditar() {
               />
             </div>
             <button type="submit" className="btn btn-primary">
-              Agregar
+              Actualizar
             </button>
           </div>
         </form>

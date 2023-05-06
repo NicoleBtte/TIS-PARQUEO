@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import { validarNombre } from "../helpers/validadores";
 import axiosClient from "../axios-client.js";
+import "../styles/formStyle.css";
 //import Swal from "sweetalert2";
 
 /*{
@@ -67,10 +68,11 @@ function FormularioParqueo() {
 
   return (
     <Container>
-      <div className="container-form">
+      <div className="formContainer">
         <form onSubmit={handleSubmit}>
           <div className="form-row">
-            <div className="form-group col-md-6">
+            <div className="myform-group ">
+              <label htmlFor="nombre_parqueo">Nombre parqueo</label>
               <input
                 className="form-control"
                 label="nombre_parqueo"
@@ -86,7 +88,7 @@ function FormularioParqueo() {
               />
             </div>
             {/*}
-            <div className="form-group col-md-4">
+            <div className="myform-group col-md-4">
               <label for="estado_convocatoria">estado_convocatoria</label>
               <select
                 name="estado_convocatoria"
@@ -105,7 +107,8 @@ function FormularioParqueo() {
               </select>
             </div>
             */}
-            <div className="form-group">
+            <div className="myform-group">
+              <label htmlFor="nombre_de_zonas">Numero de zonas</label>
               <input
                 name="numero_de_zonas"
                 type="number"
@@ -116,7 +119,7 @@ function FormularioParqueo() {
                 onChange={handleOnchange}
               />
             </div>
-            <div className="form-group col-md-4">
+            <div className="myform-group">
               <label for="archivoPdf">Subir imagen</label>
               <input
                 type="file"

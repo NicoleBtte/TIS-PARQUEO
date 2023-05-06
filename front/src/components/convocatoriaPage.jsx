@@ -2,6 +2,9 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { Container, Button, Table } from "react-bootstrap";
 import "../styles/estilos.css";
+import "../styles/tableStyle.css";
+import "../styles/botonesStyle.css";
+import "../styles/tablePageStyle.css";
 import axiosClient from "../axios-client.js";
 
 const ConvocatoriaPage = () => {
@@ -31,17 +34,18 @@ const ConvocatoriaPage = () => {
     axiosClient
       .get("/convocatorias")
       .then((response) => {
-        const result = response.data.data;
-        console.log(result);
-        setConvocatorias(result);
+        let result = response.data;
+        console.log(result[0]);
+        setConvocatorias(result[0]);
       })
       .catch((error) => console.log("error", error));
   }, []);
 
   return (
-    <Container>
-      <Table striped bordered hover className="table-container-cs">
-        <thead>
+    <Container className="tablePageContainer">
+      <h1 className="tittleContainer">Lista convocatorias</h1>
+      <Table striped bordered hover className="mytable">
+        <thead className="tableHeader">
           <tr>
             <th>Titulo</th>
             <th>Descripcion</th>
@@ -53,31 +57,29 @@ const ConvocatoriaPage = () => {
           </tr>
         </thead>
         <tbody>
-          {convocatorias.map((convocatoria, index) => (
-            <tr key={convocatoria.idConvocatoria}>
-              <td>{convocatoria.titulo}</td>
-              <td>{convocatoria.descripcion_convocatoria}</td>
-              <td>
+          {convocatorias.map((convocatoria) => (
+            <tr className="misFilas" key={convocatoria.idConvocatoria}>
+              <td className="myTd">{convocatoria.titulo}</td>
+              <td className="myTd">{convocatoria.descripcion_convocatoria}</td>
+              <td className="myTd">
                 {convocatoria.estado_convocatoria === 0 ? "Inactivo" : "Activo"}
               </td>
-              <td>{convocatoria.numero_cupos}</td>
-              <td>{convocatoria.fecha_inicio}</td>
-              <td>{convocatoria.fecha_fin}</td>
-              <td>
+              <td className="myTd">{convocatoria.numero_cupos}</td>
+              <td className="myTd">{convocatoria.fecha_inicio}</td>
+              <td className="myTd">{convocatoria.fecha_fin}</td>
+              <td className="myTd">
                 <Link to={`/pdf`}>
-                  <Button className="boton-detalle" variant="primary">
-                    Ver Convocatoria
-                  </Button>
+                  <Button className="celesteBoton">Ver Convocatoria</Button>
                 </Link>
 
                 <Link
                   to={`/admin/formulario-convocatoria/${convocatoria.idConvocatoria}/editar`}
                 >
-                  <Button variant="secondary">Editar</Button>
+                  <Button className="naranjaBoton">Editar</Button>
                 </Link>
 
                 <Button
-                  variant="danger"
+                  className="rojoBoton"
                   onClick={() =>
                     deleteConvocatoria(convocatoria.idConvocatoria)
                   }

@@ -13,6 +13,7 @@ class SitioController extends Controller
     while($i<=$numSitios){
         $sitio = new Sitio();
         $sitio->zonaEstacionamiento_idzonaEstacionamiento=$id;
+       // $sitio->cliente_idcliente=ninguna;
         $sitio->numero=$i;
         $sitio->save();
         sleep(0.5);

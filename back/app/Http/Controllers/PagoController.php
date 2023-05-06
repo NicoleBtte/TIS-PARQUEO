@@ -105,6 +105,11 @@ class PagoController extends Controller
         $consultaCliente=Cliente::all();
         return response()->json(json_encode($consultaCliente));
     }
+    
+    public function consultaPagosCliente(Request $request){
+        $consultaPagoCliente=DB::table('transaccion')->where('cliente_idcliente', '=', $request->idcliente)->get();
+        return response()->json(json_encode($consultaPagoCliente));
+    }
 
     public function updatePago(Request $request){
         $actualizar=Pago::find($request->idtransaccion);

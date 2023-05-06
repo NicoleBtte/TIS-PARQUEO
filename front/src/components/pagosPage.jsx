@@ -2,6 +2,10 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../axios-client.js";
+import "../styles/estilos.css";
+import "../styles/tableStyle.css";
+import "../styles/botonesStyle.css";
+import "../styles/tablePageStyle.css";
 
 function PagosPage() {
   const [pagos, setPagos] = useState([]);
@@ -14,16 +18,17 @@ function PagosPage() {
     setPagos(pagos.filter((pago) => pago.id !== id));
   }
 
-  /*React.useEffect(() => {
+  React.useEffect(() => {
     axiosClient
       .get("/consultaPagos")
       .then((response) => {
-        const result = response.data.data;
-        console.log(result);
+        let result = response.data;
+        result = JSON.parse(result);
+        console.log("esto es el resultaodo", result);
         setPagos(result);
       })
       .catch((error) => console.log("error", error));
-  }, []);*/
+  }, []);
 
   return (
     <div className="container">
@@ -39,8 +44,8 @@ function PagosPage() {
         </div>
       </div>
       <div>
-        <table className="table">
-          <thead className="bg-c-primary">
+        <table className="mytable w-100">
+          <thead className="tableHeader">
             <tr>
               <th className="fw-medium">Fecha</th>
               <th className="fw-medium">Cliente</th>
@@ -51,11 +56,11 @@ function PagosPage() {
           </thead>
           <tbody className="bg-c-secondary">
             {pagos.map((pago) => (
-              <tr key={pago.idtransaccion}>
-                <td>{pago.fechaPago}</td>
-                <td>{pago.cliente_idcliente}</td>
-                <td>{pago.monto}</td>
-                <td>
+              <tr className="misFilas" key={pago.idtransaccion}>
+                <td className="miTd">{pago.fechaPago}</td>
+                <td className="miTd">{pago.cliente_idcliente}</td>
+                <td className="miTd">{pago.monto}</td>
+                <td className="miTd">
                   <button
                     className="btn-none-style"
                     onClick={() => descargarComprobante(pago.id)}

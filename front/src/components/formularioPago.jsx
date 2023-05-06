@@ -3,13 +3,13 @@ import axiosClient from "../axios-client.js";
 
 function PagoForm() {
   const [formValue, setFormValue] = useState({
-    cliente_idcliente: "",
+    carnet: "",
     monto: null,
     tipo_de_pago: 1,
     comprobante: "",
   });
 
-  const { cliente_idcliente, monto, tipo_de_pago, comprobante } = formValue;
+  const { carnet, monto, tipo_de_pago, comprobante } = formValue;
 
   const handleInputChange = ({ target }) => {
     let value = target.value;
@@ -22,13 +22,13 @@ function PagoForm() {
     });
   };
   const handleSubmit = (e) => {
-    console.log(tipo_de_pago, monto, cliente_idcliente, comprobante);
+    console.log(tipo_de_pago, monto, carnet, comprobante);
     alert(
-      `datos formularios:::, ${cliente_idcliente}, ${monto}, ${tipo_de_pago}, ${comprobante}`
+      `datos formularios:::, ${carnet}, ${monto}, ${tipo_de_pago}, ${comprobante}`
     );
     axiosClient
       .post("/pagar", {
-        cliente_idcliente: cliente_idcliente,
+        carnet: carnet,
         monto: monto,
         tipo_de_pago: tipo_de_pago,
         comprobante: comprobante,
@@ -39,8 +39,8 @@ function PagoForm() {
   };
 
   return (
-    <div className="container">
-      <form className="pago-form box mx-auto my-4" onSubmit={handleSubmit}>
+    <div className="formContainer">
+      <form onSubmit={handleSubmit}>
         <fieldset>
           <legend className="text-center  fw-medium primary-color">
             Agregar Pago
@@ -48,14 +48,14 @@ function PagoForm() {
           <div className="mb-3">
             <label
               className="form-label  fw-medium primary-color"
-              htmlFor="idClient"
+              htmlFor="carnet"
             >
               C.I. cliente
             </label>
             <input
               className="form-control"
-              name="idClient"
-              id="idClient"
+              name="carnet"
+              id="carnet"
               type="text"
               onChange={handleInputChange}
             />

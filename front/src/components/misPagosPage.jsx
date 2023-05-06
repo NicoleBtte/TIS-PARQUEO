@@ -1,34 +1,57 @@
-//import { useEffect } from 'react';
+import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../axios-client.js";
+import "../styles/estilos.css";
+import "../styles/tableStyle.css";
+import "../styles/botonesStyle.css";
+import "../styles/tablePageStyle.css";
+import { Container } from "react-bootstrap";
 
 const MisPagos = () => {
   const [estadoPago, setEstadoPago] = useState({
-    estado: "Descripcion de Estado",
-    fechaLiminte: "Descripcion de Fecha limite de pago",
-    deuda: "Descripcion de Deuda",
-    montoMensual: "Descripcion de Monto mensual",
+    estado_pago: "",
+    fecha_lim_pago: "",
+    monto_a_pagar: "",
+    montoMensual: "100",
     multa: "Descripcion de Multa",
   });
 
+  function descargarComprobante(id) {
+    console.log("Downloading image", id);
+  }
   const [pagos, setPagos] = useState([]);
 
-  /*React.useEffect(() => {
+  useEffect(() => {
     axiosClient
-      .get("/showcliente")
+      .post("/showcliente", {
+        carnet: 123456,
+      })
       .then((response) => {
-        const result = response.data.data;
+        const result = response.data;
         console.log(result);
         setEstadoPago(result);
       })
       .catch((error) => console.log("error", error));
-  }, []);*/
+  }, []);
+
+  useEffect(() => {
+    axiosClient
+      .post("/consultaPagosCliente", {
+        idcliente: 123456,
+      })
+      .then((response) => {
+        const result = response.data;
+        console.log(result);
+        setPagos(JSON.parse(result));
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
 
   return (
-    <div className="container">
-      <div className="d-flex-between my-4">
-        <h1 className="my-0 fs-2">Mis Pagos</h1>
+    <div>
+      <div className="d-flex-between my-4 p-3">
+        <h1 className="tittleContainer">Mis Pagos</h1>
         <div>
           <Link
             className="link-none-styles btn-personal py-2"
@@ -38,46 +61,55 @@ const MisPagos = () => {
           </Link>
         </div>
       </div>
-      <div className="row">
+      <div className="row p-5">
         <div className="col">
           <p className="text-nowrap fw-medium mb-1">Estado</p>
-          <p>{estadoPago.estado}</p>
+          <p className="parrafoContainer">{estadoPago.estado_pago}</p>
         </div>
         <div className="col">
           <p className="text-nowrap fw-medium mb-1">Fecha limite de pago</p>
-          <p>{estadoPago.fechaLiminte}</p>
+          <p className="parrafoContainer">{estadoPago.fecha_lim_pago}</p>
         </div>
         <div className="col">
           <p className="text-nowrap fw-medium mb-1">Deuda</p>
-          <p>{estadoPago.deuda}</p>
+          <p className="parrafoContainer">{estadoPago.monto_a_pagar}</p>
         </div>
         <div className="col">
           <p className="text-nowrap fw-medium mb-1">Monto mensual</p>
-          <p>{estadoPago.montoMensual}</p>
+          <p className="parrafoContainer">{estadoPago.montoMensual}</p>
         </div>
         <div className="col">
           <p className="text-nowrap fw-medium mb-1">Multa</p>
-          <p>{estadoPago.multa}</p>
+          <p className="parrafoContainer">{estadoPago.multa}</p>
         </div>
       </div>
-      <table className="table">
-        <thead className="bg-c-primary">
-          <tr>
-            <th className="fw-medium">Fecha</th>
-            <th className="fw-medium">Monto</th>
-            <th className="fw-medium">Tipo de Pago</th>
-          </tr>
-        </thead>
-        <tbody className="bg-c-secondary">
-          {pagos.map((pago) => (
-            <tr key={pago.id}>
-              <td>{pago.fecha}</td>
-              <td>{pago.monto}</td>
-              <td>{pago.tipoPago}</td>
+      <div className="tablePageContainer">
+        <table className="mytable w-100">
+          <thead className="tableHeader">
+            <tr>
+              <th>Fecha</th>
+              <th>Monto</th>
+              <th>Comprobante</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {pagos.map((pago) => (
+              <tr className="misFilas" key={pago.id}>
+                <td className="myTd text-center">{pago.fechaPago}</td>
+                <td className="myTd text-center">{pago.monto}</td>
+                <td className="myTd text-center">
+                  <button
+                    className="btn-none-style"
+                    onClick={() => descargarComprobante(pago.id)}
+                  >
+                    <i className="bx bxs-cloud-download bx-icon"></i>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

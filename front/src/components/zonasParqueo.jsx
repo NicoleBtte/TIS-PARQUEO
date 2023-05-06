@@ -78,11 +78,11 @@ export default function ZonasPar() {
   };
   React.useEffect(() => {
     axiosClient
-      .get("/zonaDeEstacionamientos")
+      .get("/zonaDeEstacionamientos/" + params.id)
       .then((response) => {
-        const result = response.data.data;
-        console.log(result);
-        setZonas(result);
+        const result = response.data;
+        console.log(result[0]);
+        setZonas(result[0]);
       })
       .catch((error) => console.log("error", error));
   }, []);

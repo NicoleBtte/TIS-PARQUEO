@@ -11,13 +11,13 @@ class ZonaDeEstacionamiento extends Model
 {
     //use HasFactory;
     use Notifiable;
-    public $timestamp = false;
-    protected $table = 'zonaEstacionamiento';
+    //public $timestamp = false;
+    protected $table = 'zonaestacionamiento';
     
     protected $primaryKey = 'idzonaEstacionamiento';
     protected $fillable = ['idzonaEstacionamiento', 'nombre_zona_estacionamiento', 'techo', 'arboles_cerca',
     'tipo_de_piso', 'numero_de_sitios', 'descripcion','parqueo_idparqueo'];
-
+    public $timestamps = false;
     protected $hidden = [
         'password',
         'remember_token',
@@ -25,4 +25,5 @@ class ZonaDeEstacionamiento extends Model
     public function getAuthPassword(){
         return $this->password;
     }use HasFactory;
+
 }

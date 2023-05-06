@@ -1,0 +1,28 @@
+.celesteBoton {
+  border-radius: 20px !important;
+  background-color: #33b4e5 !important;
+  border-color: transparent !important;
+  font-size: 13px !important;
+}
+.verdeBoton {
+  border-radius: 20px;
+  background-color: #01c851;
+  border-color: transparent;
+}
+.naranjaBoton {
+  border-radius: 20px !important;
+  background-color: #ff8800 !important;
+  border-color: transparent !important;
+  font-size: 13px !important;
+}
+.rojoBoton {
+  border-radius: 20px !important;
+  background-color: #ff1a00 !important;
+  border-color: transparent !important;
+  font-size: 13px !important;
+}
+.grisBoton {
+  border-radius: 20px;
+  background-color: #918a95;
+  border-color: transparent;
+}

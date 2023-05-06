@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axiosClient from "../axios-client.js";
 import { Container } from "react-bootstrap";
 import { validarDescripcion, validarTitulo } from "../helpers/validadores";
+import "../styles/formStyle.css";
 //import Swal from "sweetalert2";
 
 /*{
@@ -87,7 +88,7 @@ function FormularioConvocatoria() {
         titulo: titulo,
         descripcion_convocatoria: descripcion_convocatoria,
         estado_convocatoria: estado_convocatoria,
-        numero_cupos: numero_cupos,
+        numero_cupos: parseInt(numero_cupos),
         fecha_inicio: fecha_inicio,
         fecha_fin: fecha_fin,
         fecha_pago: fecha_pago,
@@ -99,10 +100,11 @@ function FormularioConvocatoria() {
 
   return (
     <Container>
-      <div className="container-form">
+      <div className="formContainer">
         <form onSubmit={handleSubmit}>
           <div className="form-row">
-            <div className="form-group col-md-6">
+            <div className="myform-group ">
+              <label htmlFor="titulo">Titulo</label>
               <input
                 name="titulo"
                 type="text"
@@ -113,7 +115,8 @@ function FormularioConvocatoria() {
               ></input>
               <span>{validar.tituloB ? "los datos son incorrectos" : ""}</span>
             </div>
-            <div className="form-group col-md-6">
+            <div className="myform-group ">
+              <label htmlFor="descripcion_convocatoria">Descripcion</label>
               <input
                 name="descripcion_convocatoria"
                 type="text"
@@ -124,7 +127,8 @@ function FormularioConvocatoria() {
               ></input>
             </div>
           </div>
-          <div className="form-group">
+          <div className="myform-group">
+            <label htmlFor="numero_cupos">Numero de cupos</label>
             <input
               name="numero_cupos"
               type="number"
@@ -137,8 +141,8 @@ function FormularioConvocatoria() {
           </div>
 
           <div className="form-row">
-            <div className="form-group col-md-4">
-              <label for="estado_convocatoria">estado_convocatoria</label>
+            <div className="myform-group ">
+              <label for="estado_convocatoria">Estado</label>
               <select
                 name="estado_convocatoria"
                 id="estado_convocatoria"
@@ -150,7 +154,8 @@ function FormularioConvocatoria() {
                 <option value={0}>Inactivo</option>
               </select>
             </div>
-            <div className="form-group">
+            <div className="myform-group">
+              <label htmlFor="fecha_inicio">Fecha inicio</label>
               <input
                 name="fecha_inicio"
                 type="date"
@@ -160,7 +165,8 @@ function FormularioConvocatoria() {
                 onChange={handleOnchange}
               ></input>
             </div>
-            <div className="form-group">
+            <div className="myform-group">
+              <label htmlFor="fecha_fin">Fecha fin</label>
               <input
                 name="fecha_fin"
                 type="date"
@@ -170,7 +176,8 @@ function FormularioConvocatoria() {
                 onChange={handleOnchange}
               ></input>
             </div>
-            <div className="form-group">
+            <div className="myform-group">
+              <label htmlFor="fecha_pago">Fecha pago</label>
               <input
                 name="fecha_pago"
                 type="date"
@@ -180,7 +187,7 @@ function FormularioConvocatoria() {
                 onChange={handleOnchange}
               ></input>
             </div>
-            <div className="form-group col-md-4">
+            <div className="myform-group ">
               <label for="archivoPdf">Subir archivo</label>
               <input
                 type="file"

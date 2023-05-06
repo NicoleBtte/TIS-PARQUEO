@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Parqueo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\ZonaDeEstacionamientoController;
 
 class ParqueoController extends Controller
 {
@@ -18,6 +20,12 @@ class ParqueoController extends Controller
         }
     }
 
+    public function zona($numero_de_zonas){
+        $parqueo_idParqueo= DB::table('parqueo')->latest('idParqueo')->first()->idParqueo;
+        $zona = new ZonaDeEstacionamientoController;
+        $zona->registroZonas($parqueo_idParqueo, $numero_de_zonas);
+    }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -29,10 +37,12 @@ class ParqueoController extends Controller
         $parqueo = new Parqueo();
         $parqueo->nombre_parqueo = $validatedData['nombre_parqueo'];
         $parqueo->numero_de_zonas = $validatedData['numero_de_zonas'];
+        $numZonas= $request ->numero_de_zonas;
         $parqueo->mapa_parqueo = $validatedData['mapa_parqueo'];
 
         try {
             $parqueo->save();
+            $this->zona($numZonas);
             return response()->json([
                 'success' => true,
                 'message' => 'Parqueo creado con éxito',
@@ -45,9 +55,9 @@ class ParqueoController extends Controller
                 'error' => $e->getMessage()
             ]);
         }
-    }
+        }
 
-    public function show($idParqueo)
+        public function show($idParqueo)
     {
         $parqueo = Parqueo::find($idParqueo);
         if ($parqueo) {
@@ -59,19 +69,19 @@ class ParqueoController extends Controller
 
     public function update(Request $request, $idParqueo)
     {
-        $parqueo = Parqueo::findOrFail($request->$idParqueo);
+        $parqueo = Parqueo::findOrFail($idParqueo);
         
         $validatedData = $request->validate([
             'nombre_parqueo' => ['required', 'string', 'min:5', 'max:16'],
             'numero_de_zonas' => ['required', 'integer', 'min:0'],
-            'mapa_parqueo' => ['nullable', 'string']
+            //'mapa_parqueo' => ['nullable', 'string']
         ]);
 
         $parqueo->nombre_parqueo = $validatedData['nombre_parqueo'];
         $parqueo->numero_de_zonas = $validatedData['numero_de_zonas'];
-        $parqueo->mapa_parqueo = $validatedData['mapa_parqueo'];
+        //$parqueo->mapa_parqueo = $validatedData['mapa_parqueo'];
 
-        if($parqueo) {
+        if($parqueo!== null) {
             $parqueo->save();
             return response()->json(['message' => 'Parqueo actualizado correctamente.']);
         } else {

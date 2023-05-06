@@ -2,7 +2,11 @@ import * as React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../axios-client.js";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
+import "../styles/estilos.css";
+import "../styles/tableStyle.css";
+import "../styles/botonesStyle.css";
+import "../styles/tablePageStyle.css";
 
 /*{\"idhistorial\":1,\
 "hora_ingreso_hist\":null,\
@@ -37,14 +41,14 @@ function IngresosPage() {
       .get("/consultaEntradasSalidas")
       .then((response) => {
         const result = response.data;
-        console.log(result);
-        setIngresosSalidas(result);
+        console.log(JSON.parse(result));
+        setIngresosSalidas(JSON.parse(result));
       })
       .catch((error) => console.log("error", error));
   }, []);
 
   return (
-    <div className="container">
+    <div className="tablePageContainer">
       <div className="d-flex-between my-4">
         <h1 className="my-0 fs-2">Ingresos</h1>
         <div>
@@ -57,8 +61,8 @@ function IngresosPage() {
         </div>
       </div>
       <div>
-        <table className="table">
-          <thead className="bg-c-primary">
+        <table className="mytable w-100">
+          <thead className="tableHeader">
             <tr>
               <th className="fw-medium">Cliente</th>
               <th className="fw-medium">Entrada</th>
@@ -67,10 +71,14 @@ function IngresosPage() {
           </thead>
           <tbody className="bg-c-secondary">
             {ingresosSalidas.map((ingresoSalida) => (
-              <tr key={ingresoSalida.idhistorial}>
-                <td>{ingresoSalida.cliente_idcliente}</td>
-                <td>{ingresoSalida.fecha_ingreso}</td>
-                <td>
+              <tr className="misFilas" key={ingresoSalida.idhistorial}>
+                <td className="myTd text-center">
+                  {ingresoSalida.cliente_idcliente}
+                </td>
+                <td className="myTd text-center">
+                  {ingresoSalida.fecha_ingreso}
+                </td>
+                <td className="myTd text-center">
                   {" "}
                   {ingresoSalida.fecha_salida == null ? (
                     <Button onClick={handleSubmit}>Registrar Salida</Button>
