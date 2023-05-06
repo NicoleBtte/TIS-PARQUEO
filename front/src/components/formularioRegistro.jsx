@@ -4,7 +4,10 @@ import { useState, useRef } from "react";
 import axiosClient from "../axios-client.js";
 import { useStateContext } from "../contexts/ContextProvider.js";
 
-const FormularioRegistro = () => {
+const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
+  const idConv = idConvocatoria
+  const title = titulo
+  const cupos = numero_cupos
   const { setUser, setToken } = useStateContext();
   const navigate = useNavigate();
 
@@ -21,7 +24,8 @@ const FormularioRegistro = () => {
 			//password_confirmation: values.ccontrasena
 		}
 		console.log(payload);
-	
+
+    //registro al usuario
 		axiosClient.post('/register', payload)
 			.then(({data}) => {
 				console.log('Se ejecuto axios en formulario')
@@ -37,8 +41,21 @@ const FormularioRegistro = () => {
 				  console.log(response.data.errors)
 				}
 			  })
+    
 
-			navigate('/login');
+    //Reducir cupos
+    axiosClient.put('/convocatoriaRegistrarse')
+          .then((data) => {
+            //console.log(JSON.parse(data).message)
+            console.log('Se reducio exitosamente')
+
+          })
+          .catch((data) => {
+            //console.log(JSON.parse(data).message)
+            console.log('Error en reducir cupo')
+            })
+		
+    navigate('/login');
   };
 
   return (
