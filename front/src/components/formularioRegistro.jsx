@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import axiosClient from "../axios-client.js";
 import { useStateContext } from "../contexts/ContextProvider.js";
+import '../styles/formStyle.css';
 
 const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
   const idConv = idConvocatoria
@@ -59,6 +60,8 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
   };
 
   return (
+    <div className="formContainer">
+    <h4>Registro</h4>
     <Formik
       initialValues={{
         name: "",
@@ -68,6 +71,8 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
         telefono: "",
         email: "",
         placa: "",
+        unidad: "",
+        cargo: "",
         password: "",
         ccontrasena: "",
       }}
@@ -127,6 +132,20 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
           errors.placa = "La placa debe contener 4 numeros y 3 letras seguidas";
         }
 
+        // Validacion unidad
+        if (!values.unidad) {
+          errors.unidad = "Por favor ingrese la unidad en la que trabaja";
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.unidad)) {
+          errors.unidad = "La unidad solo puede contener letras y espacios";
+        }
+        
+        // Validacion cargo
+        if (!values.cargo) {
+          errors.cargo = "Por favor ingrese un cargo";
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.cargo)) {
+          errors.cargo = "El cargo solo puede contener letras y espacios";
+        }
+
         // Validacion contrasenia
         if (!values.password) {
           errors.password = "Por favor ingresa una contraseña";
@@ -152,7 +171,7 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
     >
       {({ errors, touched }) => (
         <Form className="formulario">
-          <div>
+          <div className="myform-group">
             <label htmlFor="nombre">Nombre:</label>
             <Field type="text" id="nombre" name="name" />
             <ErrorMessage
@@ -160,7 +179,7 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
               component={() => <div className="error">{errors.name}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="apellidos">Apellidos:</label>
             <Field type="text" id="apellidos" name="apellidos" />
             <ErrorMessage
@@ -168,7 +187,7 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
               component={() => <div className="error">{errors.apellidos}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="ci">Número de C.I.:</label>
             <Field type="text" id="ci" name="ci" />
             <ErrorMessage
@@ -176,7 +195,7 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
               component={() => <div className="error">{errors.ci}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="direccion">Dirección:</label>
             <Field type="text" id="direccion" name="direccion" />
             <ErrorMessage
@@ -184,7 +203,7 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
               component={() => <div className="error">{errors.direccion}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="telefono">Teléfono:</label>
             <Field type="text" id="telefono" name="telefono" />
             <ErrorMessage
@@ -192,7 +211,7 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
               component={() => <div className="error">{errors.telefono}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="correo">Correo electrónico:</label>
             <Field type="text" id="correo" name="email" />
             <ErrorMessage
@@ -200,7 +219,7 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
               component={() => <div className="error">{errors.email}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="placa">Placa del vehículo:</label>
             <Field type="text" id="placa" name="placa" />
             <ErrorMessage
@@ -208,7 +227,23 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
               component={() => <div className="error">{errors.placa}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
+            <label htmlFor="unidad">Unidad de trabajo:</label>
+            <Field type="text" id="unidad" name="unidad" />
+            <ErrorMessage
+              name="unidad"
+              component={() => <div className="error">{errors.unidad}</div>}
+            />
+          </div>
+          <div className="myform-group">
+            <label htmlFor="cargo">Cargo:</label>
+            <Field type="text" id="cargo" name="cargo" />
+            <ErrorMessage
+              name="cargo"
+              component={() => <div className="error">{errors.cargo}</div>}
+            />
+          </div>
+          <div className="myform-group">
             <label htmlFor="contrasena">Contraseña:</label>
             <Field type="password" id="contrasena" name="password" />
             <ErrorMessage
@@ -216,7 +251,7 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
               component={() => <div className="error">{errors.password}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="ccontrasena">Repetir contraseña:</label>
             <Field type="password" id="ccontrasena" name="ccontrasena" />
             <ErrorMessage
@@ -226,10 +261,13 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
               )}
             />
           </div>
-          <button type="submit">Enviar</button>
+          <div className="boton-container">
+            <button type="submit">Enviar</button>
+          </div>
         </Form>
       )}
     </Formik>
+    </div>
   );
 };
 

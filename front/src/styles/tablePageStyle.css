@@ -1,18 +1,18 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
 .tablePageContainer {
-  margin: 2%; /* centra el contenedor horizontalmente */
+    margin: 2%; /* centra el contenedor horizontalmente */
 }
 
 .titleContainer {
-  margin-bottom: 1%;
-  font-family: "Poppins", sans-serif;
+    margin-bottom: 1%;
+    font-family: 'Poppins', sans-serif;
 }
 
 .titleBottonContainer {
-  margin-bottom: 1%;
-  font-family: "Poppins", sans-serif;
-  display: flex;
-  justify-content: space-between; /* Esto coloca el título a la izquierda y el botón a la derecha */
-  align-items: center; /* Esto alinea verticalmente el título y el botón en el centro del contenedor */
+    margin-bottom: 1%;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: space-between; /* Esto coloca el título a la izquierda y el botón a la derecha */
+    align-items: center; /* Esto alinea verticalmente el título y el botón en el centro del contenedor */
 }

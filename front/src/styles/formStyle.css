@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
 .bigestContainerLogin {
   flex-direction: column;
@@ -15,76 +15,77 @@
 }
 
 .formContainer {
-  background-color: #e8f0fa; /* color celeste */
-  width: 40%; /* ancho del contenedor */
-  margin: 40px auto; /* centra el contenedor horizontalmente */
-  padding: 20px; /* agrega un poco de espacio entre el borde del contenedor y el contenido */
-  border-radius: 20px;
-}
+    background-color: #E8F0FA; /* color celeste */
+    width: 40%; /* ancho del contenedor */
+    margin: 0 auto; /* centra el contenedor horizontalmente */
+    padding: 20px; /* agrega un poco de espacio entre el borde del contenedor y el contenido */
+    border-radius: 20px;
+  }
+  
+  .formContainer h4 {
+    text-align: center; /* centra el texto horizontalmente */
+    margin-bottom: 10px; /* agrega un poco de espacio entre el título y los campos del formulario */
+    font-family: 'Poppins', sans-serif;
+  }
 
-.formContainer h4 {
-  text-align: center; /* centra el texto horizontalmente */
-  margin-bottom: 10px; /* agrega un poco de espacio entre el título y los campos del formulario */
-  font-family: "Poppins", sans-serif;
-}
+  .myform-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2px;
+  }
+  
+  .myform-group label {
+    margin-bottom: 1px;
+    margin-right: 1px; /* ajustar el margen derecho del label */
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .myform-group input {
+    width: 100%;
+    background-color: transparent;
+  }
 
-.myform-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 2px;
-}
+  .boton-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.myform-group label {
-  margin-bottom: 1px;
-  margin-right: 1px; /* ajustar el margen derecho del label */
-  font-family: "Poppins", sans-serif;
-}
+  button[type="submit"] {
+    margin-top: 5%;
+    background-color: #122A4C;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 20px;
+    font-family: 'Poppins', sans-serif;
+  }
 
-.myform-group input {
-  width: 100%;
-  background-color: transparent;
-}
+  .error {
+    color: red; /* Cambia el color de las letras a rojo */
+    font-size: 12px; /* Reduce el tamaño de las letras a 14px */
+    font-family: 'Poppins', sans-serif;
+  }
 
-.boton-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .combobox {
+    background-color: #FF8800; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+    border-radius: 10px;
+    margin-left: 5px;
+  }
 
-button[type="submit"] {
-  margin-top: 5%;
-  background-color: #122a4c;
-  border-radius: 15px;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 10px 20px;
-  font-family: "Poppins", sans-serif;
-}
+  .speciallabel{
+    font-size: 17px;
+    font-family: 'Poppins', sans-serif;
+  }
 
-.error {
-  color: red; /* Cambia el color de las letras a rojo */
-  font-size: 12px; /* Reduce el tamaño de las letras a 14px */
-  font-family: "Poppins", sans-serif;
-}
+  .bigInput {
+    height: 90px;
+  }
 
-.combobox {
-  background-color: #ff8800; /* Color de fondo */
-  color: #ffffff; /* Color del texto */
-  border-radius: 10px;
-  margin-left: 5px;
-}
-
-.speciallabel {
-  font-size: 17px;
-  font-family: "Poppins", sans-serif;
-}
-
-.bigInput {
-  height: 90px;
-}
-
-.destinatarioText {
-  font-family: "Poppins", sans-serif;
-}
+  .destinatarioText {
+    font-family: 'Poppins', sans-serif;
+  }
+  

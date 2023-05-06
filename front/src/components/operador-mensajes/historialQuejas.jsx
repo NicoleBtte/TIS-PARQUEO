@@ -4,6 +4,8 @@ import {Link, useParams} from "react-router-dom";
 import App from '../../App';
 import MensajeModal from './mensaje';
 import axiosCliente from '../../axios-client';
+import '../../styles/tableStyle.css';
+import '../../styles/tablePageStyle.css';
 
 const HistorialQuejas = () => {
   const [filas, setFilas] = useState([]);
@@ -64,8 +66,8 @@ const HistorialQuejas = () => {
 
   return (
     <>
-      <Table responsive>
-        <thead>
+      <Table responsive className='mytable'>
+        <thead className='tableHeader'>
           <tr>
             <th>Fecha</th>
             <th>Titulo</th>
@@ -75,7 +77,7 @@ const HistorialQuejas = () => {
         </thead>
         {loading && (
           <tbody>
-            <tr>
+            <tr className='misFilas'>
               <td colSpan="5">Loading...</td>
             </tr>
           </tbody>
@@ -83,14 +85,14 @@ const HistorialQuejas = () => {
         {!loading && (
           <tbody>
             {filas.map((mensaje) => (
-             <tr key={mensaje.idemisor}>
-                <td>{mensaje.fecha_notif}</td>
-                <td>{mensaje.titulo_notif}</td>
-                <td>{mensaje.emisor_notif}</td>
-                <td>
+              <tr className='misFilas' key={mensaje.idemisor}>
+                <td className='miTd'>{mensaje.fecha_notif}</td>
+                <td className='miTd'>{mensaje.titulo_notif}</td>
+                <td className='miTd'>{mensaje.emisor_notif}</td>
+                <td className='miTd'>
                   <Button
                     onClick={() => handleVerMasClick(mensaje)}
-                    variant="warning"
+                    className='celesteBoton'
                   >
                     Ver mas
                   </Button>

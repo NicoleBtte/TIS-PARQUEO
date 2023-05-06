@@ -1,30 +1,31 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 /* Estilos para la tabla */
 .mytable {
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: 15px;
-  overflow: hidden;
-  font-family: "Poppins", sans-serif;
-}
-
-/* Estilos para las celdas de los encabezados */
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 15px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Estilos para las celdas de los encabezados */
 .tableHeader {
-  background-color: #122a4c;
-  color: white;
-  text-align: center;
-  padding: 8px;
-  border-bottom: 1px solid gray;
-}
-
-/* Estilos para las filas pares de la tabla */
-.misFilas {
-  background-color: #ecf2fa;
-}
-
-/* Estilos para las celdas de la tabla */
-.miTd {
-  padding: 8px;
-  border: 1px solid #d4dae1;
-  text-align: center;
-}
+    background-color: #122A4C;
+    color: white;
+    text-align: center;
+    padding: 8px;
+    border-bottom: 1px solid gray;
+  }
+  
+  /* Estilos para las filas pares de la tabla */
+  .misFilas {
+    background-color: #ECF2FA;
+  }
+  
+  
+  /* Estilos para las celdas de la tabla */
+  .miTd {
+    padding: 8px;
+    border: 1px solid #D4DAE1;
+    text-align: center;
+  }

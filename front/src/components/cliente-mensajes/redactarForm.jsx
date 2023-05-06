@@ -3,6 +3,7 @@ import {Formik, Form, Field, ErrorMessage} from 'formik';
 import {FormGroup, FormControl} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axiosCliente from '../../axios-client';
+import '../../styles/formStyle.css';
 
 const RedactarForm = () => {
     const [options, setOptions] = useState([]);
@@ -66,6 +67,8 @@ const RedactarForm = () => {
 
     return (
       <>
+      <div className='bigestContainerRedactar'>
+      <div className="formContainer">
       <h4>Redactar petición/queja</h4>
       <Formik
         initialValues={{
@@ -95,7 +98,7 @@ const RedactarForm = () => {
         {({ errors, touched, handleChange, values }) => (
             <Form className='formulario'>
                 <div>
-                  <label htmlFor="option">Opción:</label>
+                  <label className="speciallabel" htmlFor="option">Opción:</label>
                   <Field as="select" id="option" name="option" onChange={handleOptionChange} value={selectedOption}>
                     <option value="">Seleccione una opción</option>
                     {options.map((opcion) => (
@@ -106,7 +109,7 @@ const RedactarForm = () => {
                   </Field>
                   <ErrorMessage name="option" component={() => (<div className="error">{errors.option}</div>)} />
                 </div>
-                <div>
+                <div className="myform-group">
                   <label htmlFor="titulo">Título del asunto:</label>
                   <Field
                     type="text" 
@@ -115,20 +118,24 @@ const RedactarForm = () => {
                   />
                   <ErrorMessage name="titulo" component={() => (<div className="error">{errors.titulo}</div>)} />
                 </div>
-                <div>
+                <div className="myform-group">
                   <label htmlFor="ci">Descripción:</label>
                   <Field
                     type="text" 
                     id="descripcion" 
-                    name="descripcion" 
+                    name="descripcion"
+                    className="bigInput"
                   />
                   <ErrorMessage name="descripcion" component={() => (<div className="error">{errors.descripcion}</div>)} />
                 </div>
-
-                <button type="submit">Enviar</button>
+                <div className="boton-container">
+                  <button type="submit">Enviar</button>
+                </div>
             </Form>
         )}
       </Formik>
+      </div>
+      </div>
       </>
       );
   }

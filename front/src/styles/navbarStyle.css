@@ -1,12 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 .custom-navbar {
     background: #122A4C; /* Color de fondo del Navbar */
     justify-content:space-around;
   }
 .custom-navbar a {
     color: #fff; /* Color de letra de los enlaces del Navbar */
-    font-family: Arial, sans-serif; /* Fuente utilizada para los enlaces del Navbar */
+    font-family: 'Poppins', sans-serif; /* Fuente utilizada para los enlaces del Navbar */
+    
+}
+.custom-navbar a:visited {
+    font-weight: bold;
+    color: #fff;
   }
-
+  
   .links-container {
     justify-content:center;
     display: flex;
@@ -15,3 +21,7 @@
   .izq-link {
     flex: 1;
   }
+
+  
+
+  

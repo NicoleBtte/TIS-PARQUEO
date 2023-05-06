@@ -8,6 +8,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import "../styles/headerStyle.css";
 import "../styles/navbarStyle.css";
+import '../styles/logoutButtonStyle.css';
 import App from "../App";
 import "../styles/botonesStyle.css";
 import { Button } from "react-bootstrap";
@@ -118,13 +119,7 @@ const DefaultLayout = () => {
             <Navbar.Collapse id="responsive-navbar-nav">
               {menu}
               <Nav>
-                <Button
-                  href="#"
-                  onClick={onLogout}
-                  className="rojoBoton logoutButton"
-                >
-                  Cerrar sesión
-                </Button>
+                <Button href="#" onClick={onLogout} className='mylogoutButton'>Cerrar sesión</Button>
               </Nav>
             </Navbar.Collapse>
           </Container>
