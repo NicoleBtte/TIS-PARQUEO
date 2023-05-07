@@ -99,3 +99,5 @@ Route::post('/notificaciones',[NotificacionController::class, 'store']);
 Route::post('/notificacionesResp',[NotificacionController::class, 'storeRespuesta']);
 Route::get('/notificacionesEnvia',[NotificacionController::class, 'indexSent']);
 Route::get('/notificacionesRecibe',[NotificacionController::class, 'indexReceived']);
+
+Route::get('/miSitio',[SitioController::class,'obtenerMiSitio']);

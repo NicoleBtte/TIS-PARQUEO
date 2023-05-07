@@ -14,66 +14,11 @@ const ClienteSitio = () => {
         getFilas();
       }, [])
 
-
-      const clientesSitios = [
-        { 
-            idcliente: 1,
-            nombre_cliente: "Juan Pérez",
-            idparqueo: 1,
-            nombre_parqueo: "Parqueo Planta 1",
-            idzona: 3,
-            nombre_zona_estacionamiento: "Zona Sur",
-            idsitio: 5,
-            numero: "Sitio A"
-        },
-        { 
-            idcliente: 2,
-            nombre_cliente: "María González",
-            idparqueo: 2,
-            nombre_parqueo: "Parqueo Planta 2",
-            idzona: 2,
-            nombre_zona_estacionamiento: "Zona Centro",
-            idsitio: 3,
-            numero: "Sitio B"
-        },
-        { 
-            idcliente: 3,
-            nombre_cliente: "Pedro García",
-            idparqueo: 3,
-            nombre_parqueo: "Parqueo Planta 3",
-            idzona: 1,
-            nombre_zona_estacionamiento: "Zona Norte",
-            idsitio: 2,
-            numero: "Sitio C"
-        },
-        { 
-            idcliente: 4,
-            nombre_cliente: "Luisa Martínez",
-            idparqueo: 4,
-            nombre_parqueo: "Parqueo Planta 4",
-            idzona: 3,
-            nombre_zona_estacionamiento: "Zona Sur",
-            idsitio: 4,
-            numero: "Sitio D"
-        },
-        { 
-            idcliente: 5,
-            nombre_cliente: "Sofía Ramírez",
-            idparqueo: 5,
-            nombre_parqueo: "Parqueo Planta 5",
-            idzona: 2,
-            nombre_zona_estacionamiento: "Zona Centro",
-            idsitio: 1,
-            numero: "Sitio E"
-        }
-    ];
-
     const getFilas = () => {
         setLoading(true)
         //setFilas(clientesSitios);
         //setLoading(false)
         
-        setLoading(true)
         axiosCliente.get('/consultaClienteSitio')
           .then(({ data }) => {
             console.log(data)

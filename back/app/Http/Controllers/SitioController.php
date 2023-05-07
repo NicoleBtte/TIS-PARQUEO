@@ -75,4 +75,16 @@ class SitioController extends Controller
    return response()->json(json_encode($arreglo2));    
    }
 
+   public function obtenerMiSitio(Request $request){
+      $idclient = $request -> idCliente;
+      $arreglo=DB::table('sitio')
+      ->where('cliente_idcliente',$idclient)
+      ->join('zonaEstacionamiento', 'sitio.zonaEstacionamiento_idzonaEstacionamiento', '=', 'zonaEstacionamiento.idzonaEstacionamiento')
+      ->join('parqueo', 'zonaEstacionamiento.parqueo_idparqueo', '=', 'parqueo.idparqueo')
+      ->select('parqueo.nombre_parqueo', 'zonaEstacionamiento.nombre_zona_estacionamiento','sitio.numero')
+                ->get();
+  
+      return response()->json(json_encode($arreglo));    
+    }
+
 }

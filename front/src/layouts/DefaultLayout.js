@@ -12,6 +12,7 @@ import '../styles/logoutButtonStyle.css';
 import App from "../App";
 import "../styles/botonesStyle.css";
 import { Button } from "react-bootstrap";
+import PopoverSitio from "./popoverSitio";
 
 const DefaultLayout = () => {
   const { user, token, setUser, setToken, rol, setRol, id, setID } =
@@ -119,6 +120,10 @@ const DefaultLayout = () => {
             <Navbar.Collapse id="responsive-navbar-nav">
               {menu}
               <Nav>
+                {rol === 'cliente' ? (
+                  <PopoverSitio></PopoverSitio>
+                ) : null}
+                &nbsp;
                 <Button href="#" onClick={onLogout} className='mylogoutButton'>Cerrar sesión</Button>
               </Nav>
             </Navbar.Collapse>
