@@ -48,7 +48,10 @@ const RedactarForm = () => {
     
       axiosCliente.post('/notificaciones', payload)
         .then(({data}) => {    
-          //que hacer despues      
+          //que hacer despues
+          if(data.success==true){
+            window.alert("Mensaje enviado");
+          }      
           console.log(data)
         })
         .catch(err => {

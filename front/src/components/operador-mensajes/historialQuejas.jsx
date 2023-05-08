@@ -85,7 +85,7 @@ const HistorialQuejas = () => {
         {!loading && (
           <tbody>
             {filas.map((mensaje) => (
-              <tr className='misFilas' key={mensaje.idemisor}>
+              <tr className='misFilas' key={mensaje.idnotificaciones}>
                 <td className='miTd'>{mensaje.fecha_notif}</td>
                 <td className='miTd'>{mensaje.titulo_notif}</td>
                 <td className='miTd'>{mensaje.emisor_notif}</td>

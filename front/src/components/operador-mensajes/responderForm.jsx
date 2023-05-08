@@ -23,6 +23,10 @@ const ResponderForm = () => {
         .then(({data}) => {    
           //que hacer despues      
           console.log(data)
+          if(data.success==true){
+            window.alert("Mensaje enviado");
+          }      
+          console.log(data)
         })
         .catch(err => {
           const response = err.response;

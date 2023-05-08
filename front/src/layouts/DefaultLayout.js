@@ -38,7 +38,7 @@ const DefaultLayout = () => {
         if (theRol === "operador") {
           apiruta = "/logoutoperador";
         } else {
-          apiruta = "/logout";
+          apiruta = "/logoutguardia";
         }
       }
     }
@@ -67,7 +67,7 @@ const DefaultLayout = () => {
           </Nav.Link>
           <NavDropdown title="Usuarios" className="navDrop">
               <NavDropdown.Item className="navDrop" as={Link} to="/admin/operadores">Operadores</NavDropdown.Item>
-              <NavDropdown.Item className="navDrop">Guardias</NavDropdown.Item>
+              <NavDropdown.Item className="navDrop" as={Link} to="/admin/guardias">Guardias</NavDropdown.Item>
           </NavDropdown>
         </Nav>
       );
