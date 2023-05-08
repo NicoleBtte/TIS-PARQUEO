@@ -1,82 +1,93 @@
 import {useEffect, useState} from "react";
-import axiosClient from "../axios-client.js";
 import {Link} from "react-router-dom";
-import {useStateContext} from "../contexts/ContextProvider.js";
 import { Button } from "react-bootstrap";
+import axiosCliente from '../../axios-client.js';
+import '../../styles/tablePageStyle.css'
+import '../../styles/tableStyle.css'
+import './theStyles/botonesUsersStyle.css'
 
-export default function operadores() {
+const Operadores = () => {
     const [operadores, setOperadores] = useState([]);
     const [loading, setLoading] = useState(false);
-  
     useEffect(() => {
       getOperadores();
     }, [])
-  
+
+    const getOperadores = () => {
+      setLoading(true)
+      axiosCliente.get('/operadores')
+        .then(({ data }) => {
+          setLoading(false)
+          setOperadores(data)
+        })
+        .catch(() => {
+          setLoading(false)
+        })
+      console.log('Esto es operadores',operadores)
+    }
+
     const onDelete = user => {
+        const payload = {
+          "id": user.idoperador
+        }
         if (!window.confirm("Esta seguro de eliminar este usuario?")) {
           return
         }
-        axiosClient.delete(`/operadores/${user.id}`)
+        axiosCliente.delete('/deleteOperador',{ params: payload })
           .then(() => {
             getOperadores()
           })
     }
   
-    const getOperadores = () => {
-      setLoading(true)
-      axiosClient.get('/operadores')
-        .then(({ data }) => {
-          setLoading(false)
-          setOperadores(data.data)
-        })
-        .catch(() => {
-          setLoading(false)
-        })
-    }
-  
     return (
       <div>
-        <div>
-            <h1>Operadores</h1>
-            <Button as={Link} to="/operadores/new" variant="primary">Agregar operador</Button>
+          <div className='tablePageContainer'>
+            <div className='titleBottonContainer'>
+              <h3>Operadores</h3>
+              <Button as={Link} to="/admin/operadores/new" className="azulBotonU">Agregar operador</Button>
+            </div>
             <div className="card animated fadeInDown">
-        <table>
-          <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Fecha de creacion</th>
-            <th>Acciones</th>
-          </tr>
-          </thead>
-          {loading &&
-            <tbody>
-            <tr>
-              <td colSpan="5">
-                Loading...
-              </td>
-            </tr>
-            </tbody>
-          }
-          {!loading &&
-            <tbody>
-            {operadores.map(u => (
-              <tr key={u.id}>
-                <td>{u.id}</td>
-                <td>{u.name}</td>
-                <td>{u.email}</td>
-                <td>{u.created_at}</td>
-                <td>
-                  <Button as={Link} onClick={ev => onDelete(u)} variant="danger">Eliminar</Button>
-                </td>
-              </tr>
-            ))}
-            </tbody>
-          }
-        </table>
-      </div>
-        </div>
+              <table className='mytable'>
+                <thead className='tableHeader'>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Telefono</th>
+                  <th>Parqueo</th>
+                  <th>Acciones</th>
+                </tr>
+                </thead>
+                {loading &&
+                  <tbody>
+                  <tr className='misFilas'>
+                    <td colSpan="5">
+                      Loading...
+                    </td>
+                  </tr>
+                  </tbody>
+                }
+                {!loading &&
+                  <tbody>
+                  {operadores.map(u => (
+                    <tr className='misFilas' key={u.idoperador}>
+                      <td className='miTd'>{u.idoperador}</td>
+                      <td className='miTd'>{u.nombre_operador}</td>
+                      <td className='miTd'>{u.email_operador}</td>
+                      <td className='miTd'>{u.telf_operador}</td>
+                      <td className='miTd'>{u.parqueo_idparqueo}</td>
+                      <td className='miTd'>
+                        <Button as={Link} onClick={ev => onDelete(u)} className="rojoBotonU">Eliminar</Button>
+                      </td>
+                    </tr>
+                  ))}
+                  </tbody>
+                }
+              </table>
+          </div>
+          </div>
       </div>
     )
   }
+
+export default Operadores;

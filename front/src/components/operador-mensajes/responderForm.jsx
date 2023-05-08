@@ -77,6 +77,7 @@ const ResponderForm = () => {
                 <div className="myform-group">
                   <label htmlFor="ci">Descripcion:</label>
                   <Field
+                    as="textarea"
                     type="text" 
                     id="descripcion" 
                     name="descripcion"

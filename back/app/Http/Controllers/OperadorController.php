@@ -94,4 +94,39 @@ class OperadorController extends Controller
             "msg" => "cierre sesion"
         ]);
     }
+
+    public function showAll(){
+        $consultaOperador = Operador::all();
+        return response()->json($consultaOperador);
+    }
+
+    public function eliminarOperador(Request $request){
+        $registro=Operador::find($request->id);
+        $registro->delete();
+
+        return response()->json(['message' => 'Usuario eliminado con éxito']);
+    }
+
+    public function crear(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'ci' => 'required|unique:operador,idoperador',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson());
+        }
+        
+
+        $registro=new Operador;
+        $registro->idoperador=$request->ci;
+        $registro->nombre_operador=$request->nombre_operador;
+        $registro->telf_operador=$request->telf_operador;
+        $registro->email_operador=$request->email_operador;
+        $registro->pass_operador=Hash::make($request->pass_operador);
+        $registro->parqueo_idparqueo=$request->parqueo_idparqueo;
+        $registro->save();
+
+        return response()->json(['message' => 'Usuario creado con éxito']);
+    }
 }

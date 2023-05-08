@@ -15,32 +15,27 @@ const RedactarForm = () => {
       getoptions();
     },[])
 
-    const opciones = [
-      {
-        idParqueo: 1,
-        nombre_parqueo: 'Parqueo 1'
-      }
-    ]
-
     const handleOptionChange = (event) => {
       setSelectedOption(event.target.value);
     }
 
     const getoptions = () => {
-      //setOptions(opciones);//Estatico--->cambiar
-
       axiosCliente.get('/parqueos')
       .then(({ data }) => {
         setOptions(JSON.parse(data))
         console.log(JSON.parse(data))
       })
       .catch(() => {
-        //setLoading(false)
         console.log('Algo salio mal');
       })
     }
 
     const enviarMensaje = (values) =>{
+      if(selectedOption===''){
+        alert('Por favor seleccione una opción');
+        return;
+      }
+
       console.log(values);
       const payload = {
         id: idUsuario,
@@ -121,6 +116,7 @@ const RedactarForm = () => {
                 <div className="myform-group">
                   <label htmlFor="ci">Descripción:</label>
                   <Field
+                    as="textarea"
                     type="text" 
                     id="descripcion" 
                     name="descripcion"

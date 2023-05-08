@@ -101,3 +101,8 @@ Route::get('/notificacionesEnvia',[NotificacionController::class, 'indexSent']);
 Route::get('/notificacionesRecibe',[NotificacionController::class, 'indexReceived']);
 
 Route::get('/miSitio',[SitioController::class,'obtenerMiSitio']);
+
+//Gestion usuarios
+Route::get('/operadores', [OperadorController::class, 'showAll']);
+Route::post('/crearOperador', [OperadorController::class, 'crear']);
+Route::delete('/deleteOperador', [OperadorController::class, 'eliminarOperador']);

@@ -13,6 +13,8 @@ import App from "../App";
 import "../styles/botonesStyle.css";
 import { Button } from "react-bootstrap";
 import PopoverSitio from "./popoverSitio";
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import '../styles/miNavDrop.css'
 
 const DefaultLayout = () => {
   const { user, token, setUser, setToken, rol, setRol, id, setID } =
@@ -63,6 +65,10 @@ const DefaultLayout = () => {
           <Nav.Link as={Link} to="/admin/asignacion">
             Asignar sitio
           </Nav.Link>
+          <NavDropdown title="Usuarios" className="navDrop">
+              <NavDropdown.Item className="navDrop" as={Link} to="/admin/operadores">Operadores</NavDropdown.Item>
+              <NavDropdown.Item className="navDrop">Guardias</NavDropdown.Item>
+          </NavDropdown>
         </Nav>
       );
       break;

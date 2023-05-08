@@ -5,7 +5,7 @@ import Popover from 'react-bootstrap/Popover';
 import axiosCliente from '../axios-client';
 
 const PopoverSitio = () => {
-    const [miParqueo, setMiParqueo] = useState({});
+    const [miParqueo, setMiParqueo] = useState([{"nombre_parqueo":0, "nombre_zona_estacionamiento": 0, "numero":0}]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {

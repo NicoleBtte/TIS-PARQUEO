@@ -1,108 +1,129 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
-import axiosClient from "../axios-client.js";
-import { useStateContext } from "../contexts/ContextProvider.js";
+import { useState, useEffect } from "react";
+import axiosCliente from "../../axios-client.js";
+import '../../styles/formStyle.css';
 
-const FormularioRegistro = () => {
-  const { setUser, setToken } = useStateContext();
+const FormularioOperador = () => {
+  const [options, setOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState('');
   const navigate = useNavigate();
 
-	const guardar = (values) =>{
-		console.log(values);
-		const payload = {
-			idoperador: values.idoperador,
-            nombre_operador: values.nombre_operador,
-			telf_operador: values.telf_operador,
-            email_operador: values.email_operador,
-            parqueo_idparqueo: values.parqueo_idparqueo,
-			pass_operador: values.pass_operador,
-		}
-		console.log(payload);
-	
-		axiosClient.post('/registerOperador', payload)
-			.then(({data}) => {
-				console.log('Se ejecuto axios en formulario')
-				console.log(data)
-			})
-			.catch(err => {
-				const response = err.response;
-				console.log(response.data.message)
-				if (response && response.status === 422) {
-				  console.log(response.data.errors)
-				}
-			  })
+  useEffect(() => {
+    getoptions();
+  },[])
 
-			navigate('/');
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  }
+
+  const getoptions = () => {
+    axiosCliente.get('/parqueos')
+    .then(({ data }) => {
+      setOptions(JSON.parse(data))
+      console.log(JSON.parse(data))
+    })
+    .catch(() => {
+      console.log('Algo salio mal');
+    })
+  }
+
+  const guardar = async (values) => {
+    if(selectedOption===''){
+      alert('Por favor seleccione una opción');
+      return;
+    }
+    console.log(values);
+    const payload = {
+      nombre_operador: values.name,
+      ci: values.ci,
+      email_operador: values.email,
+      telf_operador: values.telefono,
+      parqueo_idparqueo: selectedOption,
+      pass_operador: values.password,
+    }
+    console.log(payload);
+
+    axiosCliente.post('/crearOperador', payload)
+        .then(({data}) => {    
+          //que hacer despues      
+          console.log(data)
+        })
+        .catch(err => {
+          const response = err.response;
+          console.log(response.data.message)
+          if (response && response.status === 422) {
+            console.log(response.data.errors)
+          }
+          })
+  
+    navigate('/admin/operadores');
   };
+  
 
   return (
+    <div className="formContainer">
+    <h4>Registro</h4>
     <Formik
       initialValues={{
-        idoperador: "",
-        nombre_operador: "",
-        telf_operador: "",
-        email_operador: "",
-        parqueo_idparqueo: "",
-        pass_operador: "",
+        name: "",
+        ci: "",
+        telefono: "",
+        email: "",
+        parqueo: "",
+        password: "",
         ccontrasena: "",
       }}
       validate={(values) => {
         let errors = {};
-        // Validaidoperadoron idoperador
-        if (!values.idoperador) {
-          errors.idoperador = "Por favor ingresa un número de C.I.";
-        } else if (isNaN(values.idoperador)) {
-          errors.idoperador = "El número de C.I. solo puede contener números";
+
+        // Validacion nombre
+        if (!values.name) {
+          errors.name = "Por favor ingrese un nombre";
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,100}$/.test(values.name)) {
+          errors.name = "El nombre solo puede contener letras y espacios";
         }
 
-        // Validaidoperadoron nombre
-        if (!values.nombre_operador) {
-          errors.nombre_operador = "Por favor ingrese un nombre";
-        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.nombre_operador)) {
-          errors.nombre_operador = "El nombre solo puede contener letras y espaidoperadoros";
+        // Validacion ci
+        if (!values.ci) {
+          errors.ci = "Por favor ingresa un número de C.I.";
+        } else if (isNaN(values.ci)) {
+          errors.ci = "El número de C.I. solo puede contener números";
         }
 
-        // Validaidoperadoron telf_operador
-        if (!values.telf_operador) {
-          errors.telf_operador = "Por favor ingresa un número de teléfono";
-        } else if (isNaN(values.telf_operador)) {
-          errors.telf_operador = "El teléfono solo puede contener números";
+        // Validacion telefono
+        if (!values.telefono) {
+          errors.telefono = "Por favor ingresa un número de teléfono";
+        } else if (isNaN(values.telefono)) {
+          errors.telefono = "El teléfono solo puede contener números";
         }
 
-        // Validaidoperadoron correo
-        if (!values.email_operador) {
-          errors.email_operador = "Por favor ingresa un correo electronico";
+        // Validacion correo
+        if (!values.email) {
+          errors.email = "Por favor ingresa un correo electronico";
         } else if (
-          !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(values.email_operador)
+          !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(values.email)
         ) {
-          errors.email_operador = "La direcidoperadorón del correo no es válida.";
+          errors.email = "La dirección del correo no es válida.";
         }
 
-        // Validaidoperadoron placa
-        if (!values.placa) {
-          errors.placa = "Por favor ingresa la placa de su vehículo";
-        } else if (!/\d{4}[A-Z]{3}$/i.test(values.placa)) {
-          errors.placa = "La placa debe contener 4 numeros y 3 letras seguidas";
-        }
-
-        // Validaidoperadoron contrasenia
-        if (!values.pass_operador) {
-          errors.pass_operador = "Por favor ingresa una contraseña";
+        // Validacion contrasenia
+        if (!values.password) {
+          errors.password = "Por favor ingresa una contraseña";
         } else if (
           !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\w\d\s:])([^\s]){8,}$/.test(
-            values.pass_operador
+            values.password
           )
         ) {
-          errors.pass_operador =
-            "La contraseña debe tener al menos: 8 caracteres, 1 dígito, 1 letra minúscula, 1 letra mayúscula y 1 carácter espeidoperadoral.";
+          errors.password =
+            "La contraseña debe tener al menos: 8 caracteres, 1 dígito, 1 letra minúscula, 1 letra mayúscula y 1 carácter especial.";
         }
 
-        // Validaidoperadoron contrasenia
+        // Validacion contrasenia
         if (!values.ccontrasena) {
           errors.ccontrasena = "Debe confirmar la contraseña";
-        } else if (values.pass_operador !== values.ccontrasena) {
-          errors.ccontrasena = "Las contraseñas no coinidoperadorden.";
+        } else if (values.password !== values.ccontrasena) {
+          errors.ccontrasena = "Las contraseñas no coinciden.";
         }
 
         return errors;
@@ -110,53 +131,62 @@ const FormularioRegistro = () => {
       onSubmit={guardar}
     >
       {({ errors, touched }) => (
-        <Form classnombre_operador="formulario">
+        <Form className="formulario">
           <div>
-            <label htmlFor="idoperador">Número de C.I.:</label>
-            <Field type="text" id="idoperador" nombre_operador="idoperador" />
-            <ErrorMessage
-              nombre_operador="idoperador"
-              component={() => <div classnombre_operador="error">{errors.idoperador}</div>}
-            />
+            <label className="speciallabel" htmlFor="option">Parqueo:</label>
+              <Field className="combobox" as="select" id="option" name="option" onChange={handleOptionChange} value={selectedOption}>
+                <option value="">Seleccione una opción</option>
+                 {options.map((opcion) => (
+                <option key={opcion.idParqueo} value={opcion.idParqueo}>
+                  {opcion.nombre_parqueo}
+                </option>
+                ))}
+              </Field>
           </div>
-
-          <div>
+          
+          <div className="myform-group">
             <label htmlFor="nombre">Nombre:</label>
-            <Field type="text" id="nombre" nombre_operador="nombre_operador" />
+            <Field type="text" id="nombre" name="name" />
             <ErrorMessage
-              name="nombre_operador"
-              component={() => <div className="error">{errors.nombre_operador}</div>}
+              name="name"
+              component={() => <div className="error">{errors.name}</div>}
             />
           </div>
-
-          <div>
-            <label htmlFor="telf_operador">Teléfono:</label>
-            <Field type="text" id="telf_operador" nombre_operador="telf_operador" />
+          <div className="myform-group">
+            <label htmlFor="ci">Número de C.I.:</label>
+            <Field type="text" id="ci" name="ci" />
             <ErrorMessage
-              name="telf_operador"
-              component={() => <div className="error">{errors.telf_operador}</div>}
+              name="ci"
+              component={() => <div className="error">{errors.ci}</div>}
             />
           </div>
-
-          <div>
+          <div className="myform-group">
+            <label htmlFor="telefono">Teléfono:</label>
+            <Field type="text" id="telefono" name="telefono" />
+            <ErrorMessage
+              name="telefono"
+              component={() => <div className="error">{errors.telefono}</div>}
+            />
+          </div>
+          <div className="myform-group">
             <label htmlFor="correo">Correo electrónico:</label>
-            <Field type="text" id="correo" nombre_operador="email_operador" />
+            <Field type="text" id="correo" name="email" />
             <ErrorMessage
-              name="email_operador"
-              component={() => <div className="error">{errors.email_operador}</div>}
+              name="email"
+              component={() => <div className="error">{errors.email}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="contrasena">Contraseña:</label>
-            <Field type="pass_operador" id="contrasena" nombre_operador="pass_operador" />
+            <Field type="password" id="contrasena" name="password" />
             <ErrorMessage
-              name="pass_operador"
-              component={() => <div className="error">{errors.pass_operador}</div>}
+              name="password"
+              component={() => <div className="error">{errors.password}</div>}
             />
           </div>
-          <div>
+          <div className="myform-group">
             <label htmlFor="ccontrasena">Repetir contraseña:</label>
-            <Field type="pass_operador" id="ccontrasena" nombre_operador="ccontrasena" />
+            <Field type="password" id="ccontrasena" name="ccontrasena" />
             <ErrorMessage
               name="ccontrasena"
               component={() => (
@@ -164,11 +194,14 @@ const FormularioRegistro = () => {
               )}
             />
           </div>
-          <button type="submit">Enviar</button>
+          <div className="boton-container">
+            <button type="submit">Enviar</button>
+          </div>
         </Form>
       )}
     </Formik>
+    </div>
   );
 };
 
-export default FormularioRegistro;
+export default FormularioOperador;
