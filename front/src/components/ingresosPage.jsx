@@ -24,16 +24,15 @@ function IngresosPage() {
 
   const { cliente_idcliente } = formData;
 
-  const handleSubmit = (e) => {
-    console.log(cliente_idcliente);
-    alert(`datos formularios:::, ${cliente_idcliente}`);
+  const handleSubmit = (id) => {
+    console.log(id);
+    alert(`datos formularios:::, ${id}`);
     axiosClient
-      .post("'/salida", {
-        cliente_idcliente,
+      .post("/salida", {
+        idcliente: id,
       })
       .then((res) => console.log(res.data))
       .catch((error) => console.log(error));
-    e.preventDefault();
   };
 
   React.useEffect(() => {
@@ -81,7 +80,13 @@ function IngresosPage() {
                 <td className="myTd text-center">
                   {" "}
                   {ingresoSalida.fecha_salida == null ? (
-                    <Button onClick={handleSubmit}>Registrar Salida</Button>
+                    <Button
+                      onClick={() =>
+                        handleSubmit(ingresoSalida.cliente_idcliente)
+                      }
+                    >
+                      Registrar Salida
+                    </Button>
                   ) : (
                     ingresoSalida.fecha_salida
                   )}

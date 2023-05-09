@@ -3,9 +3,9 @@ import axiosClient from "../axios-client.js";
 
 function IngresosForm() {
   const [formValue, setFormValue] = useState({
-    cliente_idcliente: "",
+    idcliente: "",
   });
-  const { cliente_idcliente, placa } = formValue;
+  const { idcliente } = formValue;
 
   /*const handleCreate = (e) => {
     e.preventDefault();
@@ -13,11 +13,11 @@ function IngresosForm() {
   };*/
 
   const handleSubmit = (e) => {
-    console.log(cliente_idcliente, placa);
-    alert(`datos formularios:::, ${cliente_idcliente}`);
+    console.log(idcliente);
+    alert(`datos formularios:::, ${idcliente}`);
     axiosClient
-      .post("'/entrada", {
-        cliente_idcliente,
+      .post("/entrada", {
+        idcliente,
       })
       .then((res) => console.log(res.data))
       .catch((error) => console.log(error));
@@ -38,17 +38,17 @@ function IngresosForm() {
           <div className="mb-3">
             <label
               className="form-label  fw-medium primary-color"
-              htmlFor="cliente_idcliente"
+              htmlFor="idcliente"
             >
               ID Cliente
             </label>
             <input
               className="form-control"
-              name="cliente_idcliente"
-              id="cliente_idcliente"
+              name="idcliente"
+              id="idcliente"
               type="text"
               onChange={handleInputChange}
-              defaultValue={formValue.cliente_idcliente}
+              defaultValue={formValue.idcliente}
             />
           </div>
         </fieldset>

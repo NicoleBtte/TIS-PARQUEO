@@ -168,3 +168,8 @@ body {
   background-color: #8b0000 !important;
   border-color: transparent !important;
 }
+
+.spanError {
+  color: #ff1a00;
+  font-size: 13px;
+}

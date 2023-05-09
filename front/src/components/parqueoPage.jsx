@@ -4,7 +4,7 @@ import { Button, Container, Table } from "react-bootstrap";
 import "../styles/estilos.css";
 import "../styles/tableStyle.css";
 import "../styles/tablePageStyle.css";
-import '../styles/parqueoBotones.css'
+import "../styles/parqueoBotones.css";
 import axiosClient from "../axios-client.js";
 
 /*{
@@ -40,14 +40,12 @@ const ParqueoPage = () => {
 
   return (
     <Container className="tablePageContainer">
-    <div className='titleBottonContainer'>
-      <h2 className="tittleContainer">Lista Parqueos</h2>
+      <div className="titleBottonContainer">
+        <h2 className="tittleContainer">Lista Parqueos</h2>
         <Link to={"/admin/formulario-parqueo"}>
-          <Button className="botones-cs">
-            Agregar Parqueo
-          </Button>
+          <Button className="botones-cs">Agregar Parqueo</Button>
         </Link>
-    </div>
+      </div>
       <Table responsive className="mytable">
         <thead className="tableHeader">
           <tr>
@@ -81,7 +79,6 @@ const ParqueoPage = () => {
           ))}
         </tbody>
       </Table>
-      
     </Container>
   );
 };

@@ -69,6 +69,7 @@ Route::get('/updatePago', function(){
 });
 Route::delete('/eliminarPago', [PagoController::class, 'eliminarPago']);
 Route::get('/consultaEstadoClientes', [PagoController::class, 'consultaEstadoClientes']);
+Route::post('/consultaComprobante', [PagoController::class, 'consultaComprobante']);
 
 
 Route::get('/convocatorias', [ConvocatoriaController::class, 'index']);
@@ -78,12 +79,14 @@ Route::put('/convocatoria/{idConvocatoria}', [ConvocatoriaController::class, 'up
 Route::delete('/convocatoria/{idConvocatoria}', [ConvocatoriaController::class, 'destroy']);
 Route::get('/convocatoriaActual', [ConvocatoriaController::class, 'consultarConvocatoriaActiva']);
 Route::put('/convocatoriaRegistrarse',[ConvocatoriaController::class, 'registrarseConvo']);
+Route::post('/descargarConvocatoria',[ConvocatoriaController::class, 'descargarPdfconvocatoria']);
 
 Route::get('/parqueos', [ParqueoController::class ,'index']);
 Route::post('/parqueo',  [ParqueoController::class ,'store']);
 Route::get('/parqueo/{idParqueo}', [ParqueoController::class ,'show']);
 Route::put('/parqueo/{idParqueo}',  [ParqueoController::class ,'update']);
 Route::delete('/parqueo/{idParqueo}', [ParqueoController::class ,'destroy']);
+Route::post('/verMapaParqueo', [ParqueoController::class ,'verImagen']);
 
 Route::get('/zonaDeEstacionamientos/{idParqueo}', [ZonaDeEstacionamientoController::class,'index']);
 Route::get('/zonaDeEstacionamiento/{idZonaEstacionamiento}', [ZonaDeEstacionamientoController::class,'show']);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
-import { validarNombre } from "../helpers/validadores";
+import { validarNombre, validarNumeroSitios } from "../helpers/validadores";
 import axiosClient from "../axios-client.js";
 import "../styles/formStyle.css";
 //import Swal from "sweetalert2";
@@ -23,10 +23,21 @@ function FormularioParqueo() {
   //Swal.fire("", "El registro se ha completado exitoso", "");
   //Swal.fire('', 'El/los datos(s) ha(n) sido ingresados incorrectamente', 'error');
 
-  const [validar, setValidar] = useState({ nombre_parqueoB: false });
+  const [validar, setValidar] = useState({
+    nombre_parqueoB: false,
+    numero_de_zonasB: false,
+  });
 
   const { nombre_parqueo, numero_de_zonas, mapa_parqueo } = formData;
 
+  const [archivo, setArchivo] = useState();
+
+  const fileSelectHandler = (e) => {
+    setArchivo({
+      archivo: e.target.files[0],
+      archivoNombre: e.target.files[0].name,
+    });
+  };
   const handleOnchange = (e) => {
     if (e.target.name === "nombre_parqueo") {
       if (!validarNombre(e.target.value)) {
@@ -36,24 +47,30 @@ function FormularioParqueo() {
       }
     }
 
+    if (e.target.name === "numero_de_zonas") {
+      if (!validarNumeroSitios(e.target.value)) {
+        setValidar({ ...validar, numero_de_zonasB: true });
+      } else {
+        setValidar({ ...validar, numero_de_zonasB: false });
+      }
+    }
+
     console.log([e.target.name], e.target.value);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
-    console.log(nombre_parqueo, numero_de_zonas, mapa_parqueo);
-    alert(
-      `datos formularios:::, ${nombre_parqueo}, ${numero_de_zonas}, ${mapa_parqueo}`
-    );
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("nombre_parqueo", nombre_parqueo);
+    formData.append("numero_de_zonas", numero_de_zonas);
+    formData.append("mapa_parqueo", archivo.archivo);
+
     axiosClient
-      .post("/parqueo", {
-        nombre_parqueo,
-        numero_de_zonas,
-        mapa_parqueo,
-      })
+      .post("/parqueo", formData)
       .then((res) => console.log(res.data))
       .catch((error) => console.log(error));
-    e.preventDefault();
   };
   /*React.useEffect(() => {
     axiosClient
@@ -79,13 +96,13 @@ function FormularioParqueo() {
                 type="text"
                 name="nombre_parqueo"
                 id="nombre_parqueo"
-                helperText={
-                  !validar.nombre_parqueoB
-                    ? ""
-                    : "Solo se aceptan numeros y letras"
-                }
                 onChange={handleOnchange}
               />
+              <span className="spanError">
+                {validar.nombre_parqueoB
+                  ? "El titulo no puede contener caracteres especiales y debe tener un minimo de 4 caracteres"
+                  : ""}
+              </span>
             </div>
             {/*}
             <div className="myform-group col-md-4">
@@ -118,6 +135,11 @@ function FormularioParqueo() {
                 max="100"
                 onChange={handleOnchange}
               />
+              <span className="spanError">
+                {validar.numero_de_zonasB
+                  ? "El numero de zonas debe ser mayor o igual a 1"
+                  : ""}
+              </span>
             </div>
             <div className="myform-group">
               <label for="archivoPdf">Subir imagen</label>
@@ -126,9 +148,9 @@ function FormularioParqueo() {
                 name="archivoImg"
                 value={mapa_parqueo}
                 className="form-control-file"
-                accept="application/jpg/png"
+                accept="image/jpeg,image/png"
                 id="archivoImg"
-                onChange={handleOnchange}
+                onChange={fileSelectHandler}
               />
             </div>
             <button type="submit" className="btn btn-primary">

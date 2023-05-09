@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Time;
+use Illuminate\Http\UploadedFile;
 
 class ConvocatoriaController extends Controller
 {
@@ -31,8 +33,23 @@ class ConvocatoriaController extends Controller
             'estado_convocatoria' => ['required', 'integer', 'min:0', 'max:1'],
             'fecha_inicio' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin'],
             'fecha_fin' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_inicio'],
-            'fecha_pago' => ['required', 'date'],
+            'fecha_pago' => ['required', 'integer', 'min:1', 'max:28'],
+            'pago_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
+            'multa_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
+            'pdf_convocatoria' => ['required', 'file', 'mimes:pdf', 'max:2000'],
         ]);
+
+        $ultimaConvocatoria = Convocatoria::orderBy('fecha_fin', 'desc')->first();
+        if ($ultimaConvocatoria && $validatedData['fecha_inicio'] <= $ultimaConvocatoria->fecha_fin) {
+            return response()->json([
+                'success' => false,
+                'message' => 'La fecha de inicio de la nueva convocatoria debe ser mayor que la fecha de fin de la última convocatoria registrada.'
+            ]);
+        }
+
+        $pdf = $request->file('pdf_convocatoria');
+        $nombreArchivo = time() . '_' . $pdf->getClientOriginalName();
+        $path = $pdf->storeAs('public/pdfsconvocatoria', $nombreArchivo);
 
         $convocatoria = new Convocatoria();
         $convocatoria->titulo = $validatedData['titulo'];
@@ -42,6 +59,9 @@ class ConvocatoriaController extends Controller
         $convocatoria->fecha_inicio = $validatedData['fecha_inicio'];
         $convocatoria->fecha_fin = $validatedData['fecha_fin'];
         $convocatoria->fecha_pago = $validatedData['fecha_pago'];
+        $convocatoria->pago_mensual = $validatedData['pago_mensual'];
+        $convocatoria->multa_mensual = $validatedData['multa_mensual'];
+        $convocatoria->pdf_convocatoria = time() . '_' . $pdf->getClientOriginalName();
         if($convocatoria){
             $convocatoria->save();
             return response()->json([
@@ -77,7 +97,9 @@ class ConvocatoriaController extends Controller
             'estado_convocatoria' => ['required', 'integer', 'min:0', 'max:1'],
             'fecha_inicio' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin'],
             'fecha_fin' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_inicio'],
-            'fecha_pago' => ['required', 'date'],
+            'fecha_pago' => ['required', 'integer', 'min:1', 'max:28'],
+            'pago_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
+            'multa_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
         ]);
         $convocatoria->titulo = $validatedData['titulo'];
         $convocatoria->descripcion_convocatoria = $validatedData['descripcion_convocatoria'];
@@ -86,6 +108,8 @@ class ConvocatoriaController extends Controller
         $convocatoria->fecha_inicio = $validatedData['fecha_inicio'];
         $convocatoria->fecha_fin = $validatedData['fecha_fin'];
         $convocatoria->fecha_pago = $validatedData['fecha_pago'];
+        $convocatoria->pago_mensual = $validatedData['pago_mensual'];
+        $convocatoria->multa_mensual = $validatedData['multa_mensual'];
 
         if($convocatoria) {
             $convocatoria->save();
@@ -94,6 +118,7 @@ class ConvocatoriaController extends Controller
             return response()->json(['message' => 'No se encontró la convocatoria a actualizar.'], 404);
         }
     }
+
     public function destroy($idConvocatoria)
     {
         $convocatoria = Convocatoria::find($idConvocatoria);
@@ -137,4 +162,13 @@ class ConvocatoriaController extends Controller
             return response()->json(json_encode(null));
         }
      }
-}
+
+     public function descargarPdfconvocatoria(Request $request){
+        $id = $request->idConvocatoria;
+        $convocatoria = Convocatoria::findOrFail($id);
+        $file_path = storage_path('app\\public\\pdfsconvocatoria\\'.$convocatoria->pdf_convocatoria);
+        return response()->download($file_path, $convocatoria->pdf_convocatoria, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment']);
+        }
+    }

@@ -4,6 +4,10 @@ import { useParams } from "react-router-dom";
 import imagen from "../assets/parqueoimg.png";
 import zonaimg from "../assets/zonaimg.png";
 import axiosClient from "../axios-client.js";
+import {
+  validarNumeroSitios,
+  validarDescripcionZona,
+} from "../helpers/validadores";
 //import { useParams } from "react-router-dom";
 
 export default function ZonasPar() {
@@ -21,6 +25,16 @@ export default function ZonasPar() {
     descripcion: null,
   });
 
+  const [show, setShow] = useState({
+    imagen: "",
+    show: false,
+  });
+
+  const [validar, setValidar] = useState({
+    numero_de_sitiosB: false,
+    descripcionB: false,
+  });
+
   const {
     nombre_zona_estacionamiento,
     numero_de_sitios,
@@ -31,6 +45,22 @@ export default function ZonasPar() {
   } = modal;
 
   const handleOnchange = (e) => {
+    if (e.target.name === "numero_de_sitios") {
+      if (!validarNumeroSitios(e.target.value)) {
+        setValidar({ ...validar, numero_de_sitiosB: true });
+      } else {
+        setValidar({ ...validar, numero_de_sitiosB: false });
+      }
+    }
+
+    if (e.target.name === "descripcion") {
+      if (!validarDescripcionZona(e.target.value)) {
+        setValidar({ ...validar, descripcionB: true });
+      } else {
+        setValidar({ ...validar, descripcionB: false });
+      }
+    }
+
     setModal({ ...modal, [e.target.name]: e.target.value });
   };
 
@@ -87,6 +117,17 @@ export default function ZonasPar() {
       .catch((error) => console.log("error", error));
   }, []);
 
+  const [imagenUrl, setImagenUrl] = React.useState("");
+
+  React.useEffect(() => {
+    axiosClient
+      .get("/parqueo/" + params.id)
+      .then((response) => {
+        const result = response.data[0];
+        setImagenUrl(result.mapa_parqueo);
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
   const [caracteristicas, setCaracteristicas] = useState(false);
 
   return (
@@ -131,6 +172,11 @@ export default function ZonasPar() {
                     onChange={handleOnchange}
                     defaultValue={numero_de_sitios}
                   />
+                  <span className="spanError">
+                    {validar.numero_de_sitiosB
+                      ? "El numero de sitios debe ser mayor o igual a 1"
+                      : ""}
+                  </span>
                 </div>
 
                 <div className="form-group col-md-4">
@@ -186,6 +232,11 @@ export default function ZonasPar() {
                     onChange={handleOnchange}
                     defaultValue={descripcion}
                   ></input>
+                  <span className="spanError">
+                    {validar.descripcionB
+                      ? "La descripcion debe contener un minimo de 7 y maximo 20 caracteres"
+                      : ""}
+                  </span>
                 </div>
                 <div className="text-end">
                   <button type="submit" className="btn btn-primary">
@@ -266,7 +317,12 @@ export default function ZonasPar() {
       <Container>
         <Row className="mb-3">
           <Col xs={6}>
-            <Image src={imagen} alt="parqueoimg" fluid />
+            <Image
+              className="w-100"
+              src={
+                "http://localhost:8000/storage/public/mapasparqueo/" + imagenUrl
+              }
+            />
           </Col>
           <Col xs={6}>
             <Row>

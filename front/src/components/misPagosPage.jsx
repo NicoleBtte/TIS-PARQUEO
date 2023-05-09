@@ -9,13 +9,14 @@ import "../styles/tablePageStyle.css";
 import { Container } from "react-bootstrap";
 
 const MisPagos = () => {
-  const idusuario = localStorage.getItem('ID_USER');
+  const idusuario = localStorage.getItem("ID_USER");
   const [estadoPago, setEstadoPago] = useState({
     estado_pago: "",
     fecha_lim_pago: "",
     monto_a_pagar: "",
     montoMensual: "100",
-    multa: "Descripcion de Multa",
+    multa: "",
+    saldo: "",
   });
 
   function descargarComprobante(id) {
@@ -82,6 +83,10 @@ const MisPagos = () => {
         <div className="col">
           <p className="text-nowrap fw-medium mb-1">Multa</p>
           <p className="parrafoContainer">{estadoPago.multa}</p>
+        </div>
+        <div className="col">
+          <p className="text-nowrap fw-medium mb-1">Saldo</p>
+          <p className="parrafoContainer">{estadoPago.saldo}</p>
         </div>
       </div>
       <div className="tablePageContainer">

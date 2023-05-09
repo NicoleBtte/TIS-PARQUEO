@@ -6,17 +6,23 @@ import "../styles/estilos.css";
 import "../styles/tableStyle.css";
 import "../styles/botonesStyle.css";
 import "../styles/tablePageStyle.css";
+import { Button, Modal } from "react-bootstrap";
 
 function PagosPage() {
   const [pagos, setPagos] = useState([]);
 
-  function descargarComprobante(id) {
-    console.log("Downloading image", id);
+  const [show, setShow] = useState({
+    imagen: "",
+    show: false,
+  });
+
+  function showImage(url) {
+    setShow({ ...show, show: true, imagen: url });
   }
 
-  function eliminarPago(id) {
+  /*function eliminarPago(id) {
     setPagos(pagos.filter((pago) => pago.id !== id));
-  }
+  }*/
 
   React.useEffect(() => {
     axiosClient
@@ -61,34 +67,40 @@ function PagosPage() {
                 <td className="miTd">{pago.cliente_idcliente}</td>
                 <td className="miTd">{pago.monto}</td>
                 <td className="miTd">
-                  <button
+                  <Button
                     className="btn-none-style"
-                    onClick={() => descargarComprobante(pago.id)}
+                    onClick={() => showImage(pago.comprobante)}
                   >
                     <i className="bx bxs-cloud-download bx-icon"></i>
-                  </button>
+                  </Button>
                 </td>
                 <td>
-                  <button className="btn-none-style">
-                    <Link
-                      to={`pago/${pago.id}/edit`}
-                      className="link-none-styles"
-                    >
-                      <i className="bx bxs-edit-alt primary-color"></i>
-                    </Link>
-                  </button>
-                  <button
-                    className="btn-none-style"
-                    onClick={() => eliminarPago(pago.id)}
+                  <Link
+                    to={`/operador/formulario-pago/${pago.idtransaccion}/editar`}
                   >
-                    <i className="bx bxs-trash-alt primary-color"></i>
-                  </button>
+                    <Button className="naranjaBotonC">Editar</Button>
+                  </Link>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      <Modal
+        size="lg"
+        show={show.show}
+        onHide={() => setShow({ ...show, show: false })}
+        aria-labelledby="example-modal-sizes-title-sm"
+      >
+        <Modal.Header closeButton></Modal.Header>
+        <Modal.Body>
+          <img
+            className="w-100"
+            src={"http://localhost:8000/storage/uploads/" + show.imagen}
+            alt=""
+          />
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }

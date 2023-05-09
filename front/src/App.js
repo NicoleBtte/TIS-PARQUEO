@@ -33,6 +33,7 @@ import FormularioOperador from "./components/admin-users/operadorForm";
 import Guardias from "./components/admin-users/guardias";
 import FormularioGuardia from "./components/admin-users/guardiaForm";
 import MensajesEnviadosPage from "./components/cliente-mensajes/historialEnviados";
+import PagoEditar from "./components/pagoEditar";
 
 function App() {
   return (
@@ -82,9 +83,15 @@ function App() {
                 element={<SitiosDisponibles />}
               />
               <Route path="/admin/operadores" element={<Operadores />} />
-              <Route path="/admin/operadores/new" element={<FormularioOperador />} />
+              <Route
+                path="/admin/operadores/new"
+                element={<FormularioOperador />}
+              />
               <Route path="/admin/guardias" element={<Guardias />} />
-              <Route path="/admin/guardias/new" element={<FormularioGuardia />} />
+              <Route
+                path="/admin/guardias/new"
+                element={<FormularioGuardia />}
+              />
             </Route>
             {/* Rutas para el operador */}
             <Route
@@ -105,12 +112,19 @@ function App() {
                 path="/operador/formulario-pago"
                 element={<FormularioPago />}
               />
+              <Route
+                path="/operador/formulario-pago/:id/editar"
+                element={<PagoEditar />}
+              />
               <Route path="/operador/pqr" element={<PqrPage />} />
               <Route
                 path="/operador/pqr/responder/id/:id/name/:name"
                 element={<ResponderForm />}
               />
-              <Route path="/operador/enviados" element={<MensajesEnviadosPage />} />
+              <Route
+                path="/operador/enviados"
+                element={<MensajesEnviadosPage />}
+              />
             </Route>
             {/* Rutas para el guardia */}
             <Route
@@ -146,7 +160,10 @@ function App() {
                 path="/cliente/mensajes/responder/id/:id/name/:name"
                 element={<ResponseForm />}
               />
-              <Route path="/cliente/enviados" element={<MensajesEnviadosPage />} />
+              <Route
+                path="/cliente/enviados"
+                element={<MensajesEnviadosPage />}
+              />
             </Route>
 
             {/* Rutas para el guest */}

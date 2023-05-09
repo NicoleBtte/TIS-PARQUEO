@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Schema;
 use Carbon\Carbon;
 use App\Models\Pago;
 use App\Models\Cliente;
+use Illuminate\Support\Facades\Storage;
 
 class PagoController extends Controller
 {
@@ -26,10 +27,10 @@ class PagoController extends Controller
                 //$pago->idtransaccion=$id;
                 $pago->monto=$monto;
                 $pago->fechaPago=Carbon::today()->format('Y-m-d');
-                /*$archivo = $request->file('imagen');
+                $archivo = $request->file('imagen');
                 $ruta = Storage::disk('uploads')->putFile('comprobantes', $archivo);
-                $pago->comprobante = $ruta;*/
-                $pago->comprobante = null;
+                $pago->comprobante = $ruta;
+                //$pago->comprobante = null;
                 $pago->cliente_idcliente=$request->carnet;
                 $pago->reporte_idreporte=DB::table('reporte')->latest('idreporte')->first()->idreporte;
                 //$pago->save();
@@ -122,5 +123,13 @@ class PagoController extends Controller
         $eliminar=Pago::find($request->idtransaccion);
         $eliminar->delete();
         return response()->json(['message'=>'Registro borrado con exito']);
+    }
+
+    public function consultaComprobante(Request $request){
+        echo("aquii lo que sea".$request->idtransaccion);
+        $consultaComprobante=Pago::find($request->idtransaccion);
+        $json=json_encode($consultaComprobante);
+        return response()->json(json_encode($json));
+        //return view('verPagos')->with('json',$json);
     }
 }
