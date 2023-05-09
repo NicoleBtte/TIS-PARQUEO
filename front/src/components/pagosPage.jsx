@@ -70,10 +70,14 @@ function PagosPage() {
                   {pago.tipo_de_pago === 1 ? "Efectivo" : "Electronico"}
                 </td>
                 <td className="miTd">
-                  <Button onClick={() => showImage(pago.comprobante)}>
-                    {" "}
-                    Mostrar
-                  </Button>
+                  {" "}
+                  {pago.comprobante == null ? (
+                    <i class="bx bx-x"></i>
+                  ) : (
+                    <Button onClick={() => showImage(pago.comprobante)}>
+                      <i class="bx bx-image"></i>
+                    </Button>
+                  )}
                 </td>
               </tr>
             ))}

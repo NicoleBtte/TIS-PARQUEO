@@ -12,9 +12,9 @@ function QrPage() {
         <div className="col bac">
           <div className="cuentaB">
             <p className="parrafo">Cuenta Bancaria</p>
-            <p className="parrafo">Numero de la cuenta: #############</p>
-            <p className="parrafo">Nombre: Parqueo UMSS</p>
-            <p className="parrafo">NIT: ########</p>
+            <p className="parrafo">Numero de la cuenta: 64635838586</p>
+            <p className="parrafo">Nombre titular: Ivan Douglas</p>
+            <p className="parrafo">Tipo de cuenta: Cuenta corriente(BNB)</p>
           </div>
         </div>
         <div className="col">

@@ -6,6 +6,7 @@ import "../styles/estilos.css";
 import "../styles/tableStyle.css";
 import "../styles/botonesStyle.css";
 import "../styles/tablePageStyle.css";
+import { Button, Modal } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 
 const MisPagos = () => {
@@ -18,10 +19,15 @@ const MisPagos = () => {
     multa: "",
     saldo: "",
   });
+  const [show, setShow] = useState({
+    imagen: "",
+    show: false,
+  });
 
-  function descargarComprobante(id) {
-    console.log("Downloading image", id);
+  function showImage(url) {
+    setShow({ ...show, show: true, imagen: url });
   }
+
   const [pagos, setPagos] = useState([]);
 
   useEffect(() => {
@@ -66,7 +72,9 @@ const MisPagos = () => {
       <div className="row p-5">
         <div className="col">
           <p className="text-nowrap fw-medium mb-1">Estado</p>
-          <p className="parrafoContainer">{estadoPago.estado_pago}</p>
+          <p className="parrafoContainer">
+            {estadoPago.estado_pago === 0 ? "Con deuda" : "Al dia"}
+          </p>
         </div>
         <div className="col">
           <p className="text-nowrap fw-medium mb-1">Fecha limite de pago</p>
@@ -75,10 +83,6 @@ const MisPagos = () => {
         <div className="col">
           <p className="text-nowrap fw-medium mb-1">Deuda</p>
           <p className="parrafoContainer">{estadoPago.monto_a_pagar}</p>
-        </div>
-        <div className="col">
-          <p className="text-nowrap fw-medium mb-1">Monto mensual</p>
-          <p className="parrafoContainer">{estadoPago.montoMensual}</p>
         </div>
         <div className="col">
           <p className="text-nowrap fw-medium mb-1">Multa</p>
@@ -95,6 +99,7 @@ const MisPagos = () => {
             <tr>
               <th>Fecha</th>
               <th>Monto</th>
+              <th>Tipo de pago</th>
               <th>Comprobante</th>
             </tr>
           </thead>
@@ -104,18 +109,41 @@ const MisPagos = () => {
                 <td className="myTd text-center">{pago.fechaPago}</td>
                 <td className="myTd text-center">{pago.monto}</td>
                 <td className="myTd text-center">
-                  <button
-                    className="btn-none-style"
-                    onClick={() => descargarComprobante(pago.id)}
-                  >
-                    <i className="bx bxs-cloud-download bx-icon"></i>
-                  </button>
+                  {pago.tipo_de_pago === 1 ? "Efectivo" : "Electronico"}
+                </td>
+                <td className="myTd text-center">
+                  {" "}
+                  {pago.comprobante == null ? (
+                    <i class="bx bx-x"></i>
+                  ) : (
+                    <button
+                      className="btn-none-style"
+                      onClick={() => showImage(pago.comprobante)}
+                    >
+                      <i class="bx bx-image"></i>
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      <Modal
+        size="lg"
+        show={show.show}
+        onHide={() => setShow({ ...show, show: false })}
+        aria-labelledby="example-modal-sizes-title-sm"
+      >
+        <Modal.Header closeButton></Modal.Header>
+        <Modal.Body>
+          <img
+            className="w-100"
+            src={"http://localhost:8000/storage/uploads/" + show.imagen}
+            alt=""
+          />
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

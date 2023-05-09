@@ -52,7 +52,7 @@ class ClienteController extends Controller
         $registro->multa=0;//DB::table('convocatoria')->orderBy('id', 'desc')->first()->multa_mensual;
         $registro->saldo=1200;//DB::table('convocatoria')->orderBy('id', 'desc')->first()->pagoTotal;
         $registro->fecha_pagado=null;
-        $registro->fecha_lim_pago=null;//DB::table('convocatoria')->orderBy('id', 'desc')->first()->fecha_pago;
+        $registro->fecha_lim_pago=DB::table('convocatoria')->orderBy('idConvocatoria', 'desc')->first()->fecha_pago;
         //$age = DB::table('users')->select('age')->latest('id')->value('age');
         
         $registro->telf_cliente=$request->telefono;
