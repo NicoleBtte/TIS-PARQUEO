@@ -54,8 +54,14 @@ function PagoForm() {
     console.log({ formValue });
     axiosClient
       .post("/pagar", formData)
-      .then((res) => console.log(res.data))
-      .catch((error) => console.log(error));
+      .then((res) => {
+        console.log(res.data);
+        alert("El pago se registro exitosamente");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Datos invalidos al registrar pago");
+      });
   };
 
   return (

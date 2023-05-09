@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import axiosClient from "../axios-client.js";
 import { Container } from "react-bootstrap";
-import { validarDescripcion, validarTitulo } from "../helpers/validadores";
+import {
+  validarDescripcion,
+  validarTitulo,
+  validarNumeroSitios,
+  validarFechas,
+  validarFechaPago,
+  validarPagoMensual,
+  validarMultaMensual,
+} from "../helpers/validadores";
 import { useParams } from "react-router-dom";
 import "../styles/formStyle.css";
 //import Swal from "sweetalert2";
@@ -37,6 +45,11 @@ function ConvocatoriaEditar() {
   const [validar, setValidar] = useState({
     tituloB: false,
     descripcion_convocatoriaB: false,
+    numero_cuposB: false,
+    fecha_finB: false,
+    fecha_pagoB: false,
+    pago_mensualB: false,
+    multa_mensualB: false,
   });
 
   const {
@@ -67,6 +80,46 @@ function ConvocatoriaEditar() {
         setValidar({ ...validar, descripcion_convocatoriaB: true });
       } else {
         setValidar({ ...validar, descripcion_convocatoriaB: false });
+      }
+    }
+
+    if (e.target.name === "numero_cupos") {
+      if (!validarNumeroSitios(e.target.value)) {
+        setValidar({ ...validar, numero_cuposB: true });
+      } else {
+        setValidar({ ...validar, numero_cuposB: false });
+      }
+    }
+
+    if (e.target.name === "fecha_fin") {
+      if (!validarFechas(e.target.value)) {
+        setValidar({ ...validar, fecha_finB: true });
+      } else {
+        setValidar({ ...validar, fecha_finB: false });
+      }
+    }
+
+    if (e.target.name === "fecha_pago") {
+      if (!validarFechaPago(e.target.value)) {
+        setValidar({ ...validar, fecha_pagoB: true });
+      } else {
+        setValidar({ ...validar, fecha_pagoB: false });
+      }
+    }
+
+    if (e.target.name === "pago_mensual") {
+      if (!validarPagoMensual(e.target.value)) {
+        setValidar({ ...validar, pago_mensualB: true });
+      } else {
+        setValidar({ ...validar, pago_mensualB: false });
+      }
+    }
+
+    if (e.target.name === "multa_mensual") {
+      if (!validarMultaMensual(e.target.value)) {
+        setValidar({ ...validar, multa_mensualB: true });
+      } else {
+        setValidar({ ...validar, multa_mensualB: false });
       }
     }
 
@@ -109,7 +162,7 @@ function ConvocatoriaEditar() {
       .catch((error) => {
         console.log(error);
         alert(
-          "No se pudo actualizar la convocatoria, revisa que haya cambiado bien los datos"
+          "No se pudo actualizar la convocatoria, revisa que hayas cambiado bien los datos"
         );
       });
     e.preventDefault();
@@ -142,7 +195,11 @@ function ConvocatoriaEditar() {
                 onChange={handleOnchange}
                 defaultValue={titulo}
               ></input>
-              <span>{validar.tituloB ? "los datos son incorrectos" : ""}</span>
+              <span className="spanError">
+                {validar.tituloB
+                  ? "El titulo no puede contener caracteres especiales y debe tener un minimo de 5 caracteres"
+                  : ""}
+              </span>
             </div>
             <div className="myform-group ">
               <label htmlFor="descripcion_convocatoria">Descripcion</label>
@@ -151,10 +208,16 @@ function ConvocatoriaEditar() {
                 type="text"
                 className="form-control"
                 id="descripcion_convocatoria"
+                as="textarea"
                 placeholder="descripcion_convocatoria"
                 onChange={handleOnchange}
                 defaultValue={descripcion_convocatoria}
               ></input>
+              <span className="spanError">
+                {validar.descripcion_convocatoriaB
+                  ? "La descripcion debe contener minimamente 16 caracteres"
+                  : ""}
+              </span>
             </div>
           </div>
           <div className="myform-group">
@@ -169,6 +232,11 @@ function ConvocatoriaEditar() {
               onChange={handleOnchange}
               defaultValue={numero_cupos}
             />
+            <span className="spanError">
+              {validar.numero_cuposB
+                ? "Los cupos deben ser mayor o igual a 1"
+                : ""}
+            </span>
           </div>
 
           <div className="form-row">
@@ -208,6 +276,11 @@ function ConvocatoriaEditar() {
                 onChange={handleOnchange}
                 defaultValue={fecha_fin}
               ></input>
+              <span className="spanError">
+                {validar.fecha_finB
+                  ? "La fecha fin no puede ser menor a la fecha inicio"
+                  : ""}
+              </span>
             </div>
             <div className="myform-group">
               <label htmlFor="fecha_pago">Fecha pago</label>
@@ -220,6 +293,11 @@ function ConvocatoriaEditar() {
                 onChange={handleOnchange}
                 defaultValue={fecha_pago}
               ></input>
+              <span className="spanError">
+                {validar.fecha_pagoB
+                  ? "La fecha pago debe ser mayor igual a 1 y menor a 29"
+                  : ""}
+              </span>
             </div>
             <div className="myform-group">
               <label htmlFor="pago_mensual">Pago mensual</label>
@@ -232,6 +310,11 @@ function ConvocatoriaEditar() {
                 onChange={handleOnchange}
                 defaultValue={pago_mensual}
               ></input>
+              <span className="spanError">
+                {validar.pago_mensualB
+                  ? "El pago mensual no puede contener numeros negativos ni ser mayor a 1000"
+                  : ""}
+              </span>
             </div>
             <div className="myform-group">
               <label htmlFor="multa_mensual">Multa mensual</label>
@@ -244,6 +327,11 @@ function ConvocatoriaEditar() {
                 onChange={handleOnchange}
                 defaultValue={multa_mensual}
               ></input>
+              <span className="spanError">
+                {validar.multa_mensualB
+                  ? "El pago mensual no puede contener numeros negativos ni ser mayor a 1000"
+                  : ""}
+              </span>
             </div>
             {/*<div className="myform-group ">
               <label for="archivoPdf">Subir archivo</label>

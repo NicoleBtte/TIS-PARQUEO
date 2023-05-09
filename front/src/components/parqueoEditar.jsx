@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
-import { validarNombre } from "../helpers/validadores";
+import { validarNombre, validarNumeroSitios } from "../helpers/validadores";
 import axiosClient from "../axios-client.js";
 import { useParams } from "react-router-dom";
 import "../styles/formStyle.css";
@@ -37,6 +37,14 @@ function ParqueoEditar() {
       }
     }
 
+    if (e.target.name === "numero_de_zonas") {
+      if (!validarNumeroSitios(e.target.value)) {
+        setValidar({ ...validar, numero_de_zonasB: true });
+      } else {
+        setValidar({ ...validar, numero_de_zonasB: false });
+      }
+    }
+
     console.log([e.target.name], e.target.value);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -60,8 +68,16 @@ function ParqueoEditar() {
         numero_de_zonas,
         mapa_parqueo,
       })
-      .then((res) => console.log(res.data))
-      .catch((error) => console.log(error));
+      .then((res) => {
+        console.log(res.data);
+        alert("El parqueo se actualizo correctamente");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(
+          "No se pudo actualizar parqueo, revisa que hayas cambiado bien los datos"
+        );
+      });
     e.preventDefault();
   };
   React.useEffect(() => {
@@ -90,7 +106,13 @@ function ParqueoEditar() {
                 onChange={handleOnchange}
                 defaultValue={nombre_parqueo}
               />
+              <span className="spanError">
+                {validar.nombre_parqueoB
+                  ? "El nombre no puede contener caracteres especiales y debe tener un minimo de 4 caracteres"
+                  : ""}
+              </span>
             </div>
+
             <div className="myform-group">
               <label htmlFor="numero_de_zonas">Numero de zonas</label>
               <input
@@ -103,6 +125,11 @@ function ParqueoEditar() {
                 onChange={handleOnchange}
                 defaultValue={numero_de_zonas}
               />
+              <span className="spanError">
+                {validar.numero_de_zonasB
+                  ? "El numero de zonas debe ser mayor o igual a 1"
+                  : ""}
+              </span>
             </div>
             <div className="myform-group ">
               <label for="archivoPdf">Subir imagen</label>

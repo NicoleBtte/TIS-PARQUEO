@@ -6,6 +6,9 @@ import {
   validarTitulo,
   validarNumeroSitios,
   validarFechas,
+  validarFechaPago,
+  validarPagoMensual,
+  validarMultaMensual,
 } from "../helpers/validadores";
 import "../styles/formStyle.css";
 //import Swal from "sweetalert2";
@@ -115,6 +118,30 @@ function FormularioConvocatoria() {
         setValidar({ ...validar, fecha_finB: true });
       } else {
         setValidar({ ...validar, fecha_finB: false });
+      }
+    }
+
+    if (e.target.name === "fecha_pago") {
+      if (!validarFechaPago(e.target.value)) {
+        setValidar({ ...validar, fecha_pagoB: true });
+      } else {
+        setValidar({ ...validar, fecha_pagoB: false });
+      }
+    }
+
+    if (e.target.name === "pago_mensual") {
+      if (!validarPagoMensual(e.target.value)) {
+        setValidar({ ...validar, pago_mensualB: true });
+      } else {
+        setValidar({ ...validar, pago_mensualB: false });
+      }
+    }
+
+    if (e.target.name === "multa_mensual") {
+      if (!validarMultaMensual(e.target.value)) {
+        setValidar({ ...validar, multa_mensualB: true });
+      } else {
+        setValidar({ ...validar, multa_mensualB: false });
       }
     }
 
@@ -259,11 +286,6 @@ function FormularioConvocatoria() {
                 min={new Date().toISOString().split("T")[0]}
                 onChange={handleOnChangeFechaInicio}
               ></input>
-              <span className="spanError">
-                {validar.fecha_inicioB
-                  ? "La fecha inicio no puede ser menor a la fecha del día actual"
-                  : ""}
-              </span>
             </div>
             <div className="myform-group">
               <label htmlFor="fecha_fin">Fecha fin:</label>
@@ -294,7 +316,7 @@ function FormularioConvocatoria() {
                 onChange={handleOnchange}
               />
               <span className="spanError">
-                {validar.numero_cuposB
+                {validar.fecha_pagoB
                   ? "La fecha pago debe ser mayor igual a 1 y menor a 29"
                   : ""}
               </span>
@@ -311,8 +333,8 @@ function FormularioConvocatoria() {
                 onChange={handleOnchange}
               />
               <span className="spanError">
-                {validar.numero_cuposB
-                  ? "El pago mensual no puede contener numeros negativos"
+                {validar.pago_mensualB
+                  ? "El pago mensual no puede contener numeros negativos ni ser mayor a 1000"
                   : ""}
               </span>
             </div>
@@ -327,6 +349,11 @@ function FormularioConvocatoria() {
                 max="1000"
                 onChange={handleOnchange}
               />
+              <span className="spanError">
+                {validar.multa_mensualB
+                  ? "El pago mensual no puede contener numeros negativos ni ser mayor a 1000"
+                  : ""}
+              </span>
             </div>
             <div className="myform-group ">
               <label for="archivoPdf">Subir archivo:</label>

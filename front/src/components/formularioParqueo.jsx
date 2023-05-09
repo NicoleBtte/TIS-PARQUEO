@@ -69,8 +69,14 @@ function FormularioParqueo() {
 
     axiosClient
       .post("/parqueo", formData)
-      .then((res) => console.log(res.data))
-      .catch((error) => console.log(error));
+      .then((res) => {
+        console.log(res.data);
+        alert("El parqueo fue creado exitosamente");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Datos invalidos al crear parqueo");
+      });
   };
   /*React.useEffect(() => {
     axiosClient
@@ -100,7 +106,7 @@ function FormularioParqueo() {
               />
               <span className="spanError">
                 {validar.nombre_parqueoB
-                  ? "El titulo no puede contener caracteres especiales y debe tener un minimo de 4 caracteres"
+                  ? "El nombre no puede contener caracteres especiales y debe tener un minimo de 4 caracteres"
                   : ""}
               </span>
             </div>

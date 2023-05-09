@@ -131,10 +131,10 @@ const ConvocatoriaPage = () => {
               <td className="miTd">{convocatoria.fecha_fin}</td>
               <td className="miTd">
                 <Button
-                  className="celesteBotonC"
+                  className="celesteBotonPdf"
                   onClick={() => downloadPDF(convocatoria.idConvocatoria)}
                 >
-                  Ver Convocatoria
+                  Pdf
                 </Button>
                 <Link
                   to={`/admin/formulario-convocatoria/${convocatoria.idConvocatoria}/editar`}

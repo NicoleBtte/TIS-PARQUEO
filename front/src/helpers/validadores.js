@@ -84,6 +84,57 @@ export function validarNumeroSitios(numeroSitios) {
   return true;
 }
 
+export function validarFechaPago(fechaPago) {
+  // Convertir el valor a número entero
+  fechaPago = parseInt(fechaPago);
+
+  // Verificar que el valor sea un número válido
+  if (isNaN(fechaPago)) {
+    return false;
+  }
+
+  // Verificar que el número sea mayor o igual a 1
+  if (fechaPago < 1 || fechaPago > 28) {
+    return false;
+  }
+
+  return true;
+}
+
+export function validarPagoMensual(pagoMensual) {
+  // Convertir el valor a número entero
+  pagoMensual = parseInt(pagoMensual);
+
+  // Verificar que el valor sea un número válido
+  if (isNaN(pagoMensual)) {
+    return false;
+  }
+
+  // Verificar que el número sea mayor o igual a 1
+  if (pagoMensual < 1 || pagoMensual > 1000) {
+    return false;
+  }
+
+  return true;
+}
+
+export function validarMultaMensual(multaMensual) {
+  // Convertir el valor a número entero
+  multaMensual = parseInt(multaMensual);
+
+  // Verificar que el valor sea un número válido
+  if (isNaN(multaMensual)) {
+    return false;
+  }
+
+  // Verificar que el número sea mayor o igual a 1
+  if (multaMensual < 0 || multaMensual > 1000) {
+    return false;
+  }
+
+  return true;
+}
+
 export function validarFechaInicio(fecha) {
   const fechaActual = moment().format("YYYY-MM-DD");
   const fechaIngresada = moment(fecha).format("YYYY-MM-DD");

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Response;
 use Carbon\Carbon;
 use App\Models\Pago;
 use App\Models\Cliente;
@@ -30,6 +31,7 @@ class PagoController extends Controller
                 $archivo = $request->file('imagen');
                 $ruta = Storage::disk('uploads')->putFile('comprobantes', $archivo);
                 $pago->comprobante = $ruta;
+                $pago->tipo_de_pago= $request->tipo_de_pago;
                 //$pago->comprobante = null;
                 $pago->cliente_idcliente=$request->carnet;
                 $pago->reporte_idreporte=DB::table('reporte')->latest('idreporte')->first()->idreporte;

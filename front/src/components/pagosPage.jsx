@@ -30,7 +30,7 @@ function PagosPage() {
       .then((response) => {
         let result = response.data;
         result = JSON.parse(result);
-        console.log("esto es el resultaodo", result);
+        console.log(result);
         setPagos(result);
       })
       .catch((error) => console.log("error", error));
@@ -56,8 +56,8 @@ function PagosPage() {
               <th className="fw-medium">Fecha</th>
               <th className="fw-medium">Cliente</th>
               <th className="fw-medium">Monto</th>
+              <th className="fw-medium">Tipo de pago</th>
               <th className="fw-medium">Comprobante</th>
-              <th className="fw-medium">Acciones</th>
             </tr>
           </thead>
           <tbody className="bg-c-secondary">
@@ -67,19 +67,13 @@ function PagosPage() {
                 <td className="miTd">{pago.cliente_idcliente}</td>
                 <td className="miTd">{pago.monto}</td>
                 <td className="miTd">
-                  <Button
-                    className="btn-none-style"
-                    onClick={() => showImage(pago.comprobante)}
-                  >
-                    <i className="bx bxs-cloud-download bx-icon"></i>
-                  </Button>
+                  {pago.tipo_de_pago === 1 ? "Efectivo" : "Electronico"}
                 </td>
-                <td>
-                  <Link
-                    to={`/operador/formulario-pago/${pago.idtransaccion}/editar`}
-                  >
-                    <Button className="naranjaBotonC">Editar</Button>
-                  </Link>
+                <td className="miTd">
+                  <Button onClick={() => showImage(pago.comprobante)}>
+                    {" "}
+                    Mostrar
+                  </Button>
                 </td>
               </tr>
             ))}
