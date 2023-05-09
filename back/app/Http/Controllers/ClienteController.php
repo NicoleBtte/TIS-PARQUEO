@@ -48,9 +48,9 @@ class ClienteController extends Controller
         $registro->idcliente=$request->ci;
         $registro->nombre_cliente=$request->name;
         $registro->estado_pago=0;
-        $registro->monto_a_pagar=null;//DB::table('convocatoria')->orderBy('id', 'desc')->first()->costoMes;
-        //$registro->total=DB::table('convocatoria')->orderBy('id', 'desc')->first()->pagoTotal;
-        //$registro->saldo=DB::table('convocatoria')->orderBy('id', 'desc')->first()->pagoTotal;
+        $registro->monto_a_pagar=DB::table('convocatoria')->orderBy('idConvocatoria', 'desc')->first()->pago_mensual;
+        $registro->multa=0;//DB::table('convocatoria')->orderBy('id', 'desc')->first()->multa_mensual;
+        $registro->saldo=1200;//DB::table('convocatoria')->orderBy('id', 'desc')->first()->pagoTotal;
         $registro->fecha_pagado=null;
         $registro->fecha_lim_pago=null;//DB::table('convocatoria')->orderBy('id', 'desc')->first()->fecha_pago;
         //$age = DB::table('users')->select('age')->latest('id')->value('age');

@@ -14,13 +14,18 @@ function IngresosForm() {
 
   const handleSubmit = (e) => {
     console.log(idcliente);
-    alert(`datos formularios:::, ${idcliente}`);
     axiosClient
       .post("/entrada", {
         idcliente,
       })
-      .then((res) => console.log(res.data))
-      .catch((error) => console.log(error));
+      .then((res) => {
+        console.log(res.data);
+        alert("Se registro la entrada ");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("El cliente no existe");
+      });
     e.preventDefault();
   };
   const handleInputChange = (e) => {

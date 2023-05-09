@@ -12,7 +12,7 @@ class Pago extends Model
     public $timestamps = false;
     protected $primaryKey = 'idtransaccion';
     protected $table='transaccion';
-    protected $fillable=['idtransaccion', 'monto', 'fechaPago', 'cliente_idcliente', 'reporte_idreporte', 'comprobante'];
+    protected $fillable=['idtransaccion', 'monto', 'fechaPago', 'tipo_de_pago','cliente_idcliente', 'reporte_idreporte', 'comprobante'];
 
     public function guardarArchivo($archivo){
         $ruta = Storage::disk('uploads')->putFile('comprobantes', $archivo);
