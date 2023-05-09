@@ -25,7 +25,7 @@ class ConvocatoriaController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'titulo' => ['required', 'string', 'min:5', 'max:16', 'unique:convocatoria'],
+            'titulo' => ['required', 'string', 'min:5', 'max:32', 'unique:convocatoria'],
             'descripcion_convocatoria' => ['required', 'string'],
             'numero_cupos' => ['required', 'integer', 'min:0'],
             'estado_convocatoria' => ['required', 'integer', 'min:0', 'max:1'],
@@ -71,8 +71,8 @@ class ConvocatoriaController extends Controller
         $convocatoria = Convocatoria::findOrFail($idConvocatoria);
 
         $validatedData = $request->validate([
-            'titulo' => ['required', 'string', 'min:5', 'max:16'],
-            'descripcion_convocatoria' => ['required', 'string'],
+            'titulo' => ['required', 'string', 'min:5', 'max:32'],
+            'descripcion_convocatoria' => ['required', 'string', 'min:5', 'max:255'],
             'numero_cupos' => ['required', 'integer', 'min:0'],
             'estado_convocatoria' => ['required', 'integer', 'min:0', 'max:1'],
             'fecha_inicio' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin'],
