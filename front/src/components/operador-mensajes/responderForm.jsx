@@ -23,6 +23,10 @@ const ResponderForm = () => {
         .then(({data}) => {    
           //que hacer despues      
           console.log(data)
+          if(data.success==true){
+            window.alert("Mensaje enviado");
+          }      
+          console.log(data)
         })
         .catch(err => {
           const response = err.response;
@@ -77,6 +81,7 @@ const ResponderForm = () => {
                 <div className="myform-group">
                   <label htmlFor="ci">Descripcion:</label>
                   <Field
+                    as="textarea"
                     type="text" 
                     id="descripcion" 
                     name="descripcion"

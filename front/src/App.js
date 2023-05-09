@@ -12,7 +12,6 @@ import AsignacionPage from "./components/asignacionPage";
 import PagosPage from "./components/pagosPage";
 import PqrPage from "./components/pqrPage";
 import IngresosPage from "./components/ingresosPage";
-import MisitioPage from "./components/misitioPage";
 import MensajesPage from "./components/mensajesPage";
 import RedactarPage from "./components/redactarPage";
 import FormularioConvocatoria from "./components/formularioConvocatoria";
@@ -29,6 +28,11 @@ import ResponderForm from "./components/operador-mensajes/responderForm";
 import ResponseForm from "./components/cliente-mensajes/responseForm";
 import QrPage from "./components/qrPage";
 import IngresosForm from "./components/formularioIngreso";
+import Operadores from "./components/admin-users/operadores";
+import FormularioOperador from "./components/admin-users/operadorForm";
+import Guardias from "./components/admin-users/guardias";
+import FormularioGuardia from "./components/admin-users/guardiaForm";
+import MensajesEnviadosPage from "./components/cliente-mensajes/historialEnviados";
 
 function App() {
   return (
@@ -77,6 +81,10 @@ function App() {
                 path="/admin/asignacion/id/:id/nc/:nc/p/:p/z/:z/s/:s"
                 element={<SitiosDisponibles />}
               />
+              <Route path="/admin/operadores" element={<Operadores />} />
+              <Route path="/admin/operadores/new" element={<FormularioOperador />} />
+              <Route path="/admin/guardias" element={<Guardias />} />
+              <Route path="/admin/guardias/new" element={<FormularioGuardia />} />
             </Route>
             {/* Rutas para el operador */}
             <Route
@@ -102,6 +110,7 @@ function App() {
                 path="/operador/pqr/responder/id/:id/name/:name"
                 element={<ResponderForm />}
               />
+              <Route path="/operador/enviados" element={<MensajesEnviadosPage />} />
             </Route>
             {/* Rutas para el guardia */}
             <Route
@@ -128,8 +137,7 @@ function App() {
                 </PrivateRoutes>
               }
             >
-              <Route index element={<MisitioPage />} />
-              <Route path="/cliente/misitio" element={<MisitioPage />} />
+              <Route index element={<MisPagosPage />} />
               <Route path="/cliente/redactar" element={<RedactarPage />} />
               <Route path="/cliente/mensajes" element={<MensajesPage />} />
               <Route path="/cliente/mis-pagos" element={<MisPagosPage />} />
@@ -138,6 +146,7 @@ function App() {
                 path="/cliente/mensajes/responder/id/:id/name/:name"
                 element={<ResponseForm />}
               />
+              <Route path="/cliente/enviados" element={<MensajesEnviadosPage />} />
             </Route>
 
             {/* Rutas para el guest */}

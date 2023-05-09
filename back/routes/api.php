@@ -10,6 +10,7 @@ use App\Http\Controllers\OperadorController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EntradasSalidasController;
 use App\Http\Controllers\PagoController;
+use App\Http\Controllers\GuardiaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -26,6 +27,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [ClienteController::class, 'logout']);
     Route::post('/logoutadmin', [AdminController::class, 'logout']);
     Route::post('/logoutoperador', [OperadorController::class, 'logout']);
+    Route::post('/logoutguardia', [GuardiaController::class, 'logout']);
 });
 
 
@@ -37,6 +39,7 @@ Route::post('/login', [ClienteController::class, 'login']);
 Route::post('/loginadmin', [AdminController::class, 'login']);
 Route::post('/loginoperador', [OperadorController::class, 'login']);
 Route::post('/showcliente', [ClienteController::class, 'show']);
+Route::post('/loginguardia', [GuardiaController::class, 'login']);
 
 Route::get('/sessions', function () {
     $sessions = collect(Session::all())->map(function ($session) {
@@ -99,3 +102,18 @@ Route::post('/notificaciones',[NotificacionController::class, 'store']);
 Route::post('/notificacionesResp',[NotificacionController::class, 'storeRespuesta']);
 Route::get('/notificacionesEnvia',[NotificacionController::class, 'indexSent']);
 Route::get('/notificacionesRecibe',[NotificacionController::class, 'indexReceived']);
+
+Route::get('/miSitio',[SitioController::class,'obtenerMiSitio']);
+
+//Gestion usuarios
+Route::get('/operadores', [OperadorController::class, 'showAll']);
+Route::post('/crearOperador', [OperadorController::class, 'crear']);
+Route::delete('/deleteOperador', [OperadorController::class, 'eliminarOperador']);
+Route::get('/guardias', [GuardiaController::class, 'showAll']);
+Route::post('/crearGuardia', [GuardiaController::class, 'crear']);
+Route::delete('/deleteGuardia', [GuardiaController::class, 'eliminarGuardia']);
+
+//dejar sin sitio
+Route::post('/dejarSinSitio',[SitioController::class,'dejarSinSitio']);
+Route::get('/consultaClienteSinSitio',[SitioController::class, 'listaClienteSinSitio']);
+Route::post('/asignarManual',[SitioController::class, 'asignarManual']);

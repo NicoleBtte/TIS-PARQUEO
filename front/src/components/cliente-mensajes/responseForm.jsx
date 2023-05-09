@@ -68,6 +68,7 @@ const ResponseForm = () => {
                 <div className="myform-group">
                   <label htmlFor="titulo">Titulo:</label>
                   <Field
+                    as="textarea"
                     type="text" 
                     id="titulo" 
                     name="titulo" 

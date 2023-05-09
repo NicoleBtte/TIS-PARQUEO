@@ -6,36 +6,36 @@ import '../../styles/tablePageStyle.css'
 import '../../styles/tableStyle.css'
 import './theStyles/botonesUsersStyle.css'
 
-const Operadores = () => {
-    const [operadores, setOperadores] = useState([]);
+const Guardias = () => {
+    const [guardias, setGuardias] = useState([]);
     const [loading, setLoading] = useState(false);
     useEffect(() => {
-      getOperadores();
+      getGuardias();
     }, [])
 
-    const getOperadores = () => {
+    const getGuardias = () => {
       setLoading(true)
-      axiosCliente.get('/operadores')
+      axiosCliente.get('/guardias')
         .then(({ data }) => {
           setLoading(false)
-          setOperadores(data)
+          setGuardias(data)
         })
         .catch(() => {
           setLoading(false)
         })
-      console.log('Esto es operadores',operadores)
+      console.log('Esto es guardias',guardias)
     }
 
     const onDelete = user => {
         const payload = {
-          "id": user.idoperador
+          "id": user.idguardia
         }
         if (!window.confirm("Esta seguro de eliminar este usuario?")) {
           return
         }
-        axiosCliente.delete('/deleteOperador',{ params: payload })
+        axiosCliente.delete('/deleteGuardia',{ params: payload })
           .then(() => {
-            getOperadores()
+            getGuardias()
           })
     }
   
@@ -43,8 +43,8 @@ const Operadores = () => {
       <div>
           <div className='tablePageContainer'>
             <div className='titleBottonContainer'>
-              <h3>Operadores</h3>
-              <Button as={Link} to="/admin/operadores/new" className="azulBotonU">Agregar operador</Button>
+              <h3>Guardias</h3>
+              <Button as={Link} to="/admin/guardias/new" className="azulBotonU">Agregar guardia</Button>
             </div>
             <div className="card animated fadeInDown">
               <table className='mytable'>
@@ -52,9 +52,7 @@ const Operadores = () => {
                 <tr>
                   <th>ID</th>
                   <th>Nombre</th>
-                  <th>Email</th>
                   <th>Telefono</th>
-                  <th>Parqueo</th>
                   <th>Acciones</th>
                 </tr>
                 </thead>
@@ -69,13 +67,11 @@ const Operadores = () => {
                 }
                 {!loading &&
                   <tbody>
-                  {operadores.map(u => (
-                    <tr className='misFilas' key={u.idoperador}>
-                      <td className='miTd'>{u.idoperador}</td>
-                      <td className='miTd'>{u.nombre_operador}</td>
-                      <td className='miTd'>{u.email_operador}</td>
-                      <td className='miTd'>{u.telf_operador}</td>
-                      <td className='miTd'>{u.parqueo_idparqueo}</td>
+                  {guardias.map(u => (
+                    <tr className='misFilas' key={u.idguardia}>
+                      <td className='miTd'>{u.idguardia}</td>
+                      <td className='miTd'>{u.nombre_guardia}</td>
+                      <td className='miTd'>{u.telefono_guardia}</td>
                       <td className='miTd'>
                         <Button as={Link} onClick={ev => onDelete(u)} className="rojoBotonU">Eliminar</Button>
                       </td>
@@ -90,4 +86,4 @@ const Operadores = () => {
     )
   }
 
-export default Operadores;
+export default Guardias;

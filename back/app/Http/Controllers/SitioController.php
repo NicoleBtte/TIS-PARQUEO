@@ -53,9 +53,26 @@ class SitioController extends Controller
 
    }
 
+   public function listaClienteSinSitio(){
+      $arreglo3=DB::table('cliente')
+      ->leftJoin('sitio', 'sitio.cliente_idcliente', '=', 'cliente.idcliente')
+      ->whereNull('sitio.cliente_idcliente')
+      ->select('cliente.idcliente','cliente.nombre_cliente')
+                  ->get();
+      
+    return response()->json(json_encode($arreglo3));
+   }
+
 
    public function reasignar(Request $request){
       DB::table('sitio')->where('cliente_idcliente',$request->idcliente)->update(['cliente_idcliente'=>null]);
+      $sitio = Sitio::find($request->idsitio);
+      $sitio->cliente_idcliente = $request->idcliente;
+      
+      $sitio->save();
+   }
+
+   public function asignarManual(Request $request){
       $sitio = Sitio::find($request->idsitio);
       $sitio->cliente_idcliente = $request->idcliente;
       
@@ -74,5 +91,22 @@ class SitioController extends Controller
 
    return response()->json(json_encode($arreglo2));    
    }
+
+   public function obtenerMiSitio(Request $request){
+      $idclient = $request -> idCliente;
+      $arreglo=DB::table('sitio')
+      ->where('cliente_idcliente',$idclient)
+      ->join('zonaEstacionamiento', 'sitio.zonaEstacionamiento_idzonaEstacionamiento', '=', 'zonaEstacionamiento.idzonaEstacionamiento')
+      ->join('parqueo', 'zonaEstacionamiento.parqueo_idparqueo', '=', 'parqueo.idparqueo')
+      ->select('parqueo.nombre_parqueo', 'zonaEstacionamiento.nombre_zona_estacionamiento','sitio.numero')
+                ->get();
+  
+      return response()->json(json_encode($arreglo));    
+    }
+
+    public function dejarSinSitio(Request $request){
+      DB::table('sitio')->where('cliente_idcliente',$request->idcliente)->update(['cliente_idcliente'=>null]);
+      return response()->json(json_encode('Se ha dejado sin sitio al usuario'));
+    }
 
 }

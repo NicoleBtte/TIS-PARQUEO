@@ -82,7 +82,8 @@
   }
 
   .bigInput {
-    height: 90px;
+    background-color: transparent;
+    height: fit-content;
   }
 
   .destinatarioText {

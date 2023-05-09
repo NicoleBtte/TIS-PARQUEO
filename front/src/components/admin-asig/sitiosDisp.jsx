@@ -19,27 +19,7 @@ const SitiosDisponibles = () => {
         getFilas();
       }, [])
 
-    // Arreglo de objetos con datos aleatorios
-    /*const sitiosDisponibles = [
-        { 
-            idparqueo: 1,
-            nombreparqueo: "Parqueo Planta 1",
-            idzona: 3,
-            nombrezona: "Zona Sur",
-            idsitio: 5,
-            numerositio: "Sitio A"
-        },
-        { 
-            idparqueo: 2,
-            nombreparqueo: "Parqueo Planta 2",
-            idzona: 2,
-            nombrezona: "Zona Centro",
-            idsitio: 3,
-            numerositio: "Sitio B"
-        }
-    ];*/
   
-
     const getFilas = () => {
         setLoading(true);
         /*setFilas(sitiosDisponibles);//Estatico--->cambiar
@@ -57,13 +37,20 @@ const SitiosDisponibles = () => {
     }
 
     const asignarSitio = (clienteID, idsitio) => {
+      let apiruta = '';
       console.log('Se asigno al usuario '+clienteID+"p: "+idsitio);
       const payload = {
         idcliente: clienteID,
         idsitio: idsitio,
       }
       if (clienteID) {
-        axiosCliente.post(`/reasignarSitio`, payload)
+        if(p==='Sin asignar'){
+          apiruta = '/asignarManual'
+        }else{
+          apiruta = '/reasignarSitio'
+        }
+
+        axiosCliente.post(apiruta, payload)
           .then(() => {
               console.log('Se ha editado el usuario')
               navigate('/admin/asignacion')
@@ -78,16 +65,17 @@ const SitiosDisponibles = () => {
       navigate('/admin/asignacion');
     }
 
-    const removeSitio = (clienteID) => {
-      console.log('Se removio el sitio del cliente');
-      /*
-      if (!window.confirm("Esta seguro de remover la asigancion de sitio de este cliente?")) {
+    const removeSitio = () => {
+      /*if (!window.confirm("Esta seguro de remover la asigancion de sitio de este cliente?")) {
         return
+      }*/
+      const payload = {
+        idcliente: id
       }
-      axiosCliente.put(`//${clienteID}`)
+      axiosCliente.post('/dejarSinSitio', payload)
         .then(() => {
           getFilas();
-        })*/
+        })
       navigate('/admin/asignacion')
     }
 
@@ -102,7 +90,10 @@ const SitiosDisponibles = () => {
         <div className='tablePageContainer'>
           <div className='titleBottonContainer'>
             <h4>Sitios disponibles</h4>
-            <Button className='rojoBoton' onClick={() => removeSitio(id)}>Dejar sin sitio</Button>
+            {p !== 'Sin asignar' ? (
+                <Button className='rojoBoton' onClick={() => removeSitio(id)}>Dejar sin sitio</Button>
+            ) : null}
+            
           </div>
           <Table responsive className='mytable'>
             <thead className='tableHeader'>

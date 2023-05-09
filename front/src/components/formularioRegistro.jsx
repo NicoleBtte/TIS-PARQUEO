@@ -1,7 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
-import axiosClient from "../axios-client.js";
+import axiosCliente from "../axios-client.js";
 import { useStateContext } from "../contexts/ContextProvider.js";
 import '../styles/formStyle.css';
 
@@ -12,52 +12,67 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
   const { setUser, setToken } = useStateContext();
   const navigate = useNavigate();
 
-	const guardar = (values) =>{
-		console.log(values);
-		const payload = {
-			name: values.name,
-			email: values.email,
-			apellidos: values.apellidos,
-			direccion: values.direccion,
-			telefono: values.telefono,
-			ci: values.ci,
-			password: values.password,
-			//password_confirmation: values.ccontrasena
-		}
-		console.log(payload);
+  const reducirCupos = async () => {
+    try {
+      await axiosCliente.put('/convocatoriaRegistrarse');
+      return 'Se resto un cupo del total';
+    } catch (error) {
+      console.log('Error en reducir cupo:', error);
+      return 'No se pudo reducir el cupo';
+    }
+  }  
 
-    //registro al usuario
-		axiosClient.post('/register', payload)
-			.then(({data}) => {
-				console.log('Se ejecuto axios en formulario')
-				//setUser(data.user)
-				//setToken(data.token);
-				
-				console.log(data)
-			})
-			.catch(err => {
-				const response = err.response;
-				console.log(response.data.message)
-				if (response && response.status === 422) {
-				  console.log(response.data.errors)
-				}
-			  })
-    
-
-    //Reducir cupos
-    axiosClient.put('/convocatoriaRegistrarse')
-          .then((data) => {
-            //console.log(JSON.parse(data).message)
-            console.log('Se reducio exitosamente')
-
-          })
-          .catch((data) => {
-            //console.log(JSON.parse(data).message)
-            console.log('Error en reducir cupo')
-            })
-		
+  const guardar = async (values) => {
+    console.log(values);
+    const payload = {
+      name: values.name,
+      email: values.email,
+      apellidos: values.apellidos,
+      direccion: values.direccion,
+      telefono: values.telefono,
+      ci: values.ci,
+      password: values.password,
+      //password_confirmation: values.ccontrasena
+    }
+    console.log(payload);
+  
+    try {
+      const { data } = await axiosCliente.post('/register', payload);
+      if (data.message && data.message.indexOf('Usuario creado') !== -1) {
+        //se encontro mensaje de exito
+        const m = await reducirCupos();
+        console.log('Se termino de ejecutar reducir cupos');
+        console.log(m);
+        if (m === 'Se resto un cupo del total') {
+          console.log('El m essssss',m)
+          setTimeout(() => {
+            window.alert('Registro completado con éxito!');
+          }, 500); //espera 500ms antes de mostrar el mensaje
+        } else {
+          console.log('PEro se entroe porrrr',m)
+          setTimeout(() => {
+            window.alert('No se pudo completar el registro.\nEs posible que los cupos se hayan acabado.');
+          }, 500); //espera 500ms antes de mostrar el mensaje
+        }
+      } else {
+        setTimeout(() => {
+          window.alert('No se pudo completar el registro.\nPor favor revise que los datos esten correctos.');
+        }, 500); //espera 500ms antes de mostrar el mensaje
+      }
+    } catch (error) {
+      const response = error.response;
+      console.log(response.data.message)
+      if (response && response.status === 422) {
+        console.log(response.data.errors)
+      }
+      setTimeout(() => {
+        window.alert('No se pudo completar el registro.\nPor favor revise que los datos esten correctos. \nTambien es posible que los cupos se hayan acabado.');
+      }, 500); //espera 500ms antes de mostrar el mensaje
+    }
+  
     navigate('/login');
   };
+  
 
   return (
     <div className="formContainer">
@@ -82,14 +97,14 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
         // Validacion nombre
         if (!values.name) {
           errors.name = "Por favor ingrese un nombre";
-        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.name)) {
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,100}$/.test(values.name)) {
           errors.name = "El nombre solo puede contener letras y espacios";
         }
 
         // Validacion apellidos
         if (!values.apellidos) {
           errors.apellidos = "Por favor ingrese sus apellidos";
-        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.apellidos)) {
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,100}$/.test(values.apellidos)) {
           errors.apellidos =
             "El apellido solo puede contener letras y espacios";
         }
@@ -104,7 +119,7 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
         // Validacion dirección
         if (!values.direccion) {
           errors.direccion = "Por favor ingrese una dirección";
-        } else if (!/^[a-zA-Z0-9\s\-\#\.]+$/i.test(values.direccion)) {
+        } else if (!/^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ0-9\s\-\#\.]+$/i.test(values.direccion)) {
           errors.direccion =
             "La dirección solo puede contener letras, espacios, dígitos, espacios, guiones, almohadillas y puntos.";
         }
@@ -135,14 +150,14 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
         // Validacion unidad
         if (!values.unidad) {
           errors.unidad = "Por favor ingrese la unidad en la que trabaja";
-        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.unidad)) {
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,80}$/.test(values.unidad)) {
           errors.unidad = "La unidad solo puede contener letras y espacios";
         }
         
         // Validacion cargo
         if (!values.cargo) {
           errors.cargo = "Por favor ingrese un cargo";
-        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.cargo)) {
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,80}$/.test(values.cargo)) {
           errors.cargo = "El cargo solo puede contener letras y espacios";
         }
 

@@ -4,20 +4,20 @@ import { useState, useEffect } from "react";
 import axiosCliente from "../../axios-client.js";
 import '../../styles/formStyle.css';
 
-const FormularioOperador = () => {
+const FormularioGuardia = () => {
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
+  /*useEffect(() => {
     getoptions();
-  },[])
+  },[])*/
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   }
 
-  const getoptions = () => {
+  /*const getoptions = () => {
     axiosCliente.get('/parqueos')
     .then(({ data }) => {
       setOptions(JSON.parse(data))
@@ -26,25 +26,23 @@ const FormularioOperador = () => {
     .catch(() => {
       console.log('Algo salio mal');
     })
-  }
+  }*/
 
   const guardar = async (values) => {
-    if(selectedOption===''){
+    /*if(selectedOption===''){
       alert('Por favor seleccione una opción');
       return;
-    }
+    }*/
     console.log(values);
     const payload = {
-      nombre_operador: values.name,
+      nombre_guardia: values.name,
       ci: values.ci,
-      email_operador: values.email,
-      telf_operador: values.telefono,
-      parqueo_idparqueo: selectedOption,
-      pass_operador: values.password,
+      telf_guardia: values.telefono,
+      pass_guardia: values.password,
     }
     console.log(payload);
 
-    axiosCliente.post('/crearOperador', payload)
+    axiosCliente.post('/crearGuardia', payload)
         .then(({data}) => {    
           //que hacer despues      
           console.log(data)
@@ -57,7 +55,7 @@ const FormularioOperador = () => {
           }
           })
   
-    navigate('/admin/operadores');
+    navigate('/admin/guardias');
   };
   
 
@@ -69,8 +67,6 @@ const FormularioOperador = () => {
         name: "",
         ci: "",
         telefono: "",
-        email: "",
-        parqueo: "",
         password: "",
         ccontrasena: "",
       }}
@@ -98,15 +94,6 @@ const FormularioOperador = () => {
           errors.telefono = "El teléfono solo puede contener números";
         }
 
-        // Validacion correo
-        if (!values.email) {
-          errors.email = "Por favor ingresa un correo electronico";
-        } else if (
-          !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(values.email)
-        ) {
-          errors.email = "La dirección del correo no es válida.";
-        }
-
         // Validacion contrasenia
         if (!values.password) {
           errors.password = "Por favor ingresa una contraseña";
@@ -132,17 +119,6 @@ const FormularioOperador = () => {
     >
       {({ errors, touched }) => (
         <Form className="formulario">
-          <div>
-            <label className="speciallabel" htmlFor="option">Parqueo:</label>
-              <Field className="combobox" as="select" id="option" name="option" onChange={handleOptionChange} value={selectedOption}>
-                <option value="">Seleccione una opción</option>
-                 {options.map((opcion) => (
-                <option key={opcion.idParqueo} value={opcion.idParqueo}>
-                  {opcion.nombre_parqueo}
-                </option>
-                ))}
-              </Field>
-          </div>
           
           <div className="myform-group">
             <label htmlFor="nombre">Nombre:</label>
@@ -166,14 +142,6 @@ const FormularioOperador = () => {
             <ErrorMessage
               name="telefono"
               component={() => <div className="error">{errors.telefono}</div>}
-            />
-          </div>
-          <div className="myform-group">
-            <label htmlFor="correo">Correo electrónico:</label>
-            <Field type="text" id="correo" name="email" />
-            <ErrorMessage
-              name="email"
-              component={() => <div className="error">{errors.email}</div>}
             />
           </div>
           <div className="myform-group">
@@ -204,4 +172,4 @@ const FormularioOperador = () => {
   );
 };
 
-export default FormularioOperador;
+export default FormularioGuardia;

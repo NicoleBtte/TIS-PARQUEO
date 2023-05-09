@@ -12,6 +12,9 @@ import '../styles/logoutButtonStyle.css';
 import App from "../App";
 import "../styles/botonesStyle.css";
 import { Button } from "react-bootstrap";
+import PopoverSitio from "./popoverSitio";
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import '../styles/miNavDrop.css'
 
 const DefaultLayout = () => {
   const { user, token, setUser, setToken, rol, setRol, id, setID } =
@@ -35,7 +38,7 @@ const DefaultLayout = () => {
         if (theRol === "operador") {
           apiruta = "/logoutoperador";
         } else {
-          apiruta = "/logout";
+          apiruta = "/logoutguardia";
         }
       }
     }
@@ -62,6 +65,10 @@ const DefaultLayout = () => {
           <Nav.Link as={Link} to="/admin/asignacion">
             Asignar sitio
           </Nav.Link>
+          <NavDropdown title="Usuarios" className="navDrop">
+              <NavDropdown.Item className="navDrop" as={Link} to="/admin/operadores">Operadores</NavDropdown.Item>
+              <NavDropdown.Item className="navDrop" as={Link} to="/admin/guardias">Guardias</NavDropdown.Item>
+          </NavDropdown>
         </Nav>
       );
       break;
@@ -119,6 +126,10 @@ const DefaultLayout = () => {
             <Navbar.Collapse id="responsive-navbar-nav">
               {menu}
               <Nav>
+                {rol === 'cliente' ? (
+                  <PopoverSitio></PopoverSitio>
+                ) : null}
+                &nbsp;
                 <Button href="#" onClick={onLogout} className='mylogoutButton'>Cerrar sesión</Button>
               </Nav>
             </Navbar.Collapse>

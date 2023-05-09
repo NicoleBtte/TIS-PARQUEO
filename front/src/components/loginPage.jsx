@@ -36,11 +36,12 @@ const LoginPage = () => {
     axiosClient
       .post(apiruta, payload)
       .then(({ data }) => {
-        console.log(data.idusuario);
+        if(data.message==='login Incorrecto'){
+          alert('Los datos son inválidos');
+          return;
+        }
         setID(data.idusuario);
-        console.log(data.access_token);
         setToken(data.access_token);
-        console.log(data.rol);
         setRol(data.rol);
       })
       .catch((err) => {

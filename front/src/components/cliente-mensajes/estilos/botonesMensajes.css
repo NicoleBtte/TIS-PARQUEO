@@ -1,29 +1,28 @@
-.celesteBoton {
+.celesteBotonM {
     border-radius: 20px !important;
     background-color: #33B4E5 !important;
     border-color: transparent !important;
     width: 60% !important;
 }
-.verdeBoton {
-    color: white !important;
+.verdeBotonM {
     border-radius: 20px !important;
     background-color: #01C851 !important;
     border-color: transparent !important;
-    width: 20% !important;
+    width: 10% !important;
 }
-.naranjaBoton {
+.naranjaBotonM {
     border-radius: 20px !important;
     background-color: #FF8800 !important; 
     border-color: transparent !important;
     width: 60% !important;
 }
-.rojoBoton {
+.rojoBotonM {
     border-radius: 20px !important;
     background-color: #FF1A00 !important;
     border-color: transparent !important;
     width: 16%;
 }
-.grisBoton {
+.grisBotonM {
     border-radius: 20px !important;
     background-color: #918A95 !important;
     border-color: transparent !important;

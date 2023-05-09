@@ -1,31 +1,40 @@
-.celesteBoton {
+.celesteBotonU {
     border-radius: 20px !important;
     background-color: #33B4E5 !important;
     border-color: transparent !important;
     width: 60% !important;
 }
-.verdeBoton {
-    color: white !important;
+.verdeBotonU {
     border-radius: 20px !important;
     background-color: #01C851 !important;
     border-color: transparent !important;
     width: 20% !important;
 }
-.naranjaBoton {
+.naranjaBotonU {
     border-radius: 20px !important;
     background-color: #FF8800 !important; 
     border-color: transparent !important;
     width: 60% !important;
 }
-.rojoBoton {
+.rojoBotonU {
     border-radius: 20px !important;
     background-color: #FF1A00 !important;
     border-color: transparent !important;
-    width: 16%;
+    width: 60%;
 }
-.grisBoton {
+.grisBotonU {
     border-radius: 20px !important;
     background-color: #918A95 !important;
     border-color: transparent !important;
     width: 20% !important;
 }
+.azulBotonU {
+    background-color: #122A4C !important;
+    border-radius: 15px !important;
+    border: none !important;
+    color: white !important;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 20px;
+    font-family: 'Poppins', sans-serif !important;
+  }
