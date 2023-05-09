@@ -112,3 +112,8 @@ Route::delete('/deleteOperador', [OperadorController::class, 'eliminarOperador']
 Route::get('/guardias', [GuardiaController::class, 'showAll']);
 Route::post('/crearGuardia', [GuardiaController::class, 'crear']);
 Route::delete('/deleteGuardia', [GuardiaController::class, 'eliminarGuardia']);
+
+//dejar sin sitio
+Route::post('/dejarSinSitio',[SitioController::class,'dejarSinSitio']);
+Route::get('/consultaClienteSinSitio',[SitioController::class, 'listaClienteSinSitio']);
+Route::post('/asignarManual',[SitioController::class, 'asignarManual']);

@@ -8,10 +8,13 @@ import '../../styles/botonesStyle.css'
 
 const ClienteSitio = () => {
     const [filas, setFilas] = useState([]);
+    const [filasAdicionales, setFilasAdicionales] = useState([]);
     const [loading, setLoading] = useState(false);
+    const texto = 'Sin asignar';
 
     useEffect(() => {
         getFilas();
+        getFilasAdicionales();
       }, [])
 
     const getFilas = () => {
@@ -28,6 +31,20 @@ const ClienteSitio = () => {
           .catch(() => {
             setLoading(false)
           })
+    }
+
+    const getFilasAdicionales = () => {
+      setLoading(true);
+
+      axiosCliente.get('/consultaClienteSinSitio')
+      .then(({ data }) => {
+        console.log(data)
+        setLoading(false)
+        setFilasAdicionales(JSON.parse(data))
+      })
+      .catch(() => {
+        setLoading(false)
+      })
     }
 
     return (
@@ -64,6 +81,19 @@ const ClienteSitio = () => {
                   </Button>
                 </td>
               </tr>
+            ))}
+            {filasAdicionales.map(u => (
+                <tr className='misFilas' key={u.idsitio}>
+                  <td className='miTd'>{u.nombre_cliente}</td>
+                  <td className='miTd'>Sin asignar</td>
+                  <td className='miTd'>Sin asignar</td>
+                  <td className='miTd'>Sin asignar</td>
+                  <td className='miTd'>
+                    <Button className='naranjaBoton' as={Link} to={'/admin/asignacion/id/' + u.idcliente+'/nc/'+u.nombre_cliente+'/p/'+texto+'/z/'+texto+'/s/'+texto}>
+                      Editar
+                    </Button>
+                  </td>
+                </tr>
             ))}
             </tbody>
           }
