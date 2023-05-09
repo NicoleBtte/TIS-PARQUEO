@@ -35,6 +35,7 @@ const HomePage = () => {
     setFormularioEnviado(true);
   }
   console.log('mostraboton',mostrarBoton)
+  console.log('idconv', convocatoria.idConvocatoria)
 
   return (
     <div>
@@ -51,6 +52,7 @@ const HomePage = () => {
               mostrarBoton={mostrarBoton}
               cupos={convocatoria.numero_cupos}
               titulo={convocatoria.titulo}
+              idConv={convocatoria.idConvocatoria}
             />
           ) : (
             <Inicio
@@ -58,6 +60,7 @@ const HomePage = () => {
               mostrarBoton={mostrarBoton}
               cupos={0}
               titulo={''}
+              idConv={''}
             />
           )}
         </>
@@ -65,10 +68,38 @@ const HomePage = () => {
     </div>
   );
 }
-const Inicio = ({ mostrarOcultarFormulario, mostrarBoton, cupos, titulo}) => {
+const Inicio = ({ mostrarOcultarFormulario, mostrarBoton, cupos, titulo, idConv}) => {
   var mensaje1 = 'Bienvenido al sistema de parqueo de la Facultad de Ciencias y tecnología.\n El ingreso esta restringido para usuarios que no poseen permisos.\n  Actualmente la convocatoria “'+titulo+'” se encuentra abierta\n Cupos disponibles: '+cupos;
   const mensaje2 = 'Bienvenido al sistema de parqueo de la Facultad de Ciencias y tecnología.\n El ingreso esta restringido para usuarios que no poseen permisos.\n  Actualmente no se encuentra ninguna convocatoria abierta';
   var mensaje = 'El mensaje';
+  const idConvocatoria = idConv;
+  console.log('Se ejecuta Inicio',idConvocatoria)
+
+  function downloadPDF(idConv) {
+    const payload = {
+      idConvocatoria: idConv
+    }
+    axiosCliente
+      .post(
+        "/descargarConvocatoria",
+        payload,
+        { responseType: "blob" }
+      )
+      .then((response) => {
+        const url = window.URL.createObjectURL(
+          new Blob([response.data], { type: "application/pdf" })
+        );
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", idConv);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
   if(mostrarBoton){
     mensaje = mensaje1;
@@ -80,7 +111,14 @@ const Inicio = ({ mostrarOcultarFormulario, mostrarBoton, cupos, titulo}) => {
       <Container fluid className="bg-image" style={{ backgroundImage: `url(${backgroundImg})` }}>
         <div className="contenido">
           <p className='textoInicio'>{mensaje}</p>
-          { mostrarBoton ? <button className='inicioBoton' onClick={mostrarOcultarFormulario}>Registrarse</button> : null }
+          { mostrarBoton ?
+            <>
+              <button className='inicioBoton' onClick={mostrarOcultarFormulario}>Registrarse</button>
+              &nbsp;
+              <button className='inicioBoton' onClick={() => downloadPDF(idConv)}>Ver informacion</button>
+            </>
+
+          : null }
         </div>
       </Container>
     </div>

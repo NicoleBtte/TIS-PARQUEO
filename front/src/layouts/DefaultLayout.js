@@ -81,6 +81,9 @@ const DefaultLayout = () => {
           <Nav.Link as={Link} to="/operador/pqr">
             Quejas y peticiones
           </Nav.Link>
+          <Nav.Link as={Link} to="/operador/infoClientes">
+            Clientes
+          </Nav.Link>
         </Nav>
       );
       break;
@@ -89,6 +92,9 @@ const DefaultLayout = () => {
         <Nav className="me-auto">
           <Nav.Link as={Link} to="/guardia/ingresos">
             Ingresos
+          </Nav.Link>
+          <Nav.Link as={Link} to="/guardia/infoClientes">
+            Clientes
           </Nav.Link>
         </Nav>
       );

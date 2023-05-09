@@ -34,6 +34,7 @@ import Guardias from "./components/admin-users/guardias";
 import FormularioGuardia from "./components/admin-users/guardiaForm";
 import MensajesEnviadosPage from "./components/cliente-mensajes/historialEnviados";
 import PagoEditar from "./components/pagoEditar";
+import Clientes from "./components/guardia-clientes/clientes";
 
 function App() {
   return (
@@ -125,6 +126,7 @@ function App() {
                 path="/operador/enviados"
                 element={<MensajesEnviadosPage />}
               />
+              <Route path="/operador/infoClientes" element={<Clientes />} />
             </Route>
             {/* Rutas para el guardia */}
             <Route
@@ -141,6 +143,7 @@ function App() {
                 path="/guardia/ingresos/registrar"
                 element={<IngresosForm />}
               />
+              <Route path="/guardia/infoClientes" element={<Clientes />} />
             </Route>
             {/* Rutas para el cliente */}
             <Route
