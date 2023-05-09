@@ -8,16 +8,26 @@
 </head>
 <body>
     @php
-        $pagos = json_decode($json);
+        $pago = json_decode($json);
     @endphp
     <ul>
-           // Iterar sobre los clientes y mostrar los valores deseados
-    @foreach ($pagos as $pago) 
+           {{-- // Iterar sobre los clientes y mostrar los valores deseados --}}
+    {{-- @foreach ($pagos as $pago) --}} 
         <li>idtransaccion: {{$pago->idtransaccion}}</li>
         <li>Comprobante: <br>
-            <img src="../../storage/app/uploads/{{$pago->comprobante}}" alt="imagen1">
+            @php
+            $rute=$pago->comprobante;
+            $path = storage_path("app/uploads/".$rute);
+            $file = file_get_contents($path);
+            $type = mime_content_type($path);
+            $data = base64_encode($file);
+
+            // Crear la sintaxis de datos URI
+            $src = "data:{$type};base64, {$data}";
+            @endphp
+            <img src="{{$src}}" alt="imagen1">
         </li>
-    @endforeach
+    {{-- @endforeach --}}
     </ul>
 </body>
 </html>

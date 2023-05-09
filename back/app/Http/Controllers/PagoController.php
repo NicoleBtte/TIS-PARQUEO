@@ -106,6 +106,12 @@ class PagoController extends Controller
         return response()->json(json_encode($consultaCliente));
     }
 
+    public function consultaComprobante(Request $request){
+        $consultaComprobante=Pago::find($request->idtransaccion);
+        $json=json_encode($consultaComprobante);
+        return view('verPagos')->with('json', $json);
+    }
+
     public function updatePago(Request $request){
         $actualizar=Pago::find($request->idtransaccion);
         $archivo = $request->file('imagen');

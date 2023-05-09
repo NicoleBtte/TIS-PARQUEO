@@ -59,6 +59,10 @@ Route::get('/updatePago', function(){
 });
 Route::delete('/eliminarPago', [PagoController::class, 'eliminarPago']);
 Route::get('/consultaEstadoClientes', [PagoController::class, 'consultaEstadoClientes']);
+Route::post('/consultaComprobante', [PagoController::class, 'consultaComprobante']);
+Route::get('/consultaComprobante', function(){
+    return view('consultaComprobante');
+});
 
 
 Route::get('/convocatorias', [ConvocatoriaController::class, 'index']);
