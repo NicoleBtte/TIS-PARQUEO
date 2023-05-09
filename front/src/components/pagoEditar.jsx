@@ -58,6 +58,18 @@ function PagoForm() {
       .catch((error) => console.log(error));
   };
 
+  React.useEffect(() => {
+    axiosClient
+      .post("/updatePago", { idtransaccion })
+      .then((response) => {
+        let result = response.data;
+        result = JSON.parse(result);
+        console.log("esto es el resultado", result);
+        setPagos(result);
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
+
   return (
     <div className="formContainer">
       <form onSubmit={handleSubmit}>

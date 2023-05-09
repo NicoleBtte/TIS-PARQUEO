@@ -20,6 +20,47 @@ const ConvocatoriaPage = () => {
         }*/
   const [convocatorias, setConvocatorias] = React.useState([]);
 
+  function downloadPDF(idConvocatoria) {
+    axiosClient
+      .post(
+        "/descargarConvocatoria",
+        { idConvocatoria },
+        { responseType: "blob" }
+      )
+      .then((response) => {
+        const url = window.URL.createObjectURL(
+          new Blob([response.data], { type: "application/pdf" })
+        );
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", idConvocatoria);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  /*function downloadPDF(idConvocatoria) {
+    axiosClient({
+      url: "/descargarConvocatoria",
+      method: "POST",
+      responseType: "blob",
+      data: {
+        idConvocatoria: id,
+      },
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download");
+      document.body.appendChild(link);
+      link.click();
+    });
+  }*/
+
   function deleteConvocatoria(id) {
     setConvocatorias(
       convocatorias.filter((convocatoria) => convocatoria.idConvocatoria !== id)
@@ -68,10 +109,12 @@ const ConvocatoriaPage = () => {
               <td className="miTd">{convocatoria.fecha_inicio}</td>
               <td className="miTd">{convocatoria.fecha_fin}</td>
               <td className="miTd">
-                <Link to={`/pdf`}>
-                  <Button className="celesteBotonC">Ver Convocatoria</Button>
-                </Link>
-
+                <Button
+                  className="celesteBotonC"
+                  onClick={() => downloadPDF(convocatoria.idConvocatoria)}
+                >
+                  Ver Convocatoria
+                </Button>
                 <Link
                   to={`/admin/formulario-convocatoria/${convocatoria.idConvocatoria}/editar`}
                 >

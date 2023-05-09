@@ -24,9 +24,10 @@ class EntradasSalidasController extends Controller
                             ->where('cliente_idcliente', $request->idcliente)
                             ->latest('idhistorial')
                             ->first();
-        if($validacion->fecha_salida==null){
+        if($validacion!=null && $validacion->fecha_salida==null){
             $msg="Error: No hay registro de salida del cliente. No se puede registrar una nueva entrada";
-        }else{
+
+        }if(($validacion!=null && $validacion->fecha_salida!=null) || $validacion==null){
             $entrada=new HistorialEntradasSalidas;
             //$entrada->idhistorial=$request->id;
             //$entrada->hora_ingreso_hist=Carbon::now()->format('H:i:s');//$request->horaentrada;
@@ -43,6 +44,7 @@ class EntradasSalidasController extends Controller
 
     public function RegistroSalida(Request $request){
         $msg="";
+        echo($request->idcliente);
         $validacion=DB::table('historial_entradas_salidas')
                             ->where('cliente_idcliente', $request->idcliente)
                             ->latest('idhistorial')

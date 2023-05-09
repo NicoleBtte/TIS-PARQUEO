@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import axiosClient from "../axios-client.js";
 import { Container } from "react-bootstrap";
-import { validarDescripcion, validarTitulo } from "../helpers/validadores";
+import {
+  validarDescripcion,
+  validarTitulo,
+  validarNumeroSitios,
+  validarFechaInicio,
+  validarFechaFin,
+} from "../helpers/validadores";
 import "../styles/formStyle.css";
 //import Swal from "sweetalert2";
 
@@ -26,6 +32,8 @@ function FormularioConvocatoria() {
     fecha_inicio: null,
     fecha_fin: null,
     fecha_pago: null,
+    pago_mensual: null,
+    multa_mensaul: null,
   });
 
   //Swal.fire('', 'El registro se ha completado exitoso', '');
@@ -34,6 +42,9 @@ function FormularioConvocatoria() {
   const [validar, setValidar] = useState({
     tituloB: false,
     descripcion_convocatoriaB: false,
+    numero_cuposB: false,
+    fecha_inicioB: false,
+    fecha_finB: false,
   });
 
   const {
@@ -45,7 +56,17 @@ function FormularioConvocatoria() {
     fecha_inicio,
     fecha_fin,
     fecha_pago,
+    pago_mensual,
+    multa_mensual,
   } = formData;
+
+  const [archivo, setArchivo] = useState();
+  const fileSelectHandler = (e) => {
+    setArchivo({
+      archivo: e.target.files[0],
+      archivoNombre: e.target.files[0].name,
+    });
+  };
 
   //
   const handleOnchange = (e) => {
@@ -57,7 +78,7 @@ function FormularioConvocatoria() {
       }
     }
 
-    if (e.target.name === "descripcion") {
+    if (e.target.name === "descripcion_convocatoria") {
       if (!validarDescripcion(e.target.value)) {
         setValidar({ ...validar, descripcion_convocatoriaB: true });
       } else {
@@ -65,11 +86,35 @@ function FormularioConvocatoria() {
       }
     }
 
+    if (e.target.name === "numero_cupos") {
+      if (!validarNumeroSitios(e.target.value)) {
+        setValidar({ ...validar, numero_cuposB: true });
+      } else {
+        setValidar({ ...validar, numero_cuposB: false });
+      }
+    }
+
+    if (e.target.name === "fecha_inicio") {
+      if (!validarFechaInicio(e.target.value)) {
+        setValidar({ ...validar, fecha_inicioB: true });
+      } else {
+        setValidar({ ...validar, fecha_inicioB: false });
+      }
+    }
+
+    if (e.target.name === "fecha_fin") {
+      if (!validarFechaFin(e.target.value)) {
+        setValidar({ ...validar, fecha_finB: true });
+      } else {
+        setValidar({ ...validar, fecha_finB: false });
+      }
+    }
+
     console.log([e.target.name], e.target.value);
     setFormData({ ...formData, [e.target.name]: e.target.value }); //
   };
 
-  const handleSubmit = (e) => {
+  /*const handleSubmit = (e) => {
     console.log(
       titulo,
       descripcion_convocatoria,
@@ -96,6 +141,27 @@ function FormularioConvocatoria() {
       .then((res) => console.log(res.data))
       .catch((error) => console.log(error));
     e.preventDefault();
+  };*/
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("titulo", titulo);
+    formData.append("descripcion_convocatoria", descripcion_convocatoria);
+    formData.append("estado_convocatoria", estado_convocatoria);
+    formData.append("numero_cupos", numero_cupos);
+    formData.append("fecha_inicio", fecha_inicio);
+    formData.append("fecha_fin", fecha_fin);
+    formData.append("fecha_pago", fecha_pago);
+    formData.append("pago_mensual", pago_mensual);
+    formData.append("multa_mensual", multa_mensual);
+    formData.append("pdf_convocatoria", archivo.archivo);
+
+    axiosClient
+      .post("/convocatoria", formData)
+      .then((res) => console.log(res.data))
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -113,7 +179,11 @@ function FormularioConvocatoria() {
                 placeholder="Titulo"
                 onChange={handleOnchange}
               ></input>
-              <span>{validar.tituloB ? "los datos son incorrectos" : ""}</span>
+              <span className="spanError">
+                {validar.tituloB
+                  ? "El titulo no puede contener caracteres especiales y debe tener un minimo de 5 caracteres"
+                  : ""}
+              </span>
             </div>
             <div className="myform-group ">
               <label htmlFor="descripcion_convocatoria">Descripcion:</label>
@@ -125,6 +195,11 @@ function FormularioConvocatoria() {
                 placeholder="descripcion_convocatoria"
                 onChange={handleOnchange}
               ></input>
+              <span className="spanError">
+                {validar.descripcion_convocatoriaB
+                  ? "La descripcion debe contener minimamente 16 caracteres"
+                  : ""}
+              </span>
             </div>
           </div>
           <div className="myform-group">
@@ -138,6 +213,11 @@ function FormularioConvocatoria() {
               max="100"
               onChange={handleOnchange}
             />
+            <span className="spanError">
+              {validar.numero_cuposB
+                ? "Los cupos deben ser mayor o igual a 1"
+                : ""}
+            </span>
           </div>
 
           <div className="form-row">
@@ -164,6 +244,11 @@ function FormularioConvocatoria() {
                 placeholder="Fecha IInicio"
                 onChange={handleOnchange}
               ></input>
+              <span className="spanError">
+                {validar.fecha_inicioB
+                  ? "La fecha inicio no puede ser menor a la fecha del día actual"
+                  : ""}
+              </span>
             </div>
             <div className="myform-group">
               <label htmlFor="fecha_fin">Fecha fin:</label>
@@ -175,17 +260,57 @@ function FormularioConvocatoria() {
                 placeholder="Fecha fin"
                 onChange={handleOnchange}
               ></input>
+              <span className="spanError">
+                {validar.fecha_finB
+                  ? "La fecha fin no puede ser menor a la fecha inicio"
+                  : ""}
+              </span>
             </div>
             <div className="myform-group">
-              <label htmlFor="fecha_pago">Fecha pago:</label>
+              <label htmlFor="fecha_pago">Fecha Pago:</label>
               <input
                 name="fecha_pago"
-                type="date"
-                className="form-control"
+                type="number"
                 id="fecha_pago"
-                placeholder="Fecha Pago"
+                className="form-control"
+                min="1"
+                max="28"
                 onChange={handleOnchange}
-              ></input>
+              />
+              <span className="spanError">
+                {validar.numero_cuposB
+                  ? "La fecha pago debe ser mayor igual a 1 y menor a 29"
+                  : ""}
+              </span>
+            </div>
+            <div className="myform-group">
+              <label htmlFor="pago_mensual">Pago Mensual:</label>
+              <input
+                name="pago_mensual"
+                type="number"
+                id="pago_mensual"
+                className="form-control"
+                min="1"
+                max="1000"
+                onChange={handleOnchange}
+              />
+              <span className="spanError">
+                {validar.numero_cuposB
+                  ? "El pago mensual no puede contener numeros negativos"
+                  : ""}
+              </span>
+            </div>
+            <div className="myform-group">
+              <label htmlFor="multa_mensual">Multa Mensual:</label>
+              <input
+                name="multa_mensual"
+                type="number"
+                id="multa_mensual"
+                className="form-control"
+                min="0"
+                max="1000"
+                onChange={handleOnchange}
+              />
             </div>
             <div className="myform-group ">
               <label for="archivoPdf">Subir archivo:</label>
@@ -196,16 +321,15 @@ function FormularioConvocatoria() {
                 className="form-control-file"
                 accept="application/pdf"
                 id="archivoPdf"
-                onChange={handleOnchange}
+                onChange={fileSelectHandler}
               />
             </div>
           </div>
           <div className="boton-container">
-              <button type="submit" className="btn btn-primary">
-                Agregar
-              </button>
+            <button type="submit" className="btn btn-primary">
+              Agregar
+            </button>
           </div>
-
         </form>
       </div>
     </Container>

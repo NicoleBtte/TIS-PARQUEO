@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Parqueo;
+use App\Models\ZonaDeEstacionamiento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ZonaDeEstacionamientoController;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Time;
+
 
 class ParqueoController extends Controller
 {
@@ -31,14 +37,18 @@ class ParqueoController extends Controller
         $validatedData = $request->validate([
             'nombre_parqueo' => ['required', 'unique:parqueo', 'string', 'min:5', 'max:16'],
             'numero_de_zonas' => ['required', 'integer', 'min:0'],
-            'mapa_parqueo' => ['nullable', 'string']
+            'mapa_parqueo' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2000'],
         ]);
+
+        $mapa = $request->file('mapa_parqueo');
+        $nombreArchivo = time() . '_' . $mapa->getClientOriginalName();
+        $path = $mapa->storeAs('public/mapasparqueo', $nombreArchivo);
 
         $parqueo = new Parqueo();
         $parqueo->nombre_parqueo = $validatedData['nombre_parqueo'];
         $parqueo->numero_de_zonas = $validatedData['numero_de_zonas'];
         $numZonas= $request ->numero_de_zonas;
-        $parqueo->mapa_parqueo = $validatedData['mapa_parqueo'];
+        $parqueo->mapa_parqueo = time() . '_' . $mapa->getClientOriginalName();
 
         try {
             $parqueo->save();
@@ -55,8 +65,7 @@ class ParqueoController extends Controller
                 'error' => $e->getMessage()
             ]);
         }
-        }
-
+    }
         public function show($idParqueo)
     {
         $parqueo = Parqueo::find($idParqueo);
@@ -93,10 +102,26 @@ class ParqueoController extends Controller
     {
         $parqueo = Parqueo::find($idParqueo);
         if($parqueo) {
+            $zonaIds = ZonaDeEstacionamiento::where('parqueo_idparqueo', $idParqueo)->pluck('idzonaEstacionamiento')->toArray();
+            foreach ($zonaIds as $zonaId) {
+                DB::delete('DELETE FROM sitio WHERE zonaEstacionamiento_idzonaEstacionamiento = ?', [$zonaId]);
+            }
+            DB::delete('DELETE FROM zonaestacionamiento WHERE parqueo_idparqueo = ?', [$idParqueo]);
             $parqueo = Parqueo::destroy($idParqueo);
             return response()->json(['message' => 'Parqueo eliminado correctamente.']);
         } else {
             return response()->json(['message' => 'No se encontró el parqueo a eliminar.'], 404);
         }
+    }
+
+    public function verImagen(Request $request){
+        $id = $request->idPaqueo;
+        $parqueo = Parqueo::findOrFail($id);
+        $file_path = storage_path('app\\public\\mapasparqueo\\' . $parqueo->mapa_parqueo);
+        if (!File::exists($file_path)) {
+            abort(404);
+        }
+        $url = asset('storage/app/public/mapasparqueo/' . $parqueo->mapa_parqueo);
+        return response()->json(['url' => $url]);
     }
 }

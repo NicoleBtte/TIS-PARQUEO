@@ -54,4 +54,11 @@ Route::get('/privado', function(){
     return view('privado');
 })->middleware('auth')->name('privado');
 
-
+Route::get('/storage/{path}', function ($path) {
+    $pathToFile = storage_path('app/uploads/' . $path);
+    if (file_exists($pathToFile)) {
+        return response()->file($pathToFile);
+    } else {
+        abort(404);
+    }
+})->where('path', '.*');

@@ -27,6 +27,8 @@ function ConvocatoriaEditar() {
     fecha_inicio: null,
     fecha_fin: null,
     fecha_pago: null,
+    pago_mensual: null,
+    multa_mensaul: null,
   });
 
   //Swal.fire('', 'El registro se ha completado exitoso', '');
@@ -46,6 +48,8 @@ function ConvocatoriaEditar() {
     fecha_inicio,
     fecha_fin,
     fecha_pago,
+    pago_mensual,
+    multa_mensual,
   } = formData;
 
   //
@@ -81,6 +85,8 @@ function ConvocatoriaEditar() {
       fecha_inicio,
       fecha_fin,
       fecha_pago,
+      pago_mensual,
+      multa_mensual,
       archivoPdf
     );
     alert(
@@ -95,6 +101,8 @@ function ConvocatoriaEditar() {
         fecha_inicio: fecha_inicio,
         fecha_fin: fecha_fin,
         fecha_pago: fecha_pago,
+        pago_mensual: pago_mensual,
+        multa_mensual: multa_mensual,
       })
       .then((res) => console.log(res.data))
       .catch((error) => console.log(error));
@@ -199,7 +207,7 @@ function ConvocatoriaEditar() {
               <label htmlFor="fecha_pago">Fecha pago</label>
               <input
                 name="fecha_pago"
-                type="date"
+                type="number"
                 className="form-control"
                 id="fecha_pago"
                 placeholder="FechaPago"
@@ -207,7 +215,31 @@ function ConvocatoriaEditar() {
                 defaultValue={fecha_pago}
               ></input>
             </div>
-            <div className="myform-group ">
+            <div className="myform-group">
+              <label htmlFor="pago_mensual">Pago mensual</label>
+              <input
+                name="pago_mensual"
+                type="number"
+                className="form-control"
+                id="pago_mensual"
+                placeholder="multa_mensual"
+                onChange={handleOnchange}
+                defaultValue={pago_mensual}
+              ></input>
+            </div>
+            <div className="myform-group">
+              <label htmlFor="multa_mensual">Multa mensual</label>
+              <input
+                name="multa_mensual"
+                type="number"
+                className="form-control"
+                id="multa_mensual"
+                placeholder="multa_mensual"
+                onChange={handleOnchange}
+                defaultValue={multa_mensual}
+              ></input>
+            </div>
+            {/*<div className="myform-group ">
               <label for="archivoPdf">Subir archivo</label>
               <input
                 type="file"
@@ -218,7 +250,7 @@ function ConvocatoriaEditar() {
                 id="archivoPdf"
                 onChange={handleOnchange}
               />
-            </div>
+  </div>*/}
           </div>
           <button type="submit" className="btn btn-primary">
             Actualizar
