@@ -29,6 +29,7 @@ import ResponderForm from "./components/operador-mensajes/responderForm";
 import ResponseForm from "./components/cliente-mensajes/responseForm";
 import QrPage from "./components/qrPage";
 import IngresosForm from "./components/formularioIngreso";
+import PagoEditar from "./components/pagoEditar";
 
 function App() {
   return (
@@ -96,6 +97,10 @@ function App() {
               <Route
                 path="/operador/formulario-pago"
                 element={<FormularioPago />}
+              />
+              <Route
+                path="/operador/formulario-pago/:id/editar"
+                element={<PagoEditar />}
               />
               <Route path="/operador/pqr" element={<PqrPage />} />
               <Route

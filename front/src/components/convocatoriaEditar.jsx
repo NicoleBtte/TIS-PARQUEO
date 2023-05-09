@@ -89,9 +89,7 @@ function ConvocatoriaEditar() {
       multa_mensual,
       archivoPdf
     );
-    alert(
-      `datos formularios:::, ${titulo}, ${descripcion_convocatoria}, ${estado_convocatoria}, ${numero_cupos}, ${fecha_inicio}, ${fecha_fin}`
-    );
+
     axiosClient
       .put("/convocatoria/" + params.id, {
         titulo: titulo,
@@ -104,8 +102,16 @@ function ConvocatoriaEditar() {
         pago_mensual: pago_mensual,
         multa_mensual: multa_mensual,
       })
-      .then((res) => console.log(res.data))
-      .catch((error) => console.log(error));
+      .then((res) => {
+        console.log(res.data);
+        alert("La convocatoria se actualizo correctamente");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(
+          "No se pudo actualizar la convocatoria, revisa que haya cambiado bien los datos"
+        );
+      });
     e.preventDefault();
   };
 

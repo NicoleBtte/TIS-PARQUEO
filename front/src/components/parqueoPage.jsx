@@ -79,12 +79,6 @@ const ParqueoPage = () => {
           ))}
         </tbody>
       </Table>
-      <img
-        src={
-          "http://localhost:8000/storage/app/public/mapasparqueo/1683568705_Ingresosa.png"
-        }
-        alt=""
-      />
     </Container>
   );
 };

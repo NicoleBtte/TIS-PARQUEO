@@ -55,7 +55,7 @@ Route::get('/privado', function(){
 })->middleware('auth')->name('privado');
 
 Route::get('/storage/{path}', function ($path) {
-    $pathToFile = storage_path('app/uploads/' . $path);
+    $pathToFile = storage_path('app/' . $path);
     if (file_exists($pathToFile)) {
         return response()->file($pathToFile);
     } else {

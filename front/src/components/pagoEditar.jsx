@@ -1,5 +1,7 @@
+import * as React from "react";
 import { useState } from "react";
 import axiosClient from "../axios-client.js";
+import { useParams } from "react-router-dom";
 import { validarMonto } from "../helpers/validadores";
 
 function PagoForm() {
@@ -22,6 +24,9 @@ function PagoForm() {
   const [validar, setValidar] = useState({
     montoB: false,
   });
+
+  const params = useParams();
+
   const handleInputChange = ({ target }) => {
     if (target.name === "monto") {
       if (!validarMonto(target.value)) {
@@ -53,22 +58,22 @@ function PagoForm() {
     console.log({ archivo });
     console.log({ formValue });
     axiosClient
-      .post("/pagar", formData)
+      .put("/pagar", { comprobante: comprobante })
       .then((res) => console.log(res.data))
       .catch((error) => console.log(error));
   };
 
   React.useEffect(() => {
     axiosClient
-      .post("/updatePago", { idtransaccion })
+      .post("/updatePago", params.idtransaccion)
       .then((response) => {
         let result = response.data;
         result = JSON.parse(result);
         console.log("esto es el resultado", result);
-        setPagos(result);
+        setFormValue(result);
       })
       .catch((error) => console.log("error", error));
-  }, []);
+  }, [params.id]);
 
   return (
     <div className="formContainer">

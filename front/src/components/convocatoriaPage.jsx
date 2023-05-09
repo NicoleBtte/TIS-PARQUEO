@@ -71,6 +71,27 @@ const ConvocatoriaPage = () => {
       .catch((error) => console.log(error));
   }
 
+  function cambiarEstadoConvocatoria(id) {
+    const convocatoria = convocatorias.find(
+      (convocatoria) => convocatoria.idConvocatoria === id
+    );
+    const nuevoEstado = convocatoria.estado_convocatoria === 0 ? 1 : 0;
+    axiosClient
+      .put("/convocatoria/" + id, {
+        ...convocatoria,
+        estado_convocatoria: nuevoEstado,
+      })
+      .then((res) => {
+        const nuevasConvocatorias = convocatorias.map((c) =>
+          c.idConvocatoria === id
+            ? { ...c, estado_convocatoria: nuevoEstado }
+            : c
+        );
+        setConvocatorias(nuevasConvocatorias);
+      })
+      .catch((error) => console.log(error));
+  }
+
   React.useEffect(() => {
     axiosClient
       .get("/convocatorias")
@@ -128,6 +149,16 @@ const ConvocatoriaPage = () => {
                   }
                 >
                   Eliminar
+                </Button>
+                <Button
+                  className="grisBoton"
+                  onClick={() =>
+                    cambiarEstadoConvocatoria(convocatoria.idConvocatoria)
+                  }
+                >
+                  {convocatoria.estado_convocatoria === 0
+                    ? "Activar"
+                    : "Desactivar"}
                 </Button>
               </td>
             </tr>

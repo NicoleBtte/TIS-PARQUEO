@@ -6,7 +6,7 @@ import "../styles/estilos.css";
 import "../styles/tableStyle.css";
 import "../styles/botonesStyle.css";
 import "../styles/tablePageStyle.css";
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 function PagosPage() {
   const [pagos, setPagos] = useState([]);
@@ -67,22 +67,19 @@ function PagosPage() {
                 <td className="miTd">{pago.cliente_idcliente}</td>
                 <td className="miTd">{pago.monto}</td>
                 <td className="miTd">
-                  <button
+                  <Button
                     className="btn-none-style"
                     onClick={() => showImage(pago.comprobante)}
                   >
                     <i className="bx bxs-cloud-download bx-icon"></i>
-                  </button>
+                  </Button>
                 </td>
                 <td>
-                  <button className="btn-none-style">
-                    <Link
-                      to={`pago/${pago.id}/edit`}
-                      className="link-none-styles"
-                    >
-                      <i className="bx bxs-edit-alt primary-color"></i>
-                    </Link>
-                  </button>
+                  <Link
+                    to={`/operador/formulario-pago/${pago.idtransaccion}/editar`}
+                  >
+                    <Button className="naranjaBotonC">Editar</Button>
+                  </Link>
                 </td>
               </tr>
             ))}
@@ -99,7 +96,7 @@ function PagosPage() {
         <Modal.Body>
           <img
             className="w-100"
-            src={"http://localhost:8000/storage/" + show.imagen}
+            src={"http://localhost:8000/storage/uploads/" + show.imagen}
             alt=""
           />
         </Modal.Body>

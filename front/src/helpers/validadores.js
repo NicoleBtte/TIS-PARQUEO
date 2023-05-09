@@ -131,3 +131,27 @@ export function validarMonto(monto) {
 
   return true;
 }
+
+export function validarFechas(convocatorias, fechaInicioNueva, fechaFinNueva) {
+  for (let i = 0; i < convocatorias.length; i++) {
+    const convocatoriaExistente = convocatorias[i];
+
+    // Convertir fechas a milisegundos
+    const fechaInicioExistente = Date.parse(convocatoriaExistente.fecha_inicio);
+    const fechaFinExistente = Date.parse(convocatoriaExistente.fecha_fin);
+    const fechaInicioNuevaMs = Date.parse(fechaInicioNueva);
+    const fechaFinNuevaMs = Date.parse(fechaFinNueva);
+
+    // Verificar solapamiento
+    if (
+      (fechaInicioNuevaMs >= fechaInicioExistente &&
+        fechaInicioNuevaMs <= fechaFinExistente) ||
+      (fechaFinNuevaMs >= fechaInicioExistente &&
+        fechaFinNuevaMs <= fechaFinExistente)
+    ) {
+      return false; // hay solapamiento
+    }
+  }
+
+  return true; // no hay solapamiento
+}

@@ -121,14 +121,13 @@ export default function ZonasPar() {
 
   React.useEffect(() => {
     axiosClient
-      .post("/verImagen", { idPaqueo: params.id })
+      .get("/parqueo/" + params.id)
       .then((response) => {
-        const result = response.data;
-        setImagenUrl(result.url);
+        const result = response.data[0];
+        setImagenUrl(result.mapa_parqueo);
       })
       .catch((error) => console.log("error", error));
   }, []);
-  console.log("aquiiii");
   const [caracteristicas, setCaracteristicas] = useState(false);
 
   return (
@@ -319,9 +318,9 @@ export default function ZonasPar() {
         <Row className="mb-3">
           <Col xs={6}>
             <Image
+              className="w-100"
               src={
-                "http://localhost:8000/storage/mapasparqueo/" +
-                params.mapa_parqueo
+                "http://localhost:8000/storage/public/mapasparqueo/" + imagenUrl
               }
             />
           </Col>

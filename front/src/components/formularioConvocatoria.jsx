@@ -5,8 +5,7 @@ import {
   validarDescripcion,
   validarTitulo,
   validarNumeroSitios,
-  validarFechaInicio,
-  validarFechaFin,
+  validarFechas,
 } from "../helpers/validadores";
 import "../styles/formStyle.css";
 //import Swal from "sweetalert2";
@@ -68,6 +67,23 @@ function FormularioConvocatoria() {
     });
   };
 
+  const [minFechaFin, setMinFechaFin] = useState("");
+
+  const handleOnChangeFechaInicio = (e) => {
+    if (e.target.name === "fecha_inicio") {
+      if (!validarFechas(e.target.value)) {
+        setValidar({ ...validar, fecha_inicioB: true });
+      } else {
+        setValidar({ ...validar, fecha_inicioB: false });
+      }
+    }
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    setMinFechaFin(value);
+  };
   //
   const handleOnchange = (e) => {
     if (e.target.name === "titulo") {
@@ -94,16 +110,8 @@ function FormularioConvocatoria() {
       }
     }
 
-    if (e.target.name === "fecha_inicio") {
-      if (!validarFechaInicio(e.target.value)) {
-        setValidar({ ...validar, fecha_inicioB: true });
-      } else {
-        setValidar({ ...validar, fecha_inicioB: false });
-      }
-    }
-
     if (e.target.name === "fecha_fin") {
-      if (!validarFechaFin(e.target.value)) {
+      if (!validarFechas(e.target.value)) {
         setValidar({ ...validar, fecha_finB: true });
       } else {
         setValidar({ ...validar, fecha_finB: false });
@@ -160,8 +168,14 @@ function FormularioConvocatoria() {
 
     axiosClient
       .post("/convocatoria", formData)
-      .then((res) => console.log(res.data))
-      .catch((error) => console.log(error));
+      .then((res) => {
+        console.log(res.data);
+        alert("La convocatoria ha sido creada exitosamente");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Datos invalidos al crear convocatoria");
+      });
   };
 
   return (
@@ -241,8 +255,9 @@ function FormularioConvocatoria() {
                 type="date"
                 className="form-control"
                 id="fecha_inicio"
-                placeholder="Fecha IInicio"
-                onChange={handleOnchange}
+                placeholder="Fecha Inicio"
+                min={new Date().toISOString().split("T")[0]}
+                onChange={handleOnChangeFechaInicio}
               ></input>
               <span className="spanError">
                 {validar.fecha_inicioB
@@ -259,6 +274,7 @@ function FormularioConvocatoria() {
                 id="fecha_fin"
                 placeholder="Fecha fin"
                 onChange={handleOnchange}
+                min={minFechaFin}
               ></input>
               <span className="spanError">
                 {validar.fecha_finB
