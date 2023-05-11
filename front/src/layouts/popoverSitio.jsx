@@ -5,7 +5,7 @@ import Popover from 'react-bootstrap/Popover';
 import axiosCliente from '../axios-client';
 
 const PopoverSitio = () => {
-    const [miParqueo, setMiParqueo] = useState([{"nombre_parqueo":0, "nombre_zona_estacionamiento": 0, "numero":0}]);
+    const [miParqueo, setMiParqueo] = useState([{"nombre_parqueo":"Sin asignar", "nombre_zona_estacionamiento": "Sin asignar", "numero":"Sin asignar"}]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -21,9 +21,11 @@ const PopoverSitio = () => {
         }
         axiosCliente.get('/miSitio', { params: payload })
             .then(({ data }) => {
-                console.log('El data de mi sitio es',data)
-                setMiParqueo(JSON.parse(data))
-                setLoading(false)
+                if(data.data.lenght!==0){
+                  console.log('El data de mi sitio es',data)
+                  setMiParqueo(JSON.parse(data))
+                  setLoading(false)
+                }
             })
             .catch((errors) => {
                 setLoading(false)

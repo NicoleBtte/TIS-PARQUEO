@@ -34,8 +34,6 @@ const HomePage = () => {
   function formularioEnviadoHandler() {
     setFormularioEnviado(true);
   }
-  console.log('mostraboton',mostrarBoton)
-  console.log('idconv', convocatoria.idConvocatoria)
 
   return (
     <div>
