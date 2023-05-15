@@ -5,7 +5,7 @@ import axiosCliente from "../../axios-client";
 
 const RedactarAdmin = () => {
     const [options, setOptions] = useState([]);
-    const [selectedOption, setSelectedOption] = useState("");
+    const [selectedOption, setSelectedOption] = useState("clientes");
     const navigate = useNavigate();
     const idUsuario = localStorage.getItem("ID_USER");
   
@@ -22,20 +22,27 @@ const RedactarAdmin = () => {
   
       console.log(values);
       const payload = {
-        id: idUsuario,
-        idparqueo: selectedOption,
+        idadministrador: idUsuario,
         titulo_notif: values.titulo,
         mensaje_notif: values.descripcion,
       };
       console.log(payload);
+
+      let apiruta = "";
+
+      if(selectedOption==="clientes"){
+        apiruta = "/notificacionAnuncioClientes";
+      }else{
+        if(selectedOption==="personal"){
+          apiruta = "/notificacionAnuncioPersonal";
+        }
+      }
   
       axiosCliente
-        .post("/notificaciones", payload)
+        .post(apiruta, payload)
         .then(({ data }) => {
           //que hacer despues
-          if (data.success == true) {
-            window.alert("Mensaje enviado");
-          }
+          window.alert("Mensaje enviado");
           console.log(data);
         })
         .catch((err) => {
@@ -51,7 +58,7 @@ const RedactarAdmin = () => {
       <>
         <div className="bigestContainerRedactar">
           <div className="formContainer">
-            <h4>Redactar petición/queja</h4>
+            <h4>Redactar mensaje</h4>
             <Formik
               initialValues={{
                 option: null,
@@ -82,8 +89,8 @@ const RedactarAdmin = () => {
                   <div>
                     <label className="speciallabel" htmlFor="rol" >Mandar a:</label>
                       <select className="combobox" name="rol" id="rol" value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
-                        <option value="cliente">Cliente</option>
-                        <option value="operador">Personal</option>
+                        <option value="clientes">Cliente</option>
+                        <option value="personal">Personal</option>
                       </select>
                   </div>
                   <div className="myform-group">

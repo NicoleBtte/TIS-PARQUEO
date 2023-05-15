@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Notificacion extends Model
 {
-    protected $table = 'notificacion';
+    protected $table = 'notificaciones';
 
     protected $primaryKey = 'idnotificaciones';
     public $timestamps = false;
