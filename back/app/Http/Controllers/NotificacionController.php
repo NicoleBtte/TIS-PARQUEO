@@ -6,6 +6,7 @@ use App\Models\Notificacion;
 use App\Models\Administrador;
 use App\Models\Cliente;
 use App\Models\Operador;
+use App\Models\Guardia;
 use App\Notifications\NotificacionNueva;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -95,5 +96,55 @@ class NotificacionController extends Controller
             'message' => 'Notificación creada exitosamente',
             'data' => $notificacion
         ]);
+    }
+
+    public function anuncioClientes(Request $request){
+        $titulo_notif = $request->titulo_notif;
+        $mensaje_notif = $request->mensaje_notif;
+        $idadministrador = $request->idadministrador;
+        $admin = Administrador::find($idadministrador);
+        $nombre_administrador = $admin->nombre_administrador;
+        $clientes = Cliente::all();
+        foreach ($clientes as $cliente) {
+            $idcliente = $cliente->idcliente;
+            $nombre_cliente = $cliente->nombre_cliente;
+            $this->mandarMensaje($idcliente, $idadministrador, $nombre_cliente, $nombre_administrador,
+            $titulo_notif, $mensaje_notif);
+        }
+    }
+
+    public function anuncioPersonal(Request $request){
+        $titulo_notif = $request->titulo_notif;
+        $mensaje_notif = $request->mensaje_notif;
+        $idadministrador = $request->idadministrador;
+        $admin = Administrador::find($idadministrador);
+        $nombre_administrador = $admin->nombre_administrador;
+        $operadores = Operador::all();
+        foreach ($operadores as $operador) {
+            $idoperador = $operador->idoperador;
+            $nombre_operador = $operador->nombre_operador;
+            $this->mandarMensaje($idoperador, $idadministrador, $nombre_operador, $nombre_administrador,
+            $titulo_notif, $mensaje_notif);
+        }
+        $guardias = Guardia::all();
+        foreach ($guardias as $guardia) {
+            $idguardia = $guardia->idguardia;
+            $nombre_guardia = $guardia->nombre_guardia;
+            $this->mandarMensaje($idguardia, $idadministrador, $nombre_guardia, $nombre_administrador,
+            $titulo_notif, $mensaje_notif);
+        }
+    }
+
+    public function mandarMensaje(int $idreceptor,int $idemisor, string $receptor_notif, string $emisor_notif,
+    string $titulo_notif, string $mensaje_notif){
+        $notificacion = new Notificacion();
+        $notificacion->emisor_notif = $emisor_notif;
+        $notificacion->receptor_notif = $receptor_notif;
+        $notificacion->idemisor = $idemisor;
+        $notificacion->idreceptor = $idreceptor;
+        $notificacion->titulo_notif = $titulo_notif;
+        $notificacion->mensaje_notif = $mensaje_notif;
+        $notificacion->fecha_notif = date('Y-m-d');
+        $notificacion->save();
     }
 }
