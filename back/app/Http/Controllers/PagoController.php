@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Response;
 use Carbon\Carbon;
 use App\Models\Pago;
 use App\Models\Cliente;
+use App\Http\Controllers\ReportePagosController;
 use Illuminate\Support\Facades\Storage;
 
 class PagoController extends Controller
