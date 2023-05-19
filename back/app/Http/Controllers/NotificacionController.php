@@ -17,6 +17,24 @@ use Illuminate\Support\Facades\Validator;
 
 class NotificacionController extends Controller
 {
+    public function notifEnviadosAdmin(Request $request){
+        $idadministrador = $request -> idadministrador;
+        $notificaciones = Notificacion::where('emisor_id', $idadministrador)->get();
+        $notificacionesUnicas = [];
+
+        foreach ($notificaciones as $notificacion) {
+            if (!in_array($notificacion->mensaje_notif, $notificacionesUnicas)&&
+                !in_array($notificacion->titulo_notif, $notificacionesUnicas)) {
+                $notificacionesUnicas[] = $notificacion->mensaje_notif;
+            }
+        }
+        if( $notificacionesUnicas->isEmpty()){
+            return response()->json(['message' => 'No se encontraron notificaciones'], 404);
+        } else {
+            return response()->json(json_encode($notificacionesUnicas));
+        }
+    }
+
     public function indexSent(Request $request)
     {
         $id = $request->id;
@@ -59,13 +77,6 @@ class NotificacionController extends Controller
         $notificacion->mensaje_notif = $request->mensaje_notif;
         $notificacion->fecha_notif = date('Y-m-d');
         $notificacion->save();
-
-        /*$emisor = $notificacion->emisor_notif;
-        $titulo = $notificacion->titulo_notif;
-        $mensaje = $notificacion->mensaje_notif;
-        $id = $operador->idoperador;
-        $notificacionReceptor = new NotificacionNueva($emisor, $titulo, $mensaje);
-        Notification::route('broadcast', 'user.'.$id)->notify($notificacionReceptor);*/
 
         return response()->json([
             'success' => true,

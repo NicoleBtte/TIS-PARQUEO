@@ -192,39 +192,18 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`notificaciones`
+-- Table `mydb`.`notificacion`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`notificaciones` (
+CREATE TABLE IF NOT EXISTS `mydb`.`notificacion` (
   `idnotificaciones` INT NOT NULL AUTO_INCREMENT,
   `emisor_notif` VARCHAR(50) NULL,
   `receptor_notif` VARCHAR(50) NULL,
   `titulo_notif` VARCHAR(45) NULL,
   `mensaje_notif` VARCHAR(145) NULL,
-  `administrador_idadministrador` INT NOT NULL,
-  `cliente_idcliente` INT NOT NULL,
-  `operador_idoperador` INT NOT NULL,
   `idemisor` INT NULL,
   `idreceptor` INT NULL,
   `fecha_notif` DATE NULL,
-  PRIMARY KEY (`idnotificaciones`),
-  INDEX `fk_notificaciones_administrador1_idx` (`administrador_idadministrador` ASC) ,
-  INDEX `fk_notificaciones_cliente1_idx` (`cliente_idcliente` ASC) ,
-  INDEX `fk_notificaciones_operador1_idx` (`operador_idoperador` ASC) ,
-  CONSTRAINT `fk_notificaciones_administrador1`
-    FOREIGN KEY (`administrador_idadministrador`)
-    REFERENCES `mydb`.`administrador` (`idadministrador`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_notificaciones_cliente1`
-    FOREIGN KEY (`cliente_idcliente`)
-    REFERENCES `mydb`.`cliente` (`idcliente`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_notificaciones_operador1`
-    FOREIGN KEY (`operador_idoperador`)
-    REFERENCES `mydb`.`operador` (`idoperador`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`idnotificaciones`))
 ENGINE = InnoDB;
 
 
@@ -291,6 +270,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`convocatoria` (
   `numero_cupos` INT NOT NULL,
   `estado_convocatoria` INT NULL,
   `pdf_convocatoria` VARCHAR(100) NULL,
+  `fecha_inicio_gestion` DATE NOT NULL,
+  `fecha_fin_gestion` DATE NOT NULL,
   PRIMARY KEY (`idConvocatoria`))
 ENGINE = InnoDB;
 
