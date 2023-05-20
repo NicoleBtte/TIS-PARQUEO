@@ -37,26 +37,24 @@ const PagosCliente = () => {
           <thead className="bg-c-primary">
             <tr>
               <th className="fw-medium">Cliente</th>
-              <th className="fw-medium">Deuda Mensual</th>
               <th className="fw-medium">Fecha Pagado</th>
               <th className="fw-medium">Fecha limite</th>
-              <th className="fw-medium">Estado</th>
+              <th className="fw-medium">Deuda Mensual</th>
               <th className="fw-medium">Multa</th>
-              <th className="fw-medium">Descuento</th>
-              <th className="fw-medium">Total a pagar</th>
+              <th className="fw-medium">Meses cancelados</th>
+              <th className="fw-medium">Estado</th>
             </tr>
           </thead>
           <tbody className="bg-c-secondary">
             {clientes.map((cliente) => (
               <tr key={cliente.idcliente}>
                 <td>{cliente.nombre_cliente}</td>
-                <td>{cliente.monto_a_pagar}</td>
                 <td>{cliente.fecha_pagado}</td>
                 <td>{cliente.fecha_lim_pago}</td>
-                <td>{cliente.estado_pago === 1 ? "Deudor" : "Solvente"}</td>
-                <td>0</td>
-                <td>{cliente.descuento}</td>
-                <td>{cliente.total}</td>
+                <td>{cliente.monto_a_pagar}</td>
+                <td>{cliente.multa}</td>
+                <td>meses</td>
+                <td>{cliente.estado_pago === 1 ? "Deudor" : "Al dia"}</td>
               </tr>
             ))}
           </tbody>

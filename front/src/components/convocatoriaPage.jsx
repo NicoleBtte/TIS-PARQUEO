@@ -6,6 +6,8 @@ import "../styles/tableStyle.css";
 import "../styles/convocatoriaBotones.css";
 import "../styles/tablePageStyle.css";
 import axiosClient from "../axios-client.js";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const ConvocatoriaPage = () => {
   /*{
@@ -41,6 +43,44 @@ const ConvocatoriaPage = () => {
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  function descargarPDF() {
+    const doc = new jsPDF();
+    const tableData = [];
+
+    // Agregar encabezados de columna a tableData
+    const headers = [
+      "Titulo",
+      "Descripcion",
+      "Estado",
+      "Cupos",
+      "Fecha inicio",
+      "Fecha fin",
+    ];
+    tableData.push(headers);
+
+    // Agregar filas de datos a tableData
+    convocatorias.forEach((convocatoria) => {
+      const rowData = [
+        convocatoria.titulo,
+        convocatoria.descripcion_convocatoria,
+        convocatoria.estado_convocatoria === 0 ? "Inactivo" : "Activo",
+        convocatoria.numero_cupos.toString(),
+        convocatoria.fecha_inicio,
+        convocatoria.fecha_fin,
+      ];
+      tableData.push(rowData);
+    });
+
+    // Agregar tabla al documento PDF
+    doc.autoTable({
+      head: [tableData[0]],
+      body: tableData.slice(1),
+    });
+
+    // Descargar el archivo PDF
+    doc.save("reporte_convocatorias.pdf");
   }
 
   /*function downloadPDF(idConvocatoria) {
@@ -106,6 +146,9 @@ const ConvocatoriaPage = () => {
   return (
     <Container className="tablePageContainer">
       <h1 className="tittleContainer">Lista convocatorias</h1>
+      <Button className="pdf-button" onClick={descargarPDF}>
+        Descargar PDF
+      </Button>
       <Table responsive className="mytable">
         <thead className="tableHeader">
           <tr>
@@ -113,8 +156,10 @@ const ConvocatoriaPage = () => {
             <th>Descripcion</th>
             <th>Estado</th>
             <th>Cupos</th>
-            <th>Fecha inicio</th>
-            <th>Fecha fin</th>
+            <th>Fecha inicio de registro</th>
+            <th>Fecha fin de registro</th>
+            <th>Fecha inicio de uso del parqueo</th>
+            <th>Fecha fin de uso del parqueo</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -127,6 +172,8 @@ const ConvocatoriaPage = () => {
                 {convocatoria.estado_convocatoria === 0 ? "Inactivo" : "Activo"}
               </td>
               <td className="miTd">{convocatoria.numero_cupos}</td>
+              <td className="miTd">{convocatoria.fecha_inicio}</td>
+              <td className="miTd">{convocatoria.fecha_fin}</td>
               <td className="miTd">{convocatoria.fecha_inicio}</td>
               <td className="miTd">{convocatoria.fecha_fin}</td>
               <td className="miTd">

@@ -33,7 +33,7 @@ class ConvocatoriaController extends Controller
             'estado_convocatoria' => ['required', 'integer', 'min:0', 'max:1'],
             'fecha_inicio' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin'],
             'fecha_fin' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_inicio'],
-            'fecha_pago' => ['required', 'integer', 'min:1', 'max:28'],
+            'fecha_pago' => ['required', 'date', 'date_format:Y-m-d'],
             'pago_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
             'multa_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
             'pdf_convocatoria' => ['required', 'file', 'mimes:pdf', 'max:2000'],
@@ -97,7 +97,7 @@ class ConvocatoriaController extends Controller
             'estado_convocatoria' => ['required', 'integer', 'min:0', 'max:1'],
             'fecha_inicio' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin'],
             'fecha_fin' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_inicio'],
-            'fecha_pago' => ['required', 'integer', 'min:1', 'max:28'],
+            'fecha_pago' => ['required', 'date'],
             'pago_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
             'multa_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
         ]);

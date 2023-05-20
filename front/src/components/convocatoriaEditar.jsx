@@ -32,8 +32,10 @@ function ConvocatoriaEditar() {
     estado_convocatoria: null,
     numero_cupos: null,
     archivoPdf: null,
-    fecha_inicio: null,
+    fecha_inicio_: null,
     fecha_fin: null,
+    fecha_inicio_parqueo: null,
+    fecha_fin_parqueo: null,
     fecha_pago: null,
     pago_mensual: null,
     multa_mensaul: null,
@@ -46,10 +48,13 @@ function ConvocatoriaEditar() {
     tituloB: false,
     descripcion_convocatoriaB: false,
     numero_cuposB: false,
+    fecha_inicioB: false,
     fecha_finB: false,
     fecha_pagoB: false,
     pago_mensualB: false,
     multa_mensualB: false,
+    fecha_inicio_parqueoB: false,
+    fecha_fin_parqueoB: false,
   });
 
   const {
@@ -60,11 +65,30 @@ function ConvocatoriaEditar() {
     archivoPdf,
     fecha_inicio,
     fecha_fin,
+    fecha_inicio_parqueo,
+    fecha_fin_parqueo,
     fecha_pago,
     pago_mensual,
     multa_mensual,
   } = formData;
 
+  const [minFechaFin, setMinFechaFin] = useState("");
+
+  const handleOnChangeFechaInicio = (e) => {
+    if (e.target.name === "fecha_inicio") {
+      if (!validarFechas(e.target.value)) {
+        setValidar({ ...validar, fecha_inicioB: true });
+      } else {
+        setValidar({ ...validar, fecha_inicioB: false });
+      }
+    }
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    setMinFechaFin(value);
+  };
   //
   const handleOnchange = (e) => {
     if (e.target.name === "titulo") {
@@ -96,6 +120,22 @@ function ConvocatoriaEditar() {
         setValidar({ ...validar, fecha_finB: true });
       } else {
         setValidar({ ...validar, fecha_finB: false });
+      }
+    }
+
+    if (e.target.name === "fecha_incio_parqueo") {
+      if (!validarFechas(e.target.value)) {
+        setValidar({ ...validar, fecha_inicio_parqueoB: true });
+      } else {
+        setValidar({ ...validar, fecha_inicio_parqueoB: false });
+      }
+    }
+
+    if (e.target.name === "fecha_fin_parqueo") {
+      if (!validarFechas(e.target.value)) {
+        setValidar({ ...validar, fecha_fin_parqueoB: true });
+      } else {
+        setValidar({ ...validar, fecha_fin_parqueoB: false });
       }
     }
 
@@ -137,6 +177,8 @@ function ConvocatoriaEditar() {
       numero_cupos,
       fecha_inicio,
       fecha_fin,
+      fecha_inicio_parqueo,
+      fecha_fin_parqueo,
       fecha_pago,
       pago_mensual,
       multa_mensual,
@@ -151,6 +193,8 @@ function ConvocatoriaEditar() {
         numero_cupos: numero_cupos,
         fecha_inicio: fecha_inicio,
         fecha_fin: fecha_fin,
+        fecha_inicio_parqueo: fecha_inicio_parqueo,
+        fecha_fin_parqueo: fecha_fin_parqueo,
         fecha_pago: fecha_pago,
         pago_mensual: pago_mensual,
         multa_mensual: multa_mensual,
@@ -260,8 +304,9 @@ function ConvocatoriaEditar() {
                 type="date"
                 className="form-control"
                 id="fecha_inicio"
-                placeholder="Fecha IInicio"
-                onChange={handleOnchange}
+                placeholder="Fecha Inicio"
+                min={new Date().toISOString().split("T")[0]}
+                onChange={handleOnChangeFechaInicio}
                 defaultValue={fecha_inicio}
               ></input>
             </div>
@@ -274,10 +319,46 @@ function ConvocatoriaEditar() {
                 id="fecha_fin"
                 placeholder="Fecha fin"
                 onChange={handleOnchange}
+                min={minFechaFin}
                 defaultValue={fecha_fin}
               ></input>
               <span className="spanError">
                 {validar.fecha_finB
+                  ? "La fecha fin no puede ser menor a la fecha inicio"
+                  : ""}
+              </span>
+            </div>
+            <div className="myform-group">
+              <label htmlFor="fecha_inicio_parqueo">
+                Fecha inicio de uso del parqueo:
+              </label>
+              <input
+                name="fecha_inicio_parqueo"
+                type="date"
+                className="form-control"
+                id="fecha_inicio_parqueo"
+                placeholder="Fecha Inicio"
+                min={new Date().toISOString().split("T")[0]}
+                onChange={handleOnChangeFechaInicio}
+                defaultValue={fecha_inicio}
+              ></input>
+            </div>
+            <div className="myform-group">
+              <label htmlFor="fecha_fin_parqueo">
+                Fecha fin de uso del parqueo:
+              </label>
+              <input
+                name="fecha_fin_parqueo"
+                type="date"
+                className="form-control"
+                id="fecha_fin_parqueo"
+                placeholder="Fecha fin"
+                onChange={handleOnchange}
+                defaultValue={fecha_fin}
+                min={minFechaFin}
+              ></input>
+              <span className="spanError">
+                {validar.fecha_fin_parqueoB
                   ? "La fecha fin no puede ser menor a la fecha inicio"
                   : ""}
               </span>

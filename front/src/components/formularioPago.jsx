@@ -8,9 +8,10 @@ function PagoForm() {
     monto: null,
     tipo_de_pago: 1,
     comprobante: "",
+    meses: [],
   });
 
-  const { carnet, monto, tipo_de_pago, comprobante } = formValue;
+  const { carnet, monto, tipo_de_pago, comprobante, meses } = formValue;
 
   const [archivo, setArchivo] = useState();
 
@@ -40,6 +41,21 @@ function PagoForm() {
       [target.name]: value,
     });
   };
+
+  const handleMonthSelection = (month) => {
+    if (meses.includes(month)) {
+      setFormValue({
+        ...formValue,
+        meses: meses.filter((m) => m !== month),
+      });
+    } else {
+      setFormValue({
+        ...formValue,
+        meses: [...meses, month],
+      });
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -50,6 +66,10 @@ function PagoForm() {
     if (archivo != undefined) {
       formData.append("imagen", archivo.archivo);
     }
+    // Agregar meses seleccionados al FormData
+    meses.forEach((month) => {
+      formData.append("meses[]", month);
+    });
     console.log({ archivo });
     console.log({ formValue });
     axiosClient
@@ -142,6 +162,156 @@ function PagoForm() {
                 />
               </div>
             )}
+          </div>
+          <div className="mb-3">
+            <label className="form-label fw-medium primary-color">
+              Seleccionar meses que se esta cancelando:
+            </label>
+            <div className="check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="enero"
+                checked={meses.includes("enero")}
+                onChange={() => handleMonthSelection("enero")}
+              />
+              <label className="form-check-label" htmlFor="enero">
+                Enero
+              </label>
+            </div>
+            <div className="check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="febrero"
+                checked={meses.includes("febrero")}
+                onChange={() => handleMonthSelection("febrero")}
+              />
+              <label className="form-check-label" htmlFor="febrero">
+                Febrero
+              </label>
+            </div>
+            <div className="check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="marzo"
+                checked={meses.includes("marzo")}
+                onChange={() => handleMonthSelection("marzo")}
+              />
+              <label className="form-check-label" htmlFor="marzo">
+                marzo
+              </label>
+            </div>
+            <div className="check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="abril"
+                checked={meses.includes("abril")}
+                onChange={() => handleMonthSelection("abril")}
+              />
+              <label className="form-check-label" htmlFor="abril">
+                abril
+              </label>
+            </div>
+            <div className="check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="mayo"
+                checked={meses.includes("mayo")}
+                onChange={() => handleMonthSelection("mayo")}
+              />
+              <label className="form-check-label" htmlFor="mayo">
+                mayo
+              </label>
+            </div>
+            <div className="check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="junio"
+                checked={meses.includes("junio")}
+                onChange={() => handleMonthSelection("junio")}
+              />
+              <label className="form-check-label" htmlFor="junio">
+                junio
+              </label>
+            </div>
+            <div className="check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="julio"
+                checked={meses.includes("julio")}
+                onChange={() => handleMonthSelection("julio")}
+              />
+              <label className="form-check-label" htmlFor="julio">
+                julio
+              </label>
+            </div>
+            <div className="check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="agosto"
+                checked={meses.includes("agosto")}
+                onChange={() => handleMonthSelection("agosto")}
+              />
+              <label className="form-check-label" htmlFor="agosto">
+                agosto
+              </label>
+            </div>
+            <div className="check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="septiembre"
+                checked={meses.includes("septiembre")}
+                onChange={() => handleMonthSelection("septiembre")}
+              />
+              <label className="form-check-label" htmlFor="septiembre">
+                septiembre
+              </label>
+            </div>
+            <div className="check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="octubre"
+                checked={meses.includes("octubre")}
+                onChange={() => handleMonthSelection("octubre")}
+              />
+              <label className="form-check-label" htmlFor="octubre">
+                octubre
+              </label>
+            </div>
+            <div className="check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="noviembre"
+                checked={meses.includes("noviembre")}
+                onChange={() => handleMonthSelection("noviembre")}
+              />
+              <label className="form-check-label" htmlFor="noviembre">
+                noviembre
+              </label>
+            </div>
+            <div className="check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="diciembre"
+                checked={meses.includes("diciembre")}
+                onChange={() => handleMonthSelection("diciembre")}
+              />
+              <label className="form-check-label" htmlFor="diciembre">
+                diciembre
+              </label>
+              {/* Agregar más checkboxes para los demás meses aquí */}
+            </div>
           </div>
         </fieldset>
         <div className="text-center">

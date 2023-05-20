@@ -33,6 +33,8 @@ function FormularioConvocatoria() {
     archivoPdf: null,
     fecha_inicio: null,
     fecha_fin: null,
+    fecha_inicio_parqueo: null,
+    fecha_fin_parqueo: null,
     fecha_pago: null,
     pago_mensual: null,
     multa_mensaul: null,
@@ -47,6 +49,8 @@ function FormularioConvocatoria() {
     numero_cuposB: false,
     fecha_inicioB: false,
     fecha_finB: false,
+    fecha_inicio_parqueoB: false,
+    fecha_fin_parqueoB: false,
   });
 
   const {
@@ -57,6 +61,8 @@ function FormularioConvocatoria() {
     archivoPdf,
     fecha_inicio,
     fecha_fin,
+    fecha_inicio_parqueo,
+    fecha_fin_parqueo,
     fecha_pago,
     pago_mensual,
     multa_mensual,
@@ -118,6 +124,21 @@ function FormularioConvocatoria() {
         setValidar({ ...validar, fecha_finB: true });
       } else {
         setValidar({ ...validar, fecha_finB: false });
+      }
+    }
+    if (e.target.name === "fecha_incio_parqueo") {
+      if (!validarFechas(e.target.value)) {
+        setValidar({ ...validar, fecha_inicio_parqueoB: true });
+      } else {
+        setValidar({ ...validar, fecha_inicio_parqueoB: false });
+      }
+    }
+
+    if (e.target.name === "fecha_fin_parqueo") {
+      if (!validarFechas(e.target.value)) {
+        setValidar({ ...validar, fecha_fin_parqueoB: true });
+      } else {
+        setValidar({ ...validar, fecha_fin_parqueoB: false });
       }
     }
 
@@ -188,6 +209,8 @@ function FormularioConvocatoria() {
     formData.append("numero_cupos", numero_cupos);
     formData.append("fecha_inicio", fecha_inicio);
     formData.append("fecha_fin", fecha_fin);
+    formData.append("fecha_inicio_parqueo", fecha_inicio_parqueo);
+    formData.append("fecha_fin_parqueo", fecha_fin_parqueo);
     formData.append("fecha_pago", fecha_pago);
     formData.append("pago_mensual", pago_mensual);
     formData.append("multa_mensual", multa_mensual);
@@ -276,7 +299,7 @@ function FormularioConvocatoria() {
               </select>
             </div>
             <div className="myform-group">
-              <label htmlFor="fecha_inicio">Fecha inicio:</label>
+              <label htmlFor="fecha_inicio">Fecha inicio de registro:</label>
               <input
                 name="fecha_inicio"
                 type="date"
@@ -288,7 +311,7 @@ function FormularioConvocatoria() {
               ></input>
             </div>
             <div className="myform-group">
-              <label htmlFor="fecha_fin">Fecha fin:</label>
+              <label htmlFor="fecha_fin">Fecha fin de registro:</label>
               <input
                 name="fecha_fin"
                 type="date"
@@ -305,21 +328,48 @@ function FormularioConvocatoria() {
               </span>
             </div>
             <div className="myform-group">
-              <label htmlFor="fecha_pago">Fecha Pago:</label>
+              <label htmlFor="fecha_inicio_parqueo">
+                Fecha inicio de uso del parqueo:
+              </label>
               <input
-                name="fecha_pago"
-                type="number"
-                id="fecha_pago"
+                name="fecha_inicio_parqueo"
+                type="date"
                 className="form-control"
-                min="1"
-                max="28"
+                id="fecha_inicio_parqueo"
+                placeholder="Fecha Inicio"
+                min={new Date().toISOString().split("T")[0]}
+                onChange={handleOnChangeFechaInicio}
+              ></input>
+            </div>
+            <div className="myform-group">
+              <label htmlFor="fecha_fin_parqueo">
+                Fecha fin de uso del parqueo:
+              </label>
+              <input
+                name="fecha_fin_parqueo"
+                type="date"
+                className="form-control"
+                id="fecha_fin_parqueo"
+                placeholder="Fecha fin"
                 onChange={handleOnchange}
-              />
+                min={minFechaFin}
+              ></input>
               <span className="spanError">
-                {validar.fecha_pagoB
-                  ? "La fecha pago debe ser mayor igual a 1 y menor a 29"
+                {validar.fecha_fin_parqueoB
+                  ? "La fecha fin no puede ser menor a la fecha inicio"
                   : ""}
               </span>
+            </div>
+            <div className="myform-group">
+              <label htmlFor="fecha_pago">Fecha pago:</label>
+              <input
+                name="fecha_pago"
+                type="date"
+                className="form-control"
+                id="fecha_pago"
+                placeholder="Fecha pago"
+                onChange={handleOnchange}
+              ></input>
             </div>
             <div className="myform-group">
               <label htmlFor="pago_mensual">Pago Mensual:</label>

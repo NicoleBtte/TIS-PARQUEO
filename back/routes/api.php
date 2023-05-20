@@ -35,10 +35,12 @@ Route::get('/signin', function () {
     return view('signin');
 });
 Route::post('/register', [ClienteController::class, 'store']);
+Route::get('/register', [ClienteController::class, 'index']);
 Route::post('/login', [ClienteController::class, 'login']);
 Route::post('/loginadmin', [AdminController::class, 'login']);
 Route::post('/loginoperador', [OperadorController::class, 'login']);
 Route::post('/showcliente', [ClienteController::class, 'show']);
+//Route::post('/obtenerIdsClientes', [ClienteController::class, 'obtenerIdsClientes']);
 Route::post('/loginguardia', [GuardiaController::class, 'login']);
 
 Route::get('/sessions', function () {

@@ -77,8 +77,8 @@ class ClienteController extends Controller
 
     public function index(){
         $registro=Cliente::select('nombre_cliente','idcliente')->get();
-
-        return view('clientes',compact('registro'));
+        return response()->json($registro);
+        //return view('clientes',compact('registro'));
     }
 
     public function show(Request $request){

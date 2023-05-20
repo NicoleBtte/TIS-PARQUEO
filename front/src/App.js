@@ -35,6 +35,7 @@ import FormularioGuardia from "./components/admin-users/guardiaForm";
 import MensajesEnviadosPage from "./components/cliente-mensajes/historialEnviados";
 import PagoEditar from "./components/pagoEditar";
 import Clientes from "./components/guardia-clientes/clientes";
+import PagosReportePage from "./components/pagosReportePage";
 
 function App() {
   return (
@@ -118,6 +119,10 @@ function App() {
                 element={<PagoEditar />}
               />
               <Route path="/operador/pqr" element={<PqrPage />} />
+              <Route
+                path="/operador/reporte-pagos"
+                element={<PagosReportePage />}
+              />
               <Route
                 path="/operador/pqr/responder/id/:id/name/:name"
                 element={<ResponderForm />}

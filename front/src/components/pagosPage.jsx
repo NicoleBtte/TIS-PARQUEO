@@ -57,6 +57,7 @@ function PagosPage() {
               <th className="fw-medium">Cliente</th>
               <th className="fw-medium">Monto</th>
               <th className="fw-medium">Tipo de pago</th>
+              <th className="fw-medium">Meses cancelados</th>
               <th className="fw-medium">Comprobante</th>
             </tr>
           </thead>
@@ -69,6 +70,7 @@ function PagosPage() {
                 <td className="miTd">
                   {pago.tipo_de_pago === 1 ? "Efectivo" : "Electronico"}
                 </td>
+                <td className="miTd">meses</td>
                 <td className="miTd">
                   {" "}
                   {pago.comprobante == null ? (

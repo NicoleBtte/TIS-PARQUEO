@@ -1,16 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axiosClient from "../axios-client.js";
 
 function IngresosForm() {
-  const [formValue, setFormValue] = useState({
-    idcliente: "",
-  });
+  const [formValue, setFormValue] = useState("");
+  const [options, setOptions] = useState([]); // Verifica que hayas declarado esta línea correctamente
+  const [filtros, setFiltros] = useState([]);
   const { idcliente } = formValue;
-
   /*const handleCreate = (e) => {
     e.preventDefault();
     console.log({ formValue });
   };*/
+
+  useEffect(() => {
+    // Realizar una solicitud al servidor para obtener la lista completa de IDs disponibles
+    axiosClient
+      .get("/register") // Ajusta la ruta de la solicitud según tu API
+      .then((res) => {
+        setOptions(res.data.map((cliente) => cliente.idcliente)); // Asignar la lista completa de IDs al estado idOptions
+        setFiltros(res.data.map((cliente) => cliente.idcliente));
+      })
+      .catch((error) => {
+        console.log(error);
+        // Manejo de errores si es necesario
+      });
+  }, []);
 
   const handleSubmit = (e) => {
     console.log(idcliente);
@@ -29,8 +42,17 @@ function IngresosForm() {
     e.preventDefault();
   };
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormValue({ ...formValue, [name]: value });
+    const { value } = e.target;
+    setFormValue(value);
+    setFiltros(
+      options.filter((option) => option.toString().includes(formValue))
+    );
+  };
+
+  const handleOnchange = (e) => {
+    const { value } = e.target;
+    console.log(value);
+    setFormValue(value);
   };
 
   return (
@@ -48,13 +70,18 @@ function IngresosForm() {
               ID Cliente
             </label>
             <input
-              className="form-control"
-              name="idcliente"
-              id="idcliente"
               type="text"
+              value={formValue}
               onChange={handleInputChange}
-              defaultValue={formValue.idcliente}
+              list="options-list"
             />
+            <datalist id="options-list" className="datalist-width">
+              {filtros.map((option, index) => (
+                <option key={index} value={option}>
+                  {option}
+                </option>
+              ))}
+            </datalist>
           </div>
         </fieldset>
         <div className="text-center">

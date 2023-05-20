@@ -173,3 +173,35 @@ body {
   color: #ff1a00;
   font-size: 13px;
 }
+.row-reporte {
+  display: flex;
+}
+.col-reporte {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  margin-right: 20px;
+}
+.col-reporte1 {
+  flex: 1;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rgba(82, 144, 232, 0.1);
+  text-align: center;
+  margin-right: 20px;
+  width: 100px;
+}
+
+.col-reporte1:first-child {
+  margin-left: 20px; /* Agrega margen izquierdo de 10px al primer contenedor */
+  width: 100px;
+}
+
+.datalist-width {
+  width: 100%;
+  background-color: #122a4c;
+}
+.checkboxContainer {
+  display: flex;
+  flex-direction: row;
+}
