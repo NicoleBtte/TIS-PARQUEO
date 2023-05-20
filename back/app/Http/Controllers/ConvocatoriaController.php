@@ -37,6 +37,8 @@ class ConvocatoriaController extends Controller
             'pago_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
             'multa_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
             'pdf_convocatoria' => ['required', 'file', 'mimes:pdf', 'max:2000'],
+            'fecha_inicio_gestion'=>['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin_gestion'],
+            'fecha_fin_gestion'=>['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_inicio_gestion'],
         ]);
 
         $ultimaConvocatoria = Convocatoria::orderBy('fecha_fin', 'desc')->first();
@@ -62,6 +64,8 @@ class ConvocatoriaController extends Controller
         $convocatoria->pago_mensual = $validatedData['pago_mensual'];
         $convocatoria->multa_mensual = $validatedData['multa_mensual'];
         $convocatoria->pdf_convocatoria = time() . '_' . $pdf->getClientOriginalName();
+        $convocatoria->fecha_inicio_gestion = $validatedData['fecha_inicio_gestion'];
+        $convocatoria->fecha_fin_gestion = $validatedData['fecha_fin_gestion'];
         if($convocatoria){
             $convocatoria->save();
             return response()->json([
@@ -100,6 +104,8 @@ class ConvocatoriaController extends Controller
             'fecha_pago' => ['required', 'integer', 'min:1', 'max:28'],
             'pago_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
             'multa_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
+            'fecha_inicio_gestion'=>['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin_gestion'],
+            'fecha_fin_gestion'=>['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_inicio_gestion'],
         ]);
         $convocatoria->titulo = $validatedData['titulo'];
         $convocatoria->descripcion_convocatoria = $validatedData['descripcion_convocatoria'];
@@ -110,6 +116,8 @@ class ConvocatoriaController extends Controller
         $convocatoria->fecha_pago = $validatedData['fecha_pago'];
         $convocatoria->pago_mensual = $validatedData['pago_mensual'];
         $convocatoria->multa_mensual = $validatedData['multa_mensual'];
+        $convocatoria->fecha_inicio_gestion = $validatedData['fecha_inicio_gestion'];
+        $convocatoria->fecha_fin_gestion = $validatedData['fecha_fin_gestion'];
 
         if($convocatoria) {
             $convocatoria->save();

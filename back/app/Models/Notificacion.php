@@ -22,12 +22,7 @@ class Notificacion extends Model
         'idreceptor',
         'titulo_notif',
         'mensaje_notif',
-
         'fecha_notif',
-        
-        'administrador_idadministrador',
-        'cliente_idcliente',
-        'operador_idoperador',
     ];
 
     public function administrador()
