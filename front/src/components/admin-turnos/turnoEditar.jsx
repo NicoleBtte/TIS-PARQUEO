@@ -151,7 +151,7 @@ const TurnoEdit = () => {
 
     return (
         <div className="formContainer">
-        <h4>Crear turno</h4>
+        <h4>Editar turno</h4>
         <form className="formulario" onSubmit={handleSubmit}>
             <div className="myform-group">
                 <label htmlFor="nombre">Nombre:</label>
@@ -191,8 +191,8 @@ const TurnoEdit = () => {
                 {error.horaFin && <div className="error">{error.horaFin}</div>}
             </div>
 
-            <div className="myform-group">
-                <label>Días:</label>
+            <div>
+                <label className='myLabel'>Días:</label>
                 {diasOptions.map((option) => (
                 <div key={option.value}>
                     <input
@@ -203,7 +203,7 @@ const TurnoEdit = () => {
                         checked={turno.dias.includes(option.value)}
                         onChange={handleCheckboxChange}
                     />
-                    <label htmlFor={option.value}>{option.label}</label>
+                    <label className='myLabel' htmlFor={option.value}>{option.label}</label>
                 </div>
             ))}
             </div>

@@ -1,0 +1,47 @@
+.accionesCeldaTurno{
+    padding: 8px;
+    border: 1px solid #D4DAE1;
+    text-align:justify;
+    justify-content: space-between;
+}
+
+.azulBotonTurno {
+    border-radius: 20px !important;
+    background-color: #122A4C !important;
+    border-color: transparent !important;
+    width: 20% !important;
+  }
+
+.celesteBotonTurno {
+    border-radius: 20px !important;
+    background-color: #33b4e5 !important;
+    border-color: transparent !important;
+    width: 60% !important;
+  }
+  
+  .verdeBotonTurno {
+    color: white !important;
+    border-radius: 20px !important;
+    background-color: #01c851 !important;
+    border-color: transparent !important;
+    width: 20% !important;
+  }
+  .naranjaBotonTurno {
+    border-radius: 20px !important;
+    background-color: #ff8800 !important;
+    border-color: transparent !important;
+    width: 60% !important;
+  }
+  .rojoBotonTurno {
+    border-radius: 20px !important;
+    background-color: #ff1a00 !important;
+    border-color: transparent !important;
+    width: 16%;
+  }
+  .grisBotonTurno {
+    border-radius: 20px !important;
+    background-color: #918a95 !important;
+    border-color: transparent !important;
+    width: 20% !important;
+  }
+  

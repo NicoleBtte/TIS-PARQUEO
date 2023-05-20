@@ -3,6 +3,7 @@ import TurnosTable from './turnosTable';
 import { Button} from "react-bootstrap";
 import { Navigate, Link } from "react-router-dom";
 import axiosCliente from '../../axios-client';
+import './botonesTurno.css';
 
 function TurnosPage() {
   return (
@@ -10,7 +11,7 @@ function TurnosPage() {
     <div className='tablePageContainer'>
       <div className='titleBottonContainer'>
         <h4>Horarios disponibles</h4>
-        <Button className='celesteBoton' as={Link} to="/admin/turnoForm">Agregar turno</Button>
+        <Button className='azulBotonTurno' as={Link} to="/admin/turnoForm">Agregar turno</Button>
       </div>
       <div>
         <TurnosTable/>

@@ -18,17 +18,29 @@ use Illuminate\Support\Facades\Validator;
 class NotificacionController extends Controller
 {
     public function notifEnviadosAdmin(Request $request){
-        $idadministrador = $request -> idadministrador;
-        $notificaciones = Notificacion::where('emisor_id', $idadministrador)->get();
+        $idadministrador = $request -> id;
+        $notificaciones = Notificacion::where('idemisor', $idadministrador)->get();
         $notificacionesUnicas = [];
+        $cadena_equipo = implode(";", $notificacionesUnicas);
 
         foreach ($notificaciones as $notificacion) {
-            if (!in_array($notificacion->mensaje_notif, $notificacionesUnicas)&&
-                !in_array($notificacion->titulo_notif, $notificacionesUnicas)) {
-                $notificacionesUnicas[] = $notificacion->mensaje_notif;
+            $existe = false;
+            foreach ($notificacionesUnicas as $unica) {
+                if ($unica->titulo_notif === $notificacion->titulo_notif && $unica->mensaje_notif === $notificacion->mensaje_notif) {
+                    $existe = true;
+                    break;
+                }
+            }
+            if (!$existe) {
+                $idAuxiliar = $notificacion->idreceptor;
+                $notificacion->receptor_notif = "Personal";
+                if(Cliente::find($idAuxiliar)){
+                    $notificacion->receptor_notif = "Cliente";
+                }
+                $notificacionesUnicas[] = $notificacion;
             }
         }
-        if( $notificacionesUnicas->isEmpty()){
+        if (count($notificacionesUnicas) === 0) {
             return response()->json(['message' => 'No se encontraron notificaciones'], 404);
         } else {
             return response()->json(json_encode($notificacionesUnicas));

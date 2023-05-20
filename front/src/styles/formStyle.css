@@ -81,6 +81,10 @@
     font-family: 'Poppins', sans-serif;
   }
 
+  .myLabel{
+    font-family: 'Poppins', sans-serif;
+  }
+
   .bigInput {
     background-color: transparent;
     height: fit-content;
