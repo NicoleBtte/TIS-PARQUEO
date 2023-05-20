@@ -1,8 +1,7 @@
 .accionesCeldaTurno{
     padding: 8px;
     border: 1px solid #D4DAE1;
-    text-align:justify;
-    justify-content: space-between;
+    text-align:center;
 }
 
 .azulBotonTurno {
@@ -30,13 +29,13 @@
     border-radius: 20px !important;
     background-color: #ff8800 !important;
     border-color: transparent !important;
-    width: 60% !important;
+    width: 30% !important;
   }
   .rojoBotonTurno {
     border-radius: 20px !important;
     background-color: #ff1a00 !important;
     border-color: transparent !important;
-    width: 16%;
+    width: 35%;
   }
   .grisBotonTurno {
     border-radius: 20px !important;

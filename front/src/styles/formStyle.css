@@ -93,4 +93,15 @@
   .destinatarioText {
     font-family: 'Poppins', sans-serif;
   }
+
+  .horaInput {
+    width: 22% !important;
+  }
+
+  .bigestContainerTurno {
+    flex-direction: column;
+    justify-content: center; /* Alinea el formulario al centro horizontal */
+    padding-top: 2%;
+    height: 100vh;
+  }
   

@@ -30,13 +30,13 @@ const TurnoEdit = () => {
 
 
     const diasOptions = [
-        { value: 'lunes', label: 'Lunes' },
-        { value: 'martes', label: 'Martes' },
-        { value: 'miercoles', label: 'Miércoles' },
-        { value: 'jueves', label: 'Jueves' },
-        { value: 'viernes', label: 'Viernes' },
-        { value: 'sabado', label: 'Sábado' },
-        { value: 'domingo', label: 'Domingo' },
+        { value: 'Lunes', label: 'Lunes' },
+        { value: 'Martes', label: 'Martes' },
+        { value: 'Miercoles', label: 'Miércoles' },
+        { value: 'Jueves', label: 'Jueves' },
+        { value: 'Viernes', label: 'Viernes' },
+        { value: 'Sabado', label: 'Sábado' },
+        { value: 'Domingo', label: 'Domingo' },
     ];
 
     const makeString = (lista) => {
@@ -150,7 +150,8 @@ const TurnoEdit = () => {
       
 
     return (
-        <div className="formContainer">
+      <div className='bigestContainerTurno'>
+                <div className="formContainer">
         <h4>Editar turno</h4>
         <form className="formulario" onSubmit={handleSubmit}>
             <div className="myform-group">
@@ -171,6 +172,7 @@ const TurnoEdit = () => {
                 type="time"
                 id="horaInicio"
                 name="horaInicio"
+                className = "horaInput"
                 value={turno.horaInicio}
                 onChange={handleChange}
                 required
@@ -184,6 +186,7 @@ const TurnoEdit = () => {
                 type="time"
                 id="horaFin"
                 name="horaFin"
+                className = "horaInput"
                 value={turno.horaFin}
                 onChange={handleChange}
                 required
@@ -212,6 +215,7 @@ const TurnoEdit = () => {
             </div>
         </form>
         </div>
+      </div>
     )
 }
 

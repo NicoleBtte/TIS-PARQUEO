@@ -80,7 +80,7 @@ const TurnosTable = () => {
                     <td className='accionesCeldaTurno'>
                         <Button as={Link} to={"/admin/turnoEdit/id/"+turno.idturno+'/t/'+turno.nombre_turno+'/hi/'+turno.hora_inicio_turno+'/hf/'+turno.hora_fin_turno+'/d/'+turno.dia_turno}className='naranjaBotonTurno'> Editar </Button>
                         &nbsp;
-                        <Button onClick={ev => onDelete(turno)} className="rojoBotonU">Eliminar</Button>
+                        <Button onClick={ev => onDelete(turno)} className="rojoBotonTurno">Eliminar</Button>
                     </td>
                     </tr>
                 ))}
