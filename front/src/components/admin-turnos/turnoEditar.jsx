@@ -1,7 +1,7 @@
 import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import {Link, useParams, useNavigate} from "react-router-dom";
 import axiosCliente from '../../axios-client';
 
 const TurnoEdit = () => {
@@ -12,25 +12,21 @@ const TurnoEdit = () => {
         horaFin: "",
         dias: []
     });
+    const [error, setError] = useState({ nombre: '', horaInicio: '', horaFin: ''});
+    const { id, t, hi, hf, d } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
-        getTurno();
-      }, []);
-
-    const elturno = {
-        "id": 1,
-        "nombre": "Turno 1",
-        "horaInicio": "09:00",
-        "horaFin": "17:00",
-        "dias": ["lunes", "martes", "jueves"]
-    }
+        const elturno = {
+            "id": id,
+            "nombre": t,
+            "horaInicio": hi,
+            "horaFin": hf,
+            "dias": d.split('-')
+          };
       
-
-    const getTurno = () => {
-        setTurno(elturno);
-        console.log(turno)
-    }
+          setTurno(elturno);
+      }, []);
 
 
     const diasOptions = [
@@ -43,27 +39,33 @@ const TurnoEdit = () => {
         { value: 'domingo', label: 'Domingo' },
     ];
 
-    const isDiaSeleccionado = (dia) => {
-        return turno.dias.includes(dia);
-    };
+    const makeString = (lista) => {
+        const cadena = lista.join('-');
+        return cadena;
+      }
 
-    const guardar = async (values) => {
-        /*if(selectedOption===''){
-        alert('Por favor seleccione una opción');
-        return;
-        }*/
-        console.log(values);
+    const guardar = (turno) => {
+        if(error.nombre || error.horaFin || error.horaInicio){
+          alert('Los datos no son validos');
+          return;
+        }else if(turno.nombre==="" || turno.horaInicio==="" || turno.horaFin==="" || turno.dias.length === 0){
+          alert('Por favor complete los campos vacios');
+          return;
+        }
+        console.log('el estado del turno es',turno);
+        const diasString = makeString(turno.dias);
         const payload = {
-            nombre_turno: values.nombre,
-            hora_inicio_turno: values.horaInicio,
-            hora_fin_turno: values.horaFin,
-            dia_turno: values.dias,
+            idturno: turno.id,
+            nombret: turno.nombre,
+            horaini: turno.horaInicio,
+            horafin: turno.horaFin,
+            diastur: diasString,
         }
 
-        /*axiosCliente.post('/crearOperador', payload)
+        axiosCliente.post('/actualizarTurno', payload)
             .then(({data}) => {    
             //que hacer despues      
-            console.log(data)
+            //console.log(data)
             })
             .catch(err => {
             const response = err.response;
@@ -71,66 +73,144 @@ const TurnoEdit = () => {
             if (response && response.status === 422) {
                 console.log(response.data.errors)
             }
-            })*/
+        })
     
         navigate('/admin/turnos');
     };
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        // Validar el campo nombre
+        if (name === 'nombre') {
+          if (!value || /^\s+$/.test(value)) {
+            setError((prevError) => ({ ...prevError, nombre: 'El campo nombre no puede estar vacío' }));
+            //setError('');
+          } else if (!/^[a-zA-Z\s]+$/.test(value)) {
+            setError((prevError) => ({ ...prevError, nombre: 'El formato del nombre no es válido' }));
+          } else {
+            setError((prevError) => ({ ...prevError, nombre: '' }));
+            //setError('');
+          }
+        }
+
+        // Validar el campo horaFin
+        if (name === 'horaFin') {
+          const horaInicioValue = turno.horaInicio;
+          if (horaInicioValue && value && value < horaInicioValue) {
+            setError((prevError) => ({ ...prevError, horaFin: 'La hora de finalización no puede ser anterior a la hora de inicio' }));
+          }else if (horaInicioValue === value) {
+            setError((prevError) => ({ ...prevError, horaFin: 'La hora de inicio y la hora de fin no pueden ser iguales' }));
+          }else {
+            setError((prevError) => ({ ...prevError, horaFin: '' }));
+          }
+        }
+
+        // Validar el campo horaInicio
+        if (name === 'horaInicio') {
+          const horaFinValue = turno.horaFin;
+          if (horaFinValue && value && value > horaFinValue) {
+            setError((prevError) => ({ ...prevError, horaInicio: 'La hora de inicio no puede ser posterior a la hora de finalización' }));
+          }else if (horaFinValue === value) {
+            setError((prevError) => ({ ...prevError, horaFin: 'La hora de inicio y la hora de fin no pueden ser iguales' }));
+          }else {
+            setError((prevError) => ({ ...prevError, horaInicio: '' }));
+          }
+        }
+
+        setTurno((prevturno) => ({
+          ...prevturno,
+          [name]: value
+        }));
+    };
+
+    const handleCheckboxChange = (e) => {
+        const { name, value, checked } = e.target;
+        setTurno((prevTurno) => {
+          if (checked) {
+            return {
+              ...prevTurno,
+              dias: [...prevTurno.dias, value]
+            };
+          } else {
+            return {
+              ...prevTurno,
+              dias: prevTurno.dias.filter((dia) => dia !== value)
+            };
+          }
+        });
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        console.log(turno);
+        guardar(turno);
+      };
+      
+
     return (
         <div className="formContainer">
         <h4>Crear turno</h4>
-        <Formik
-            initialValues={{ nombre: turno.nombre, ...turno }}
-            validate={(values) => {
-                let errors = {};
-
-            // Validacion nombre
-            if (!values.nombre) {
-            errors.nombre = "Por favor ingrese un nombre";
-            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,100}$/.test(values.nombre)) {
-            errors.nombre = "El nombre solo puede contener letras y espacios";
-            }
-            return errors;
-        }}
-        onSubmit={guardar}
-        >
-        {({ errors, touched }) => (
-            <Form className="formulario">        
+        <form className="formulario" onSubmit={handleSubmit}>
             <div className="myform-group">
                 <label htmlFor="nombre">Nombre:</label>
-                <Field type="text" id="nombre" name="nombre" />
-                <ErrorMessage
-                name="nombre"
-                component={() => <div className="error">{errors.nombre}</div>}
+                <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    value={turno.nombre}
+                    onChange={handleChange}
                 />
+              {error.nombre && <div className="error">{error.nombre}</div>}
             </div>
 
-            <label htmlFor="horaInicio">Hora de inicio:</label>
-            <Field type="time" id="horaInicio" name="horaInicio" required />
+            <div className="myform-group">
+                <label htmlFor="horaInicio">Hora de inicio:</label>
+                <input
+                type="time"
+                id="horaInicio"
+                name="horaInicio"
+                value={turno.horaInicio}
+                onChange={handleChange}
+                required
+                />
+                {error.horaInicio && <div className="error">{error.horaInicio}</div>}
+            </div>
 
-            <label htmlFor="horaFin">Hora de fin:</label>
-            <Field type="time" id="horaFin" name="horaFin" required />
+            <div className="myform-group">
+                <label htmlFor="horaFin">Hora de fin:</label>
+                <input
+                type="time"
+                id="horaFin"
+                name="horaFin"
+                value={turno.horaFin}
+                onChange={handleChange}
+                required
+                />
+                {error.horaFin && <div className="error">{error.horaFin}</div>}
+            </div>
 
-            <label>Días:</label>
-            {diasOptions.map((option) => (
+            <div className="myform-group">
+                <label>Días:</label>
+                {diasOptions.map((option) => (
                 <div key={option.value}>
-                <Field
-                    type="checkbox"
-                    id={option.value}
-                    name="dias"
-                    value={option.value}
-                    checked={isDiaSeleccionado(option.value)}
-                />
-                <label htmlFor={option.value}>{option.label}</label>
+                    <input
+                        type="checkbox"
+                        id={option.value}
+                        name="dias"
+                        value={option.value}
+                        checked={turno.dias.includes(option.value)}
+                        onChange={handleCheckboxChange}
+                    />
+                    <label htmlFor={option.value}>{option.label}</label>
                 </div>
-                ))}
-
-            <div className="boton-container">
-                <button type="submit">Guardar</button>
+            ))}
             </div>
-            </Form>
-        )}
-        </Formik>
+            <div className="boton-container">
+            <button type="submit">Guardar</button>
+            </div>
+        </form>
         </div>
     )
 }

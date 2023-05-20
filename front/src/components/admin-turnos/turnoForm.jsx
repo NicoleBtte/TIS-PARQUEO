@@ -18,23 +18,29 @@ const TurnoForm = () => {
     { value: 'domingo', label: 'Domingo' },
   ];
 
+  const makeString = (lista) => {
+    const cadena = lista.join('-');
+    return cadena;
+  }
+
   const guardar = async (values) => {
     /*if(selectedOption===''){
       alert('Por favor seleccione una opción');
       return;
     }*/
     console.log(values);
+    const diasString = makeString(values.dias);
+
     const payload = {
-      nombre_turno: values.nombre,
-      hora_inicio_turno: values.horaInicio,
-      hora_fin_turno: values.horaFin,
-      dia_turno: values.dias,
+      nombret: values.nombre,
+      horaini: values.horaInicio,
+      horafin: values.horaFin,
+      dias: diasString,
     }
 
-    /*axiosCliente.post('/crearOperador', payload)
-        .then(({data}) => {    
-          //que hacer despues      
-          console.log(data)
+    axiosCliente.post('/registroTurno', payload)
+        .then(({}) => {    
+
         })
         .catch(err => {
           const response = err.response;
@@ -42,7 +48,7 @@ const TurnoForm = () => {
           if (response && response.status === 422) {
             console.log(response.data.errors)
           }
-          })*/
+          })
   
     navigate('/admin/turnos');
   };

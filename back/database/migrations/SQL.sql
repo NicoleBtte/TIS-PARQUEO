@@ -233,7 +233,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`turno` (
   `idturno` INT NOT NULL AUTO_INCREMENT,
-  `dia_turno` VARCHAR(9) NOT NULL,
+  `dia_turno` VARCHAR(60) NOT NULL,
   `hora_inicio_turno` TIME NOT NULL,
   `hora_fin_turno` TIME NOT NULL,
   `nombre_turno` VARCHAR(15) NOT NULL,

@@ -6,37 +6,19 @@ import axiosCliente from '../../axios-client';
 const GuardiasTable = () => {
     const [filas, setFilas] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [filasAdicionales, setFilasAdicionales] = useState([]);
+    const texto = 'Sin asignar';
 
     useEffect(() => {
         getFilas();
+        getFilasAdicionales();
       }, [])
-
-    const guardiasTurnos = [
-          {
-            "id": 1,
-            "nombre": "Juan Pérez",
-            "turno": "mañana"
-          },
-          {
-            "id": 2,
-            "nombre": "María López",
-            "turno": "tarde"
-          },
-          {
-            "id": 3,
-            "nombre": "Carlos García",
-            "turno": "noche"
-          }
-        ]
-      
 
     const getFilas = () => {
         setLoading(true);
-        setFilas(guardiasTurnos);
-        setLoading(false);
-
-        /*
-        axiosCliente.get('/consultaClienteSitio')
+        //setFilas(guardiasTurnos);
+        //setLoading(false);
+        axiosCliente.get('/listaGuardiasconturno')
           .then(({ data }) => {
             console.log(data)
             setLoading(false)
@@ -44,7 +26,22 @@ const GuardiasTable = () => {
           })
           .catch(() => {
             setLoading(false)
-          })*/
+          })
+    }
+
+    const getFilasAdicionales = () => {
+      setLoading(true);
+      //setFilas(guardiasTurnos);
+      //setLoading(false);
+      axiosCliente.get('/listaGuardiassinturno')
+        .then(({ data }) => {
+          console.log(data)
+          setLoading(false)
+          setFilasAdicionales(JSON.parse(data))
+        })
+        .catch(() => {
+          setLoading(false)
+        })
     }
 
     
@@ -69,16 +66,27 @@ const GuardiasTable = () => {
         {!loading &&
           <tbody>
           {filas.map(u => (
-            <tr className='misFilas' key={u.id}>
-              <td className='miTd'>{u.nombre}</td>
-              <td className='miTd'>{u.turno}</td>
+            <tr className='misFilas' key={u.idguardia}>
+              <td className='miTd'>{u.nombre_guardia}</td>
+              <td className='miTd'>{u.nombre_turno+" "+u.dia_turno+" "+u.hora_inicio_turno+" "+u.hora_fin_turno}</td>
               <td className='miTd'>
-                <Button className='naranjaBoton' as={Link} to={'/admin/asigTurno'}>
+                <Button className='naranjaBoton' as={Link} to={'/admin/asigTurno/id/'+u.idguardia+'/t/'+u.nombre_turno+'/hi/'+u.hora_inicio_turno+'/hf/'+u.hora_fin_turno+'/d/'+u.dia_turno}>
                   Editar
                 </Button>
               </td>
             </tr>
           ))}
+          {filasAdicionales.map(u => (
+            <tr className='misFilas' key={u.idguardia}>
+              <td className='miTd'>{u.nombre_guardia}</td>
+              <td className='miTd'>{texto}</td>
+              <td className='miTd'>
+                <Button className='naranjaBoton' as={Link} to={'/admin/asigTurno/id/'+u.idguardia+'/t/'+texto+'/hi/'+texto+'/hf/'+texto+'/d/'+texto}>
+                  Editar
+                </Button>
+              </td>
+              </tr>
+            ))}
           </tbody>
         }
       </Table>

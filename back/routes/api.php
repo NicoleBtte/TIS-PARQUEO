@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EntradasSalidasController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\GuardiaController;
+use App\Http\Controllers\TurnoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -122,3 +123,15 @@ Route::delete('/deleteGuardia', [GuardiaController::class, 'eliminarGuardia']);
 Route::post('/dejarSinSitio',[SitioController::class,'dejarSinSitio']);
 Route::get('/consultaClienteSinSitio',[SitioController::class, 'listaClienteSinSitio']);
 Route::post('/asignarManual',[SitioController::class, 'asignarManual']);
+
+//Turnos
+Route::get('/listaGuardiasconturno', [TurnoController::class, 'listaGuardias']);
+Route::get('/listaGuardiassinturno', [TurnoController::class, 'listaGuardiasSinturno']);
+Route::get('/listaTurnosTodos', [TurnoController::class, 'listaTurnosTodos']);
+Route::get('/listaTurnosSinGuardia', [TurnoController::class, 'listaTurnosSinGuardia']);
+Route::post('/asignarTurno', [TurnoController::class, 'asignarTurno']);
+Route::post('/reasignarTurno', [TurnoController::class, 'reasignarTurno']);
+Route::post('/actualizarTurno', [TurnoController::class, 'actualizarTurno']);
+Route::delete('/eliminarTurno', [TurnoController::class, 'eliminarTurno']);
+Route::post('/dejarSinTurno', [TurnoController::class, 'dejarSinTurno']);
+Route::post('/registroTurno', [TurnoController::class, 'registroTurnos']);

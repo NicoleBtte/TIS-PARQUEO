@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Table } from "react-bootstrap";
 import {Link} from "react-router-dom";
+import axiosCliente from '../../axios-client';
 
 const TurnosTable = () => {
     const [filas, setFilas] = useState([]);
+    const [filasAdicionales, setFilasAdicionales] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -18,54 +20,34 @@ const TurnosTable = () => {
             "hora_fin_turno": "5:17",
             "dia_turno": "eight-four-five-one-nine-six-ten"
         },
-        {
-            "idturno": 2,
-            "nombre_turno": "Turno 2",
-            "hora_inicio_turno": "7:57",
-            "hora_fin_turno": "12:50",
-            "dia_turno": "six-three-ten-five-one-four-nine"
-        },
-        {
-            "idturno": 3,
-            "nombre_turno": "Turno 3",
-            "hora_inicio_turno": "1:21",
-            "hora_fin_turno": "20:00",
-            "dia_turno": "seven-five-six-two-one-three-four"
-        },
-        {
-            "idturno": 4,
-            "nombre_turno": "Turno 4",
-            "hora_inicio_turno": "13:03",
-            "hora_fin_turno": "23:25",
-            "dia_turno": "six-three-eight-one-five-two-four"
-        },
-        {
-            "idturno": 5,
-            "nombre_turno": "Turno 5",
-            "hora_inicio_turno": "13:57",
-            "hora_fin_turno": "10:22",
-            "dia_turno": "ten-five-one-eight-four-nine-seven"
-        }
     ];
 
     const getFilas = () => {
         setLoading(true);
-        setFilas(turnos);
-        setLoading(false);
+        axiosCliente.get('/listaTurnosTodos')
+        .then(({ data }) => {
+          console.log(data)
+          setFilas(JSON.parse(data))
+          setLoading(false)
+        })
+        .catch(() => {
+          setLoading(false)
+        })
+
     }
 
     const onDelete = turno => {
         console.log('Se borro el turno', turno.idturno)
-        /*const payload = {
+        const payload = {
           "idturno": turno.idturno
         }
         if (!window.confirm("Esta seguro de eliminar este turno?")) {
           return
         }
-        axiosCliente.delete('/deleteTurno',{ params: payload })
+        axiosCliente.delete('/eliminarTurno',{ params: payload })
           .then(() => {
             getFilas()
-          })*/
+          })
     }
 
   return (
@@ -96,7 +78,7 @@ const TurnosTable = () => {
                     <td className='miTd'>{turno.hora_fin_turno}</td>
                     <td className='miTd'>{turno.dia_turno}</td>
                     <td className='miTd'>
-                        <Button as={Link} to="/admin/turnoEdit" className='celesteBoton'> Editar </Button>
+                        <Button as={Link} to={"/admin/turnoEdit/id/"+turno.idturno+'/t/'+turno.nombre_turno+'/hi/'+turno.hora_inicio_turno+'/hf/'+turno.hora_fin_turno+'/d/'+turno.dia_turno}className='celesteBoton'> Editar </Button>
                         <Button onClick={ev => onDelete(turno)} className="rojoBotonU">Eliminar</Button>
                     </td>
                     </tr>
