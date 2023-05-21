@@ -104,7 +104,7 @@ function App() {
               <Route path="/admin/turnoForm" element={<TurnoForm />}/>
               <Route path="/admin/turnoEdit/id/:id/t/:t/hi/:hi/hf/:hf/d/:d" element={<TurnoEdit />}/>
               <Route path="/admin/guardiasTurnos" element={<GuardiaTurnos />}/>
-              <Route path="/admin/asigTurno/id/:id/t/:t/hi/:hi/hf/:hf/d/:d" element={<AsignarTurno />}/>
+              <Route path="/admin/asigTurno/id/:id/t/:t" element={<AsignarTurno />}/>
               <Route path="/admin/mensajes" element={<AdminMensajes />}/>
               <Route path="/admin/redactar" element={<RedactarAdmin />}/>
             </Route>

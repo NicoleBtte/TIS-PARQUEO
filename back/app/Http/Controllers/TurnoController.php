@@ -36,7 +36,7 @@ public function asignarTurno(Request $request){
     */
     $arregloguardias=DB::table('turno')
     ->whereNotNull('guardia_idguardia')
-    ->join('guardia', 'turno.guardia_idguardia', '=', 'guardia_idguardia')
+    ->join('guardia', 'turno.guardia_idguardia', '=', 'guardia.idguardia')
     ->select('guardia.idguardia','guardia.nombre_guardia', 'turno.nombre_turno', 'turno.dia_turno','turno.hora_inicio_turno', 'turno.hora_fin_turno')
                 ->get();
 
@@ -112,5 +112,15 @@ public function asignarTurno(Request $request){
       DB::table('turno')->where('guardia_idguardia',$request->idguardia)->update(['guardia_idguardia'=>null]);
       return response()->json(json_encode('Se ha dejado sin turno al guardia'));
     }
+
+    public function listaTurnosDelGuardia(Request $request){
+        $idg = $request -> idguardia;
+        $arregloturnosin=DB::table('turno')
+        ->where('guardia_idguardia',$idg)
+        ->select('idturno','nombre_turno','hora_inicio_turno', 'hora_fin_turno','dia_turno')
+                    ->get();
+    
+        return response()->json(json_encode($arregloturnosin));    
+      }
 
 }

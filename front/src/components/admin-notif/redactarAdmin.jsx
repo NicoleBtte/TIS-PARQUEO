@@ -89,7 +89,7 @@ const RedactarAdmin = () => {
                   <div>
                     <label className="speciallabel" htmlFor="rol" >Mandar a:</label>
                       <select className="combobox" name="rol" id="rol" value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
-                        <option value="clientes">Cliente</option>
+                        <option value="clientes">Clientes</option>
                         <option value="personal">Personal</option>
                       </select>
                   </div>

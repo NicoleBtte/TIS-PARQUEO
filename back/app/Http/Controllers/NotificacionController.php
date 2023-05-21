@@ -35,7 +35,7 @@ class NotificacionController extends Controller
                 $idAuxiliar = $notificacion->idreceptor;
                 $notificacion->receptor_notif = "Personal";
                 if(Cliente::find($idAuxiliar)){
-                    $notificacion->receptor_notif = "Cliente";
+                    $notificacion->receptor_notif = "Clientes";
                 }
                 $notificacionesUnicas[] = $notificacion;
             }

@@ -6,52 +6,30 @@ import CardInfoTurno from './cardInfoTurno';
 
 const AsignarTurno = () => {
   const [filas, setFilas] = useState([]);
+  //const [filasAdicionales, setFilasAdicionales] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
-  const { id, t, hi, hf, d } = useParams();
+  const { id, t } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
+      //getFilasAdicionales();
       getFilas();
     }, []);
 
-  const turnos = [
-      {
-          "idturno": 1,
-          "nombre_turno": "Turno 1",
-          "hora_inicio_turno": "15:27",
-          "hora_fin_turno": "5:17",
-          "dia_turno": "eight-four-five-one-nine-six-ten"
-      },
-      {
-          "idturno": 2,
-          "nombre_turno": "Turno 2",
-          "hora_inicio_turno": "7:57",
-          "hora_fin_turno": "12:50",
-          "dia_turno": "six-three-ten-five-one-four-nine"
-      },
-      {
-          "idturno": 3,
-          "nombre_turno": "Turno 3",
-          "hora_inicio_turno": "1:21",
-          "hora_fin_turno": "20:00",
-          "dia_turno": "seven-five-six-two-one-three-four"
-      },
-      {
-          "idturno": 4,
-          "nombre_turno": "Turno 4",
-          "hora_inicio_turno": "13:03",
-          "hora_fin_turno": "23:25",
-          "dia_turno": "six-three-eight-one-five-two-four"
-      },
-      {
-          "idturno": 5,
-          "nombre_turno": "Turno 5",
-          "hora_inicio_turno": "13:57",
-          "hora_fin_turno": "10:22",
-          "dia_turno": "ten-five-one-eight-four-nine-seven"
-      }
-  ];
+    /*const getFilasAdicionales = () => {
+      setLoading(true);
+
+      axiosCliente.get('/listaTurnosDelGuardia')
+      .then(({ data }) => {
+        console.log(data)
+        setLoading(false)
+        setFilasAdicionales(JSON.parse(data))
+      })
+      .catch(() => {
+        setLoading(false)
+      })
+    }*/
 
   const getFilas = () => {
       setLoading(true);
@@ -107,13 +85,7 @@ const AsignarTurno = () => {
   
 
 return (
-  <>
-    <CardInfoTurno
-        turno = {t}
-        inicio = {hi}
-        fin = {hf}
-        dias = {d}
-    />    
+  <>   
     <div className='tablePageContainer'>
         <div className='titleBottonContainer'>
             <h4>Horarios disponibles</h4>
