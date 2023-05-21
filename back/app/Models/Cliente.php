@@ -47,4 +47,10 @@ class Cliente extends Authenticatable
         
         return new PersonalAccessTokenResult($token->token, $token->token->id, $token->accessToken);
     }*/
+
+    public function transacciones()
+    {
+        return $this->hasMany(Pago::class, 'cliente_idcliente');
+    }
+
 }

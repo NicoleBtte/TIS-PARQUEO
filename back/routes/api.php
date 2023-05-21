@@ -11,6 +11,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EntradasSalidasController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\GuardiaController;
+use App\Http\Controllers\ReportePagosController;
+use App\Http\Controllers\GestionDeudasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -69,6 +71,10 @@ Route::post('/updatePago', [PagoController::class, 'updatePago']);
 Route::get('/updatePago', function(){
     return view('updatePago');
 });
+Route::post('/reportePagos', [ReportePagosController::class, 'reportePagos']);
+Route::post('/guardarReportePagos', [ReportePagosController::class, 'guardarReportePagos']);
+Route::get('/totalIngresos',[ReportePagosController::class, 'totalIngresos']);
+
 Route::delete('/eliminarPago', [PagoController::class, 'eliminarPago']);
 Route::get('/consultaEstadoClientes', [PagoController::class, 'consultaEstadoClientes']);
 Route::post('/consultaComprobante', [PagoController::class, 'consultaComprobante']);
@@ -122,3 +128,6 @@ Route::delete('/deleteGuardia', [GuardiaController::class, 'eliminarGuardia']);
 Route::post('/dejarSinSitio',[SitioController::class,'dejarSinSitio']);
 Route::get('/consultaClienteSinSitio',[SitioController::class, 'listaClienteSinSitio']);
 Route::post('/asignarManual',[SitioController::class, 'asignarManual']);
+
+
+Route::get('/calcularDeudas',[GestionDeudasController::class, 'calcularDeudas']);
