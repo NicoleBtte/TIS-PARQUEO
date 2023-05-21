@@ -19,6 +19,26 @@ const PagosCliente = () => {
       .catch((error) => console.log("error", error));
   }, []);
 
+  const calcularDeudas = () => {
+    axiosClient
+      .post(`/calcularDeudas`)
+      .then((response) => {
+        // Actualizar el estado de las deudas de los clientes en el frontend
+        const updatedClientes = clientes.map((cliente) => {
+          const clienteActualizado = response.data.find(
+            (clienteActualizado) =>
+              clienteActualizado.idcliente === cliente.idcliente
+          );
+          return {
+            ...cliente,
+            deuda: clienteActualizado.deuda, // Reemplazar con la propiedad adecuada de la respuesta del backend
+          };
+        });
+        setClientes(updatedClientes);
+      })
+      .catch((error) => console.log("error", error));
+  };
+
   return (
     <div className="container">
       <div className="d-flex-between my-4">
@@ -31,6 +51,11 @@ const PagosCliente = () => {
             Agregar Pago
           </Link>
         </div>
+      </div>
+      <div>
+        <button className="btn btn-primary" onClick={calcularDeudas}>
+          Calcular Deudas
+        </button>
       </div>
       <div>
         <table className="mytable w-100">

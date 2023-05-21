@@ -205,3 +205,9 @@ body {
   display: flex;
   flex-direction: row;
 }
+
+.center-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Ajusta el margen superior según tus necesidades */
+}
