@@ -39,14 +39,22 @@ class GestionDeudas extends Command
     public function handle()
     {
         $convocatoria=DB::table('convocatoria')->orderBy('idConvocatoria', 'desc')->first();
-        if($convocatoria->estado_convocatoria == 0){
+        $fechaActual=date('Y-m-d');
+        if(($convocatoria->fecha_pago < $fechaActual) && ($fechaActual < $convocatoria->fecha_fin_gestion)){
             $msg='Los clientes: ';
             $clientes=Cliente::all();
             $pagoMes=$convocatoria->pago_mensual;
             foreach($clientes as $cliente){
-                $deuda=$cliente->monto_a_pagar;
-                $nombre=$cliente->nombre_cliente;
-                $cliente->monto_a_pagar=$deuda+$pagoMes;
+                if($cliente->mesAdelantado>0){
+                    $cliente->mesAdelantado=$cliente->mesAdelantado-1; 
+                }else{
+                    if($cliente->monto_a_pagar>0){
+                        $cliente->multa=$cliente->multa+$convocatoria->multa_mensual;
+                    }
+                    $cliente->monto_a_pagar=$cliente->monto_a_pagar+$convocatoria->pago_mensual;
+                    $cliente->saldo=$cliente->saldo-$convocatoria->pago_mensual;
+                    $cliente->fecha_lim_pago=date('Y-m-d', strtotime($cliente->fecha_lim_pago . ' +1 month'));
+                }
                 $cliente->save();
                 $msg=$msg.', '.$nombre;
             }
