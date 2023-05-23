@@ -2,17 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Button, Table } from "react-bootstrap";
 import {Link, useParams} from "react-router-dom";
 import App from '../../App';
-import MensajeModal from './mensajeModal';
+import MensajeModal from '../cliente-mensajes/mensajeModal';
 import axiosCliente from '../../axios-client';
 import '../../styles/tableStyle.css'
 
-const MensajesEnviados = () => {
+const GlobalesEnviados = () => {
     const [filas, setFilas] = useState([]);
     const [loading, setLoading] = useState(false);
     const [mensajeSeleccionado, setMensajeSeleccionado] = useState(null);
     const [modalShow, setModalShow] = useState(false);
     const idUsuario = localStorage.getItem('ID_USER');
-    const theRol = localStorage.getItem('ROL');
   
     useEffect(() => {
       getFilas();
@@ -20,15 +19,11 @@ const MensajesEnviados = () => {
 
   
     const getFilas = () => {
-      let apiruta = '/notificacionesEnvia';
-      if(theRol==='admin'){
-        apiruta = '/notificacionesEnviaAdmin';
-      }
       const payload ={
         id: idUsuario
       }
       setLoading(true)
-      axiosCliente.get(apiruta, { params: payload })
+      axiosCliente.get('/notificacionesEnviaAdmin', { params: payload })
         .then(({ data }) => {
           setLoading(false)
           setFilas(JSON.parse(data))
@@ -107,4 +102,4 @@ const MensajesEnviados = () => {
   };
   
   
-  export default MensajesEnviados;
+  export default GlobalesEnviados;

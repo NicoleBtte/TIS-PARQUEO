@@ -13,6 +13,7 @@ use App\Http\Controllers\PagoController;
 use App\Http\Controllers\GuardiaController;
 use App\Http\Controllers\ReportePagosController;
 use App\Http\Controllers\GestionDeudasController;
+use App\Http\Controllers\TurnoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -113,6 +114,9 @@ Route::post('/notificaciones',[NotificacionController::class, 'store']);
 Route::post('/notificacionesResp',[NotificacionController::class, 'storeRespuesta']);
 Route::get('/notificacionesEnvia',[NotificacionController::class, 'indexSent']);
 Route::get('/notificacionesRecibe',[NotificacionController::class, 'indexReceived']);
+Route::post('/notificacionAnuncioClientes',[NotificacionController::class, 'anuncioClientes']);
+Route::post('/notificacionAnuncioPersonal',[NotificacionController::class, 'anuncioPersonal']);
+Route::get('/notificacionesEnviaAdmin',[NotificacionController::class, 'notifEnviadosAdmin']);
 
 Route::get('/miSitio',[SitioController::class,'obtenerMiSitio']);
 
@@ -131,3 +135,16 @@ Route::post('/asignarManual',[SitioController::class, 'asignarManual']);
 
 
 Route::get('/calcularDeudas',[GestionDeudasController::class, 'calcularDeudas']);
+//Turnos
+Route::get('/listaGuardiasconturno', [TurnoController::class, 'listaGuardias']);
+Route::get('/listaGuardiassinturno', [TurnoController::class, 'listaGuardiasSinturno']);
+Route::get('/listaTurnosTodos', [TurnoController::class, 'listaTurnosTodos']);
+Route::get('/listaTurnosSinGuardia', [TurnoController::class, 'listaTurnosSinGuardia']);
+Route::post('/asignarTurno', [TurnoController::class, 'asignarTurno']);
+Route::post('/reasignarTurno', [TurnoController::class, 'reasignarTurno']);
+Route::post('/actualizarTurno', [TurnoController::class, 'actualizarTurno']);
+Route::delete('/eliminarTurno', [TurnoController::class, 'eliminarTurno']);
+Route::post('/dejarSinTurno', [TurnoController::class, 'dejarSinTurno']);
+Route::post('/registroTurno', [TurnoController::class, 'registroTurnos']);
+Route::get('/listaTurnosDelGuardia', [TurnoController::class, 'listaTurnosDelGuardia']);
+Route::get('/verificarTurno', [TurnoController::class,'verificar']);

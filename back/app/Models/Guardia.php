@@ -26,4 +26,8 @@ class Guardia extends Authenticatable
     public function getAuthPassword(){
         return $this->pass_guardia;
     }
+    public function turnos()
+    {
+        return $this->belongsToMany(Turno::class, 'turno_has_guardia', 'guardia_idguardia','turno_idturno');
+    }
 }

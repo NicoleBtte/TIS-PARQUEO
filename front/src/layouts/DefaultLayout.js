@@ -65,6 +65,14 @@ const DefaultLayout = () => {
           <Nav.Link as={Link} to="/admin/asignacion">
             Asignar sitio
           </Nav.Link>
+          <NavDropdown title="Asignar turno" className="navDrop">
+              <NavDropdown.Item className="navDrop" as={Link} to="/admin/turnos">Turnos</NavDropdown.Item>
+              <NavDropdown.Item className="navDrop" as={Link} to="/admin/guardiasTurnos">Guardias</NavDropdown.Item>
+          </NavDropdown>
+          <NavDropdown title="Notificaciones" className="navDrop">
+              <NavDropdown.Item className="navDrop" as={Link} to="/admin/redactar">Redactar</NavDropdown.Item>
+              <NavDropdown.Item className="navDrop" as={Link} to="/admin/mensajes">Mensajes</NavDropdown.Item>
+          </NavDropdown>
           <NavDropdown title="Usuarios" className="navDrop">
               <NavDropdown.Item className="navDrop" as={Link} to="/admin/operadores">Operadores</NavDropdown.Item>
               <NavDropdown.Item className="navDrop" as={Link} to="/admin/guardias">Guardias</NavDropdown.Item>

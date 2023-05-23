@@ -36,6 +36,13 @@ import MensajesEnviadosPage from "./components/cliente-mensajes/historialEnviado
 import PagoEditar from "./components/pagoEditar";
 import Clientes from "./components/guardia-clientes/clientes";
 import PagosReportePage from "./components/pagosReportePage";
+import TurnosPage from "./components/admin-turnos/turnosPage";
+import GuardiaTurnos from "./components/admin-turnos/guardiaTurnos";
+import TurnoForm from "./components/admin-turnos/turnoForm";
+import TurnoEdit from "./components/admin-turnos/turnoEditar";
+import AsignarTurno from "./components/admin-turnos/asignarTurno";
+import RedactarAdmin from "./components/admin-notif/redactarAdmin";
+import AdminMensajes from "./components/admin-notif/adminMensajes";
 
 function App() {
   return (
@@ -94,6 +101,13 @@ function App() {
                 path="/admin/guardias/new"
                 element={<FormularioGuardia />}
               />
+              <Route path="/admin/turnos" element={<TurnosPage />}/>
+              <Route path="/admin/turnoForm" element={<TurnoForm />}/>
+              <Route path="/admin/turnoEdit/id/:id/t/:t/hi/:hi/hf/:hf/d/:d" element={<TurnoEdit />}/>
+              <Route path="/admin/guardiasTurnos" element={<GuardiaTurnos />}/>
+              <Route path="/admin/asigTurno/id/:id/t/:t" element={<AsignarTurno />}/>
+              <Route path="/admin/mensajes" element={<AdminMensajes />}/>
+              <Route path="/admin/redactar" element={<RedactarAdmin />}/>
             </Route>
             {/* Rutas para el operador */}
             <Route

@@ -5,6 +5,7 @@ import App from '../../App';
 import axiosCliente from '../../axios-client';
 import '../../styles/tableStyle.css'
 import '../../styles/botonesStyle.css'
+import '../../styles/descargarBotonStyle.css'
 
 const ClienteSitio = () => {
     const [filas, setFilas] = useState([]);
@@ -48,6 +49,11 @@ const ClienteSitio = () => {
     }
 
     return (
+      <>
+        <div className='titleBottonContainer'>
+            <h3>Clientes</h3>
+            <button className='descargarBoton'>Descargar PDF</button>
+        </div>
         <Table responsive className='mytable'>
           <thead className='tableHeader'>
             <tr>
@@ -98,6 +104,7 @@ const ClienteSitio = () => {
             </tbody>
           }
         </Table>
+      </>
       );
 }
 

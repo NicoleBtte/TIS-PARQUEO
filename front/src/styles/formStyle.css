@@ -81,6 +81,10 @@
     font-family: 'Poppins', sans-serif;
   }
 
+  .myLabel{
+    font-family: 'Poppins', sans-serif;
+  }
+
   .bigInput {
     background-color: transparent;
     height: fit-content;
@@ -88,5 +92,16 @@
 
   .destinatarioText {
     font-family: 'Poppins', sans-serif;
+  }
+
+  .horaInput {
+    width: 30% !important;
+  }
+
+  .bigestContainerTurno {
+    flex-direction: column;
+    justify-content: center; /* Alinea el formulario al centro horizontal */
+    padding-top: 2%;
+    height: 100vh;
   }
   
