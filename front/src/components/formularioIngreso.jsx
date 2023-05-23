@@ -26,14 +26,15 @@ function IngresosForm() {
   }, []);
 
   const handleSubmit = (e) => {
-    console.log(idcliente);
+    console.log("aquii" + formValue); // Acceder a formValue en lugar de idcliente
     axiosClient
       .post("/entrada", {
-        idcliente,
+        idcliente: formValue, // Utilizar formValue directamente
       })
       .then((res) => {
+        console.log("aquii" + formValue);
         console.log(res.data);
-        alert("Se registro la entrada ");
+        alert("Se registró la entrada");
       })
       .catch((error) => {
         console.log(error);
@@ -44,9 +45,7 @@ function IngresosForm() {
   const handleInputChange = (e) => {
     const { value } = e.target;
     setFormValue(value);
-    setFiltros(
-      options.filter((option) => option.toString().includes(formValue))
-    );
+    setFiltros(options.filter((option) => option.toString().includes(value)));
   };
 
   const handleOnchange = (e) => {
@@ -56,38 +55,44 @@ function IngresosForm() {
   };
 
   return (
-    <div className="formContainer ">
-      <form onSubmit={handleSubmit}>
-        <fieldset>
-          <legend className="text-center  fw-medium primary-color">
-            Registrar Ingreso
-          </legend>
-          <div className="mb-3">
-            <label
-              className="form-label  fw-medium primary-color"
-              htmlFor="idcliente"
-            >
-              ID Cliente
-            </label>
+    <div className="contenedorRegistro">
+      <div className="formContainer ">
+        <form onSubmit={handleSubmit}>
+          <fieldset>
+            <legend className="text-center  fw-medium primary-color">
+              Registrar Ingreso
+            </legend>
+            <div>
+              <label
+                className="form-label  fw-medium primary-color"
+                htmlFor="idcliente"
+              >
+                ID Cliente
+              </label>
+              <input
+                type="text"
+                value={formValue}
+                onChange={handleInputChange}
+                list="options-list"
+              />
+              <datalist id="options-list" className="datalist-width">
+                {filtros.map((option, index) => (
+                  <option key={index} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </datalist>
+            </div>
+          </fieldset>
+          <div className="text-center">
             <input
-              type="text"
-              value={formValue}
-              onChange={handleInputChange}
-              list="options-list"
+              className="btn btn-personal"
+              type="submit"
+              value="Registrar"
             />
-            <datalist id="options-list" className="datalist-width">
-              {filtros.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
-                </option>
-              ))}
-            </datalist>
           </div>
-        </fieldset>
-        <div className="text-center">
-          <input className="btn btn-personal" type="submit" value="Registrar" />
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }

@@ -6,7 +6,7 @@ import "../styles/estilos.css";
 import "../styles/tableStyle.css";
 import "../styles/botonesStyle.css";
 import "../styles/tablePageStyle.css";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Table } from "react-bootstrap";
 
 function PagosPage() {
   const [pagos, setPagos] = useState([]);
@@ -50,7 +50,7 @@ function PagosPage() {
         </div>
       </div>
       <div>
-        <table className="mytable w-100">
+        <Table className="mytable w-100">
           <thead className="tableHeader">
             <tr>
               <th className="fw-medium">Fecha</th>
@@ -70,7 +70,7 @@ function PagosPage() {
                 <td className="miTd">
                   {pago.tipo_de_pago === 1 ? "Efectivo" : "Electronico"}
                 </td>
-                <td className="miTd">meses</td>
+                <td className="miTd">{pago.meses_pagados}</td>
                 <td className="miTd">
                   {" "}
                   {pago.comprobante == null ? (
@@ -84,7 +84,7 @@ function PagosPage() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
       <Modal
         size="lg"

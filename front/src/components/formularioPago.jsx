@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axiosClient from "../axios-client.js";
 import { validarMonto } from "../helpers/validadores";
+import { Form } from "react-bootstrap";
+import "../styles/formStyle.css";
 
 function PagoForm() {
   const [formValue, setFormValue] = useState({
@@ -44,30 +46,36 @@ function PagoForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("carnet", carnet);
-    formData.append("monto", monto);
-    formData.append("tipo_de_pago", tipo_de_pago);
-    if (archivo != undefined) {
-      formData.append("imagen", archivo.archivo);
+    const confirmacion = window.confirm(
+      "¿Está seguro de agregar este nuevo pago?"
+    );
+
+    if (confirmacion) {
+      const formData = new FormData();
+      formData.append("carnet", carnet);
+      formData.append("monto", monto);
+      formData.append("tipo_de_pago", tipo_de_pago);
+      if (archivo != undefined) {
+        formData.append("imagen", archivo.archivo);
+      }
+      console.log({ archivo });
+      console.log({ formValue });
+      axiosClient
+        .post("/pagar", formData)
+        .then((res) => {
+          console.log(res.data);
+          alert("El pago se registró exitosamente");
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("Datos inválidos al registrar el pago");
+        });
     }
-    console.log({ archivo });
-    console.log({ formValue });
-    axiosClient
-      .post("/pagar", formData)
-      .then((res) => {
-        console.log(res.data);
-        alert("El pago se registro exitosamente");
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("Datos invalidos al registrar pago");
-      });
   };
 
   return (
     <div className="formContainer">
-      <form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <fieldset>
           <legend className="text-center  fw-medium primary-color">
             Agregar Pago
@@ -148,7 +156,7 @@ function PagoForm() {
         <div className="text-center">
           <input className="btn btn-personal" type="submit" value="Registrar" />
         </div>
-      </form>
+      </Form>
     </div>
   );
 }

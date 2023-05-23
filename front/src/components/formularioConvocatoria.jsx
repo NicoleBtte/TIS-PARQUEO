@@ -11,18 +11,6 @@ import {
   validarMultaMensual,
 } from "../helpers/validadores";
 import "../styles/formStyle.css";
-//import Swal from "sweetalert2";
-
-/*{
-            "idConvocatoria": 1,
-            "titulo": "convocatoria prueba",
-            "fecha_inicio": "2023-05-01",
-            "fecha_fin": "2023-05-02",
-            "descripcion_convocatoria": "puerbassssssssss",
-            "fecha_pago": "2023-06-01",
-            "numero_cupos": 20,
-            "estado_convocatoria": 1
-        }*/
 
 function FormularioConvocatoria() {
   const [formData, setFormData] = useState({
@@ -33,9 +21,9 @@ function FormularioConvocatoria() {
     archivoPdf: null,
     fecha_inicio: null,
     fecha_fin: null,
-    fecha_inicio_parqueo: null,
-    fecha_fin_parqueo: null,
-    fecha_pago: null,
+    fecha_inicio_gestion: null,
+    fecha_fin_gestion: null,
+    //fecha_pago: null,
     pago_mensual: null,
     multa_mensaul: null,
   });
@@ -49,8 +37,8 @@ function FormularioConvocatoria() {
     numero_cuposB: false,
     fecha_inicioB: false,
     fecha_finB: false,
-    fecha_inicio_parqueoB: false,
-    fecha_fin_parqueoB: false,
+    fecha_inicio_gestionB: false,
+    fecha_fin_gestionB: false,
   });
 
   const {
@@ -61,9 +49,9 @@ function FormularioConvocatoria() {
     archivoPdf,
     fecha_inicio,
     fecha_fin,
-    fecha_inicio_parqueo,
-    fecha_fin_parqueo,
-    fecha_pago,
+    fecha_inicio_gestion,
+    fecha_fin_gestion,
+    //fecha_pago,
     pago_mensual,
     multa_mensual,
   } = formData;
@@ -128,17 +116,17 @@ function FormularioConvocatoria() {
     }
     if (e.target.name === "fecha_incio_parqueo") {
       if (!validarFechas(e.target.value)) {
-        setValidar({ ...validar, fecha_inicio_parqueoB: true });
+        setValidar({ ...validar, fecha_inicio_gestionB: true });
       } else {
-        setValidar({ ...validar, fecha_inicio_parqueoB: false });
+        setValidar({ ...validar, fecha_inicio_gestionB: false });
       }
     }
 
-    if (e.target.name === "fecha_fin_parqueo") {
+    if (e.target.name === "fecha_fin_gestion") {
       if (!validarFechas(e.target.value)) {
-        setValidar({ ...validar, fecha_fin_parqueoB: true });
+        setValidar({ ...validar, fecha_fin_gestionB: true });
       } else {
-        setValidar({ ...validar, fecha_fin_parqueoB: false });
+        setValidar({ ...validar, fecha_fin_gestionB: false });
       }
     }
 
@@ -209,9 +197,9 @@ function FormularioConvocatoria() {
     formData.append("numero_cupos", numero_cupos);
     formData.append("fecha_inicio", fecha_inicio);
     formData.append("fecha_fin", fecha_fin);
-    formData.append("fecha_inicio_parqueo", fecha_inicio_parqueo);
-    formData.append("fecha_fin_parqueo", fecha_fin_parqueo);
-    formData.append("fecha_pago", fecha_pago);
+    formData.append("fecha_inicio_gestion", fecha_inicio_gestion);
+    formData.append("fecha_fin_gestion", fecha_fin_gestion);
+    //formData.append("fecha_pago", fecha_pago);
     formData.append("pago_mensual", pago_mensual);
     formData.append("multa_mensual", multa_mensual);
     formData.append("pdf_convocatoria", archivo.archivo);
@@ -328,39 +316,39 @@ function FormularioConvocatoria() {
               </span>
             </div>
             <div className="myform-group">
-              <label htmlFor="fecha_inicio_parqueo">
+              <label htmlFor="fecha_inicio_gestion">
                 Fecha inicio de uso del parqueo:
               </label>
               <input
-                name="fecha_inicio_parqueo"
+                name="fecha_inicio_gestion"
                 type="date"
                 className="form-control"
-                id="fecha_inicio_parqueo"
+                id="fecha_inicio_gestion"
                 placeholder="Fecha Inicio"
                 min={new Date().toISOString().split("T")[0]}
                 onChange={handleOnChangeFechaInicio}
               ></input>
             </div>
             <div className="myform-group">
-              <label htmlFor="fecha_fin_parqueo">
+              <label htmlFor="fecha_fin_gestion">
                 Fecha fin de uso del parqueo:
               </label>
               <input
-                name="fecha_fin_parqueo"
+                name="fecha_fin_gestion"
                 type="date"
                 className="form-control"
-                id="fecha_fin_parqueo"
+                id="fecha_fin_gestion"
                 placeholder="Fecha fin"
                 onChange={handleOnchange}
                 min={minFechaFin}
               ></input>
               <span className="spanError">
-                {validar.fecha_fin_parqueoB
+                {validar.fecha_fin_gestionB
                   ? "La fecha fin no puede ser menor a la fecha inicio"
                   : ""}
               </span>
             </div>
-            <div className="myform-group">
+            {/*<div className="myform-group">
               <label htmlFor="fecha_pago">Fecha pago:</label>
               <input
                 name="fecha_pago"
@@ -370,7 +358,7 @@ function FormularioConvocatoria() {
                 placeholder="Fecha pago"
                 onChange={handleOnchange}
               ></input>
-            </div>
+                </div>*/}
             <div className="myform-group">
               <label htmlFor="pago_mensual">Pago Mensual:</label>
               <input

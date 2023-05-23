@@ -6,7 +6,7 @@ import "../styles/estilos.css";
 import "../styles/tableStyle.css";
 import "../styles/botonesStyle.css";
 import "../styles/tablePageStyle.css";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Table } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 
 const MisPagos = () => {
@@ -57,7 +57,7 @@ const MisPagos = () => {
   }, []);
 
   return (
-    <div>
+    <Container>
       <div className="d-flex-between my-4 p-3">
         <h1 className="tittleContainer">Mis Pagos</h1>
         <div>
@@ -94,7 +94,7 @@ const MisPagos = () => {
         </div>
       </div>
       <div className="tablePageContainer">
-        <table className="mytable w-100">
+        <Table className="mytable w-100">
           <thead className="tableHeader">
             <tr>
               <th>Fecha</th>
@@ -106,12 +106,12 @@ const MisPagos = () => {
           <tbody>
             {pagos.map((pago) => (
               <tr className="misFilas" key={pago.id}>
-                <td className="myTd text-center">{pago.fechaPago}</td>
-                <td className="myTd text-center">{pago.monto}</td>
-                <td className="myTd text-center">
+                <td className="miTd">{pago.fechaPago}</td>
+                <td className="miTd">{pago.monto}</td>
+                <td className="miTd">
                   {pago.tipo_de_pago === 1 ? "Efectivo" : "Electronico"}
                 </td>
-                <td className="myTd text-center">
+                <td className="miTd">
                   {" "}
                   {pago.comprobante == null ? (
                     <i class="bx bx-x"></i>
@@ -127,7 +127,7 @@ const MisPagos = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
       <Modal
         size="lg"
@@ -144,7 +144,7 @@ const MisPagos = () => {
           />
         </Modal.Body>
       </Modal>
-    </div>
+    </Container>
   );
 };
 

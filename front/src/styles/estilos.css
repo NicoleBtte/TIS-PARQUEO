@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Kodchasan:ital,wght@0,600;1,600&family=Roboto:wght@400;500;700&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 .content-rigth {
   display: flex;
   justify-content: right;
@@ -197,7 +197,7 @@ body {
   width: 100px;
 }
 
-.datalist-width {
+.datalist-width option {
   width: 100%;
   background-color: #122a4c;
 }
@@ -205,9 +205,65 @@ body {
   display: flex;
   flex-direction: row;
 }
-
 .center-button {
   display: flex;
   justify-content: center;
   margin-top: 20px; /* Ajusta el margen superior según tus necesidades */
+}
+
+.chartContainer {
+  width: 35%;
+  height: 200px; /* Ajusta el valor para cambiar la altura de la gráfica */
+}
+
+.containerr {
+  display: flex;
+  margin-top: 50px;
+}
+
+.chartContainer {
+  flex: 2;
+  margin-right: 20px; /* Espacio entre la gráfica y la tabla */
+  margin-left: 20px;
+}
+
+.tableContainerr {
+  flex: 2;
+  margin: 2%;
+}
+
+.mytabler {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 15px;
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+.tableFoot {
+  background-color: #ecf2fa;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  padding: 8px;
+}
+
+.autoWidth {
+  width: auto;
+}
+
+.mytablec {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 15px;
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.contenedorRegistro {
+  margin-top: 20px;
 }

@@ -49,6 +49,8 @@ const ConvocatoriaPage = () => {
     const doc = new jsPDF();
     const tableData = [];
 
+    doc.text("Reporte Convocatorias", 10, 20);
+
     // Agregar encabezados de columna a tableData
     const headers = [
       "Titulo",
@@ -146,9 +148,6 @@ const ConvocatoriaPage = () => {
   return (
     <Container className="tablePageContainer">
       <h1 className="tittleContainer">Lista convocatorias</h1>
-      <Button className="pdf-button" onClick={descargarPDF}>
-        Descargar PDF
-      </Button>
       <Table responsive className="mytable">
         <thead className="tableHeader">
           <tr>
@@ -158,8 +157,8 @@ const ConvocatoriaPage = () => {
             <th>Cupos</th>
             <th>Fecha inicio de registro</th>
             <th>Fecha fin de registro</th>
-            <th>Fecha inicio de uso del parqueo</th>
-            <th>Fecha fin de uso del parqueo</th>
+            {/*<th>Fecha inicio de uso del parqueo</th>
+            <th>Fecha fin de uso del parqueo</th>*/}
             <th>Acciones</th>
           </tr>
         </thead>
@@ -174,8 +173,8 @@ const ConvocatoriaPage = () => {
               <td className="miTd">{convocatoria.numero_cupos}</td>
               <td className="miTd">{convocatoria.fecha_inicio}</td>
               <td className="miTd">{convocatoria.fecha_fin}</td>
-              <td className="miTd">{convocatoria.fecha_inicio}</td>
-              <td className="miTd">{convocatoria.fecha_fin}</td>
+              {/*<td className="miTd">{convocatoria.fecha_inicio}</td>
+              <td className="miTd">{convocatoria.fecha_fin}</td>*/}
               <td className="miTd">
                 <Button
                   className="celesteBotonPdf"
@@ -213,6 +212,9 @@ const ConvocatoriaPage = () => {
         </tbody>
       </Table>
       <div className="content-rigth">
+        <Button className="celesteBotonPdf" onClick={descargarPDF}>
+          Descargar reporte
+        </Button>
         <Link to={"/admin/formulario-convocatoria"}>
           <Button className="botones-cs" variant="success">
             Crear Convocatoria{" "}

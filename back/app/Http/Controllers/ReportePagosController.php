@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Storage;
 class ReportePagosController extends Controller
 {
     public static function reportePagos(Request $request){
-        $fechaInicio=$request->fechaInicio;
-        $fechaFin=$request->fechaFin;
+        $fechaInicio=$request->fecha_de;
+        $fechaFin=$request->hasta_fecha;
         $consultaPago=DB::table('transaccion')->whereBetween('fechaPago', [$fechaInicio, $fechaFin])->select('fechaPago', 'monto', 'devolucion')->get();
         $totalneto=0;
         foreach($consultaPago as $pago){
@@ -35,9 +35,9 @@ class ReportePagosController extends Controller
         //$array=json_decode($json, true);
 
         $guardado=DB::table('reporte')->insert([
-            'ingreso_mes' => $request->data[1],
+            'ingreso_mes' => $request->numberRValue,
             'mes' => null,
-            'datos' => $request->data[0],
+            'datos' => json_encode($request->registroTabla),
             'operador_idoperador' => null//$request->idoperador
         ]);
         return response($guardado);

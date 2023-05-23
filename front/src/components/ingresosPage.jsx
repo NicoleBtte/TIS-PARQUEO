@@ -7,6 +7,8 @@ import "../styles/estilos.css";
 import "../styles/tableStyle.css";
 import "../styles/botonesStyle.css";
 import "../styles/tablePageStyle.css";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 /*{\"idhistorial\":1,\
 "hora_ingreso_hist\":null,\
@@ -17,6 +19,7 @@ import "../styles/tablePageStyle.css";
 
 function IngresosPage() {
   const [ingresosSalidas, setIngresosSalidas] = useState([]);
+  const [registroTabla, setRegistroTabla] = useState([]);
 
   const [formData, setFormData] = useState({
     cliente_idcliente: "",
@@ -42,9 +45,49 @@ function IngresosPage() {
         const result = response.data;
         console.log(JSON.parse(result));
         setIngresosSalidas(JSON.parse(result));
+        setRegistroTabla(JSON.parse(result));
       })
       .catch((error) => console.log("error", error));
   }, []);
+
+  const generarPDF = () => {
+    const doc = new jsPDF();
+    const title = "Reporte Registro";
+
+    doc.setDocumentProperties({ title: title });
+    doc.setFontSize(18);
+    doc.text("Reporte entradas y salidas", 10, 20);
+
+    const data = registroTabla.map((registro) => [
+      registro.cliente_idcliente,
+      registro.fecha_ingreso,
+      registro.fecha_salida ? registro.fecha_salida : "No registrada",
+    ]);
+
+    doc.autoTable({
+      head: [["Cliente", "Entrada", "Salida"]],
+      body: data,
+      startY: 30,
+    });
+
+    const fileName = "reporte_entradas_salidas.pdf";
+    doc.save(fileName);
+  };
+
+  const enviarReporte = () => {
+    axiosClient
+      .post("/guardarReportePagos", { registroTabla: ingresosSalidas })
+      .then((response) => {
+        console.log("desdequiii");
+        console.log(ingresosSalidas);
+        console.log("hastaaaquiii");
+        console.log("Reporte enviado exitosamente");
+        // Realizar cualquier acción adicional después de enviar el reporte
+      })
+      .catch((error) => {
+        console.error("Error al enviar el reporte", error);
+      });
+  };
 
   return (
     <div className="tablePageContainer">
@@ -95,6 +138,15 @@ function IngresosPage() {
             ))}
           </tbody>
         </table>
+      </div>
+      {/* ... */}
+      <div className="center-button">
+        <button
+          className="link-none-styles btn-personal py-2"
+          onClick={generarPDF}
+        >
+          Descargar reporte
+        </button>
       </div>
     </div>
   );

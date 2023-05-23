@@ -3,6 +3,12 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../axios-client.js";
+import "../styles/estilos.css";
+import "../styles/tableStyle.css";
+import "../styles/convocatoriaBotones.css";
+import "../styles/tablePageStyle.css";
+import "../styles/botonesStyle.css";
+import { Button, Table } from "react-bootstrap";
 
 const PagosCliente = () => {
   const [clientes, setClientes] = useState([]);
@@ -20,23 +26,19 @@ const PagosCliente = () => {
   }, []);
 
   const calcularDeudas = () => {
-    axiosClient
-      .post(`/calcularDeudas`)
-      .then((response) => {
-        // Actualizar el estado de las deudas de los clientes en el frontend
-        const updatedClientes = clientes.map((cliente) => {
-          const clienteActualizado = response.data.find(
-            (clienteActualizado) =>
-              clienteActualizado.idcliente === cliente.idcliente
-          );
-          return {
-            ...cliente,
-            deuda: clienteActualizado.deuda, // Reemplazar con la propiedad adecuada de la respuesta del backend
-          };
-        });
-        setClientes(updatedClientes);
-      })
-      .catch((error) => console.log("error", error));
+    const confirmacion = window.confirm(
+      "¿Está seguro de calcular las deudas? Por favor, asegúrese de que no se haya calculado dos veces el mismo mes."
+    );
+
+    if (confirmacion) {
+      axiosClient
+        .get(`/calcularDeudas`)
+        .then((response) => {
+          const updatedClientes = response.data;
+          setClientes(updatedClientes);
+        })
+        .catch((error) => console.log("error", error));
+    }
   };
 
   return (
@@ -52,13 +54,13 @@ const PagosCliente = () => {
           </Link>
         </div>
       </div>
-      <div>
-        <button className="btn btn-primary" onClick={calcularDeudas}>
+      <div className="content-rigth">
+        <Button className="rojoBotonC autoWidth" onClick={calcularDeudas}>
           Calcular Deudas
-        </button>
+        </Button>
       </div>
       <div>
-        <table className="mytable w-100">
+        <Table className="mytablec w-100">
           <thead className="bg-c-primary">
             <tr>
               <th className="fw-medium">Cliente</th>
@@ -73,17 +75,19 @@ const PagosCliente = () => {
           <tbody className="bg-c-secondary">
             {clientes.map((cliente) => (
               <tr key={cliente.idcliente}>
-                <td>{cliente.nombre_cliente}</td>
-                <td>{cliente.fecha_pagado}</td>
-                <td>{cliente.fecha_lim_pago}</td>
-                <td>{cliente.monto_a_pagar}</td>
-                <td>{cliente.multa}</td>
-                <td>meses</td>
-                <td>{cliente.estado_pago === 1 ? "Deudor" : "Al dia"}</td>
+                <td className="miTd">{cliente.nombre_cliente}</td>
+                <td className="miTd">{cliente.fecha_pagado}</td>
+                <td className="miTd">{cliente.fecha_lim_pago}</td>
+                <td className="miTd">{cliente.monto_a_pagar}</td>
+                <td className="miTd">{cliente.multa}</td>
+                <td className="miTd">{cliente.meses_cancelados}</td>
+                <td className="miTd">
+                  {cliente.estado_pago === 0 ? "Deudor" : "Al dia"}
+                </td>
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
     </div>
   );

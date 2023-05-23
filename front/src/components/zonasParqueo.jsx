@@ -64,7 +64,7 @@ export default function ZonasPar() {
     setModal({ ...modal, [e.target.name]: e.target.value });
   };
 
-  function mostrarZona(idzonaEstacionamiento) {
+  function mostrarZona(idzonaEstacionamiento, nombre_zona_estacionamiento) {
     let objetoBuscado = zonas.find(
       (zona_estacionamiento) =>
         zona_estacionamiento.idzonaEstacionamiento === idzonaEstacionamiento
@@ -75,8 +75,9 @@ export default function ZonasPar() {
       ...modal,
       ...objetoBuscado,
       open: true,
-      parqueo: `Parqueo ${params.id}`,
+      parqueo: `Parqueo ${params.id}5`,
       zona: `Zona ${idzonaEstacionamiento}`,
+      nombre_zona_estacionamiento,
     });
     setCaracteristicas(false);
   }
@@ -117,14 +118,21 @@ export default function ZonasPar() {
       .catch((error) => console.log("error", error));
   }, []);
 
-  const [imagenUrl, setImagenUrl] = React.useState("");
+  const [parqueoData, setParqueoData] = React.useState({
+    administrador_idadministrador: null,
+    idParqueo: null,
+    mapa_parqueo: "",
+    nombre_parqueo: "",
+    numero_de_zonas: null,
+  });
 
   React.useEffect(() => {
     axiosClient
       .get("/parqueo/" + params.id)
       .then((response) => {
+        console.log("esto", response.data);
         const result = response.data[0];
-        setImagenUrl(result.mapa_parqueo);
+        setParqueoData(result);
       })
       .catch((error) => console.log("error", error));
   }, []);
@@ -132,7 +140,7 @@ export default function ZonasPar() {
 
   return (
     <Container>
-      <h1 textAlign={"center"}>Parqueo {params.id}</h1>{" "}
+      <h1 textAlign={"center"}>{parqueoData.nombre_parqueo}</h1>{" "}
       <Modal
         show={modal.open}
         onHide={() => setModal({ ...modal, open: false })}
@@ -149,7 +157,7 @@ export default function ZonasPar() {
             </Button>
           )}
           <span>
-            {modal.parqueo} {modal.zona}
+            {parqueoData.nombre_parqueo} {modal.nombre_zona_estacionamiento}
           </span>
         </Modal.Header>
         <Modal.Body>
@@ -320,7 +328,8 @@ export default function ZonasPar() {
             <Image
               className="w-100"
               src={
-                "http://localhost:8000/storage/public/mapasparqueo/" + imagenUrl
+                "http://localhost:8000/storage/public/mapasparqueo/" +
+                parqueoData.mapa_parqueo
               }
             />
           </Col>
@@ -336,10 +345,15 @@ export default function ZonasPar() {
                   />
                   <Button
                     variant="primary"
-                    onClick={() => mostrarZona(zona.idzonaEstacionamiento)}
+                    onClick={() =>
+                      mostrarZona(
+                        zona.idzonaEstacionamiento,
+                        zona.nombre_zona_estacionamiento
+                      )
+                    }
                     className="mt-3"
                   >
-                    Zona {zona.idzonaEstacionamiento}
+                    {zona.nombre_zona_estacionamiento}
                   </Button>
                 </Col>
               ))}
