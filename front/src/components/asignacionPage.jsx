@@ -8,9 +8,6 @@ const AsignacionPage = () => {
   return (
     <>
     <div className='tablePageContainer'>
-      <div className='titleContainer'>
-        <h4>Clientes</h4>
-      </div>
       <div>
         <ClienteSitio/>
       </div>
