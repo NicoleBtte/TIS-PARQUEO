@@ -13,29 +13,12 @@ const AsignarTurno = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-      //getFilasAdicionales();
       getFilas();
     }, []);
 
-    /*const getFilasAdicionales = () => {
-      setLoading(true);
-
-      axiosCliente.get('/listaTurnosDelGuardia')
-      .then(({ data }) => {
-        console.log(data)
-        setLoading(false)
-        setFilasAdicionales(JSON.parse(data))
-      })
-      .catch(() => {
-        setLoading(false)
-      })
-    }*/
-
   const getFilas = () => {
       setLoading(true);
-      //setFilas(turnos);
-      //setLoading(false);
-      axiosCliente.get('/listaTurnosSinGuardia')
+      axiosCliente.get('/listaTurnosTodos')
       .then(({ data }) => {
         console.log(data)
         setLoading(false)
@@ -46,34 +29,38 @@ const AsignarTurno = () => {
       })
   }
 
-  const asignarTurno = (guardiaID, idturno) => {
-      let apiruta = '/asignarTurno';
-      console.log('Se asigno al usuario '+guardiaID+"p: "+idturno);
-      const payload = {
-        idguardia: guardiaID,
-        idturno: idturno,
-      }
-
-      axiosCliente.post(apiruta, payload)
-        .then(() => {
-            console.log('Se ha editado el usuario')
-        })
-        .catch(err => {
-          const response = err.response;
-          if (response && response.status === 422) {
-            setErrors(response.data.errors)
-          }
-        })
-      
-      navigate('/admin/guardiasTurnos');
+  const verificarTurno = (guardiaID, idturno) => {
+    const payload = {
+      idguardia: guardiaID,
+      idturno: idturno,
     }
 
-    const removeTurno = () => {
+    axiosCliente.get('/verificarTurno', {params:payload})
+      .then((data) => {
+        if(!JSON.parse(data)==='Fue asignado exitosamente'){
+          return window.confirm("ERROR")
+        }else{
+          navigate('/admin/guardiasTurnos');
+        }
+      })
+      .catch(err => {
+        const response = err.response;
+        if (response && response.status === 422) {
+          setErrors(response.data.errors)
+        }
+      })
+    
+    navigate('/admin/guardiasTurnos');
+
+  }
+
+    const removeTurno = (idt) => {
         /*if (!window.confirm("Esta seguro de remover la asigancion de sitio de este cliente?")) {
           return
         }*/
         const payload = {
-          idguardia: id
+          idguardia: id,
+          idturno: idt
         }
         axiosCliente.post('/dejarSinTurno', payload)
           .then(() => {
@@ -89,10 +76,6 @@ return (
     <div className='tablePageContainer'>
         <div className='titleBottonContainer'>
             <h4>Horarios disponibles</h4>
-            {t !== 'Sin asignar' ? (
-                <Button className='rojoBoton' onClick={() => removeTurno(id)}>Dejar sin turnos</Button>
-            ) : null}
-            
         </div>    
       <Table responsive className='mytable'>
           <thead className='tableHeader'>
@@ -104,28 +87,47 @@ return (
               <th>Acciones</th>
               </tr>
           </thead>
-          {loading && (
-              <tbody>
-              <tr className='misFilas'>
-                  <td colSpan="5">Cargando...</td>
-              </tr>
-              </tbody>
-          )}
+          {loading &&
+            <tbody>
+            <tr className='misFilas'>
+              <td colSpan="5">
+                Loading...
+              </td>
+            </tr>
+            </tbody>
+          }
           {!loading && (
-              <tbody>
-              {filas.map((turno) => (
-                  <tr className='misFilas' key={turno.idturno}>
+            <tbody>
+            {filas.map((turno) => {
+              let boton;
+                const idsturno = t.split(',');
+                const seEncuentra = idsturno.includes(turno.idturno.toString());
+                if (seEncuentra) {
+                  boton = (
+                    <Button className='quitarBotonTurno' onClick={() => removeTurno(turno.idturno)}>
+                      Quitar este turno
+                    </Button>
+                  );
+                } else {
+                  boton = (
+                    <Button className='naranjaBoton' onClick={() => verificarTurno(id, turno.idturno)}>
+                      Asignar este turno
+                    </Button>
+                  );
+                }
+
+              return (
+                <tr className='misFilas' key={turno.idturno}>
                   <td className='miTd'>{turno.nombre_turno}</td>
                   <td className='miTd'>{turno.hora_inicio_turno}</td>
                   <td className='miTd'>{turno.hora_fin_turno}</td>
                   <td className='miTd'>{turno.dia_turno}</td>
-                  <td className='miTd'>
-                    <Button className='naranjaBoton' onClick={() => asignarTurno(id, turno.idturno)}>Asignar este turno</Button>
-                  </td>
-                  </tr>
-              ))}
-              </tbody>
-          )}
+                  <td className='miTd'>{boton}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        )}
       </Table>
       </div>
   </>

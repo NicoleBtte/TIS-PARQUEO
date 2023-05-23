@@ -74,8 +74,8 @@ const TurnosTable = () => {
                 {filas.map((turno) => (
                     <tr className='misFilas' key={turno.idturno}>
                     <td className='miTd'>{turno.nombre_turno}</td>
-                    <td className='miTd'>{turno.hora_inicio_turno}</td>
-                    <td className='miTd'>{turno.hora_fin_turno}</td>
+                    <td className='miTd'>{turno.hora_inicio_turno.slice(0, 5)}</td>
+                    <td className='miTd'>{turno.hora_fin_turno.slice(0, 5)}</td>
                     <td className='miTd'>{turno.dia_turno}</td>
                     <td className='accionesCeldaTurno'>
                         <Button as={Link} to={"/admin/turnoEdit/id/"+turno.idturno+'/t/'+turno.nombre_turno+'/hi/'+turno.hora_inicio_turno+'/hf/'+turno.hora_fin_turno+'/d/'+turno.dia_turno}className='naranjaBotonTurno'> Editar </Button>

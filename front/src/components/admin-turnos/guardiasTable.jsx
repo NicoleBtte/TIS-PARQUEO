@@ -7,19 +7,20 @@ const GuardiasTable = () => {
     const [filas, setFilas] = useState([]);
     const [filasxGrupo, setGrupos] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [filasAdicionales, setFilasAdicionales] = useState([]);
+    //const [filasAdicionales, setFilasAdicionales] = useState([]);
     const asignadoFlag = 'Asignado';
     const texto = 'Sin asignar';
 
     useEffect(() => {
         getFilas();
-        getFilasAdicionales();
+        //getFilasAdicionales();
       }, [])
 
       useEffect(() => {
         if (filas.length > 0) {
           getGrupos();
         }
+        console.log("misfilasxgrupo",filasxGrupo)
       }, [filas])
     
     const getFilas = () => {
@@ -39,6 +40,20 @@ const GuardiasTable = () => {
 
     const getGrupos = () => {
       const grupos = filas.reduce((result, elemento) => {
+        const { idguardia, nombre_guardia, idturno, ...datos } = elemento;
+        if (!result[idguardia]) {
+          result[idguardia] = { nombre_guardia, datos: [], idsturno: [] };
+        }
+        result[idguardia].datos.push(datos);
+        result[idguardia].idsturno.push(idturno); // Agregar idturno al arreglo idsturno
+        return result;
+      }, {});
+      setGrupos(grupos);
+      console.log("f",filasxGrupo);
+    }    
+
+    /*const getGrupos = () => {
+      const grupos = filas.reduce((result, elemento) => {
         const { idguardia, nombre_guardia, ...datos } = elemento;
         if (!result[idguardia]) {
           result[idguardia] = { nombre_guardia, datos: [] };
@@ -47,9 +62,9 @@ const GuardiasTable = () => {
         return result;
       }, {});
       setGrupos(grupos);
-    }
+    }*/
 
-    const getFilasAdicionales = () => {
+    /*const getFilasAdicionales = () => {
       setLoading(true);
       //setFilas(guardiasTurnos);
       //setLoading(false);
@@ -62,7 +77,7 @@ const GuardiasTable = () => {
         .catch(() => {
           setLoading(false)
         })
-    }
+    }*/
 
     
     return (
@@ -87,27 +102,56 @@ const GuardiasTable = () => {
           <tbody>
           {Object.keys(filasxGrupo).map((idguardia) => {
             const grupo = filasxGrupo[idguardia];
+            console.log("el grupito", grupo)
+            const tieneIdTurnoNull = grupo.idsturno[0] === null;
             return (
               <tr className='misFilas' key={idguardia}>
                 <td className='miTd'>{grupo.nombre_guardia}</td>
                 <td className='miTd'>
-                  {grupo.datos.map((dato, index) => (
-                    <div key={index}>{dato.nombre_turno+": "+dato.dia_turno+" de "+dato.hora_inicio_turno.slice(0, 5)+" a "+dato.hora_fin_turno.slice(0, 5)}</div>
-                  ))}
+                {grupo.datos.map((dato, index) => {
+                  if (dato.nombre_turno) {
+                    return (
+                      <div key={index}>{dato.nombre_turno+": "+dato.dia_turno+" de "+dato.hora_inicio_turno.slice(0, 5)+" a "+dato.hora_fin_turno.slice(0, 5)}</div>
+                    );
+                  } else {
+                    return (
+                      <p>{texto}</p>
+                    );
+                  }
+                })}
                 </td>
+                {tieneIdTurnoNull ? (
                 <td className='miTd'>
-                  <Button
-                    className='naranjaBoton'
-                    as={Link}
-                    to={`/admin/asigTurno/id/${idguardia}/t/${asignadoFlag}`}
-                  >
-                    Editar
-                  </Button>
-                </td>
+                    <Button
+                      className='naranjaBoton'
+                      as={Link}
+                      to={`/admin/asigTurno/id/${idguardia}/t/${texto}`}
+                    >
+                      Editar
+                    </Button>
+                  </td>                  
+                ) : (
+                  <td className='miTd'>
+                    <Button
+                      className='naranjaBoton'
+                      as={Link}
+                      to={`/admin/asigTurno/id/${idguardia}/t/${grupo.idsturno.join(",")}`}
+                    >
+                      Editar
+                    </Button>
+                  </td>
+                )}
               </tr>
             );
           })}
-          {filasAdicionales.map(u => (
+          </tbody>
+        }
+      </Table>
+    )
+}
+//to={`/admin/asigTurno/id/${idguardia}/t/${grupo.nombre_turno}/hi/${grupo.hora_inicio_turno}/hf/${grupo.hora_fin_turno}/d/${grupo.dia_turno}`}
+/*
+{filasAdicionales.map(u => (
             <tr className='misFilas' key={u.idguardia}>
               <td className='miTd'>{u.nombre_guardia}</td>
               <td className='miTd'>{texto}</td>
@@ -118,11 +162,6 @@ const GuardiasTable = () => {
               </td>
               </tr>
             ))}
-          </tbody>
-        }
-      </Table>
-    )
-}
-//to={`/admin/asigTurno/id/${idguardia}/t/${grupo.nombre_turno}/hi/${grupo.hora_inicio_turno}/hf/${grupo.hora_fin_turno}/d/${grupo.dia_turno}`}
+*/
 
 export default GuardiasTable
