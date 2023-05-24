@@ -44,14 +44,13 @@ const Clientes = () => {
                   <th>Cliente</th>
                   <th>Telefono</th>
                   <th>Email</th>
-                  <th></th>
               </tr>
             </thead>
             {loading &&
               <tbody>
               <tr className='misFilas'>
                 <td colSpan="5">
-                  Loading...
+                  Cargando...
                 </td>
               </tr>
               </tbody>

@@ -20,7 +20,7 @@ import "../styles/formStyle.css";
   "fecha_inicio": "2023-05-01",
   "fecha_fin": "2023-05-02",
   "descripcion_convocatoria": "puerbassssssssss",
-  "fecha_pago": "2023-06-01",
+  "fecha_inicio_gestion": "2023-06-01",
   "numero_cupos": 20,
   "estado_convocatoria_convocatoria": 1
 }*/
@@ -36,7 +36,7 @@ function ConvocatoriaEditar() {
     fecha_fin: null,
     fecha_inicio_parqueo: null,
     fecha_fin_parqueo: null,
-    fecha_pago: null,
+    fecha_inicio_gestion: null,
     pago_mensual: null,
     multa_mensaul: null,
   });
@@ -50,7 +50,7 @@ function ConvocatoriaEditar() {
     numero_cuposB: false,
     fecha_inicioB: false,
     fecha_finB: false,
-    fecha_pagoB: false,
+    fecha_inicio_gestionB: false,
     pago_mensualB: false,
     multa_mensualB: false,
     fecha_inicio_parqueoB: false,
@@ -67,7 +67,7 @@ function ConvocatoriaEditar() {
     fecha_fin,
     fecha_inicio_parqueo,
     fecha_fin_parqueo,
-    fecha_pago,
+    fecha_inicio_gestion,
     pago_mensual,
     multa_mensual,
   } = formData;
@@ -139,11 +139,11 @@ function ConvocatoriaEditar() {
       }
     }
 
-    if (e.target.name === "fecha_pago") {
+    if (e.target.name === "fecha_inicio_gestion") {
       if (!validarFechaPago(e.target.value)) {
-        setValidar({ ...validar, fecha_pagoB: true });
+        setValidar({ ...validar, fecha_inicio_gestionB: true });
       } else {
-        setValidar({ ...validar, fecha_pagoB: false });
+        setValidar({ ...validar, fecha_inicio_gestionB: false });
       }
     }
 
@@ -179,7 +179,7 @@ function ConvocatoriaEditar() {
       fecha_fin,
       fecha_inicio_parqueo,
       fecha_fin_parqueo,
-      fecha_pago,
+      fecha_inicio_gestion,
       pago_mensual,
       multa_mensual,
       archivoPdf
@@ -195,7 +195,7 @@ function ConvocatoriaEditar() {
         fecha_fin: fecha_fin,
         fecha_inicio_parqueo: fecha_inicio_parqueo,
         fecha_fin_parqueo: fecha_fin_parqueo,
-        fecha_pago: fecha_pago,
+        fecha_inicio_gestion: fecha_inicio_gestion,
         pago_mensual: pago_mensual,
         multa_mensual: multa_mensual,
       })
@@ -364,18 +364,18 @@ function ConvocatoriaEditar() {
               </span>
             </div>
             <div className="myform-group">
-              <label htmlFor="fecha_pago">Fecha pago</label>
+              <label htmlFor="fecha_inicio_gestion">Fecha pago</label>
               <input
-                name="fecha_pago"
+                name="fecha_inicio_gestion"
                 type="number"
                 className="form-control"
-                id="fecha_pago"
+                id="fecha_inicio_gestion"
                 placeholder="FechaPago"
                 onChange={handleOnchange}
-                defaultValue={fecha_pago}
+                defaultValue={fecha_inicio_gestion}
               ></input>
               <span className="spanError">
-                {validar.fecha_pagoB
+                {validar.fecha_inicio_gestionB
                   ? "La fecha pago debe ser mayor igual a 1 y menor a 29"
                   : ""}
               </span>

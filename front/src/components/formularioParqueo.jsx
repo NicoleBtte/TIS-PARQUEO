@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
 import { validarNombre, validarNumeroSitios } from "../helpers/validadores";
 import axiosClient from "../axios-client.js";
 import "../styles/formStyle.css";
@@ -31,6 +32,8 @@ function FormularioParqueo() {
   const { nombre_parqueo, numero_de_zonas, mapa_parqueo } = formData;
 
   const [archivo, setArchivo] = useState();
+
+  const navigate = useNavigate();
 
   const fileSelectHandler = (e) => {
     setArchivo({
@@ -77,6 +80,7 @@ function FormularioParqueo() {
         console.log(error);
         alert("Datos invalidos al crear parqueo");
       });
+    navigate('/admin/parqueo')
   };
   /*React.useEffect(() => {
     axiosClient

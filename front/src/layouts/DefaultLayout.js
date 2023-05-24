@@ -86,11 +86,17 @@ const DefaultLayout = () => {
           <Nav.Link as={Link} to="/operador/pagos">
             Pagos
           </Nav.Link>
+          <Nav.Link as={Link} to="/operador/pagos-clientes">
+            Pagos clientes
+          </Nav.Link>
           <Nav.Link as={Link} to="/operador/pqr">
             Quejas y peticiones
           </Nav.Link>
           <Nav.Link as={Link} to="/operador/infoClientes">
             Clientes
+          </Nav.Link>
+          <Nav.Link as={Link} to="/operador/reporte-pagos">
+            Reporte ingresos
           </Nav.Link>
         </Nav>
       );

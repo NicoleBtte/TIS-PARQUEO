@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Console\\Commands\\GestionDeudas' => $baseDir . '/app/Console/Commands/GestionDeudas.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\AdminController' => $baseDir . '/app/Http/Controllers/AdminController.php',
@@ -13,11 +14,13 @@ return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\ConvocatoriaController' => $baseDir . '/app/Http/Controllers/ConvocatoriaController.php',
     'App\\Http\\Controllers\\EntradasSalidasController' => $baseDir . '/app/Http/Controllers/EntradasSalidasController.php',
+    'App\\Http\\Controllers\\GestionDeudasController' => $baseDir . '/app/Http/Controllers/GestionDeudasController.php',
     'App\\Http\\Controllers\\GuardiaController' => $baseDir . '/app/Http/Controllers/GuardiaController.php',
     'App\\Http\\Controllers\\NotificacionController' => $baseDir . '/app/Http/Controllers/NotificacionController.php',
     'App\\Http\\Controllers\\OperadorController' => $baseDir . '/app/Http/Controllers/OperadorController.php',
     'App\\Http\\Controllers\\PagoController' => $baseDir . '/app/Http/Controllers/PagoController.php',
     'App\\Http\\Controllers\\ParqueoController' => $baseDir . '/app/Http/Controllers/ParqueoController.php',
+    'App\\Http\\Controllers\\ReportePagosController' => $baseDir . '/app/Http/Controllers/ReportePagosController.php',
     'App\\Http\\Controllers\\SitioController' => $baseDir . '/app/Http/Controllers/SitioController.php',
     'App\\Http\\Controllers\\TurnoController' => $baseDir . '/app/Http/Controllers/TurnoController.php',
     'App\\Http\\Controllers\\ZonaDeEstacionamientoController' => $baseDir . '/app/Http/Controllers/ZonaDeEstacionamientoController.php',

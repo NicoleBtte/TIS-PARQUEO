@@ -253,7 +253,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`convocatoria` (
   `fecha_inicio` DATE NOT NULL,
   `fecha_fin` DATE NOT NULL,
   `descripcion_convocatoria` VARCHAR(100) NULL,
-  `fecha_pago` DATE NOT NULL,
+  `fecha_inicio_gestion` DATE NOT NULL,
   `pago_mensual` INT NOT NULL,
   `multa_mensual` INT NOT NULL,
   `numero_cupos` INT NOT NULL,

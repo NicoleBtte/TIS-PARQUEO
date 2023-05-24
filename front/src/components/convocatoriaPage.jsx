@@ -16,7 +16,7 @@ const ConvocatoriaPage = () => {
             "fecha_inicio": "2023-05-01",
             "fecha_fin": "2023-05-02",
             "descripcion_convocatoria": "puerbassssssssss",
-            "fecha_pago": "2023-06-01",
+            "fecha_inicio_gestion": "2023-06-01",
             "numero_cupos": 20,
             "estado_convocatoria": 1
         }*/

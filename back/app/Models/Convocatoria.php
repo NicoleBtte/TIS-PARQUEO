@@ -15,7 +15,7 @@ class Convocatoria extends Model
     public $timestamps = false;
     protected $primaryKey = 'idConvocatoria';
     protected $fillable = ['idConvocatoria', 'titulo', 'fecha_inicio', 'fecha_fin', 'descripcion_convocatoria', 
-    'numero_cupos', 'estado_convocatoria', 'pago_mensual', 'multa_mensual', 'fecha_pago', 'pdf_convocatoria', 
+    'numero_cupos', 'estado_convocatoria', 'pago_mensual', 'multa_mensual', 'fecha_inicio_gestion', 'pdf_convocatoria', 
     'fecha_inicio_gestion', 'fecha_fin_gestion'];
 
     protected $hidden = [

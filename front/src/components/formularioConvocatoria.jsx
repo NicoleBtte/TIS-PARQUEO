@@ -23,7 +23,7 @@ function FormularioConvocatoria() {
     fecha_fin: null,
     fecha_inicio_gestion: null,
     fecha_fin_gestion: null,
-    //fecha_pago: null,
+    //fecha_inicio_gestion: null,
     pago_mensual: null,
     multa_mensaul: null,
   });
@@ -51,7 +51,7 @@ function FormularioConvocatoria() {
     fecha_fin,
     fecha_inicio_gestion,
     fecha_fin_gestion,
-    //fecha_pago,
+    //fecha_inicio_gestion,
     pago_mensual,
     multa_mensual,
   } = formData;
@@ -130,11 +130,11 @@ function FormularioConvocatoria() {
       }
     }
 
-    if (e.target.name === "fecha_pago") {
+    if (e.target.name === "fecha_inicio_gestion") {
       if (!validarFechaPago(e.target.value)) {
-        setValidar({ ...validar, fecha_pagoB: true });
+        setValidar({ ...validar, fecha_inicio_gestionB: true });
       } else {
-        setValidar({ ...validar, fecha_pagoB: false });
+        setValidar({ ...validar, fecha_inicio_gestionB: false });
       }
     }
 
@@ -166,7 +166,7 @@ function FormularioConvocatoria() {
       numero_cupos,
       fecha_inicio,
       fecha_fin,
-      fecha_pago,
+      fecha_inicio_gestion,
       archivoPdf
     );
     alert(
@@ -180,7 +180,7 @@ function FormularioConvocatoria() {
         numero_cupos: parseInt(numero_cupos),
         fecha_inicio: fecha_inicio,
         fecha_fin: fecha_fin,
-        fecha_pago: fecha_pago,
+        fecha_inicio_gestion: fecha_inicio_gestion,
       })
       .then((res) => console.log(res.data))
       .catch((error) => console.log(error));
@@ -199,7 +199,7 @@ function FormularioConvocatoria() {
     formData.append("fecha_fin", fecha_fin);
     formData.append("fecha_inicio_gestion", fecha_inicio_gestion);
     formData.append("fecha_fin_gestion", fecha_fin_gestion);
-    //formData.append("fecha_pago", fecha_pago);
+    //formData.append("fecha_inicio_gestion", fecha_inicio_gestion);
     formData.append("pago_mensual", pago_mensual);
     formData.append("multa_mensual", multa_mensual);
     formData.append("pdf_convocatoria", archivo.archivo);
@@ -349,12 +349,12 @@ function FormularioConvocatoria() {
               </span>
             </div>
             {/*<div className="myform-group">
-              <label htmlFor="fecha_pago">Fecha pago:</label>
+              <label htmlFor="fecha_inicio_gestion">Fecha pago:</label>
               <input
-                name="fecha_pago"
+                name="fecha_inicio_gestion"
                 type="date"
                 className="form-control"
-                id="fecha_pago"
+                id="fecha_inicio_gestion"
                 placeholder="Fecha pago"
                 onChange={handleOnchange}
               ></input>

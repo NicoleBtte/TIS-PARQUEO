@@ -50,9 +50,14 @@ class ClienteController extends Controller
         $registro->estado_pago=0;
         $registro->monto_a_pagar=DB::table('convocatoria')->orderBy('idConvocatoria', 'desc')->first()->pago_mensual;
         $registro->multa=0;//DB::table('convocatoria')->orderBy('id', 'desc')->first()->multa_mensual;
-        $registro->saldo=1200;//DB::table('convocatoria')->orderBy('id', 'desc')->first()->pagoTotal;
+        $inicio=DB::table('convocatoria')->orderBy('idConvocatoria', 'desc')->first()->fecha_inicio_gestion;
+        $fin=DB::table('convocatoria')->orderBy('idConvocatoria', 'desc')->first()->fecha_fin_gestion;
+        $inicio_mes=date('n', strtotime($inicio));
+        $fin_mes=date('n', strtotime($fin));
+        $meses_saldo=$fin_mes-$inicio_mes;
+        $registro->saldo=((DB::table('convocatoria')->orderBy('idConvocatoria', 'desc')->first()->pago_mensual)*($meses_saldo-1));
         $registro->fecha_pagado=null;
-        $registro->fecha_lim_pago=DB::table('convocatoria')->orderBy('idConvocatoria', 'desc')->first()->fecha_pago;
+        $registro->fecha_lim_pago=DB::table('convocatoria')->orderBy('idConvocatoria', 'desc')->first()->fecha_inicio_gestion;
         //$age = DB::table('users')->select('age')->latest('id')->value('age');
         
         $registro->telf_cliente=$request->telefono;
@@ -94,7 +99,7 @@ class ClienteController extends Controller
         $registro->estado_pago=$request->estado;
         $registro->monto_a_pagar=0;
         $registro->fecha_pagado=$request->fechapagado;
-        $registro->fecha_lim_pago=DB::table('convocatoria')->orderBy('id', 'desc')->first()->fecha_pago;
+        $registro->fecha_lim_pago=DB::table('convocatoria')->orderBy('id', 'desc')->first()->fecha_inicio_gestion;
         //$age = DB::table('users')->select('age')->latest('id')->value('age');
         
         $registro->telf_cliente=$request->telfcliente;

@@ -29,8 +29,8 @@ const PagosReportePage = () => {
         const convocatoria = JSON.parse(response.data);
         console.log(convocatoria);
         if (convocatoria && convocatoria.fecha_inicio) {
-          setFechaInicioConvocatoria(new Date(convocatoria.fecha_inicio));
-          setFechaFinConvocatoria(new Date(convocatoria.fecha_fin));
+          setFechaInicioConvocatoria(new Date(convocatoria.fecha_inicio_gestion));
+          setFechaFinConvocatoria(new Date(convocatoria.fecha_fin_gestion));
         }
       })
       .catch((error) => {

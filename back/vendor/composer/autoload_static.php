@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitc3c1d6469f168e613f0e6a7ec9a97f7a
+class ComposerStaticIniteb3fcf60d51f4b2fc9da2c39e28b284e
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -507,6 +507,7 @@ class ComposerStaticInitc3c1d6469f168e613f0e6a7ec9a97f7a
     );
 
     public static $classMap = array (
+        'App\\Console\\Commands\\GestionDeudas' => __DIR__ . '/../..' . '/app/Console/Commands/GestionDeudas.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminController.php',
@@ -514,11 +515,13 @@ class ComposerStaticInitc3c1d6469f168e613f0e6a7ec9a97f7a
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\ConvocatoriaController' => __DIR__ . '/../..' . '/app/Http/Controllers/ConvocatoriaController.php',
         'App\\Http\\Controllers\\EntradasSalidasController' => __DIR__ . '/../..' . '/app/Http/Controllers/EntradasSalidasController.php',
+        'App\\Http\\Controllers\\GestionDeudasController' => __DIR__ . '/../..' . '/app/Http/Controllers/GestionDeudasController.php',
         'App\\Http\\Controllers\\GuardiaController' => __DIR__ . '/../..' . '/app/Http/Controllers/GuardiaController.php',
         'App\\Http\\Controllers\\NotificacionController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotificacionController.php',
         'App\\Http\\Controllers\\OperadorController' => __DIR__ . '/../..' . '/app/Http/Controllers/OperadorController.php',
         'App\\Http\\Controllers\\PagoController' => __DIR__ . '/../..' . '/app/Http/Controllers/PagoController.php',
         'App\\Http\\Controllers\\ParqueoController' => __DIR__ . '/../..' . '/app/Http/Controllers/ParqueoController.php',
+        'App\\Http\\Controllers\\ReportePagosController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReportePagosController.php',
         'App\\Http\\Controllers\\SitioController' => __DIR__ . '/../..' . '/app/Http/Controllers/SitioController.php',
         'App\\Http\\Controllers\\TurnoController' => __DIR__ . '/../..' . '/app/Http/Controllers/TurnoController.php',
         'App\\Http\\Controllers\\ZonaDeEstacionamientoController' => __DIR__ . '/../..' . '/app/Http/Controllers/ZonaDeEstacionamientoController.php',
@@ -5439,10 +5442,10 @@ class ComposerStaticInitc3c1d6469f168e613f0e6a7ec9a97f7a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitc3c1d6469f168e613f0e6a7ec9a97f7a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitc3c1d6469f168e613f0e6a7ec9a97f7a::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitc3c1d6469f168e613f0e6a7ec9a97f7a::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitc3c1d6469f168e613f0e6a7ec9a97f7a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticIniteb3fcf60d51f4b2fc9da2c39e28b284e::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticIniteb3fcf60d51f4b2fc9da2c39e28b284e::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticIniteb3fcf60d51f4b2fc9da2c39e28b284e::$prefixesPsr0;
+            $loader->classMap = ComposerStaticIniteb3fcf60d51f4b2fc9da2c39e28b284e::$classMap;
 
         }, null, ClassLoader::class);
     }

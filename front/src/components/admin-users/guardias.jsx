@@ -46,7 +46,7 @@ const Guardias = () => {
               <h3>Guardias</h3>
               <Button as={Link} to="/admin/guardias/new" className="azulBotonU">Agregar guardia</Button>
             </div>
-            <div className="card animated fadeInDown">
+            <div>
               <table className='mytable'>
                 <thead className='tableHeader'>
                 <tr>

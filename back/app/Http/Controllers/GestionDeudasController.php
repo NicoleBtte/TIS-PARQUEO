@@ -12,7 +12,7 @@ class GestionDeudasController extends Controller
     public function calcularDeudas(){
         $convocatoria=DB::table('convocatoria')->orderBy('idConvocatoria', 'desc')->first();
         $fechaActual=date('Y-m-d');
-        //if(($convocatoria->fecha_pago < $fechaActual) && ($fechaActual < $convocatoria->fecha_fin_gestion)){
+        //if(($convocatoria->fecha_inicio_gestion < $fechaActual) && ($fechaActual < $convocatoria->fecha_fin_gestion)){
             $clientes=Cliente::all();
             foreach($clientes as $cliente){
                 if($cliente->saldo>0){

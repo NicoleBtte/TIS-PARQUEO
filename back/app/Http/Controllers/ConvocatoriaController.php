@@ -33,12 +33,12 @@ class ConvocatoriaController extends Controller
             'estado_convocatoria' => ['required', 'integer', 'min:0', 'max:1'],
             'fecha_inicio' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin'],
             'fecha_fin' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_inicio'],
-            'fecha_pago' => ['required', 'date', 'date_format:Y-m-d'],
+            'fecha_inicio_gestion' => ['required', 'date', 'date_format:Y-m-d'],
             'pago_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
             'multa_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
             'pdf_convocatoria' => ['required', 'file', 'mimes:pdf', 'max:2000'],
-            'fecha_inicio_gestion'=>['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin_gestion'],
-            'fecha_fin_gestion'=>['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_inicio_gestion'],
+            'fecha_inicio_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_fin'],
+            'fecha_fin_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_inicio_gestion'],
         ]);
 
         $ultimaConvocatoria = Convocatoria::orderBy('fecha_fin', 'desc')->first();
@@ -60,7 +60,7 @@ class ConvocatoriaController extends Controller
         $convocatoria->estado_convocatoria = $validatedData['estado_convocatoria'];
         $convocatoria->fecha_inicio = $validatedData['fecha_inicio'];
         $convocatoria->fecha_fin = $validatedData['fecha_fin'];
-        $convocatoria->fecha_pago = $validatedData['fecha_pago'];
+        $convocatoria->fecha_inicio_gestion = $validatedData['fecha_inicio_gestion'];
         $convocatoria->pago_mensual = $validatedData['pago_mensual'];
         $convocatoria->multa_mensual = $validatedData['multa_mensual'];
         $convocatoria->pdf_convocatoria = time() . '_' . $pdf->getClientOriginalName();
@@ -101,11 +101,11 @@ class ConvocatoriaController extends Controller
             'estado_convocatoria' => ['required', 'integer', 'min:0', 'max:1'],
             'fecha_inicio' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin'],
             'fecha_fin' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_inicio'],
-            'fecha_pago' => ['required', 'date'],
+            'fecha_inicio_gestion' => ['required', 'date'],
             'pago_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
             'multa_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
-            'fecha_inicio_gestion'=>['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin_gestion'],
-            'fecha_fin_gestion'=>['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_inicio_gestion'],
+            'fecha_inicio_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_fin'],
+            'fecha_fin_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_inicio_gestion'],
         ]);
         $convocatoria->titulo = $validatedData['titulo'];
         $convocatoria->descripcion_convocatoria = $validatedData['descripcion_convocatoria'];
@@ -113,7 +113,7 @@ class ConvocatoriaController extends Controller
         $convocatoria->estado_convocatoria = $validatedData['estado_convocatoria'];
         $convocatoria->fecha_inicio = $validatedData['fecha_inicio'];
         $convocatoria->fecha_fin = $validatedData['fecha_fin'];
-        $convocatoria->fecha_pago = $validatedData['fecha_pago'];
+        $convocatoria->fecha_inicio_gestion = $validatedData['fecha_inicio_gestion'];
         $convocatoria->pago_mensual = $validatedData['pago_mensual'];
         $convocatoria->multa_mensual = $validatedData['multa_mensual'];
         $convocatoria->fecha_inicio_gestion = $validatedData['fecha_inicio_gestion'];
