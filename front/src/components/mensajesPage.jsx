@@ -12,7 +12,7 @@ const MensajesPage = () => {
     <div className='tablePageContainer'>
      <div className='titleBottonContainer'>
         <h4>Historial de mensajes</h4>
-        <Button className='celesteBoton' as={Link} to="/cliente/enviados">Ver enviados</Button>
+        <Button className='verdeBotonM' as={Link} to="/cliente/enviados">Ver enviados</Button>
       </div>
       <div>
         <HistorialMensajes></HistorialMensajes>

@@ -3,6 +3,8 @@ import { Button, Table } from "react-bootstrap";
 import {Link, useParams, useNavigate} from "react-router-dom";
 import App from '../../App';
 import axiosCliente from '../../axios-client';
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const Clientes = () => {
     const [filas, setFilas] = useState([]);
@@ -30,12 +32,36 @@ const Clientes = () => {
         setLoading(false);
     }
 
+    const generarPDF = () => {
+      const doc = new jsPDF();
+      
+      // Agregar el título al documento
+      doc.setFontSize(18);
+      doc.text("Información de los clientes", 10, 20);
+    
+      // Agregar los datos de la tabla a una matriz
+      const dataTabla = filas.map((registro) => [registro.idcliente, registro.nombre_cliente, registro.telf_cliente, registro.email_cliente]);
+      // Agregar la tabla al documento
+      doc.autoTable({
+        head: [["CI", "Nombre del cliente","Telefono","Email"]],
+        body: dataTabla,
+        startY: 30,
+      });
+  
+      // Guardar el documento como un archivo PDF
+      doc.save("Clientes_Informacion.pdf");
+    };
+  
+
 
     return (
       <>
         <div className='tablePageContainer'>
           <div className='titleBottonContainer'>
             <h4>Clientes</h4>
+          </div>
+          <div className='containerDescargarBoton'>
+            <button className='descargarBoton' onClick={generarPDF}>Descargar PDF</button>
           </div>
           <Table responsive className='mytable'>
             <thead className='tableHeader'>

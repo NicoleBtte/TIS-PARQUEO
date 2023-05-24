@@ -6,6 +6,8 @@ import axiosCliente from '../../axios-client';
 import '../../styles/tableStyle.css'
 import '../../styles/botonesStyle.css'
 import '../../styles/descargarBotonStyle.css'
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const ClienteSitio = () => {
     const [filas, setFilas] = useState([]);
@@ -48,11 +50,38 @@ const ClienteSitio = () => {
       })
     }
 
+    const generarPDF = () => {
+      const doc = new jsPDF();
+      
+      // Agregar el título al documento
+      doc.setFontSize(18);
+      doc.text("Clientes y sitios asignados", 10, 20);
+    
+      // Agregar los datos de la tabla a una matriz
+      const dataTabla = filas.map((registro) => [registro.nombre_cliente, registro.nombre_parqueo, registro.nombre_zona_estacionamiento, registro.numero]);
+      filasAdicionales.forEach(registro => {
+        dataTabla.push([
+          registro.nombre_cliente,
+          texto,
+          texto,
+          texto
+        ]);
+      });
+      // Agregar la tabla al documento
+      doc.autoTable({
+        head: [["Cliente", "Parqueo", "Zona de estacionamiento", "Sitio"]],
+        body: dataTabla,
+        startY: 30,
+      });
+
+      // Guardar el documento como un archivo PDF
+      doc.save("Clientes-Sitios.pdf");
+    };
+
     return (
       <>
-        <div className='titleBottonContainer'>
-            <h3>Clientes</h3>
-            <button className='descargarBoton'>Descargar PDF</button>
+        <div className='containerDescargarBoton'>
+            <button className='descargarBoton' onClick={generarPDF}>Descargar PDF</button>
         </div>
         <Table responsive className='mytable'>
           <thead className='tableHeader'>
@@ -68,7 +97,7 @@ const ClienteSitio = () => {
             <tbody>
             <tr className='misFilas'>
               <td colSpan="5">
-                Loading...
+                Cargando...
               </td>
             </tr>
             </tbody>

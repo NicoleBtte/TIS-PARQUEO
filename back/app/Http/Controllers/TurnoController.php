@@ -74,7 +74,7 @@ class TurnoController extends Controller
                     ->get();
     
                 if ($turnosSolapados->isNotEmpty()) {
-                    $resp='El/Los turno/s solapa con el turno que quiere asignarle al guardia';
+                    $resp='El/Los turno/s solapa con el turno que quiere asignarle al guardia: ';
                     foreach ($turnosSolapados as $turno) {
                         $resp.= $turno->nombre_turno . ", ";
                     }

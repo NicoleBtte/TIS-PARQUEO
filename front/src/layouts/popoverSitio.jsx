@@ -10,6 +10,7 @@ const PopoverSitio = () => {
 
     useEffect(() => {
         getInfo();
+        console.log('mi p',miParqueo);
       }, [])
 
 
@@ -21,7 +22,7 @@ const PopoverSitio = () => {
         }
         axiosCliente.get('/miSitio', { params: payload })
             .then(({ data }) => {
-                if(data.data.lenght!==0){
+                if(data.lenght!==0){
                   console.log('El data de mi sitio es',data)
                   setMiParqueo(JSON.parse(data))
                   setLoading(false)

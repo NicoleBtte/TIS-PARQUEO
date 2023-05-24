@@ -70,7 +70,7 @@ const ResponderForm = () => {
         {({ errors, touched }) => (
             <Form className='formulario'>
                 <div className="myform-group">
-                  <label htmlFor="titulo">Titulo:</label>
+                  <label htmlFor="titulo">Tema:</label>
                   <Field
                     type="text" 
                     id="titulo" 
@@ -79,7 +79,7 @@ const ResponderForm = () => {
                   <ErrorMessage name="titulo" component={() => (<div className="error">{errors.titulo}</div>)} />
                 </div>
                 <div className="myform-group">
-                  <label htmlFor="ci">Descripcion:</label>
+                  <label htmlFor="ci">Mensaje:</label>
                   <Field
                     as="textarea"
                     type="text" 

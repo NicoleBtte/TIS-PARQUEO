@@ -6,6 +6,8 @@ import MensajeModal from './mensaje';
 import axiosCliente from '../../axios-client';
 import '../../styles/tableStyle.css';
 import '../../styles/tablePageStyle.css';
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const HistorialQuejas = () => {
   const [filas, setFilas] = useState([]);
@@ -17,24 +19,6 @@ const HistorialQuejas = () => {
   useEffect(() => {
     getFilas();
   }, []);
-
-  // Arreglo de objetos con datos aleatorios
-  /*const mensajes = [
-    {
-      idemisor: 1,
-      fecha: "2022-01-01",
-      titulo: "Mensaje de prueba 1",
-      descripcion: "Esta es una descripcion de prueba para el mensaje 1",
-      emisor: "Juan Pérez"
-    },
-    {
-      idemisor: 2,
-      fecha: "2022-02-15",
-      titulo: "Mensaje de prueba 2",
-      descripcion: "Esta es una descripcion de prueba para el mensaje 2",
-      emisor: "María González"
-    }
-  ];*/
 
   const getFilas = () => {
     const payload ={
@@ -64,13 +48,36 @@ const HistorialQuejas = () => {
     }
   }, [mensajeSeleccionado]);
 
+  const generarPDF = () => {
+    const doc = new jsPDF();
+    
+    // Agregar el título al documento
+    doc.setFontSize(18);
+    doc.text("Historial de quejas", 10, 20);
+  
+    // Agregar los datos de la tabla a una matriz
+    const dataTabla = filas.map((registro) => [registro.fecha_notif, registro.emisor_notif, registro.titulo_notif, registro.mensaje_notif]);
+    // Agregar la tabla al documento
+    doc.autoTable({
+      head: [["Fecha", "Emisor","Tema","Mensaje"]],
+      body: dataTabla,
+      startY: 30,
+    });
+
+    // Guardar el documento como un archivo PDF
+    doc.save("Historial_Quejas.pdf");
+  };
+
   return (
     <>
+      <div className='containerDescargarBoton'>
+         <button className='descargarBoton' onClick={generarPDF}>Descargar PDF</button>
+      </div>
       <Table responsive className='mytable'>
         <thead className='tableHeader'>
           <tr>
             <th>Fecha</th>
-            <th>Titulo</th>
+            <th>Tema</th>
             <th>Emisor</th>
             <th>Acciones</th>
           </tr>
@@ -78,7 +85,7 @@ const HistorialQuejas = () => {
         {loading && (
           <tbody>
             <tr className='misFilas'>
-              <td colSpan="5">Loading...</td>
+              <td colSpan="5">Cargando...</td>
             </tr>
           </tbody>
         )}

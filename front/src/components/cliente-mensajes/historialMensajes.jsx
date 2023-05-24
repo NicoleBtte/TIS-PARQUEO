@@ -52,7 +52,7 @@ const HistorialMensajes = () => {
           <thead className='tableHeader'>
             <tr>
               <th>Fecha</th>
-              <th>Titulo</th>
+              <th>Tema</th>
               <th>Emisor</th>
               <th>Acciones</th>
             </tr>

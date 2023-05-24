@@ -37,8 +37,8 @@ const AsignarTurno = () => {
 
     axiosCliente.get('/verificarTurno', {params:payload})
       .then((data) => {
-        if(!JSON.parse(data)==='Fue asignado exitosamente'){
-          return window.confirm("ERROR")
+        if(JSON.parse(data.data).includes('El/Los turno/s solapa con el turno que quiere asignarle al guardia')){
+          return window.confirm(JSON.parse(data.data))
         }else{
           navigate('/admin/guardiasTurnos');
         }
@@ -49,8 +49,6 @@ const AsignarTurno = () => {
           setErrors(response.data.errors)
         }
       })
-    
-    navigate('/admin/guardiasTurnos');
 
   }
 

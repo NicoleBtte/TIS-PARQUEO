@@ -44,6 +44,7 @@ const RedactarAdmin = () => {
           //que hacer despues
           window.alert("Mensaje enviado");
           console.log(data);
+          navigate('/admin/mensajes');
         })
         .catch((err) => {
           const response = err.response;
@@ -94,7 +95,7 @@ const RedactarAdmin = () => {
                       </select>
                   </div>
                   <div className="myform-group">
-                    <label htmlFor="titulo">Título del asunto:</label>
+                    <label htmlFor="titulo">Tema:</label>
                     <Field type="text" id="titulo" name="titulo" />
                     <ErrorMessage
                       name="titulo"
@@ -104,7 +105,7 @@ const RedactarAdmin = () => {
                     />
                   </div>
                   <div className="myform-group">
-                    <label htmlFor="ci">Descripción:</label>
+                    <label htmlFor="ci">Mensaje:</label>
                     <Field
                       as="textarea"
                       type="textarea"

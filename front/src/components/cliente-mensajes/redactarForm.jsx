@@ -123,7 +123,7 @@ const RedactarForm = () => {
                   />
                 </div>
                 <div className="myform-group">
-                  <label htmlFor="titulo">Título del asunto:</label>
+                  <label htmlFor="titulo">Tema:</label>
                   <Field type="text" id="titulo" name="titulo" />
                   <ErrorMessage
                     name="titulo"
@@ -133,7 +133,7 @@ const RedactarForm = () => {
                   />
                 </div>
                 <div className="myform-group">
-                  <label htmlFor="ci">Descripción:</label>
+                  <label htmlFor="ci">Mensaje:</label>
                   <Field
                     as="textarea"
                     type="textarea"
