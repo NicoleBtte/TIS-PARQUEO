@@ -33,7 +33,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`parqueo` (
   `idParqueo` INT NOT NULL AUTO_INCREMENT,
   `nombre_parqueo` VARCHAR(15) NOT NULL,
-  `administrador_idadministrador` INT NOT NULL,
+  `administrador_idadministrador` INT NULL,
   `mapa_parqueo` VARCHAR(100) NULL,
   `numero_de_zonas` INT NULL,
   PRIMARY KEY (`idParqueo`),
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`guardia` (
   `idguardia` INT NOT NULL AUTO_INCREMENT,
   `nombre_guardia` VARCHAR(45) NULL,
   `telefono_guardia` VARCHAR(45) NULL,
-  `zonaEstacionamiento_idzonaEstacionamiento` INT NOT NULL,
+  `zonaEstacionamiento_idzonaEstacionamiento` INT NULL,
   `pass_guardia` VARCHAR(500) NULL,
   PRIMARY KEY (`idguardia`),
   INDEX `fk_guardia_zonaEstacionamiento1_idx` (`zonaEstacionamiento_idzonaEstacionamiento` ASC)  ,
@@ -217,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`turno` (
   `dia_turno` VARCHAR(60) NULL,
   `hora_inicio_turno` TIME NULL,
   `hora_fin_turno` TIME NULL,
-  `nombre_turno` VARCHAR(15) NULL,
+  `nombre_turno` VARCHAR(50) NULL,
   PRIMARY KEY (`idturno`))
 ENGINE = InnoDB;
 
@@ -233,6 +233,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`transaccion` (
   `devolucion` INT NULL,
   `meses_pagados` VARCHAR(100) NULL,
   `comprobante` VARCHAR(100) NULL,
+  `tipo_de_pago` INT NULL,
   `cliente_idcliente` INT NOT NULL,
   PRIMARY KEY (`idtransaccion`),
   INDEX `fk_transaccion_cliente1_idx` (`cliente_idcliente` ASC)  ,
@@ -253,7 +254,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`convocatoria` (
   `fecha_inicio` DATE NOT NULL,
   `fecha_fin` DATE NOT NULL,
   `descripcion_convocatoria` VARCHAR(100) NULL,
-  `fecha_inicio_gestion` DATE NOT NULL,
   `pago_mensual` INT NOT NULL,
   `multa_mensual` INT NOT NULL,
   `numero_cupos` INT NOT NULL,
