@@ -23,7 +23,7 @@
 }
 
 .modal-body {
-  background: rgba(82, 144, 232, 0.1);
+  background: rgba(82 144, 232, 0.1);
 }
 
 .container-1 {
@@ -175,6 +175,7 @@ body {
 }
 .row-reporte {
   display: flex;
+  margin-top: 20px;
 }
 .col-reporte {
   flex: 1;

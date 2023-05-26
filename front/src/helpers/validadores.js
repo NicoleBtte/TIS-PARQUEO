@@ -84,23 +84,6 @@ export function validarNumeroSitios(numeroSitios) {
   return true;
 }
 
-export function validarFechaPago(fechaPago) {
-  // Convertir el valor a número entero
-  fechaPago = parseInt(fechaPago);
-
-  // Verificar que el valor sea un número válido
-  if (isNaN(fechaPago)) {
-    return false;
-  }
-
-  // Verificar que el número sea mayor o igual a 1
-  if (fechaPago < 1 || fechaPago > 28) {
-    return false;
-  }
-
-  return true;
-}
-
 export function validarPagoMensual(pagoMensual) {
   // Convertir el valor a número entero
   pagoMensual = parseInt(pagoMensual);
@@ -129,37 +112,6 @@ export function validarMultaMensual(multaMensual) {
 
   // Verificar que el número sea mayor o igual a 1
   if (multaMensual < 0 || multaMensual > 1000) {
-    return false;
-  }
-
-  return true;
-}
-
-export function validarFechaInicio(fecha) {
-  const fechaActual = moment().format("YYYY-MM-DD");
-  const fechaIngresada = moment(fecha).format("YYYY-MM-DD");
-
-  if (fechaIngresada < fechaActual) {
-    return false;
-  } else {
-    return true;
-  }
-}
-
-export function validarFechaFin(fecha, fechaInicio = null) {
-  // Obtener la fecha actual
-  const fechaActual = moment().startOf("day");
-
-  // Validar que la fecha sea válida y no esté en el pasado
-  if (
-    !moment(fecha, "YYYY-MM-DD", true).isValid() ||
-    moment(fecha, "YYYY-MM-DD").isBefore(fechaActual)
-  ) {
-    return false;
-  }
-
-  // Validar que la fecha de inicio no sea mayor a la fecha de fin (si se especificó la fecha de inicio)
-  if (fechaInicio && moment(fecha, "YYYY-MM-DD").isBefore(fechaInicio)) {
     return false;
   }
 

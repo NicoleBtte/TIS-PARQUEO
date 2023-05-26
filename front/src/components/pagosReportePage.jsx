@@ -29,7 +29,9 @@ const PagosReportePage = () => {
         const convocatoria = JSON.parse(response.data);
         console.log(convocatoria);
         if (convocatoria && convocatoria.fecha_inicio) {
-          setFechaInicioConvocatoria(new Date(convocatoria.fecha_inicio_gestion));
+          setFechaInicioConvocatoria(
+            new Date(convocatoria.fecha_inicio_gestion)
+          );
           setFechaFinConvocatoria(new Date(convocatoria.fecha_fin_gestion));
         }
       })
@@ -230,8 +232,8 @@ const PagosReportePage = () => {
 
   return (
     <Container className="tablePageContainer">
-      <div className="d-flex-between my-4 p-3">
-        <h1 className="tittleContainer">Reporte de pagos</h1>
+      <div className="titleBottonContainer">
+        <h2 className="tittleContainer">Reporte de pagos</h2>
         <div>
           <Button
             className="link-none-styles btn-personal py-2"
@@ -240,6 +242,11 @@ const PagosReportePage = () => {
             Generar reporte
           </Button>
         </div>
+      </div>
+      <div className="containerDescargarBoton">
+        <button className="descargarBoton" onClick={generarPDF}>
+          Descargar reporte
+        </button>
       </div>
       <div className="row-reporte">
         <div className="col-reporte1" id="firts">
@@ -317,17 +324,6 @@ const PagosReportePage = () => {
         </div>
       </div>
       {/* ... */}
-      <div className="center-button">
-        {/*<button
-          className="link-none-styles btn-personal py-2"
-          onClick={enviarReporte}
-        >
-          Enviar Reporte
-              </button>*/}
-        <Button className="celesteBotonPdf autoWidth" onClick={generarPDF}>
-          Descargar reporte
-        </Button>
-      </div>
     </Container>
   );
 };
