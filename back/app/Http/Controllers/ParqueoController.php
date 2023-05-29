@@ -26,8 +26,7 @@ class ParqueoController extends Controller
         }
     }
 
-    public function zona($numero_de_zonas){
-        $parqueo_idParqueo= DB::table('parqueo')->latest('idParqueo')->first()->idParqueo;
+    public function zona($numero_de_zonas,$parqueo_idParqueo){
         $zona = new ZonaDeEstacionamientoController;
         $zona->registroZonas($parqueo_idParqueo, $numero_de_zonas);
     }
@@ -52,7 +51,7 @@ class ParqueoController extends Controller
 
         try {
             $parqueo->save();
-            $this->zona($numZonas);
+            $this->zona($numZonas,DB::table('parqueo')->latest('idParqueo')->first()->idParqueo);
             return response()->json([
                 'success' => true,
                 'message' => 'Parqueo creado con éxito',
@@ -79,17 +78,33 @@ class ParqueoController extends Controller
     public function update(Request $request, $idParqueo)
     {
         $parqueo = Parqueo::findOrFail($idParqueo);
-        
+        $numeroActualZonas = $parqueo->numero_de_zonas;
         $validatedData = $request->validate([
             'nombre_parqueo' => ['required', 'string', 'min:5', 'max:16'],
             'numero_de_zonas' => ['required', 'integer', 'min:0'],
-            //'mapa_parqueo' => ['nullable', 'string']
+            'mapa_parqueo' => ['nullable', 'string']
         ]);
 
         $parqueo->nombre_parqueo = $validatedData['nombre_parqueo'];
         $parqueo->numero_de_zonas = $validatedData['numero_de_zonas'];
-        //$parqueo->mapa_parqueo = $validatedData['mapa_parqueo'];
+        $numZonas= $request ->numero_de_zonas;
 
+        $zona = new ZonaDeEstacionamientoController;
+        $zonaEliminar = new ZonaDeEstacionamiento();
+        if ($numeroActualZonas > $numZonas) {
+            while ($numeroActualZonas > $numZonas){
+                $zonaEliminar = ZonaDeEstacionamiento::where('parqueo_idparqueo', $idParqueo)
+                ->where('nombre_zona_estacionamiento', 'zona '.$numeroActualZonas)
+                ->get();
+                if ($zonaEliminar) {
+                    $zona->destroy($zonaEliminar[0]->idzonaEstacionamiento);
+                }
+                $numeroActualZonas--;
+            } 
+        }else{
+            $this->zona($numZonas,$idParqueo);
+        }
+        
         if($parqueo!== null) {
             $parqueo->save();
             return response()->json(['message' => 'Parqueo actualizado correctamente.']);
