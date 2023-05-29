@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axiosClient from "../axios-client.js";
 import { Container } from "react-bootstrap";
 import {
@@ -6,7 +6,6 @@ import {
   validarTitulo,
   validarNumeroSitios,
   validarFechas,
-  validarFechaPago,
   validarPagoMensual,
   validarMultaMensual,
 } from "../helpers/validadores";
@@ -28,9 +27,6 @@ function FormularioConvocatoria() {
     multa_mensaul: null,
   });
 
-  //Swal.fire('', 'El registro se ha completado exitoso', '');
-  //Swal.fire('', 'El/los datos(s) ha(n) sido ingresados incorrectamente', 'error');
-
   const [validar, setValidar] = useState({
     tituloB: false,
     descripcion_convocatoriaB: false,
@@ -51,7 +47,6 @@ function FormularioConvocatoria() {
     fecha_fin,
     fecha_inicio_gestion,
     fecha_fin_gestion,
-    //fecha_inicio_gestion,
     pago_mensual,
     multa_mensual,
   } = formData;
@@ -65,14 +60,13 @@ function FormularioConvocatoria() {
   };
 
   const [minFechaFin, setMinFechaFin] = useState("");
+  const [minFechaFinG, setMinFechaFinG] = useState("");
 
   const handleOnChangeFechaInicio = (e) => {
-    if (e.target.name === "fecha_inicio") {
-      if (!validarFechas(e.target.value)) {
-        setValidar({ ...validar, fecha_inicioB: true });
-      } else {
-        setValidar({ ...validar, fecha_inicioB: false });
-      }
+    if (!validarFechas(e.target.value)) {
+      setValidar({ ...validar, fecha_inicioB: true });
+    } else {
+      setValidar({ ...validar, fecha_inicioB: false });
     }
     const { name, value } = e.target;
     setFormData({
@@ -81,6 +75,29 @@ function FormularioConvocatoria() {
     });
     setMinFechaFin(value);
   };
+
+  const handleOnChangeFechaInicioG = (e) => {
+    if (e.target.name === "fecha_inicio_gestion") {
+      if (!validarFechas(e.target.value)) {
+        setValidar({ ...validar, fecha_inicio_gestionB: true });
+      } else if (
+        validarFechas(e.target.value) &&
+        fecha_fin &&
+        e.target.value <= fecha_fin
+      ) {
+        setValidar({ ...validar, fecha_inicio_gestionB: true });
+      } else {
+        setValidar({ ...validar, fecha_inicio_gestionB: false });
+      }
+    }
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    setMinFechaFinG(value);
+  };
+
   //
   const handleOnchange = (e) => {
     if (e.target.name === "titulo") {
@@ -107,37 +124,6 @@ function FormularioConvocatoria() {
       }
     }
 
-    if (e.target.name === "fecha_fin") {
-      if (!validarFechas(e.target.value)) {
-        setValidar({ ...validar, fecha_finB: true });
-      } else {
-        setValidar({ ...validar, fecha_finB: false });
-      }
-    }
-    if (e.target.name === "fecha_incio_parqueo") {
-      if (!validarFechas(e.target.value)) {
-        setValidar({ ...validar, fecha_inicio_gestionB: true });
-      } else {
-        setValidar({ ...validar, fecha_inicio_gestionB: false });
-      }
-    }
-
-    if (e.target.name === "fecha_fin_gestion") {
-      if (!validarFechas(e.target.value)) {
-        setValidar({ ...validar, fecha_fin_gestionB: true });
-      } else {
-        setValidar({ ...validar, fecha_fin_gestionB: false });
-      }
-    }
-
-    if (e.target.name === "fecha_inicio_gestion") {
-      if (!validarFechaPago(e.target.value)) {
-        setValidar({ ...validar, fecha_inicio_gestionB: true });
-      } else {
-        setValidar({ ...validar, fecha_inicio_gestionB: false });
-      }
-    }
-
     if (e.target.name === "pago_mensual") {
       if (!validarPagoMensual(e.target.value)) {
         setValidar({ ...validar, pago_mensualB: true });
@@ -158,35 +144,6 @@ function FormularioConvocatoria() {
     setFormData({ ...formData, [e.target.name]: e.target.value }); //
   };
 
-  /*const handleSubmit = (e) => {
-    console.log(
-      titulo,
-      descripcion_convocatoria,
-      estado_convocatoria,
-      numero_cupos,
-      fecha_inicio,
-      fecha_fin,
-      fecha_inicio_gestion,
-      archivoPdf
-    );
-    alert(
-      `datos formularios:::, ${titulo}, ${descripcion_convocatoria}, ${estado_convocatoria}, ${numero_cupos}, ${fecha_inicio}, ${fecha_fin}`
-    );
-    axiosClient
-      .post("/convocatoria", {
-        titulo: titulo,
-        descripcion_convocatoria: descripcion_convocatoria,
-        estado_convocatoria: estado_convocatoria,
-        numero_cupos: parseInt(numero_cupos),
-        fecha_inicio: fecha_inicio,
-        fecha_fin: fecha_fin,
-        fecha_inicio_gestion: fecha_inicio_gestion,
-      })
-      .then((res) => console.log(res.data))
-      .catch((error) => console.log(error));
-    e.preventDefault();
-  };*/
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -206,13 +163,21 @@ function FormularioConvocatoria() {
 
     axiosClient
       .post("/convocatoria", formData)
-      .then((res) => {
-        console.log(res.data);
-        alert("La convocatoria ha sido creada exitosamente");
+      .then((response) => {
+        if (response.data.success) {
+          const successMessage = response.data.message;
+          alert(successMessage);
+        } else {
+          const errorMessage = response.data.message;
+          alert(errorMessage);
+        }
       })
       .catch((error) => {
-        console.log(error);
-        alert("Datos invalidos al crear convocatoria");
+        if (error.response) {
+          console.log(error.response.data.message);
+        } else {
+          console.log("Datos invalidos al crear la convocatoria");
+        }
       });
   };
 
@@ -297,6 +262,11 @@ function FormularioConvocatoria() {
                 min={new Date().toISOString().split("T")[0]}
                 onChange={handleOnChangeFechaInicio}
               ></input>
+              <span
+                className={`spanError ${validar.fecha_inicioB ? "show" : ""}`}
+              >
+                {validar.fecha_inicioB ? "Hay solapamiento de fechas" : ""}
+              </span>
             </div>
             <div className="myform-group">
               <label htmlFor="fecha_fin">Fecha fin de registro:</label>
@@ -309,15 +279,10 @@ function FormularioConvocatoria() {
                 onChange={handleOnchange}
                 min={minFechaFin}
               ></input>
-              <span className="spanError">
-                {validar.fecha_finB
-                  ? "La fecha fin no puede ser menor a la fecha inicio"
-                  : ""}
-              </span>
             </div>
             <div className="myform-group">
               <label htmlFor="fecha_inicio_gestion">
-                Fecha inicio de uso del parqueo:
+                Fecha inicio gestion:
               </label>
               <input
                 name="fecha_inicio_gestion"
@@ -325,14 +290,12 @@ function FormularioConvocatoria() {
                 className="form-control"
                 id="fecha_inicio_gestion"
                 placeholder="Fecha Inicio"
-                min={new Date().toISOString().split("T")[0]}
-                onChange={handleOnChangeFechaInicio}
+                min={fecha_fin}
+                onChange={handleOnChangeFechaInicioG}
               ></input>
             </div>
             <div className="myform-group">
-              <label htmlFor="fecha_fin_gestion">
-                Fecha fin de uso del parqueo:
-              </label>
+              <label htmlFor="fecha_fin_gestion">Fecha fin gestion:</label>
               <input
                 name="fecha_fin_gestion"
                 type="date"
@@ -340,25 +303,14 @@ function FormularioConvocatoria() {
                 id="fecha_fin_gestion"
                 placeholder="Fecha fin"
                 onChange={handleOnchange}
-                min={minFechaFin}
+                min={minFechaFinG}
               ></input>
               <span className="spanError">
                 {validar.fecha_fin_gestionB
-                  ? "La fecha fin no puede ser menor a la fecha inicio"
+                  ? "La fecha fin gestion no puede ser menor a la fecha inicio gestion"
                   : ""}
               </span>
             </div>
-            {/*<div className="myform-group">
-              <label htmlFor="fecha_inicio_gestion">Fecha pago:</label>
-              <input
-                name="fecha_inicio_gestion"
-                type="date"
-                className="form-control"
-                id="fecha_inicio_gestion"
-                placeholder="Fecha pago"
-                onChange={handleOnchange}
-              ></input>
-                </div>*/}
             <div className="myform-group">
               <label htmlFor="pago_mensual">Pago Mensual:</label>
               <input

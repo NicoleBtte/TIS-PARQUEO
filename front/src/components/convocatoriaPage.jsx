@@ -5,21 +5,12 @@ import "../styles/estilos.css";
 import "../styles/tableStyle.css";
 import "../styles/convocatoriaBotones.css";
 import "../styles/tablePageStyle.css";
+import "../styles/descargarBotonStyle.css";
 import axiosClient from "../axios-client.js";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
 const ConvocatoriaPage = () => {
-  /*{
-            "idConvocatoria": 1,
-            "titulo": "convocatoria prueba",
-            "fecha_inicio": "2023-05-01",
-            "fecha_fin": "2023-05-02",
-            "descripcion_convocatoria": "puerbassssssssss",
-            "fecha_inicio_gestion": "2023-06-01",
-            "numero_cupos": 20,
-            "estado_convocatoria": 1
-        }*/
   const [convocatorias, setConvocatorias] = React.useState([]);
 
   function downloadPDF(idConvocatoria) {
@@ -49,7 +40,7 @@ const ConvocatoriaPage = () => {
     const doc = new jsPDF();
     const tableData = [];
 
-    doc.text("Reporte Convocatorias", 10, 20);
+    doc.text("Reporte de convocatorias", 10, 20);
 
     // Agregar encabezados de columna a tableData
     const headers = [
@@ -79,29 +70,12 @@ const ConvocatoriaPage = () => {
     doc.autoTable({
       head: [tableData[0]],
       body: tableData.slice(1),
+      startY: 30,
     });
 
     // Descargar el archivo PDF
     doc.save("reporte_convocatorias.pdf");
   }
-
-  /*function downloadPDF(idConvocatoria) {
-    axiosClient({
-      url: "/descargarConvocatoria",
-      method: "POST",
-      responseType: "blob",
-      data: {
-        idConvocatoria: id,
-      },
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download");
-      document.body.appendChild(link);
-      link.click();
-    });
-  }*/
 
   function deleteConvocatoria(id) {
     setConvocatorias(
@@ -109,7 +83,10 @@ const ConvocatoriaPage = () => {
     );
     axiosClient
       .delete("/convocatoria/" + id, {})
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        const message = res.data.message;
+        alert(message);
+      })
       .catch((error) => console.log(error));
   }
 
@@ -147,7 +124,19 @@ const ConvocatoriaPage = () => {
 
   return (
     <Container className="tablePageContainer">
-      <h1 className="tittleContainer">Lista convocatorias</h1>
+      <div className="titleBottonContainer">
+        <h2 className="tittleContainer">Lista convocatorias</h2>
+        <Link to={"/admin/formulario-convocatoria"}>
+          <Button className="botones-cs" variant="success">
+            Crear Convocatoria{" "}
+          </Button>
+        </Link>
+      </div>
+      <div className="containerDescargarBoton">
+        <button className="descargarBoton" onClick={descargarPDF}>
+          Descargar reporte
+        </button>
+      </div>
       <Table responsive className="mytable">
         <thead className="tableHeader">
           <tr>
@@ -211,16 +200,6 @@ const ConvocatoriaPage = () => {
           ))}
         </tbody>
       </Table>
-      <div className="content-rigth">
-        <Button className="celesteBotonPdf" onClick={descargarPDF}>
-          Descargar reporte
-        </Button>
-        <Link to={"/admin/formulario-convocatoria"}>
-          <Button className="botones-cs" variant="success">
-            Crear Convocatoria{" "}
-          </Button>
-        </Link>
-      </div>
     </Container>
   );
 };

@@ -64,7 +64,11 @@ function PagoForm() {
         .post("/pagar", formData)
         .then((res) => {
           console.log(res.data);
-          alert("El pago se registró exitosamente");
+          if (res.data.message) {
+            alert(res.data.message); // Mostrar el mensaje de error
+          } else {
+            alert("El pago se registró exitosamente");
+          }
         })
         .catch((error) => {
           console.log(error);

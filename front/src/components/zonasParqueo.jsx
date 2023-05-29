@@ -8,7 +8,8 @@ import {
   validarNumeroSitios,
   validarDescripcionZona,
 } from "../helpers/validadores";
-//import { useParams } from "react-router-dom";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 export default function ZonasPar() {
   const [zonas, setZonas] = React.useState([]);
@@ -43,6 +44,47 @@ export default function ZonasPar() {
     tipo_de_piso,
     descripcion,
   } = modal;
+
+  function descargarPDF() {
+    const doc = new jsPDF();
+    const tittle = parqueoData.nombre_parqueo;
+    const tableData = [];
+
+    doc.text("Reporte de zonas de " + tittle, 10, 20);
+
+    // Agregar encabezados de columna a tableData
+    const headers = [
+      "Nombre zona",
+      "Techo",
+      "Arboles cerca",
+      "Tipo de piso",
+      "Descripcion",
+    ];
+    tableData.push(headers);
+
+    // Agregar filas de datos a tableData
+    zonas.forEach((zona) => {
+      const rowData = [
+        zona.nombre_zona_estacionamiento,
+        zona.techo === 0 ? "No" : "Si",
+        zona.arboles_cerca === 0 ? "No" : "Si",
+        zona.tipo_de_piso,
+        zona.descripcion,
+      ];
+      tableData.push(rowData);
+    });
+
+    // Agregar tabla al documento PDF
+    doc.autoTable({
+      head: [tableData[0]],
+      body: tableData.slice(1),
+      startY: 30,
+    });
+
+    // Descargar el archivo PDF
+    const fileName = `reporte_${parqueoData.nombre_parqueo}.pdf`;
+    doc.save(fileName);
+  }
 
   const handleOnchange = (e) => {
     if (e.target.name === "numero_de_sitios") {
@@ -139,8 +181,15 @@ export default function ZonasPar() {
   const [caracteristicas, setCaracteristicas] = useState(false);
 
   return (
-    <Container>
-      <h1 textAlign={"center"}>{parqueoData.nombre_parqueo}</h1>{" "}
+    <Container className="tablePageContainer">
+      <h2 className="tittleContainer" textAlign={"center"}>
+        {parqueoData.nombre_parqueo}
+      </h2>{" "}
+      <div className="containerDescargarBoton">
+        <button className="descargarBoton" onClick={descargarPDF}>
+          Descargar reporte
+        </button>
+      </div>
       <Modal
         show={modal.open}
         onHide={() => setModal({ ...modal, open: false })}

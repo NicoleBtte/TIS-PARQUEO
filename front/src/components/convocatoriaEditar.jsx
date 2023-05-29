@@ -6,7 +6,6 @@ import {
   validarTitulo,
   validarNumeroSitios,
   validarFechas,
-  validarFechaPago,
   validarPagoMensual,
   validarMultaMensual,
 } from "../helpers/validadores";
@@ -34,9 +33,8 @@ function ConvocatoriaEditar() {
     archivoPdf: null,
     fecha_inicio_: null,
     fecha_fin: null,
-    fecha_inicio_parqueo: null,
-    fecha_fin_parqueo: null,
     fecha_inicio_gestion: null,
+    fecha_fin_gestion: null,
     pago_mensual: null,
     multa_mensaul: null,
   });
@@ -65,22 +63,20 @@ function ConvocatoriaEditar() {
     archivoPdf,
     fecha_inicio,
     fecha_fin,
-    fecha_inicio_parqueo,
-    fecha_fin_parqueo,
     fecha_inicio_gestion,
+    fecha_fin_gestion,
     pago_mensual,
     multa_mensual,
   } = formData;
 
   const [minFechaFin, setMinFechaFin] = useState("");
+  const [minFechaFinG, setMinFechaFinG] = useState("");
 
   const handleOnChangeFechaInicio = (e) => {
-    if (e.target.name === "fecha_inicio") {
-      if (!validarFechas(e.target.value)) {
-        setValidar({ ...validar, fecha_inicioB: true });
-      } else {
-        setValidar({ ...validar, fecha_inicioB: false });
-      }
+    if (!validarFechas(e.target.value)) {
+      setValidar({ ...validar, fecha_inicioB: true });
+    } else {
+      setValidar({ ...validar, fecha_inicioB: false });
     }
     const { name, value } = e.target;
     setFormData({
@@ -88,6 +84,28 @@ function ConvocatoriaEditar() {
       [name]: value,
     });
     setMinFechaFin(value);
+  };
+
+  const handleOnChangeFechaInicioG = (e) => {
+    if (e.target.name === "fecha_inicio_gestion") {
+      if (!validarFechas(e.target.value)) {
+        setValidar({ ...validar, fecha_inicio_gestionB: true });
+      } else if (
+        validarFechas(e.target.value) &&
+        fecha_fin &&
+        e.target.value <= fecha_fin
+      ) {
+        setValidar({ ...validar, fecha_inicio_gestionB: true });
+      } else {
+        setValidar({ ...validar, fecha_inicio_gestionB: false });
+      }
+    }
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    setMinFechaFinG(value);
   };
   //
   const handleOnchange = (e) => {
@@ -115,38 +133,6 @@ function ConvocatoriaEditar() {
       }
     }
 
-    if (e.target.name === "fecha_fin") {
-      if (!validarFechas(e.target.value)) {
-        setValidar({ ...validar, fecha_finB: true });
-      } else {
-        setValidar({ ...validar, fecha_finB: false });
-      }
-    }
-
-    if (e.target.name === "fecha_incio_parqueo") {
-      if (!validarFechas(e.target.value)) {
-        setValidar({ ...validar, fecha_inicio_parqueoB: true });
-      } else {
-        setValidar({ ...validar, fecha_inicio_parqueoB: false });
-      }
-    }
-
-    if (e.target.name === "fecha_fin_parqueo") {
-      if (!validarFechas(e.target.value)) {
-        setValidar({ ...validar, fecha_fin_parqueoB: true });
-      } else {
-        setValidar({ ...validar, fecha_fin_parqueoB: false });
-      }
-    }
-
-    if (e.target.name === "fecha_inicio_gestion") {
-      if (!validarFechaPago(e.target.value)) {
-        setValidar({ ...validar, fecha_inicio_gestionB: true });
-      } else {
-        setValidar({ ...validar, fecha_inicio_gestionB: false });
-      }
-    }
-
     if (e.target.name === "pago_mensual") {
       if (!validarPagoMensual(e.target.value)) {
         setValidar({ ...validar, pago_mensualB: true });
@@ -164,7 +150,7 @@ function ConvocatoriaEditar() {
     }
 
     console.log([e.target.name], e.target.value);
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value }); //
   };
 
   const params = useParams();
@@ -177,9 +163,8 @@ function ConvocatoriaEditar() {
       numero_cupos,
       fecha_inicio,
       fecha_fin,
-      fecha_inicio_parqueo,
-      fecha_fin_parqueo,
       fecha_inicio_gestion,
+      fecha_fin_gestion,
       pago_mensual,
       multa_mensual,
       archivoPdf
@@ -193,21 +178,26 @@ function ConvocatoriaEditar() {
         numero_cupos: numero_cupos,
         fecha_inicio: fecha_inicio,
         fecha_fin: fecha_fin,
-        fecha_inicio_parqueo: fecha_inicio_parqueo,
-        fecha_fin_parqueo: fecha_fin_parqueo,
         fecha_inicio_gestion: fecha_inicio_gestion,
+        fecha_fin_gestion: fecha_fin_gestion,
         pago_mensual: pago_mensual,
         multa_mensual: multa_mensual,
       })
-      .then((res) => {
-        console.log(res.data);
-        alert("La convocatoria se actualizo correctamente");
+      .then((response) => {
+        if (response.data.success) {
+          const successMessage = response.data.message;
+          alert(successMessage);
+        } else {
+          const errorMessage = response.data.message;
+          alert(errorMessage);
+        }
       })
       .catch((error) => {
-        console.log(error);
-        alert(
-          "No se pudo actualizar la convocatoria, revisa que hayas cambiado bien los datos"
-        );
+        if (error.response) {
+          console.log(error.response.data.message);
+        } else {
+          console.log("Datos invalidos al editar la convocatoria");
+        }
       });
     e.preventDefault();
   };
@@ -330,7 +320,7 @@ function ConvocatoriaEditar() {
             </div>
             <div className="myform-group">
               <label htmlFor="fecha_inicio_parqueo">
-                Fecha inicio de uso del parqueo:
+                Fecha inicio gestion:
               </label>
               <input
                 name="fecha_inicio_parqueo"
@@ -338,15 +328,13 @@ function ConvocatoriaEditar() {
                 className="form-control"
                 id="fecha_inicio_parqueo"
                 placeholder="Fecha Inicio"
-                min={new Date().toISOString().split("T")[0]}
-                onChange={handleOnChangeFechaInicio}
+                min={fecha_fin}
+                onChange={handleOnChangeFechaInicioG}
                 defaultValue={fecha_inicio}
               ></input>
             </div>
             <div className="myform-group">
-              <label htmlFor="fecha_fin_parqueo">
-                Fecha fin de uso del parqueo:
-              </label>
+              <label htmlFor="fecha_fin_parqueo">Fecha fin gestion:</label>
               <input
                 name="fecha_fin_parqueo"
                 type="date"
@@ -355,28 +343,11 @@ function ConvocatoriaEditar() {
                 placeholder="Fecha fin"
                 onChange={handleOnchange}
                 defaultValue={fecha_fin}
-                min={minFechaFin}
+                min={minFechaFinG}
               ></input>
               <span className="spanError">
-                {validar.fecha_fin_parqueoB
+                {validar.fecha_fin_gestionB
                   ? "La fecha fin no puede ser menor a la fecha inicio"
-                  : ""}
-              </span>
-            </div>
-            <div className="myform-group">
-              <label htmlFor="fecha_inicio_gestion">Fecha pago</label>
-              <input
-                name="fecha_inicio_gestion"
-                type="number"
-                className="form-control"
-                id="fecha_inicio_gestion"
-                placeholder="FechaPago"
-                onChange={handleOnchange}
-                defaultValue={fecha_inicio_gestion}
-              ></input>
-              <span className="spanError">
-                {validar.fecha_inicio_gestionB
-                  ? "La fecha pago debe ser mayor igual a 1 y menor a 29"
                   : ""}
               </span>
             </div>
@@ -410,22 +381,11 @@ function ConvocatoriaEditar() {
               ></input>
               <span className="spanError">
                 {validar.multa_mensualB
-                  ? "El pago mensual no puede contener numeros negativos ni ser mayor a 1000"
+                  ? "La multa mensual no puede contener numeros negativos ni ser mayor a 1000"
                   : ""}
               </span>
             </div>
-            {/*<div className="myform-group ">
-              <label for="archivoPdf">Subir archivo</label>
-              <input
-                type="file"
-                name="archivoPdf"
-                value={archivoPdf}
-                className="form-control-file"
-                accept="application/pdf"
-                id="archivoPdf"
-                onChange={handleOnchange}
-              />
-  </div>*/}
+            <h6>Recuerda que no puedes editar el archivo pdf</h6>
           </div>
           <button type="submit" className="btn btn-primary">
             Actualizar
