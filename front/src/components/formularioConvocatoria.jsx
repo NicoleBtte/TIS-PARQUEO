@@ -10,6 +10,7 @@ import {
   validarMultaMensual,
 } from "../helpers/validadores";
 import "../styles/formStyle.css";
+import { useNavigate } from "react-router-dom";
 
 function FormularioConvocatoria() {
   const [formData, setFormData] = useState({
@@ -61,6 +62,8 @@ function FormularioConvocatoria() {
 
   const [minFechaFin, setMinFechaFin] = useState("");
   const [minFechaFinG, setMinFechaFinG] = useState("");
+  const [campoObligatorio, setCampoObligatorio] = useState(false);
+  const navigate = useNavigate();
 
   const handleOnChangeFechaInicio = (e) => {
     if (!validarFechas(e.target.value)) {
@@ -147,6 +150,11 @@ function FormularioConvocatoria() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!archivo) {
+      setCampoObligatorio(true);
+      return;
+    }
+
     const formData = new FormData();
     formData.append("titulo", titulo);
     formData.append("descripcion_convocatoria", descripcion_convocatoria);
@@ -179,6 +187,7 @@ function FormularioConvocatoria() {
           console.log("Datos invalidos al crear la convocatoria");
         }
       });
+    navigate("/admin/convocatoria");
   };
 
   return (
@@ -356,6 +365,9 @@ function FormularioConvocatoria() {
                 id="archivoPdf"
                 onChange={fileSelectHandler}
               />
+              {campoObligatorio && (
+                <span className="spanError">Este campo es obligatorio</span>
+              )}
             </div>
           </div>
           <div className="boton-container">

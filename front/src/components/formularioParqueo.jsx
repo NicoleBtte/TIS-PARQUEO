@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { validarNombre, validarNumeroSitios } from "../helpers/validadores";
 import axiosClient from "../axios-client.js";
 import "../styles/formStyle.css";
@@ -30,9 +30,8 @@ function FormularioParqueo() {
   });
 
   const { nombre_parqueo, numero_de_zonas, mapa_parqueo } = formData;
-
   const [archivo, setArchivo] = useState();
-
+  const [campoObligatorio, setCampoObligatorio] = useState(false);
   const navigate = useNavigate();
 
   const fileSelectHandler = (e) => {
@@ -65,6 +64,11 @@ function FormularioParqueo() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!archivo) {
+      setCampoObligatorio(true);
+      return;
+    }
+
     const formData = new FormData();
     formData.append("nombre_parqueo", nombre_parqueo);
     formData.append("numero_de_zonas", numero_de_zonas);
@@ -80,7 +84,7 @@ function FormularioParqueo() {
         console.log(error);
         alert("Datos invalidos al crear parqueo");
       });
-    navigate('/admin/parqueo')
+    navigate("/admin/parqueo");
   };
   /*React.useEffect(() => {
     axiosClient
@@ -162,6 +166,9 @@ function FormularioParqueo() {
                 id="archivoImg"
                 onChange={fileSelectHandler}
               />
+              {campoObligatorio && (
+                <span className="spanError">Este campo es obligatorio</span>
+              )}
             </div>
             <button type="submit" className="btn btn-primary">
               Agregar

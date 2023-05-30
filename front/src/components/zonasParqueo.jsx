@@ -243,7 +243,7 @@ export default function ZonasPar() {
                     name="techo"
                     className="form-control"
                     onChange={handleOnchange}
-                    value={techo}
+                    defaltValue={techo}
                   >
                     <option value={1}>Si</option>
                     <option value={0}>No</option>
@@ -257,7 +257,7 @@ export default function ZonasPar() {
                     name="arboles_cerca"
                     className="form-control"
                     onChange={handleOnchange}
-                    value={arboles_cerca}
+                    defaultValue={arboles_cerca}
                   >
                     <option value={1}>Si</option>
                     <option value={0}>No</option>
@@ -271,7 +271,7 @@ export default function ZonasPar() {
                     name="tipo_de_piso"
                     className="form-control"
                     onChange={handleOnchange}
-                    value={tipo_de_piso}
+                    defaultValue={tipo_de_piso}
                   >
                     <option>Pavimentado</option>
                     <option>Empedrado</option>
@@ -355,6 +355,15 @@ export default function ZonasPar() {
                       Tipo de piso
                     </h1>
                     <Button variant="outline-primary">{tipo_de_piso}</Button>
+                  </div>
+                  <div className="caracteristicas">
+                    <h1
+                      className="h1"
+                      style={{ fontSize: "15px", textAlign: "center" }}
+                    >
+                      Caracteristicas
+                    </h1>
+                    <Button variant="outline-primary">{descripcion}</Button>
                   </div>
                 </div>
               </Col>

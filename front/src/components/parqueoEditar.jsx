@@ -131,18 +131,7 @@ function ParqueoEditar() {
                   : ""}
               </span>
             </div>
-            <div className="myform-group ">
-              <label for="archivoPdf">Subir imagen</label>
-              <input
-                type="text"
-                name="mapa_parqueo"
-                className="form-control-file"
-                accept="application/jpg/png"
-                id="mapa_parqueo"
-                onChange={handleOnchange}
-                defaultValue={mapa_parqueo}
-              />
-            </div>
+            <h6>Recuerda que no puedes editar la imagen del parqueo</h6>
             <button type="submit" className="btn btn-primary">
               Actualizar
             </button>
