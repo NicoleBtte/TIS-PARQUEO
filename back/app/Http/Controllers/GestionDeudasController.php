@@ -15,7 +15,7 @@ class GestionDeudasController extends Controller
         //if(($convocatoria->fecha_inicio_gestion < $fechaActual) && ($fechaActual < $convocatoria->fecha_fin_gestion)){
             $clientes=Cliente::all();
             foreach($clientes as $cliente){
-                if($cliente->saldo>0){
+                if($cliente->saldo<=0){
                     if($cliente->mesAdelantado>0){
                         $cliente->mesAdelantado=$cliente->mesAdelantado-1; 
                     }else{
