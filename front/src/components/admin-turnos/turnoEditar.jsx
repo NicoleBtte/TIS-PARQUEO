@@ -29,26 +29,44 @@ const TurnoEdit = () => {
       }, []);
 
 
-    const diasOptions = [
+      const diasOptions = [
         { value: 'Lunes', label: 'Lunes' },
         { value: 'Martes', label: 'Martes' },
-        { value: 'Miercoles', label: 'Miércoles' },
+        { value: 'Miércoles', label: 'Miércoles' },
         { value: 'Jueves', label: 'Jueves' },
         { value: 'Viernes', label: 'Viernes' },
-        { value: 'Sabado', label: 'Sábado' },
+        { value: 'Sábado', label: 'Sábado' },
         { value: 'Domingo', label: 'Domingo' },
-    ];
+      ];
 
-    const makeString = (lista) => {
-        const cadena = lista.join('-');
+      const makeString = (lista) => {
+        const ordenDias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+      
+        const diasOrdenados = lista.sort(function(a, b) {
+          const indiceA = ordenDias.indexOf(a);
+          const indiceB = ordenDias.indexOf(b);
+          if (indiceA === -1 && indiceB === -1) {
+            return 0; // Ambos elementos no están en la lista de orden
+          }
+          if (indiceA === -1) {
+            return 1; // El elemento 'a' no está en la lista de orden
+          }
+          if (indiceB === -1) {
+            return -1; // El elemento 'b' no está en la lista de orden
+          }
+          return indiceA - indiceB; // Comparación normal de índices
+        });
+      
+        console.log("lista ordenada", diasOrdenados);
+        const cadena = diasOrdenados.join('-');
         return cadena;
       }
 
     const guardar = (turno) => {
-        if(error.nombre || error.horaFin || error.horaInicio){
-          alert('Los datos no son validos');
-          return;
-        }else if(turno.nombre==="" || turno.horaInicio==="" || turno.horaFin==="" || turno.dias.length === 0){
+      if(error.nombre!=='' || error.horaFin!==''|| error.horaInicio!==''){
+        alert('Los datos no son válidos');
+        return;
+      }else if(turno.nombre==="" || turno.horaInicio==="" || turno.horaFin==="" || turno.dias.length === 0){
           alert('Por favor complete los campos vacios');
           return;
         }
