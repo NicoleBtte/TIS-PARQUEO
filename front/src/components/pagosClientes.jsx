@@ -33,9 +33,8 @@ const PagosCliente = () => {
     if (confirmacion) {
       axiosClient
         .get(`/calcularDeudas`)
-        .then((response) => {
-          const updatedClientes = response.data;
-          setClientes(updatedClientes);
+        .then(() => {
+          window.location.reload();
         })
         .catch((error) => console.log("error", error));
     }

@@ -34,7 +34,10 @@ function IngresosPage() {
       .post("/salida", {
         idcliente: id,
       })
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        console.log(res.data);
+        window.location.reload();
+      })
       .catch((error) => console.log(error));
   };
 

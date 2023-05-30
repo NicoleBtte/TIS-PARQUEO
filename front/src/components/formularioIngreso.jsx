@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import axiosClient from "../axios-client.js";
+import { useNavigate } from "react-router-dom";
 
 function IngresosForm() {
   const [formValue, setFormValue] = useState("");
   const [options, setOptions] = useState([]); // Verifica que hayas declarado esta línea correctamente
   const [filtros, setFiltros] = useState([]);
+  const navigate = useNavigate();
   const { idcliente } = formValue;
   /*const handleCreate = (e) => {
     e.preventDefault();
@@ -41,6 +43,7 @@ function IngresosForm() {
         alert("El cliente no existe");
       });
     e.preventDefault();
+    navigate("/guardia/ingresos");
   };
   const handleInputChange = (e) => {
     const { value } = e.target;

@@ -103,8 +103,8 @@ class ConvocatoriaController extends Controller
             'fecha_inicio_gestion' => ['required', 'date'],
             'pago_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
             'multa_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
-            'fecha_inicio_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_fin'],
-            'fecha_fin_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_inicio_gestion'],
+            'fecha_inicio_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after:fecha_fin'],
+            'fecha_fin_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after:fecha_inicio_gestion'],
         ]);
         $convocatoria->titulo = $validatedData['titulo'];
         $convocatoria->descripcion_convocatoria = $validatedData['descripcion_convocatoria'];
