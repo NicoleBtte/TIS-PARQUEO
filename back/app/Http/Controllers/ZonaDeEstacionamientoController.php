@@ -29,59 +29,25 @@ class ZonaDeEstacionamientoController extends Controller
     public function registroZonas($id,$numero_de_zonas) {
         $i=1;    
         while($i<=$numero_de_zonas){
-            $zona = new ZonaDeEstacionamiento();
-            $zona->nombre_zona_estacionamiento="zona ".$i;
-            $zona->parqueo_idparqueo=$id;
-            $zona->techo = 0;
-            $zona->arboles_cerca = 0;
-            $zona->tipo_de_piso = null;
-            $zona->numero_de_sitios=0;
-            $zona->descripcion=null;
-            $zona->save();
-            sleep(0.5);
+            $zonaAux = new ZonaDeEstacionamiento();
+            $zonaAux = ZonaDeEstacionamiento::where('parqueo_idparqueo', $id)
+            ->where('nombre_zona_estacionamiento', 'zona '.$i)
+            ->get();
+            if($zonaAux->isEmpty()){
+                $zona = new ZonaDeEstacionamiento();
+                $zona->nombre_zona_estacionamiento="zona ".$i;
+                $zona->parqueo_idparqueo=$id;
+                $zona->techo = 0;
+                $zona->arboles_cerca = 0;
+                $zona->tipo_de_piso = null;
+                $zona->numero_de_sitios=0;
+                $zona->descripcion=null;
+                $zona->save();
+                sleep(0.5);
+            }
             $i++;
         }
     }
-    /*public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'nombre_zona_estacionamiento' => ['required', 'unique:zonaEstacionamiento', 'string', 'min:5', 'max:16'],
-            'techo' => ['nullable', 'boolean'],
-            'arboles_cerca' => ['nullable', 'boolean'],
-            'tipo_de_piso' => ['nullable', 'string'],
-            'numero_de_sitios' => ['required', 'integer', 'min:0'],
-            'descripcion' => ['nullable', 'string']
-        ]);
-
-        $zonaDeEstacionamiento = new ZonaDeEstacionamiento();
-
-        $zonaDeEstacionamiento->nombre_zona_estacionamiento= $request->nombre_zona_estacionamiento;
-        $zonaDeEstacionamiento->parqueo_idparqueo=$request->parqueo_idparqueo;
-        $zonaDeEstacionamiento->techo =0;$request->techo;
-        $zonaDeEstacionamiento->arboles_cerca =0;// $request->arbol;
-        $zonaDeEstacionamiento->tipo_de_piso = $request->tipoPiso;
-        $zonaDeEstacionamiento->numero_de_sitios = $request->numero_de_sitios;
-        $numSitios= $request->numero_de_sitios;
-        $zonaDeEstacionamiento->descripcion = $request->descripcionZona;
-        //$zonaDeEstacionamiento->save();
-        try {
-            $zonaDeEstacionamiento->save();
-            $this->sitios($numSitios);
-            return response()->json([
-                'success' => true,
-                'message' => 'Zona de estacionamiento creada con éxito',
-                'data' => $zonaDeEstacionamiento->toArray()
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al crear la zona de estacionamiento',
-                'error' => $e->getMessage()
-            ]);
-        }
-
-       //$this->sitios($numSitios);
-    }*/
 
     public function show($idZonaEstacionamiento){
         $zonaDeEstacionamiento = ZonaDeEstacionamiento::find($idZonaEstacionamiento);
@@ -123,11 +89,12 @@ class ZonaDeEstacionamientoController extends Controller
         }
     }
 
-    public function destroy($idZonaEstacionamiento)
+    public function destroy($idzonaEstacionamiento)
     {
-        $zonaDeEstacionamiento = ZonaDeEstacionamiento::find($idZonaEstacionamiento);
+        $zonaDeEstacionamiento = ZonaDeEstacionamiento::find($idzonaEstacionamiento);
         if ($zonaDeEstacionamiento) {
-            $zonaDeEstacionamiento = ZonaDeEstacionamiento::destroy($idZonaEstacionamiento);
+            DB::delete('DELETE FROM sitio WHERE zonaEstacionamiento_idzonaEstacionamiento = ?', [$idzonaEstacionamiento]);
+            ZonaDeEstacionamiento::destroy($idzonaEstacionamiento);
             return response()->json(['message' => 'La zona de estacionamiento ha sido eliminada.']);
         } else {
             return response()->json(['message' => 'No se pudo eliminar la zona de estacionamiento.']);

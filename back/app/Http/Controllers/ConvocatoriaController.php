@@ -33,12 +33,11 @@ class ConvocatoriaController extends Controller
             'estado_convocatoria' => ['required', 'integer', 'min:0', 'max:1'],
             'fecha_inicio' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:fecha_fin'],
             'fecha_fin' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_inicio'],
-            'fecha_inicio_gestion' => ['required', 'date', 'date_format:Y-m-d'],
             'pago_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
             'multa_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
             'pdf_convocatoria' => ['required', 'file', 'mimes:pdf', 'max:2000'],
-            'fecha_inicio_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_fin'],
-            'fecha_fin_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_inicio_gestion'],
+            'fecha_inicio_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after:fecha_fin'],
+            'fecha_fin_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after:fecha_inicio_gestion'],
         ]);
 
         $ultimaConvocatoria = Convocatoria::orderBy('fecha_fin', 'desc')->first();

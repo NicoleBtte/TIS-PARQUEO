@@ -19,23 +19,46 @@ const TurnoForm = () => {
   const diasOptions = [
     { value: 'Lunes', label: 'Lunes' },
     { value: 'Martes', label: 'Martes' },
-    { value: 'Miercoles', label: 'Miércoles' },
+    { value: 'Miércoles', label: 'Miércoles' },
     { value: 'Jueves', label: 'Jueves' },
     { value: 'Viernes', label: 'Viernes' },
-    { value: 'Sabado', label: 'Sábado' },
+    { value: 'Sábado', label: 'Sábado' },
     { value: 'Domingo', label: 'Domingo' },
   ];
 
   const makeString = (lista) => {
-    const cadena = lista.join('-');
+    const ordenDias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+  
+    const diasOrdenados = lista.sort(function(a, b) {
+      const indiceA = ordenDias.indexOf(a);
+      const indiceB = ordenDias.indexOf(b);
+      if (indiceA === -1 && indiceB === -1) {
+        return 0; // Ambos elementos no están en la lista de orden
+      }
+      if (indiceA === -1) {
+        return 1; // El elemento 'a' no está en la lista de orden
+      }
+      if (indiceB === -1) {
+        return -1; // El elemento 'b' no está en la lista de orden
+      }
+      return indiceA - indiceB; // Comparación normal de índices
+    });
+  
+    console.log("lista ordenada", diasOrdenados);
+    const cadena = diasOrdenados.join('-');
     return cadena;
   }
+  
+  
 
   const guardar = async (values) => {
-    /*if(selectedOption===''){
-      alert('Por favor seleccione una opción');
+    if(error.nombre!=='' || error.horaFin!==''|| error.horaInicio!==''){
+      alert('Los datos no son válidos');
       return;
-    }*/
+    }else if(turno.nombre==="" || turno.horaInicio==="" || turno.horaFin==="" || turno.dias.length === 0){
+      alert('Por favor complete los campos vacios');
+      return;
+    }
     console.log(values);
     const diasString = makeString(values.dias);
 
@@ -134,7 +157,7 @@ const handleCheckboxChange = (e) => {
   return (
     <div className='bigestContainerTurno'>
     <div className="formContainer">
-      <h4>Editar turno</h4>
+      <h4>Crear turno</h4>
       <form className="formulario" onSubmit={handleSubmit}>
         <div className="myform-group">
             <label htmlFor="nombre">Nombre:</label>
