@@ -78,10 +78,12 @@ class PagoController extends Controller
                             $mesAdelantado=($adelanto/$mensualidad->pago_mensual);
                             $beforeUpdate=$cliente->mesAdelantado;
                             $cliente->mesAdelantado=(($cliente->mesAdelantado)+$mesAdelantado);
-                            DB::table('cliente')->where('idcliente', $request->carnet)->update([
-                                'fecha_lim_pago' => DB::raw("DATE_ADD(fecha_lim_pago, INTERVAL {$mesAdelantado} MONTH)")
-                            ]);
-                        
+                            $fecha = Carbon::parse($cliente->fecha_lim_pago);
+                            $nuevaFecha = $fecha->addMonths($mesAdelantado);
+                            $cliente->fecha_lim_pago=$nuevaFecha->format('Y-m-d');
+                            //DB::table('cliente')->where('idcliente', $request->carnet)->update([
+                                //'fecha_lim_pago' => DB::raw("DATE_ADD(fecha_lim_pago, INTERVAL {$mesAdelantado} MONTH)")
+                            //]);
                             if($adelanto>=(0.5*$saldo)){
                                 $cliente->saldo=$saldo-$adelanto;
                                 $calculoMeses=($this->calcularMeses($deuda, ($monto-$multa), $mensualidad->pago_mensual, $beforeUpdate));
