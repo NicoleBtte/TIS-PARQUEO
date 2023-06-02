@@ -12,7 +12,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema mydb
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+-- USE `mydb` ;
 
 -- -----------------------------------------------------
 -- Table `mydb`.`administrador`
@@ -330,8 +330,26 @@ ENGINE = InnoDB;
 -- Table `mydb`.`gestion_deudas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`gestion_deudas` (
-  `fecha_ultima_vez` DATE NULL)
+  `fecha_calculo` DATE NULL)
 ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`gestion_deudas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`bitacora` (
+  `idbitacora` int(11) NOT NULL,
+  `tipo_operacion` varchar(20) DEFAULT NULL,
+  `nombre_tabla` text DEFAULT NULL,
+  `valores_antiguos` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `valores_nuevos` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `mydb`.`administrador` (`idadministrador`, `nombre_administrador`, `telf_administrador`, `email_administrador`, `pass_administrador`) 
+VALUES ('13456746', 'Roberto Martinez', '7658978', 'robertito@gmail.com', 'Admin.123');
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
