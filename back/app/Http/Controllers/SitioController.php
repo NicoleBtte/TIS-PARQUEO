@@ -8,24 +8,39 @@ use Illuminate\Support\Facades\DB;
 
 class SitioController extends Controller
 {
-   public function registroSitios($id,$numSitios) {
-    $i=1;    
-    while($i<=$numSitios){
-        $sitio = new Sitio();
-        $sitio->zonaEstacionamiento_idzonaEstacionamiento=$id;
-       // $sitio->cliente_idcliente=ninguna;
-        $sitio->numero=$i;
-        $sitio->save();
-        sleep(0.5);
+   public function registroSitios($id,$numSitios, $i) {
+      if($i!=0){  
+         if($i>0) {
+            $j=$numSitios-$i;
+            while($j<$numSitios){
+               $j++;
+               $sitio = new Sitio();
+               $sitio->zonaEstacionamiento_idzonaEstacionamiento=$id;
+               // $sitio->cliente_idcliente=ninguna;
+               $sitio->numero=$j;
+               $sitio->save();
+               
+               sleep(0.5);
 
+            }
+        }
+        else{
+         $e=$i*(-1);
+         $this->eliminarSitios($id, $e);
+        }
+      }
 
-
-        $i++;
-        
-    }
 
    }
-
+   
+   public function eliminarSitios($id, $e){
+      DB::table('sitio')
+      ->where('zonaEstacionamiento_idzonaEstacionamiento',$id)
+      ->whereNull('cliente_idcliente')
+      ->orderBy('idsitio', 'desc')
+      ->take($e)
+      ->delete();
+   }
 
    public static function asignarSitio(int $idCliente){
 

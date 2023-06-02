@@ -21,9 +21,9 @@ class ZonaDeEstacionamientoController extends Controller
             return response()->json([$zonaDeEstacionamientos], 200);
         }
         }
-    public function sitios($numSitios, $id){
+    public function sitios($numSitios, $id,$i){
         $sitio= new SitioController;
-        $sitio->registroSitios($id, $numSitios);
+        $sitio->registroSitios($id, $numSitios, $i);
     }
     
     public function registroZonas($id,$numero_de_zonas) {
@@ -73,6 +73,8 @@ class ZonaDeEstacionamientoController extends Controller
         ]);
 
        // $zonaDeEstacionamiento->nombre_zona_estacionamiento = $validatedData['nombre_zona_estacionamiento'];
+       $zonaAnt= ZonaDeEstacionamiento::find($idZonaEstacionamiento);
+       $sitiosAnt = $zonaAnt->numero_de_sitios;
         $zonaDeEstacionamiento->techo = $validatedData['techo'];
         $zonaDeEstacionamiento->arboles_cerca = $validatedData['arboles_cerca'];
         $zonaDeEstacionamiento->tipo_de_piso = $validatedData['tipo_de_piso'];
@@ -82,7 +84,14 @@ class ZonaDeEstacionamientoController extends Controller
 
         if($zonaDeEstacionamiento) {
             $zonaDeEstacionamiento->save();
-            $this->sitios($numSitios, $idZonaEstacionamiento);
+            if($sitiosAnt!=$numSitios){
+                    $i=($numSitios-$sitiosAnt);
+                
+            }
+            else{
+                $i=0;
+            }
+            $this->sitios($numSitios, $idZonaEstacionamiento,$i);
             return response()->json(['message' => 'Zona de estacionamiento actualizada correctamente.']);
         } else {
             return response()->json(['message' => 'No se encontró la zona de estacionamiento a actualizar.'], 404);
