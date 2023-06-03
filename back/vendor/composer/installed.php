@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'dcf6c7fe9471272d96f91befd4824fa157e8f825',
+        'reference' => '2701b2e07bd37ee93821c3e3174029033ac41c7f',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -406,7 +406,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'dcf6c7fe9471272d96f91befd4824fa157e8f825',
+            'reference' => '2701b2e07bd37ee93821c3e3174029033ac41c7f',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -509,9 +509,9 @@
             'dev_requirement' => true,
         ),
         'nesbot/carbon' => array(
-            'pretty_version' => '2.66.0',
-            'version' => '2.66.0.0',
-            'reference' => '496712849902241f04902033b0441b269effe001',
+            'pretty_version' => '2.67.0',
+            'version' => '2.67.0.0',
+            'reference' => 'c1001b3bc75039b07f38a79db5237c4c529e04c8',
             'type' => 'library',
             'install_path' => __DIR__ . '/../nesbot/carbon',
             'aliases' => array(),
@@ -748,8 +748,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0.0 || 2.0.0 || 3.0.0',
-                1 => '1.0|2.0',
+                0 => '1.0|2.0',
+                1 => '1.0.0 || 2.0.0 || 3.0.0',
             ),
         ),
         'psr/simple-cache' => array(

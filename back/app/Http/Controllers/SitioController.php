@@ -10,7 +10,7 @@ class SitioController extends Controller
 {
    public function registroSitios($id,$numSitios, $i) {
       if($i!=0){  
-         if($i>0) {
+         if($i>0){
             $j=$numSitios-$i;
             while($j<$numSitios){
                $j++;
@@ -18,28 +18,26 @@ class SitioController extends Controller
                $sitio->zonaEstacionamiento_idzonaEstacionamiento=$id;
                // $sitio->cliente_idcliente=ninguna;
                $sitio->numero=$j;
-               $sitio->save();
-               
+               $sitio->save();   
                sleep(0.5);
-
             }
-        }
-        else{
-         $e=$i*(-1);
-         $this->eliminarSitios($id, $e);
+        }else{
+            $e=$i*(-1);
+            $this->eliminarSitios($id, $e);
         }
       }
-
-
    }
    
    public function eliminarSitios($id, $e){
-      DB::table('sitio')
-      ->where('zonaEstacionamiento_idzonaEstacionamiento',$id)
-      ->whereNull('cliente_idcliente')
-      ->orderBy('idsitio', 'desc')
-      ->take($e)
-      ->delete();
+      while($e>0){
+         DB::table('sitio')
+         ->where('zonaEstacionamiento_idzonaEstacionamiento',$id)
+         ->whereNull('cliente_idcliente')
+         ->orderBy('idsitio', 'desc')
+         ->limit(1)
+         ->delete();
+         $e = $e-1;
+      }
    }
 
    public static function asignarSitio(int $idCliente){

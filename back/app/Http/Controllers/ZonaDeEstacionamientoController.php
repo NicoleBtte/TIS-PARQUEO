@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ZonaDeEstacionamiento;
+use App\Models\Sitio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\SitioController;
@@ -20,7 +21,7 @@ class ZonaDeEstacionamientoController extends Controller
         } else {
             return response()->json([$zonaDeEstacionamientos], 200);
         }
-        }
+    }
     public function sitios($numSitios, $id,$i){
         $sitio= new SitioController;
         $sitio->registroSitios($id, $numSitios, $i);
@@ -60,41 +61,39 @@ class ZonaDeEstacionamientoController extends Controller
 
     public function update(Request $request, $idZonaEstacionamiento)
     {
-        $zonaDeEstacionamiento = ZonaDeEstacionamiento::findOrFail($idZonaEstacionamiento);
+        $zonaAnt= ZonaDeEstacionamiento::find($idZonaEstacionamiento);
+        $sitiosSinIdCliente = Sitio::where('zonaEstacionamiento_idzonaEstacionamiento', $idZonaEstacionamiento)
+            ->where('cliente_idcliente', null)
+            ->count();
+        $sitiosAnt = $zonaAnt->numero_de_sitios;
+        $numSitios = $request->numero_de_sitios;
+        if($sitiosSinIdCliente>=($sitiosAnt-$numSitios)){
+            $zonaDeEstacionamiento = ZonaDeEstacionamiento::findOrFail($idZonaEstacionamiento);
+            $validatedData = $request->validate([
+                'techo' => ['nullable', 'integer', 'min:0', 'max:1'],
+                'arboles_cerca' => ['nullable', 'integer', 'min:0', 'max:1'],
+                'tipo_de_piso' => ['nullable', 'string'],
+                'numero_de_sitios' => ['nullable', 'integer', 'min:0'],
+                'descripcion' => ['nullable', 'string']
 
-        $validatedData = $request->validate([
-           // 'nombre_zona_estacionamiento' => ['required', 'string', 'min:5', 'max:16'],
-            'techo' => ['nullable', 'integer', 'min:0', 'max:1'],
-            'arboles_cerca' => ['nullable', 'integer', 'min:0', 'max:1'],
-            'tipo_de_piso' => ['nullable', 'string'],
-            'numero_de_sitios' => ['nullable', 'integer', 'min:0'],
-            'descripcion' => ['nullable', 'string']
-
-        ]);
-
-       // $zonaDeEstacionamiento->nombre_zona_estacionamiento = $validatedData['nombre_zona_estacionamiento'];
-       $zonaAnt= ZonaDeEstacionamiento::find($idZonaEstacionamiento);
-       $sitiosAnt = $zonaAnt->numero_de_sitios;
-        $zonaDeEstacionamiento->techo = $validatedData['techo'];
-        $zonaDeEstacionamiento->arboles_cerca = $validatedData['arboles_cerca'];
-        $zonaDeEstacionamiento->tipo_de_piso = $validatedData['tipo_de_piso'];
-        $zonaDeEstacionamiento->numero_de_sitios = $validatedData['numero_de_sitios'];
-        $numSitios= $request->numero_de_sitios;
-        $zonaDeEstacionamiento->descripcion = $validatedData['descripcion'];
-
+            ]);
+            $zonaDeEstacionamiento->techo = $validatedData['techo'];
+            $zonaDeEstacionamiento->arboles_cerca = $validatedData['arboles_cerca'];
+            $zonaDeEstacionamiento->tipo_de_piso = $validatedData['tipo_de_piso'];
+            $zonaDeEstacionamiento->numero_de_sitios = $validatedData['numero_de_sitios'];
+            $zonaDeEstacionamiento->descripcion = $validatedData['descripcion'];
+        }
         if($zonaDeEstacionamiento) {
             $zonaDeEstacionamiento->save();
             if($sitiosAnt!=$numSitios){
-                    $i=($numSitios-$sitiosAnt);
-                
-            }
-            else{
+                $i=($numSitios-$sitiosAnt);   
+            }else{
                 $i=0;
             }
             $this->sitios($numSitios, $idZonaEstacionamiento,$i);
             return response()->json(['message' => 'Zona de estacionamiento actualizada correctamente.']);
         } else {
-            return response()->json(['message' => 'No se encontró la zona de estacionamiento a actualizar.'], 404);
+            return response()->json(['message' => 'No se encontró la zona de estacionamiento a actualizar o los sitios a borrar sobrepasa los disponibles.'], 404);
         }
     }
 
