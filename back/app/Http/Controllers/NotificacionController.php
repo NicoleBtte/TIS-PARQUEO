@@ -274,4 +274,20 @@ class NotificacionController extends Controller
             ]);
         }
     }
+    public function indexReceivedOperador(Request $request)
+    {
+        $id = $request->id;
+        $administradores = Administrador::pluck('id')->toArray();
+        
+        $notificaciones = Notificacion::where('idreceptor', $id)
+            ->whereIn('idemisor', $administradores)
+            ->get();
+            
+        if ($notificaciones->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron notificaciones'], 404);
+        } else {
+            return response()->json(json_encode($notificaciones));
+        }
+    }
+
 }

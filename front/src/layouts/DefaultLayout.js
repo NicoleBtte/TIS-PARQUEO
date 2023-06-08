@@ -99,6 +99,9 @@ const DefaultLayout = () => {
           <Nav.Link as={Link} to="/operador/reporte-pagos">
             Reporte ingresos
           </Nav.Link>
+          <Nav.Link as={Link} to="/operador/notificaciones">
+            Mensajes
+          </Nav.Link>
         </Nav>
       );
       break;
@@ -110,6 +113,9 @@ const DefaultLayout = () => {
           </Nav.Link>
           <Nav.Link as={Link} to="/guardia/infoClientes">
             Clientes
+          </Nav.Link>
+          <Nav.Link as={Link} to="/guardia/notificaciones">
+            Mensajes
           </Nav.Link>
         </Nav>
       );

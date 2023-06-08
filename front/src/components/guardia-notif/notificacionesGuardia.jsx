@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Button, Table } from "react-bootstrap";
 import {Link, useParams} from "react-router-dom";
 import App from '../../App';
-import MensajeModal from './mensajeModal';
+import MensajeModal from '../cliente-mensajes/mensajeModal';
 import axiosCliente from '../../axios-client';
 import '../../styles/tableStyle.css'
 
-const HistorialMensajes = () => {
+const NotificacionesGuardia = () => {
     const [filas, setFilas] = useState([]);
     const [loading, setLoading] = useState(false);
     const [mensajeSeleccionado, setMensajeSeleccionado] = useState(null);
@@ -103,4 +103,4 @@ const HistorialMensajes = () => {
   };
   
   
-  export default HistorialMensajes;
+  export default NotificacionesGuardia;
