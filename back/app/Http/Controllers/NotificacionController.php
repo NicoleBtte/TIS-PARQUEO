@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Validator;
 
 class NotificacionController extends Controller
 {
-    public function notifEnviadosAdmin(Request $request){
+    /*public function notifEnviadosAdmin(Request $request){
         $idadministrador = $request -> id;
         $notificaciones = Notificacion::where('idemisor', $idadministrador)->get();
         $notificacionesUnicas = [];
@@ -38,6 +38,40 @@ class NotificacionController extends Controller
                     $notificacion->receptor_notif = "Clientes";
                 }
                 $notificacionesUnicas[] = $notificacion;
+            }
+        }
+        if (count($notificacionesUnicas) === 0) {
+            return response()->json(['message' => 'No se encontraron notificaciones'], 404);
+        } else {
+            return response()->json(json_encode($notificacionesUnicas));
+        }
+    }*/
+
+    public function notifEnviadosAdmin(Request $request){
+        $idadministrador = $request -> id;
+        $notificaciones = Notificacion::where('idemisor', $idadministrador)->get();
+        $notificacionesUnicas = [];
+        foreach ($notificaciones as $notificacion) {
+            $existe = false;
+            foreach ($notificacionesUnicas as $unica) {
+                if ($unica->titulo_notif === $notificacion->titulo_notif && $unica->mensaje_notif === $notificacion->mensaje_notif) {
+                    $unica->idreceptor = 0;
+                    $existe = true;
+                    break;
+                }
+            }
+            if (!$existe) {
+                $notificacionesUnicas[] = $notificacion;
+            }
+        }
+        foreach($notificacionesUnicas as $notificacion){
+            if($notificacion->idreceptor===0){
+                $idAuxiliar = $notificacion->idreceptor;
+                if(Cliente::find($idAuxiliar)){
+                    $notificacion->receptor_notif = "Clientes";  
+                }else{
+                    $notificacion->receptor_notif = "Personal";
+                }
             }
         }
         if (count($notificacionesUnicas) === 0) {
@@ -169,5 +203,75 @@ class NotificacionController extends Controller
         $notificacion->mensaje_notif = $mensaje_notif;
         $notificacion->fecha_notif = date('Y-m-d');
         $notificacion->save();
+    }
+
+    public function storeMensajeIndividual(Request $request)
+    {
+        $idreceptor = $request->idreceptor;
+        $idadmin = $request->idemisor;
+        $administrador = Administrador::find($idadmin);
+        $receptor = Operador::where('idoperador', $idreceptor)->first();
+        $rol = '';
+
+        if (!$receptor) {
+            $receptor = Guardia::where('idguardia', $idreceptor)->first();
+            if (!$receptor) {
+                $receptor = Cliente::where('idcliente', $idreceptor)->first();
+                $rol = 'Cliente';
+            }else{
+                $rol = 'Guardia';
+            }
+        }else{
+            $rol = 'Operador';
+        }
+        
+        if($receptor && $rol!=''){
+
+            switch ($rol) {
+                case 'Operador':
+                    $notificacion = new Notificacion();
+                    $notificacion->emisor_notif = $administrador->nombre_administrador;
+                    $notificacion->receptor_notif = $receptor->nombre_operador;
+                    $notificacion->idemisor = $administrador->idadministrador;
+                    $notificacion->idreceptor = $receptor->idoperador;
+                    $notificacion->titulo_notif = $request->titulo_notif;
+                    $notificacion->mensaje_notif = $request->mensaje_notif;
+                    $notificacion->fecha_notif = date('Y-m-d');
+                    $notificacion->save();
+                    break;
+                case 'Guardia':
+                    $notificacion = new Notificacion();
+                    $notificacion->emisor_notif = $administrador->nombre_administrador;
+                    $notificacion->receptor_notif = $receptor->nombre_guardia;
+                    $notificacion->idemisor = $administrador->idadministrador;
+                    $notificacion->idreceptor = $receptor->idguardia;
+                    $notificacion->titulo_notif = $request->titulo_notif;
+                    $notificacion->mensaje_notif = $request->mensaje_notif;
+                    $notificacion->fecha_notif = date('Y-m-d');
+                    $notificacion->save();
+                    break;
+                default:
+                    $notificacion = new Notificacion();
+                    $notificacion->emisor_notif = $administrador->nombre_administrador;
+                    $notificacion->receptor_notif = $receptor->nombre_cliente;
+                    $notificacion->idemisor = $administrador->idadministrador;
+                    $notificacion->idreceptor = $receptor->idcliente;
+                    $notificacion->titulo_notif = $request->titulo_notif;
+                    $notificacion->mensaje_notif = $request->mensaje_notif;
+                    $notificacion->fecha_notif = date('Y-m-d');
+                    $notificacion->save();
+                    break;
+            }
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Notificación creada exitosamente',
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Notificación no pudo crearse'
+            ]);
+        }
     }
 }

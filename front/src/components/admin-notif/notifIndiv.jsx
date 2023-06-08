@@ -3,43 +3,23 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate } from "react-router-dom";
 import axiosCliente from "../../axios-client";
 
-const RedactarAdmin = () => {
-    const [options, setOptions] = useState([]);
-    const [selectedOption, setSelectedOption] = useState("clientes");
+const NotifIndv = () => {
     const navigate = useNavigate();
     const idUsuario = localStorage.getItem("ID_USER");
-  
-    const handleOptionChange = (event) => {
-      setSelectedOption(event.target.value);
-    };
 
   
     const enviarMensaje = (values) => {
-      if (selectedOption === "") {
-        alert("Por favor seleccione una opción");
-        return;
-      }
-  
       console.log(values);
       const payload = {
-        idadministrador: idUsuario,
+        idemisor: idUsuario,
+        idreceptor: values.ci,
         titulo_notif: values.titulo,
         mensaje_notif: values.descripcion,
       };
       console.log(payload);
 
-      let apiruta = "";
-
-      if(selectedOption==="clientes"){
-        apiruta = "/notificacionAnuncioClientes";
-      }else{
-        if(selectedOption==="personal"){
-          apiruta = "/notificacionAnuncioPersonal";
-        }
-      }
-  
       axiosCliente
-        .post(apiruta, payload)
+        .post('/notificacionIndividual', payload)
         .then(({ data }) => {
           //que hacer despues
           window.alert("Mensaje enviado");
@@ -62,12 +42,19 @@ const RedactarAdmin = () => {
             <h4>Redactar mensaje</h4>
             <Formik
               initialValues={{
-                option: null,
+                ci: '',
                 titulo: "",
                 descripcion: "",
               }}
               validate={(values) => {
                 let errors = {};
+
+                // Validacion ci
+                if (!values.ci) {
+                    errors.ci = "Por favor ingresa un número de C.I.";
+                } else if (isNaN(values.ci)) {
+                    errors.ci = "El número de C.I. solo puede contener números";
+                }
   
                 // Validacion titulo
                 if (!values.titulo) {
@@ -87,12 +74,14 @@ const RedactarAdmin = () => {
             >
               {({ errors, touched, handleChange, values }) => (
                 <Form className="formulario">
-                  <div>
-                    <label className="speciallabel" htmlFor="rol" >Mandar a:</label>
-                      <select className="combobox" name="rol" id="rol" value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
-                        <option value="clientes">Clientes</option>
-                        <option value="personal">Personal</option>
-                      </select>
+                  <div className="myform-group">
+                      <label htmlFor="ci">Número de C.I.:</label>
+                      <Field
+                        type="text" 
+                        id="ci" 
+                        name="ci" 
+                      />
+                      <ErrorMessage name="ci" component={() => (<div className="error">{errors.ci}</div>)} />
                   </div>
                   <div className="myform-group">
                     <label htmlFor="titulo">Tema:</label>
@@ -132,4 +121,4 @@ const RedactarAdmin = () => {
     );
 }
 
-export default RedactarAdmin
+export default NotifIndv

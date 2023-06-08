@@ -92,7 +92,7 @@ const TurnoForm = () => {
       if (!value || /^\s+$/.test(value)) {
         setError((prevError) => ({ ...prevError, nombre: 'El campo nombre no puede estar vacío' }));
         //setError('');
-      } else if (!/^[a-zA-Z\s]+$/.test(value)) {
+      } else if (!/^[a-zA-ZñÑ\s]+$/.test(value)) {
         setError((prevError) => ({ ...prevError, nombre: 'El formato del nombre no es válido' }));
       } else {
         setError((prevError) => ({ ...prevError, nombre: '' }));

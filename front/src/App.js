@@ -43,6 +43,7 @@ import TurnoEdit from "./components/admin-turnos/turnoEditar";
 import AsignarTurno from "./components/admin-turnos/asignarTurno";
 import RedactarAdmin from "./components/admin-notif/redactarAdmin";
 import AdminMensajes from "./components/admin-notif/adminMensajes";
+import NotifIndv from "./components/admin-notif/notifIndiv";
 
 function App() {
   return (
@@ -108,6 +109,7 @@ function App() {
               <Route path="/admin/asigTurno/id/:id/t/:t" element={<AsignarTurno />}/>
               <Route path="/admin/mensajes" element={<AdminMensajes />}/>
               <Route path="/admin/redactar" element={<RedactarAdmin />}/>
+              <Route path="/admin/redactarindv" element={<NotifIndv />}/>
             </Route>
             {/* Rutas para el operador */}
             <Route

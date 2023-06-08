@@ -81,7 +81,7 @@ const RedactarForm = () => {
               // Validacion titulo
               if (!values.titulo) {
                 errors.titulo = "Por favor ingrese sus titulo";
-              } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.titulo)) {
+              } else if (!/^[a-zA-ZÀ-ÿ\s]{1,60}$/.test(values.titulo)) {
                 errors.titulo =
                   "El titulo solo puede contener letras y espacios";
               }

@@ -71,6 +71,7 @@ const DefaultLayout = () => {
           </NavDropdown>
           <NavDropdown title="Notificaciones" className="navDrop">
               <NavDropdown.Item className="navDrop" as={Link} to="/admin/redactar">Redactar</NavDropdown.Item>
+              <NavDropdown.Item className="navDrop" as={Link} to="/admin/redactarindv">Redactar mensaje individual</NavDropdown.Item>
               <NavDropdown.Item className="navDrop" as={Link} to="/admin/mensajes">Mensajes</NavDropdown.Item>
           </NavDropdown>
           <NavDropdown title="Usuarios" className="navDrop">

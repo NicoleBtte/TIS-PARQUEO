@@ -117,6 +117,7 @@ Route::get('/notificacionesRecibe',[NotificacionController::class, 'indexReceive
 Route::post('/notificacionAnuncioClientes',[NotificacionController::class, 'anuncioClientes']);
 Route::post('/notificacionAnuncioPersonal',[NotificacionController::class, 'anuncioPersonal']);
 Route::get('/notificacionesEnviaAdmin',[NotificacionController::class, 'notifEnviadosAdmin']);
+Route::post('/notificacionIndividual',[NotificacionController::class, 'storeMensajeIndividual']);
 
 Route::get('/miSitio',[SitioController::class,'obtenerMiSitio']);
 
