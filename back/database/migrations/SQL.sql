@@ -338,7 +338,7 @@ ENGINE = InnoDB;
 -- Table `mydb`.`gestion_deudas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`bitacora` (
-  `idbitacora` int(11) INT NOT NULL AUTO_INCREMENT,
+  `idbitacora` INT NOT NULL AUTO_INCREMENT,
   `tipo_operacion` varchar(20) DEFAULT NULL,
   `nombre_tabla` text DEFAULT NULL,
   `valores_antiguos` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
