@@ -118,6 +118,8 @@ Route::post('/notificacionAnuncioClientes',[NotificacionController::class, 'anun
 Route::post('/notificacionAnuncioPersonal',[NotificacionController::class, 'anuncioPersonal']);
 Route::get('/notificacionesEnviaAdmin',[NotificacionController::class, 'notifEnviadosAdmin']);
 Route::post('/notificacionIndividual',[NotificacionController::class, 'storeMensajeIndividual']);
+Route::get('/notificacionesOperador',[NotificacionController::class, 'indexReceivedOperador']);
+Route::get('/quejas',[NotificacionController::class, 'indexQuejas']);
 
 Route::get('/miSitio',[SitioController::class,'obtenerMiSitio']);
 

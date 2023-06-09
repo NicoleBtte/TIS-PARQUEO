@@ -24,7 +24,7 @@ const NotificacionesOperador = () => {
         id: idUsuario
       }
       setLoading(true)
-      axiosCliente.get('/notificacionesRecibe', { params: payload })
+      axiosCliente.get('/notificacionesOperador', { params: payload })
         .then(({ data }) => {
           setLoading(false)
           setFilas(JSON.parse(data))
@@ -47,57 +47,63 @@ const NotificacionesOperador = () => {
   
     return (
       <>
-      <div>
-        <Table responsive className='mytable'>
-          <thead className='tableHeader'>
-            <tr>
-              <th>Fecha</th>
-              <th>Tema</th>
-              <th>Emisor</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          {loading && (
-            <tbody>
-              <tr className='misFilas'>
-                <td colSpan="5">Cargando...</td>
-              </tr>
-            </tbody>
-          )}
-          {!loading && (
-            <tbody>
-              {filas.map((mensaje) => (
-                <tr className='misFilas' key={mensaje.idemisor}>
-                  <td className='miTd'>{mensaje.fecha_notif}</td>
-                  <td className='miTd'>{mensaje.titulo_notif}</td>
-                  <td className='miTd'>{mensaje.emisor_notif}</td>
-                  <td className='miTd'>
-                    <Button
-                      onClick={() => handleVerMasClick(mensaje)}
-                      className='celesteBoton'
-                    >
-                      Ver mas
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-              {modalShow && (
-                <MensajeModal
-                  idemisor={mensajeSeleccionado.idemisor}
-                  nameemisor={mensajeSeleccionado.emisor_notif}
-                  titulo={mensajeSeleccionado.titulo_notif}
-                  descripcion={mensajeSeleccionado.mensaje_notif}
-                  fecha={mensajeSeleccionado.fecha_notif}
-                  show={modalShow}
-                  onHide={() => {
-                    setModalShow(false);
-                  }}
-                />
-              )}
-            </tbody>
-          )}
-        </Table>
+      <div className='tablePageContainer'>
+        <div className='titleBottonContainer'>
+          <h4>Historial de mensajes recibidos</h4>
         </div>
+        <div>
+          <Table responsive className='mytable'>
+            <thead className='tableHeader'>
+              <tr>
+                <th>Fecha</th>
+                <th>Tema</th>
+                <th>Emisor</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            {loading && (
+              <tbody>
+                <tr className='misFilas'>
+                  <td colSpan="5">Cargando...</td>
+                </tr>
+              </tbody>
+            )}
+            {!loading && (
+              <tbody>
+                {filas.map((mensaje) => (
+                  <tr className='misFilas' key={mensaje.idemisor}>
+                    <td className='miTd'>{mensaje.fecha_notif}</td>
+                    <td className='miTd'>{mensaje.titulo_notif}</td>
+                    <td className='miTd'>{mensaje.emisor_notif}</td>
+                    <td className='miTd'>
+                      <Button
+                        onClick={() => handleVerMasClick(mensaje)}
+                        className='celesteBoton'
+                      >
+                        Ver mas
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+                {modalShow && (
+                  <MensajeModal
+                    idemisor={mensajeSeleccionado.idemisor}
+                    nameemisor={mensajeSeleccionado.emisor_notif}
+                    titulo={mensajeSeleccionado.titulo_notif}
+                    descripcion={mensajeSeleccionado.mensaje_notif}
+                    fecha={mensajeSeleccionado.fecha_notif}
+                    show={modalShow}
+                    onHide={() => {
+                      setModalShow(false);
+                    }}
+                  />
+                )}
+              </tbody>
+            )}
+          </Table>
+          </div>
+      </div>
+      
       </>
     );
   };

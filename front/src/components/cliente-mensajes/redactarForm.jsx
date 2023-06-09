@@ -52,6 +52,7 @@ const RedactarForm = () => {
         //que hacer despues
         if (data.success == true) {
           window.alert("Mensaje enviado");
+          navigate('/cliente/enviados');
         }
         console.log(data);
       })

@@ -27,7 +27,7 @@ const HistorialQuejas = () => {
 
     //con axios
     setLoading(true)
-      axiosCliente.get('/notificacionesRecibe', { params: payload })
+      axiosCliente.get('/quejas', { params: payload })
         .then(({ data }) => {
           setLoading(false)
           setFilas(JSON.parse(data))
