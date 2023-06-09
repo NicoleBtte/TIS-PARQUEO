@@ -65,8 +65,8 @@ class ClienteController extends Controller
         $registro->password=Hash::make($request->password);
         $registro->apellidos_cliente=$request->apellidos;
         $registro->direccion_cliente=$request->direccion;
-        $registro->unidad_trabajo=null;//$request->unidad;
-        $registro->cargo_cliente=null;//$request->cargo;
+        $registro->unidad_trabajo=$request->unidad;
+        $registro->cargo_cliente=$request->cargo;
         
         $registro->save();
         
