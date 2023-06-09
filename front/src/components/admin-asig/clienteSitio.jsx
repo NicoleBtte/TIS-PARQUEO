@@ -58,7 +58,7 @@ const ClienteSitio = () => {
       doc.text("Clientes y sitios asignados", 10, 20);
     
       // Agregar los datos de la tabla a una matriz
-      const dataTabla = filas.map((registro) => [registro.nombre_cliente, registro.nombre_parqueo, registro.nombre_zona_estacionamiento, registro.numero]);
+      const dataTabla = filas.map((registro) => [registro.nombre_cliente + " "+ registro.apellidos_cliente, registro.nombre_parqueo, registro.nombre_zona_estacionamiento, registro.numero]);
       filasAdicionales.forEach(registro => {
         dataTabla.push([
           registro.nombre_cliente,
@@ -106,7 +106,7 @@ const ClienteSitio = () => {
             <tbody>
             {filas.map(u => (
               <tr className='misFilas' key={u.idcliente}>
-                <td className='miTd'>{u.nombre_cliente}</td>
+                <td className='miTd'>{u.nombre_cliente+" "+u.apellidos_cliente}</td>
                 <td className='miTd'>{u.nombre_parqueo}</td>
                 <td className='miTd'>{u.nombre_zona_estacionamiento}</td>
                 <td className='miTd'>{u.numero}</td>
@@ -119,7 +119,7 @@ const ClienteSitio = () => {
             ))}
             {filasAdicionales.map(u => (
                 <tr className='misFilas' key={u.idsitio}>
-                  <td className='miTd'>{u.nombre_cliente}</td>
+                  <td className='miTd'>{u.nombre_cliente+" "+u.apellidos_cliente}</td>
                   <td className='miTd'>Sin asignar</td>
                   <td className='miTd'>Sin asignar</td>
                   <td className='miTd'>Sin asignar</td>

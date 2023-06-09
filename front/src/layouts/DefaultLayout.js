@@ -70,9 +70,9 @@ const DefaultLayout = () => {
               <NavDropdown.Item className="navDrop" as={Link} to="/admin/guardiasTurnos">Guardias</NavDropdown.Item>
           </NavDropdown>
           <NavDropdown title="Notificaciones" className="navDrop">
-              <NavDropdown.Item className="navDrop" as={Link} to="/admin/redactar">Redactar</NavDropdown.Item>
+              <NavDropdown.Item className="navDrop" as={Link} to="/admin/redactar">Redactar mensaje global</NavDropdown.Item>
               <NavDropdown.Item className="navDrop" as={Link} to="/admin/redactarindv">Redactar mensaje individual</NavDropdown.Item>
-              <NavDropdown.Item className="navDrop" as={Link} to="/admin/mensajes">Mensajes</NavDropdown.Item>
+              <NavDropdown.Item className="navDrop" as={Link} to="/admin/mensajes">Mensajes enviados</NavDropdown.Item>
           </NavDropdown>
           <NavDropdown title="Usuarios" className="navDrop">
               <NavDropdown.Item className="navDrop" as={Link} to="/admin/operadores">Operadores</NavDropdown.Item>
@@ -111,9 +111,10 @@ const DefaultLayout = () => {
           <Nav.Link as={Link} to="/guardia/ingresos">
             Ingresos
           </Nav.Link>
-          <Nav.Link as={Link} to="/guardia/infoClientes">
-            Clientes
-          </Nav.Link>
+          <NavDropdown title="Clientes" className="navDrop">
+              <NavDropdown.Item className="navDrop" as={Link} to="/guardia/infoClientes">Información Personal</NavDropdown.Item>
+              <NavDropdown.Item className="navDrop" as={Link} to="/guardia/infoVehiculo">Vehículos y Estacionamiento</NavDropdown.Item>
+          </NavDropdown>
           <Nav.Link as={Link} to="/guardia/notificaciones">
             Mensajes
           </Nav.Link>

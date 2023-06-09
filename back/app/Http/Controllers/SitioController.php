@@ -59,7 +59,7 @@ class SitioController extends Controller
     ->join('zonaEstacionamiento', 'sitio.zonaEstacionamiento_idzonaEstacionamiento', '=', 'zonaEstacionamiento.idzonaEstacionamiento')
     ->join('cliente', 'sitio.cliente_idcliente', '=', 'cliente.idcliente')
     ->join('parqueo', 'zonaEstacionamiento.parqueo_idparqueo', '=', 'parqueo.idparqueo')
-    ->select('cliente.idcliente','cliente.nombre_cliente', 'parqueo.nombre_parqueo', 'zonaEstacionamiento.nombre_zona_estacionamiento','sitio.numero')
+    ->select('cliente.idcliente','cliente.nombre_cliente', 'cliente.apellidos_cliente','parqueo.nombre_parqueo', 'zonaEstacionamiento.nombre_zona_estacionamiento','sitio.numero')
                 ->get();
 
    return response()->json(json_encode($arreglo));             

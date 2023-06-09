@@ -151,3 +151,6 @@ Route::post('/dejarSinTurno', [TurnoController::class, 'dejarSinTurno']);
 Route::post('/registroTurno', [TurnoController::class, 'registroTurnos']);
 Route::get('/listaTurnosDelGuardia', [TurnoController::class, 'listaTurnosDelGuardia']);
 Route::get('/verificarTurno', [TurnoController::class,'verificar']);
+
+//info clientes
+Route::get('/infoClientes', [ClienteController::class,'infoClientes']);
