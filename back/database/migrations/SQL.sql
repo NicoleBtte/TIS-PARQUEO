@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`bitacora` (
 
 
 INSERT INTO `mydb`.`administrador` (`idadministrador`, `nombre_administrador`, `telf_administrador`, `email_administrador`, `pass_administrador`) 
-VALUES ('13456746', 'Roberto Martinez', '7658978', 'robertito@gmail.com', '$2a$12$wvkeI37Moob1BsaQgZFK8.c0hUqKrdktSTraygTNz2hDI1SfeMdJ6');
+VALUES ('1111', 'Roberto Martinez', '7658978', 'robertito@gmail.com', '$2a$12$wvkeI37Moob1BsaQgZFK8.c0hUqKrdktSTraygTNz2hDI1SfeMdJ6');
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
