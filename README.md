@@ -5,10 +5,10 @@ Bienvenido al sistema de parqueo de la FCyT, elaborado por el equipo de CATSOFT.
 --------------------------------------------------------------------------------------------------------------
 
 -----> Antes de comenzar, siga los siguientes pasos posterior a clonar el repositorio:
-•	Dentro del directorio “back”, ejecute el comando: composer install. Si presenta problemas puede borrar la carpeta vendor e intentar de nuevo.
-•	En phpmyadmin cree una base de datos llamada “mydb”, seleccionando utf8_unicode_ci. 
-•	Dentro del directorio “back”, ejecute el comando: php artisan migrate. Esto ejecutara el script sql con la base de datos.
-•	Dentro del directorio “front”, ejecute el comando: npm install
+- Dentro del directorio “back”, ejecute el comando: composer install. Si presenta problemas puede borrar la carpeta vendor e intentar de nuevo.
+- En phpmyadmin cree una base de datos llamada “mydb”, seleccionando utf8_unicode_ci. 
+- Dentro del directorio “back”, ejecute el comando: php artisan migrate. Esto ejecutara el script sql con la base de datos.
+- Dentro del directorio “front”, ejecute el comando: npm install
 
 -----> Iniciar el sistema de manera local
 1.Para iniciar el sistema, abra xampp e inicie Apache y MySQL
@@ -34,7 +34,7 @@ Contraseña:  Admin123.
 11.	Una vez creada, ya podrá hacer uso de las demás funcionalidades
 
 -----> Cuentas de usuario
-•	Con el parqueo y convocatoria creados, los clientes podrán registrarse a la convocatoria y obtener sitios de estacionamiento. 
-•	El administrador podrá crear operadores y guardias desde la opción “Usuarios”.
+- Con el parqueo y convocatoria creados, los clientes podrán registrarse a la convocatoria y obtener sitios de estacionamiento. 
+- El administrador podrá crear operadores y guardias desde la opción “Usuarios”.
 
 ¡Ya puede empezar a explorar las opciones del sistema!
