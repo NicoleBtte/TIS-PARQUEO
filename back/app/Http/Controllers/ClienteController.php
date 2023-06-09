@@ -65,8 +65,8 @@ class ClienteController extends Controller
         $registro->password=Hash::make($request->password);
         $registro->apellidos_cliente=$request->apellidos;
         $registro->direccion_cliente=$request->direccion;
-        $registro->unidad_trabajo=$request->unidad;
-        $registro->cargo_cliente=$request->cargo;
+        $registro->unidad_trabajo=$request->unidad;//$request->unidad;
+        $registro->cargo_cliente=$request->cargo;//$request->cargo;
         
         $registro->save();
         
@@ -167,4 +167,24 @@ class ClienteController extends Controller
         ]);
     }
 
+    public function infoClientes()
+    {
+        $arreglo = DB::table('sitio')
+            ->join('zonaEstacionamiento', 'sitio.zonaEstacionamiento_idzonaEstacionamiento', '=', 'zonaEstacionamiento.idzonaEstacionamiento')
+            ->join('cliente', 'sitio.cliente_idcliente', '=', 'cliente.idcliente')
+            ->join('parqueo', 'zonaEstacionamiento.parqueo_idparqueo', '=', 'parqueo.idparqueo')
+            ->join('auto', 'auto.cliente_idcliente', '=', 'cliente.idcliente')
+            ->select(
+                'cliente.idcliente',
+                'cliente.nombre_cliente',
+                'cliente.apellidos_cliente',
+                'parqueo.nombre_parqueo',
+                'zonaEstacionamiento.nombre_zona_estacionamiento',
+                'sitio.numero',
+                'auto.placa_auto'
+            )
+            ->get();
+
+        return response()->json(json_encode($arreglo));
+    }
 }

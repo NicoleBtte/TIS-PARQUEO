@@ -104,10 +104,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cliente` (
   `telf_cliente` VARCHAR(15) NULL,
   `email_cliente` VARCHAR(35) NULL,
   `password` VARCHAR(500) NULL,
-  `apellidos_cliente` VARCHAR(45) NULL,
-  `direccion_cliente` VARCHAR(45) NULL,
-  `unidad_trabajo` VARCHAR(20) NULL,
-  `cargo_cliente` VARCHAR(45) NULL,
+  `apellidos_cliente` VARCHAR(60) NULL,
+  `direccion_cliente` VARCHAR(60) NULL,
+  `unidad_trabajo` VARCHAR(60) NULL,
+  `cargo_cliente` VARCHAR(60) NULL,
   PRIMARY KEY (`idcliente`))
 ENGINE = InnoDB;
 
@@ -200,8 +200,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`notificacion` (
   `idnotificaciones` INT NOT NULL AUTO_INCREMENT,
   `emisor_notif` VARCHAR(50) NULL,
   `receptor_notif` VARCHAR(50) NULL,
-  `titulo_notif` VARCHAR(45) NULL,
-  `mensaje_notif` VARCHAR(145) NULL,
+  `titulo_notif` VARCHAR(80) NULL,
+  `mensaje_notif` VARCHAR(500) NULL,
   `idemisor` INT NULL,
   `idreceptor` INT NULL,
   `fecha_notif` DATE NULL,
@@ -338,14 +338,14 @@ ENGINE = InnoDB;
 -- Table `mydb`.`gestion_deudas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`bitacora` (
-  `idbitacora` int(11) NOT NULL,
+  `idbitacora` int(11) INT NOT NULL AUTO_INCREMENT,
   `tipo_operacion` varchar(20) DEFAULT NULL,
   `nombre_tabla` text DEFAULT NULL,
   `valores_antiguos` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `valores_nuevos` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`idbitacora`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 INSERT INTO `mydb`.`administrador` (`idadministrador`, `nombre_administrador`, `telf_administrador`, `email_administrador`, `pass_administrador`) 

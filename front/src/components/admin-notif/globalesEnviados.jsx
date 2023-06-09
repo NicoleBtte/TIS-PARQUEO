@@ -51,7 +51,7 @@ const GlobalesEnviados = () => {
           <thead className='tableHeader'>
             <tr>
               <th>Fecha</th>
-              <th>Titulo</th>
+              <th>Tema</th>
               <th>Receptor</th>
               <th>Acciones</th>
             </tr>
@@ -59,7 +59,7 @@ const GlobalesEnviados = () => {
           {loading && (
             <tbody>
               <tr className='misFilas'>
-                <td colSpan="5">Loading...</td>
+                <td colSpan="5">Cargando...</td>
               </tr>
             </tbody>
           )}

@@ -75,7 +75,7 @@ const NotifIndv = () => {
               {({ errors, touched, handleChange, values }) => (
                 <Form className="formulario">
                   <div className="myform-group">
-                      <label htmlFor="ci">Número de C.I.:</label>
+                      <label htmlFor="ci">Número de C.I. del receptor:</label>
                       <Field
                         type="text" 
                         id="ci" 

@@ -44,6 +44,9 @@ import AsignarTurno from "./components/admin-turnos/asignarTurno";
 import RedactarAdmin from "./components/admin-notif/redactarAdmin";
 import AdminMensajes from "./components/admin-notif/adminMensajes";
 import NotifIndv from "./components/admin-notif/notifIndiv";
+import NotificacionesGuardia from "./components/guardia-notif/notificacionesGuardia";
+import NotificacionesOperador from "./components/operador-notif/notificacionesOperador";
+import Vehiculos from "./components/guardia-clientes/vehiculos";
 
 function App() {
   return (
@@ -148,6 +151,7 @@ function App() {
                 element={<MensajesEnviadosPage />}
               />
               <Route path="/operador/infoClientes" element={<Clientes />} />
+              <Route path="/operador/notificaciones" element={<NotificacionesOperador />} />
             </Route>
             {/* Rutas para el guardia */}
             <Route
@@ -165,6 +169,8 @@ function App() {
                 element={<IngresosForm />}
               />
               <Route path="/guardia/infoClientes" element={<Clientes />} />
+              <Route path="/guardia/notificaciones" element={<NotificacionesGuardia />} />
+              <Route path="/guardia/infoVehiculo" element={<Vehiculos />} />
             </Route>
             {/* Rutas para el cliente */}
             <Route
