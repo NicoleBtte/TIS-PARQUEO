@@ -17,36 +17,6 @@ use Illuminate\Support\Facades\Validator;
 
 class NotificacionController extends Controller
 {
-    /*public function notifEnviadosAdmin(Request $request){
-        $idadministrador = $request -> id;
-        $notificaciones = Notificacion::where('idemisor', $idadministrador)->get();
-        $notificacionesUnicas = [];
-        $cadena_equipo = implode(";", $notificacionesUnicas);
-
-        foreach ($notificaciones as $notificacion) {
-            $existe = false;
-            foreach ($notificacionesUnicas as $unica) {
-                if ($unica->titulo_notif === $notificacion->titulo_notif && $unica->mensaje_notif === $notificacion->mensaje_notif) {
-                    $existe = true;
-                    break;
-                }
-            }
-            if (!$existe) {
-                $idAuxiliar = $notificacion->idreceptor;
-                $notificacion->receptor_notif = "Personal";
-                if(Cliente::find($idAuxiliar)){
-                    $notificacion->receptor_notif = "Clientes";
-                }
-                $notificacionesUnicas[] = $notificacion;
-            }
-        }
-        if (count($notificacionesUnicas) === 0) {
-            return response()->json(['message' => 'No se encontraron notificaciones'], 404);
-        } else {
-            return response()->json(json_encode($notificacionesUnicas));
-        }
-    }*/
-
     public function notifEnviadosAdmin(Request $request){
         $idadministrador = $request -> id;
         $notificaciones = Notificacion::where('idemisor', $idadministrador)->get();
@@ -55,7 +25,7 @@ class NotificacionController extends Controller
             $existe = false;
             foreach ($notificacionesUnicas as $unica) {
                 if ($unica->titulo_notif === $notificacion->titulo_notif && $unica->mensaje_notif === $notificacion->mensaje_notif) {
-                    $unica->idreceptor = 0;
+                    $unica->idemisor = 0;
                     $existe = true;
                     break;
                 }
@@ -65,7 +35,7 @@ class NotificacionController extends Controller
             }
         }
         foreach($notificacionesUnicas as $notificacion){
-            if($notificacion->idreceptor===0){
+            if($notificacion->idemisor === 0){
                 $idAuxiliar = $notificacion->idreceptor;
                 if(Cliente::find($idAuxiliar)){
                     $notificacion->receptor_notif = "Clientes";  
