@@ -11,14 +11,15 @@ Bienvenido al sistema de parqueo de la FCyT, elaborado por el equipo de CATSOFT.
 - Dentro del directorio “front”, ejecute el comando: npm install
 
 -----> Iniciar el sistema de manera local
-1.Para iniciar el sistema, abra xampp e inicie Apache y MySQL
-2.Posteriormente, desde el directorio “back” ejecute el comando: php artisan serve
-3.Por último, desde el directorio “front” ejecute el comando: npm start
+1. Para iniciar el sistema, abra xampp e inicie Apache y MySQL
+2. Posteriormente, desde el directorio “back” ejecute el comando: php artisan serve
+3. Por último, desde el directorio “front” ejecute el comando: npm start
 
 -----> Cuenta Administrador
 En la base de datos esta registrada una cuenta de administrador que podrá usar para ingresar al sistema:
-Numero de C.I.: 13456746
-Contraseña:  Admin123.
+
+- Numero de C.I.: 13456746
+- Contraseña:  Admin123.
 
 -----> Para hacer uso del sistema puede seguir los siguientes pasos:
 1.	Inicie sesión como administrador
