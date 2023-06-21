@@ -27,6 +27,7 @@ const ResponderForm = () => {
             window.alert("Mensaje enviado");
           }      
           console.log(data)
+          navigate('/operador/enviados');
         })
         .catch(err => {
           const response = err.response;
@@ -35,6 +36,7 @@ const ResponderForm = () => {
             console.log(response.data.errors)
           }
           })
+          
     }
 
     return (

@@ -32,7 +32,9 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
       telefono: values.telefono,
       ci: values.ci,
       password: values.password,
-      //password_confirmation: values.ccontrasena
+      cargo: values.cargo,
+      unidad: values.unidad,
+      placa: values.placa,
     }
     console.log(payload);
   
@@ -41,15 +43,12 @@ const FormularioRegistro = ({idConvocatoria, titulo, numero_cupos}) => {
       if (data.message && data.message.indexOf('Usuario creado') !== -1) {
         //se encontro mensaje de exito
         const m = await reducirCupos();
-        console.log('Se termino de ejecutar reducir cupos');
         console.log(m);
         if (m === 'Se resto un cupo del total') {
-          console.log('El m essssss',m)
           setTimeout(() => {
             window.alert('Registro completado con éxito!');
           }, 500); //espera 500ms antes de mostrar el mensaje
         } else {
-          console.log('PEro se entroe porrrr',m)
           setTimeout(() => {
             window.alert('No se pudo completar el registro.\nEs posible que los cupos se hayan acabado.');
           }, 500); //espera 500ms antes de mostrar el mensaje

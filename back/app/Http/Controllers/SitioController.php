@@ -59,7 +59,7 @@ class SitioController extends Controller
     ->join('zonaEstacionamiento', 'sitio.zonaEstacionamiento_idzonaEstacionamiento', '=', 'zonaEstacionamiento.idzonaEstacionamiento')
     ->join('cliente', 'sitio.cliente_idcliente', '=', 'cliente.idcliente')
     ->join('parqueo', 'zonaEstacionamiento.parqueo_idparqueo', '=', 'parqueo.idparqueo')
-    ->select('cliente.idcliente','cliente.nombre_cliente', 'parqueo.nombre_parqueo', 'zonaEstacionamiento.nombre_zona_estacionamiento','sitio.numero')
+    ->select('cliente.idcliente','cliente.nombre_cliente', 'cliente.apellidos_cliente','parqueo.nombre_parqueo', 'zonaEstacionamiento.nombre_zona_estacionamiento','sitio.numero')
                 ->get();
 
    return response()->json(json_encode($arreglo));             
@@ -70,7 +70,7 @@ class SitioController extends Controller
       $arreglo3=DB::table('cliente')
       ->leftJoin('sitio', 'sitio.cliente_idcliente', '=', 'cliente.idcliente')
       ->whereNull('sitio.cliente_idcliente')
-      ->select('cliente.idcliente','cliente.nombre_cliente')
+      ->select('cliente.idcliente','cliente.nombre_cliente', 'cliente.apellidos_cliente')
                   ->get();
       
     return response()->json(json_encode($arreglo3));
@@ -113,8 +113,12 @@ class SitioController extends Controller
       ->join('parqueo', 'zonaEstacionamiento.parqueo_idparqueo', '=', 'parqueo.idparqueo')
       ->select('parqueo.nombre_parqueo', 'zonaEstacionamiento.nombre_zona_estacionamiento','sitio.numero')
                 ->get();
-  
-      return response()->json(json_encode($arreglo));    
+      
+      if ($arreglo->isEmpty()) {
+         return response()->json(['message' => 'El arreglo esta vacio']);
+      }
+              
+      return response()->json(json_encode($arreglo));
     }
 
     public function dejarSinSitio(Request $request){

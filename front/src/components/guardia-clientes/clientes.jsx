@@ -40,7 +40,7 @@ const Clientes = () => {
       doc.text("Información de los clientes", 10, 20);
     
       // Agregar los datos de la tabla a una matriz
-      const dataTabla = filas.map((registro) => [registro.idcliente, registro.nombre_cliente, registro.telf_cliente, registro.email_cliente]);
+      const dataTabla = filas.map((registro) => [registro.idcliente, registro.nombre_cliente + " "+ registro.apellidos_cliente, registro.telf_cliente, registro.email_cliente]);
       // Agregar la tabla al documento
       doc.autoTable({
         head: [["CI", "Nombre del cliente","Telefono","Email"]],
@@ -86,7 +86,7 @@ const Clientes = () => {
               {filas.map(u => (
                 <tr className='misFilas' key={u.idcliente}>
                   <td className='miTd'>{u.idcliente}</td>
-                  <td className='miTd'>{u.nombre_cliente}</td>
+                  <td className='miTd'>{u.nombre_cliente+" "+u.apellidos_cliente}</td>
                   <td className='miTd'>{u.telf_cliente}</td>
                   <td className='miTd'>{u.email_cliente}</td>
                 </tr>

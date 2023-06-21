@@ -85,7 +85,8 @@ class NotificacionController extends Controller
             ->first();
         
         $notificacion = new Notificacion();
-        $notificacion->emisor_notif = $cliente->nombre_cliente;
+        //$notificacion->emisor_notif = $cliente->nombre_cliente;
+        $notificacion->emisor_notif = $cliente->nombre_cliente. ' ' . $cliente->apellidos_cliente;;
         $notificacion->receptor_notif = $operador->nombre_operador;
         $notificacion->idemisor = $cliente->idcliente;
         $notificacion->idreceptor = $operador->idoperador;
@@ -110,7 +111,8 @@ class NotificacionController extends Controller
         
         $notificacion = new Notificacion();
         $notificacion->emisor_notif = $operador->nombre_operador;
-        $notificacion->receptor_notif = $cliente->nombre_cliente;
+        //$notificacion->receptor_notif = $cliente->nombre_cliente;
+        $notificacion->receptor_notif = $cliente->nombre_cliente . ' ' . $cliente->apellidos_cliente;
         $notificacion->idemisor = $operador->idoperador;
         $notificacion->idreceptor = $cliente->idcliente;
         $notificacion->titulo_notif = $request->titulo_notif;
@@ -223,7 +225,8 @@ class NotificacionController extends Controller
                 default:
                     $notificacion = new Notificacion();
                     $notificacion->emisor_notif = $administrador->nombre_administrador;
-                    $notificacion->receptor_notif = $receptor->nombre_cliente;
+                    //$notificacion->receptor_notif = $receptor->nombre_cliente;
+                    $notificacion->receptor_notif = $receptor->nombre_cliente. ' ' . $receptor->apellidos_cliente;;
                     $notificacion->idemisor = $administrador->idadministrador;
                     $notificacion->idreceptor = $receptor->idcliente;
                     $notificacion->titulo_notif = $request->titulo_notif;
@@ -244,4 +247,36 @@ class NotificacionController extends Controller
             ]);
         }
     }
+    public function indexReceivedOperador(Request $request)
+    {
+        $id = $request->id;
+        $administradores = Administrador::pluck('idadministrador')->toArray();
+        
+        $notificaciones = Notificacion::where('idreceptor', $id)
+            ->whereIn('idemisor', $administradores)
+            ->get();
+            
+        if ($notificaciones->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron notificaciones'], 404);
+        } else {
+            return response()->json(json_encode($notificaciones));
+        }
+    }
+
+    public function indexQuejas(Request $request)
+    {
+        $id = $request->id;
+        $clientes = Cliente::pluck('idcliente')->toArray();
+        
+        $notificaciones = Notificacion::where('idreceptor', $id)
+            ->whereIn('idemisor', $clientes)
+            ->get();
+            
+        if ($notificaciones->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron notificaciones'], 404);
+        } else {
+            return response()->json(json_encode($notificaciones));
+        }
+    }
+
 }

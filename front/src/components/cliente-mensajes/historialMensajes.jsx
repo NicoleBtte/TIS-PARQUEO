@@ -60,7 +60,7 @@ const HistorialMensajes = () => {
           {loading && (
             <tbody>
               <tr className='misFilas'>
-                <td colSpan="5">Loading...</td>
+                <td colSpan="5">Cargando...</td>
               </tr>
             </tbody>
           )}
