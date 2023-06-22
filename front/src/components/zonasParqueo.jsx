@@ -319,7 +319,7 @@ export default function ZonasPar() {
                       className="h1"
                       style={{ fontSize: "15px", textAlign: "center" }}
                     >
-                      Numero de pisos
+                      Numero de sitios
                     </h1>
                     <Button variant="outline-primary">
                       {numero_de_sitios}
