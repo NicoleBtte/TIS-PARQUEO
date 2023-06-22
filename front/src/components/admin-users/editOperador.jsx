@@ -6,6 +6,7 @@ import '../../styles/formStyle.css';
 const EditOperador = () => {
   const { id, p } = useParams();
   const [operador, setOperador] = useState({
+    idactual: "",
     idoperador: "",
     nombre_operador: "",
     telf_operador: "",
@@ -28,9 +29,14 @@ const EditOperador = () => {
   },[])
 
   const handleOptionChange = (event) => {
+    /*console.log("eeeeeeeeeeeeeeeeeeee",event.target.value);
     console.log("cambia de", selectedOption)
     setSelectedOption(event.target.value);
-    console.log("a ", selectedOption)
+    console.log("a ", selectedOption)*/
+    setOperador((prevoperador) => ({
+      ...prevoperador,
+      parqueo_idparqueo: event.target.value
+    }));
   }
 
   const getoptions = () => {
@@ -128,7 +134,8 @@ const EditOperador = () => {
     }
     console.log(operador);
     const payload = {
-      nombre_operador_operador: operador.nombre_operador,
+      idoperador: id,
+      nombre_operador: operador.nombre_operador,
       ci: operador.idoperador,
       email_operador: operador.email_operador,
       telf_operador: operador.telf_operador,
@@ -136,7 +143,7 @@ const EditOperador = () => {
     }
     console.log(payload);
 
-    /*axiosCliente.post('/crearOperador', payload)
+    axiosCliente.post('/editarOperador', payload)
         .then(({data}) => {    
           //que hacer despues      
           console.log(data)
@@ -147,9 +154,9 @@ const EditOperador = () => {
           if (response && response.status === 422) {
             console.log(response.data.errors)
           }
-          })*/
+          })
   
-    //navigate('/admin/operadores');
+    navigate('/admin/operadores');
   };
 
   const handleSubmit = (e) => {

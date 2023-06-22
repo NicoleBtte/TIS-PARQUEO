@@ -133,8 +133,8 @@ Route::post('/crearGuardia', [GuardiaController::class, 'crear']);
 Route::delete('/deleteGuardia', [GuardiaController::class, 'eliminarGuardia']);
 Route::get('/getGuardia', [GuardiaController::class, 'show']);
 
-Route::put('/editarOperador', [OperadorController::class, 'actualizarDatosOperador']);
-Route::put('/editarGuardia', [GuardiaController::class, 'actualizarDatosGuardia']);
+Route::post('/editarOperador', [OperadorController::class, 'actualizarDatosOperador']);
+Route::post('/editarGuardia', [GuardiaController::class, 'actualizarDatosGuardia']);
 
 //dejar sin sitio
 Route::post('/dejarSinSitio',[SitioController::class,'dejarSinSitio']);

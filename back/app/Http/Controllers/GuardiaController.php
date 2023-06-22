@@ -114,8 +114,17 @@ class GuardiaController extends Controller
         return response()->json(['message' => 'Usuario creado con éxito']);
     }
 
-    public function actualizarDatosGuardia(Request $request, $idguardia){
-        $registro = Guardia::findOrFail($idguardia);
+    public function actualizarDatosGuardia(Request $request){
+        if($request->ci != $request->idguardia){
+            $validator = Validator::make($request->all(), [
+                'ci' => 'required|unique:guardia,idguardia',
+            ]);
+        
+            if ($validator->fails()) {
+                return response()->json($validator->errors()->toJson());
+            }
+        }
+        $registro = Guardia::findOrFail($request->idguardia);
         $registro->idguardia=$request->ci;
         $registro->nombre_guardia=$request->nombre_guardia;
         $registro->telefono_guardia=$request->telf_guardia;

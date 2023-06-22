@@ -91,13 +91,14 @@ const EditGuardia = () => {
     }
     console.log(guardia);
     const payload = {
-      nombre_guardia_guardia: guardia.nombre_guardia,
+      idguardia: id,
+      nombre_guardia: guardia.nombre_guardia,
       ci: guardia.idguardia,
-      telefono_guardia: guardia.telefono_guardia,
+      telf_guardia: guardia.telefono_guardia,
     }
     console.log(payload);
 
-    /*axiosCliente.post('/crearguardia', payload)
+    axiosCliente.post('/editarGuardia', payload)
         .then(({data}) => {    
           //que hacer despues      
           console.log(data)
@@ -108,9 +109,9 @@ const EditGuardia = () => {
           if (response && response.status === 422) {
             console.log(response.data.errors)
           }
-          })*/
+          })
   
-    //navigate('/admin/guardiaes');
+    navigate('/admin/guardias');
   };
 
   const handleSubmit = (e) => {

@@ -130,8 +130,17 @@ class OperadorController extends Controller
         return response()->json(['message' => 'Usuario creado con éxito']);
     }
 
-    public function actualizarDatosOperador(Request $request, $idoperador){
-        $registro = Operador::findOrFail($idoperador);
+    public function actualizarDatosOperador(Request $request){
+        if($request->ci != $request->idoperador){
+            $validator = Validator::make($request->all(), [
+                'ci' => 'required|unique:operador,idoperador',
+            ]);
+        
+            if ($validator->fails()) {
+                return response()->json($validator->errors()->toJson());
+            }
+        }
+        $registro = Operador::findOrFail($request->idoperador);
         $registro->idoperador=$request->ci;
         $registro->nombre_operador=$request->nombre_operador;
         $registro->telf_operador = $request->telf_operador;
