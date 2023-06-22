@@ -59,6 +59,7 @@ function PagosPage() {
               <th className="fw-medium">Tipo de pago</th>
               <th className="fw-medium">Meses cancelados</th>
               <th className="fw-medium">Comprobante</th>
+              <th className="fw-medium">Operador</th>
             </tr>
           </thead>
           <tbody className="bg-c-secondary">
@@ -81,6 +82,7 @@ function PagosPage() {
                     </Button>
                   )}
                 </td>
+                <td className="miTd">{pago.idOperador}</td>
               </tr>
             ))}
           </tbody>

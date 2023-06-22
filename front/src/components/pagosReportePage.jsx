@@ -301,6 +301,7 @@ const PagosReportePage = () => {
                 <th>Fecha</th>
                 <th>Monto</th>
                 <th>Devolucion</th>
+                {/*<th>Operador</th>*/}
               </tr>
             </thead>
             <tbody>
@@ -308,6 +309,7 @@ const PagosReportePage = () => {
                 <tr className="misFilas" key={index}>
                   <td className="miTd">{registro.fechaPago}</td>
                   <td className="miTd">{registro.monto}</td>
+                  <td className="miTd">{registro.devolucion}</td>
                   <td className="miTd">{registro.devolucion}</td>
                 </tr>
               ))}

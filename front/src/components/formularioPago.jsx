@@ -10,9 +10,10 @@ function PagoForm() {
     monto: null,
     tipo_de_pago: 1,
     comprobante: "",
+    operador_ci: localStorage.getItem("ID_USER"),
   });
 
-  const { carnet, monto, tipo_de_pago, comprobante } = formValue;
+  const { carnet, monto, tipo_de_pago, comprobante, operador_ci } = formValue;
 
   const [archivo, setArchivo] = useState();
 
@@ -60,6 +61,7 @@ function PagoForm() {
       }
       console.log({ archivo });
       console.log({ formValue });
+      formData.append("operador_ci", operador_ci);
       axiosClient
         .post("/pagar", formData)
         .then((res) => {
@@ -84,6 +86,23 @@ function PagoForm() {
           <legend className="text-center  fw-medium primary-color">
             Agregar Pago
           </legend>
+          <div className="mb-3">
+            <label
+              className="form-label  fw-medium primary-color"
+              htmlFor="operador_ci"
+            >
+              Id operador responsable
+            </label>
+            <input
+              className="form-control"
+              name="operador_ci"
+              id="operador_ci"
+              type="text"
+              onChange={handleInputChange}
+              defaultValue={operador_ci}
+              readOnly
+            />
+          </div>
           <div className="mb-3">
             <label
               className="form-label  fw-medium primary-color"
