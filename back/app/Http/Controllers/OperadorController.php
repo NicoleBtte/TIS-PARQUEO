@@ -96,7 +96,12 @@ class OperadorController extends Controller
     }
 
     public function showAll(){
-        $consultaOperador = Operador::all();
+        //$consultaOperador = Operador::all();
+        //return response()->json($consultaOperador);
+        $consultaOperador = Operador::select('operador.*', 'parqueo.nombre_parqueo')
+        ->leftJoin('parqueo', 'operador.parqueo_idparqueo', '=', 'parqueo.idParqueo')
+        ->get();
+
         return response()->json($consultaOperador);
     }
 

@@ -76,7 +76,7 @@ const Operadores = () => {
                       <td className='miTd'>{u.email_operador}</td>
                       <td className='miTd'>{u.telf_operador}</td>
                       <td className='miTd'>
-                        {u.parqueo_idparqueo !== null ? u.parqueo_idparqueo : 'Sin asignar'}
+                        {u.nombre_parqueo !== null ? u.nombre_parqueo : 'Sin asignar'}
                       </td>
                       <td className='miTd'>
                         <Button as={Link} to={"/admin/editOp/id/"+u.idoperador+"/p/"+u.parqueo_idparqueo}className='naranjaBotonU'> Editar </Button>

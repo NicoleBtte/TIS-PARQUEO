@@ -117,8 +117,10 @@ class ParqueoController extends Controller
     public function destroy($idParqueo)
     {
         $operador = Operador::where('parqueo_idparqueo', $idParqueo)->first();
-        $operador->parqueo_idparqueo = null;
-        $operador->save();
+        if($operador){
+            $operador->parqueo_idparqueo = null;
+            $operador->save();
+        }
         $parqueo = Parqueo::find($idParqueo);
         if($parqueo) {
             $zonaIds = ZonaDeEstacionamiento::where('parqueo_idparqueo', $idParqueo)->pluck('idzonaEstacionamiento')->toArray();

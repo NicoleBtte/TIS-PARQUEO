@@ -29,10 +29,6 @@ const EditOperador = () => {
   },[])
 
   const handleOptionChange = (event) => {
-    /*console.log("eeeeeeeeeeeeeeeeeeee",event.target.value);
-    console.log("cambia de", selectedOption)
-    setSelectedOption(event.target.value);
-    console.log("a ", selectedOption)*/
     setOperador((prevoperador) => ({
       ...prevoperador,
       parqueo_idparqueo: event.target.value
@@ -175,10 +171,19 @@ const EditOperador = () => {
 
         <div>
           <label className="speciallabel" htmlFor="option">Parqueo:</label>
-          {options.length > 0 ? (
+          {options.length > 0 && p!=='null'? (
             <select className="combobox" id="option" name="option" onChange={handleOptionChange}>
               {options.map((opcion) => (
                 <option key={opcion.idParqueo} value={opcion.idParqueo} selected={opcion.idParqueo === operador.parqueo_idparqueo}>
+                  {opcion.nombre_parqueo}
+                </option>
+              ))}
+            </select>
+          ) : options.length > 0 && p==='null'? (
+            <select className="combobox" id="option" name="option" onChange={handleOptionChange}>
+            <option value="">Seleccione una opción</option>
+              {options.map((opcion) => (
+                <option key={opcion.idParqueo} value={opcion.idParqueo}>
                   {opcion.nombre_parqueo}
                 </option>
               ))}

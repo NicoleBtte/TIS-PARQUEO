@@ -29,7 +29,7 @@ const FormularioOperador = () => {
   }
 
   const guardar = async (values) => {
-    if(selectedOption===''){
+    if(selectedOption==='' && options.length>0){
       alert('Por favor seleccione una opción');
       return;
     }
@@ -134,14 +134,19 @@ const FormularioOperador = () => {
         <Form className="formulario">
           <div>
             <label className="speciallabel" htmlFor="option">Parqueo:</label>
+            {options.length > 0 ? (
               <Field className="combobox" as="select" id="option" name="option" onChange={handleOptionChange} value={selectedOption}>
                 <option value="">Seleccione una opción</option>
-                 {options.map((opcion) => (
-                <option key={opcion.idParqueo} value={opcion.idParqueo}>
-                  {opcion.nombre_parqueo}
-                </option>
+                {options.map((opcion) => (
+                  <option key={opcion.idParqueo} value={opcion.idParqueo}>
+                    {opcion.nombre_parqueo}
+                  </option>
                 ))}
               </Field>
+            ) : (
+              <p>No hay opciones disponibles.</p>
+            )}
+
           </div>
           
           <div className="myform-group">
