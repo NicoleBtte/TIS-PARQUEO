@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Parqueo;
+use App\Models\Operador;
 use App\Models\ZonaDeEstacionamiento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -115,6 +116,9 @@ class ParqueoController extends Controller
 
     public function destroy($idParqueo)
     {
+        $operador = Operador::where('parqueo_idparqueo', $idParqueo)->first();
+        $operador->parqueo_idparqueo = null;
+        $operador->save();
         $parqueo = Parqueo::find($idParqueo);
         if($parqueo) {
             $zonaIds = ZonaDeEstacionamiento::where('parqueo_idparqueo', $idParqueo)->pluck('idzonaEstacionamiento')->toArray();

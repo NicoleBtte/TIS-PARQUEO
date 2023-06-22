@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`operador` (
   `telf_operador` VARCHAR(12) NULL,
   `email_operador` VARCHAR(35) NULL,
   `pass_operador` VARCHAR(500) NULL,
-  `parqueo_idparqueo` INT NOT NULL,
+  `parqueo_idparqueo` INT NULL,
   PRIMARY KEY (`idoperador`),
   INDEX `fk_operador_parqueo1_idx` (`parqueo_idparqueo` ASC)  ,
   CONSTRAINT `fk_operador_parqueo1`
