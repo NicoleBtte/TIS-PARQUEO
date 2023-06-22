@@ -129,4 +129,15 @@ class OperadorController extends Controller
 
         return response()->json(['message' => 'Usuario creado con éxito']);
     }
+
+    public function actualizarDatosOperador(Request $request, $idoperador){
+        $registro = Operador::findOrFail($idoperador);
+        $registro->idoperador=$request->ci;
+        $registro->nombre_operador=$request->nombre_operador;
+        $registro->telf_operador = $request->telf_operador;
+        $registro->email_operador = $request->email_operador;
+        $registro->parqueo_idparqueo = $request->parqueo_idparqueo;
+        $registro->save();
+        return response()->json(['message' => 'Se a actualizado sus datos correctamente']);
+    }
 }

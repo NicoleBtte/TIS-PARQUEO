@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Guardia;
+use App\Models\Turno;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class GuardiaController extends Controller
 {
@@ -69,9 +72,24 @@ class GuardiaController extends Controller
     }
 
     public function eliminarGuardia(Request $request){
-        $registro=Guardia::find($request->id);
-        $registro->delete();
+        $guardiaId = $request->id; // ID del guardia que deseas eliminar
 
+        // Verificar si existen relaciones en la tabla turno_has_guardia
+        if (Turno::whereHas('guardias', function ($query) use ($guardiaId) {
+            $query->where('guardia_idguardia', $guardiaId);
+        })->exists()) {
+            $turnos = Turno::whereHas('guardias', function ($query) use ($guardiaId) {
+                $query->where('guardia_idguardia', $guardiaId);
+            })->get();
+            
+            foreach ($turnos as $turno) {
+                $turno->guardias()->detach($guardiaId);
+            }
+            Guardia::destroy($guardiaId);
+        } else {
+            $registro=Guardia::find($request->id);
+                $registro->delete();
+        }
         return response()->json(['message' => 'Usuario eliminado con éxito']);
     }
 
@@ -94,5 +112,14 @@ class GuardiaController extends Controller
         $registro->save();
 
         return response()->json(['message' => 'Usuario creado con éxito']);
+    }
+
+    public function actualizarDatosGuardia(Request $request, $idguardia){
+        $registro = Guardia::findOrFail($idguardia);
+        $registro->idguardia=$request->ci;
+        $registro->nombre_guardia=$request->nombre_guardia;
+        $registro->telefono_guardia=$request->telf_guardia;
+        $registro->save();
+        return response()->json(['message' => 'Se a actualizado sus datos correctamente']);
     }
 }

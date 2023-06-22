@@ -6,6 +6,9 @@ use App\Models\Turno;
 use App\Models\Guardia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
+
+use Illuminate\Database\Eloquent\Builder;
 
 class TurnoController extends Controller
 {
@@ -156,8 +159,20 @@ class TurnoController extends Controller
         if ($turno->dia_turno != $request-> diastur) {
             DB::table('turno')->where('idturno', $request-> idturno)->update(['dia_turno' => $request-> diastur]);
         }
-            
-    
+        $turnoId = $request ->idturno;
+
+        if (Turno::whereHas('guardias', function ($query) use ($turnoId ) {
+            $query->where('turno_idturno', $turnoId );
+            })->exists()) {
+                // Si existen relaciones, eliminar las relaciones y el guardia
+                $turnos = Turno::whereHas('guardias', function ($query) use ($turnoId) {
+                    $query->where('turno_idturno', $turnoId);
+                })->get();
+                
+                foreach ($turnos as $turno) {
+                    $turno->guardias()->detach($turnoId);
+                }
+            }
         }
     
     
@@ -171,7 +186,25 @@ class TurnoController extends Controller
        }
        
        public function eliminarTurno(Request $request){
+        $turnoId =  $request ->idturno; // ID del guardia que deseas eliminar
+
+        // Verificar si existen relaciones en la tabla turno_has_guardia
+        if (Turno::whereHas('guardias', function ($query) use ($turnoId ) {
+            $query->where('turno_idturno', $turnoId );
+            })->exists()) {
+            // Si existen relaciones, eliminar las relaciones y el guardia
+            $turnos = Turno::whereHas('guardias', function ($query) use ($turnoId) {
+                $query->where('turno_idturno', $turnoId);
+            })->get();
+            
+            foreach ($turnos as $turno) {
+                $turno->guardias()->detach($turnoId);}
+
+            Turno::destroy($turnoId);
+        } else {
+            // Si no existen relaciones, solo eliminar el guardia
             DB::table('turno')->where('idturno', $request ->idturno)->delete();
+        }
             }   
     
         public function listaTurnosSinGuardia(){
