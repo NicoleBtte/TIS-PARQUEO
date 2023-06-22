@@ -113,8 +113,8 @@ class PagoController extends Controller
                         
                     }
                     $pago->meses_pagados=$calculoMeses;
-                    //$pago->operador=$request->operador_ci;
-                    $pago->operador=Auth::id();
+                    $pago->operador=$request->operador_ci;
+                    //$pago->operador=Auth::id();
                     $pago->save();
                 }else{
                     $msg='Error: no se puede guardar montos pequeños, porfavor ingrese un monto exacto';

@@ -82,7 +82,7 @@ function PagosPage() {
                     </Button>
                   )}
                 </td>
-                <td className="miTd">{pago.idOperador}</td>
+                <td className="miTd">{pago.operador}</td>
               </tr>
             ))}
           </tbody>
