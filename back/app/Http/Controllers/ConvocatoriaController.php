@@ -36,7 +36,7 @@ class ConvocatoriaController extends Controller
             'pago_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
             'multa_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
             'pdf_convocatoria' => ['required', 'file', 'mimes:pdf', 'max:2000'],
-            'fecha_inicio_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after:fecha_fin'],
+            'fecha_inicio_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_fin'],
             'fecha_fin_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after:fecha_inicio_gestion'],
         ]);
 
@@ -101,7 +101,7 @@ class ConvocatoriaController extends Controller
             'fecha_fin' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_inicio'],
             'pago_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
             'multa_mensual'=>['required', 'integer', 'min:0', 'max:1000'],
-            'fecha_inicio_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after:fecha_fin'],
+            'fecha_inicio_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after_or_equal:fecha_fin'],
             'fecha_fin_gestion'=>['required', 'date', 'date_format:Y-m-d', 'after:fecha_inicio_gestion'],
         ]);
         $convocatoria->titulo = $validatedData['titulo'];

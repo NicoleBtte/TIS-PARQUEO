@@ -52,12 +52,13 @@ const ParqueoPage = () => {
   }
 
   function deleteParqueo(id) {
-    setParqueos(parqueos.filter((parqueo) => parqueo.idParqueo !== id));
+    //setParqueos(parqueos.filter((parqueo) => parqueo.idParqueo !== id));
     axiosClient
       .delete("/parqueo/" + id, {})
       .then((res) => {
         const message = res.data.message;
         alert(message);
+        window.location.reload();
       })
       .catch((error) => console.log(error));
   }

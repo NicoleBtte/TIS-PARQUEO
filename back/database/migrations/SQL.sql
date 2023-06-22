@@ -235,6 +235,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`transaccion` (
   `comprobante` VARCHAR(100) NULL,
   `tipo_de_pago` INT NULL,
   `cliente_idcliente` INT NOT NULL,
+  `operador` INT NULL,
   PRIMARY KEY (`idtransaccion`),
   INDEX `fk_transaccion_cliente1_idx` (`cliente_idcliente` ASC)  ,
   CONSTRAINT `fk_transaccion_cliente1`

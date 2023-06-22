@@ -135,7 +135,7 @@ export default function ZonasPar() {
       descripcion
     );
     alert(
-      `datos formularios:::, ${numero_de_sitios}, ${techo}, ${arboles_cerca}, ${tipo_de_piso}, ${tipo_de_piso}, ${descripcion}`
+      `datos formularios:::, ${numero_de_sitios}, ${techo}, ${arboles_cerca}, ${tipo_de_piso}, ${descripcion}`
     );
     axiosClient
       .put("/zonaDeEstacionamiento/" + modal.idzonaEstacionamiento, {
@@ -341,7 +341,7 @@ export default function ZonasPar() {
                       className="h1"
                       style={{ fontSize: "15px", textAlign: "center" }}
                     >
-                      arboles cerca
+                      Arboles cerca
                     </h1>
                     <Button variant="outline-primary">
                       {arboles_cerca === 0 ? "NO" : "SI"}

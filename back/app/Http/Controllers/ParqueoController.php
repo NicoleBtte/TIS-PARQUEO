@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Parqueo;
+use App\Models\Sitio;
 use App\Models\Operador;
 use App\Models\ZonaDeEstacionamiento;
 use Illuminate\Http\Request;
@@ -116,6 +117,15 @@ class ParqueoController extends Controller
 
     public function destroy($idParqueo)
     {
+        $zonasIdsA = ZonaDeEstacionamiento::where('parqueo_idparqueo', $idParqueo)->pluck('idzonaEstacionamiento')->toArray();
+        foreach ($zonasIdsA as $idZona){
+            $sitios = Sitio::where('zonaEstacionamiento_idzonaEstacionamiento', $idZona)->get();
+            foreach ($sitios as $sitio){
+                if($sitio->cliente_idcliente != null){
+                    return response()->json(['message' => 'No se puede eliminar el parqueo porque algunos sitios están asignados a clientes.']);
+                }
+            }
+        }
         $operador = Operador::where('parqueo_idparqueo', $idParqueo)->first();
         if($operador){
             $operador->parqueo_idparqueo = null;

@@ -310,7 +310,6 @@ const PagosReportePage = () => {
                   <td className="miTd">{registro.fechaPago}</td>
                   <td className="miTd">{registro.monto}</td>
                   <td className="miTd">{registro.devolucion}</td>
-                  <td className="miTd">{registro.devolucion}</td>
                 </tr>
               ))}
             </tbody>
@@ -319,7 +318,6 @@ const PagosReportePage = () => {
                 <th className="miTd">Total:</th>
                 <th className="miTd">{sumaMontos}</th>
                 <th className="miTd">{sumaDevoluciones}</th>
-                <th className="miTd"></th>
               </tr>
             </tfoot>
           </Table>
