@@ -63,6 +63,11 @@ class GuardiaController extends Controller
         return response()->json($consultaguardia);
     }
 
+    public function show(Request $request){
+        $consultaOperador=Guardia::find($request->carnet);
+        return response()->json(json_encode($consultaOperador));
+    }
+
     public function eliminarGuardia(Request $request){
         $registro=Guardia::find($request->id);
         $registro->delete();

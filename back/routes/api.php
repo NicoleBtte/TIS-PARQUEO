@@ -125,11 +125,13 @@ Route::get('/miSitio',[SitioController::class,'obtenerMiSitio']);
 
 //Gestion usuarios
 Route::get('/operadores', [OperadorController::class, 'showAll']);
+Route::get('/getOperador', [OperadorController::class, 'show']);
 Route::post('/crearOperador', [OperadorController::class, 'crear']);
 Route::delete('/deleteOperador', [OperadorController::class, 'eliminarOperador']);
 Route::get('/guardias', [GuardiaController::class, 'showAll']);
 Route::post('/crearGuardia', [GuardiaController::class, 'crear']);
 Route::delete('/deleteGuardia', [GuardiaController::class, 'eliminarGuardia']);
+Route::get('/getGuardia', [GuardiaController::class, 'show']);
 
 //dejar sin sitio
 Route::post('/dejarSinSitio',[SitioController::class,'dejarSinSitio']);

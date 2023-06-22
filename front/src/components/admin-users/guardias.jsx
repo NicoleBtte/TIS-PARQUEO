@@ -60,7 +60,7 @@ const Guardias = () => {
                   <tbody>
                   <tr className='misFilas'>
                     <td colSpan="5">
-                      Loading...
+                      Cargando...
                     </td>
                   </tr>
                   </tbody>
@@ -73,6 +73,8 @@ const Guardias = () => {
                       <td className='miTd'>{u.nombre_guardia}</td>
                       <td className='miTd'>{u.telefono_guardia}</td>
                       <td className='miTd'>
+                        <Button as={Link} to={"/admin/editGuardia/id/"+u.idguardia}className='naranjaBotonU'> Editar </Button>
+                        &nbsp;
                         <Button as={Link} onClick={ev => onDelete(u)} className="rojoBotonU">Eliminar</Button>
                       </td>
                     </tr>

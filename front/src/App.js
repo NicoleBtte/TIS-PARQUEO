@@ -47,6 +47,8 @@ import NotifIndv from "./components/admin-notif/notifIndiv";
 import NotificacionesGuardia from "./components/guardia-notif/notificacionesGuardia";
 import NotificacionesOperador from "./components/operador-notif/notificacionesOperador";
 import Vehiculos from "./components/guardia-clientes/vehiculos";
+import EditOperador from "./components/admin-users/editOperador";
+import EditGuardia from "./components/admin-users/editGuardia";
 
 function App() {
   return (
@@ -100,11 +102,13 @@ function App() {
                 path="/admin/operadores/new"
                 element={<FormularioOperador />}
               />
+              <Route path="/admin/editOp/id/:id/p/:p" element={<EditOperador />}/>
               <Route path="/admin/guardias" element={<Guardias />} />
               <Route
                 path="/admin/guardias/new"
                 element={<FormularioGuardia />}
               />
+              <Route path="/admin/editGuardia/id/:id" element={<EditGuardia />}/>
               <Route path="/admin/turnos" element={<TurnosPage />}/>
               <Route path="/admin/turnoForm" element={<TurnoForm />}/>
               <Route path="/admin/turnoEdit/id/:id/t/:t/hi/:hi/hf/:hf/d/:d" element={<TurnoEdit />}/>

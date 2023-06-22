@@ -62,7 +62,7 @@ const Operadores = () => {
                   <tbody>
                   <tr className='misFilas'>
                     <td colSpan="5">
-                      Loading...
+                      Cargando...
                     </td>
                   </tr>
                   </tbody>
@@ -75,8 +75,12 @@ const Operadores = () => {
                       <td className='miTd'>{u.nombre_operador}</td>
                       <td className='miTd'>{u.email_operador}</td>
                       <td className='miTd'>{u.telf_operador}</td>
-                      <td className='miTd'>{u.parqueo_idparqueo}</td>
                       <td className='miTd'>
+                        {u.parqueo_idparqueo !== null ? u.parqueo_idparqueo : 'Sin asignar'}
+                      </td>
+                      <td className='miTd'>
+                        <Button as={Link} to={"/admin/editOp/id/"+u.idoperador+"/p/"+u.parqueo_idparqueo}className='naranjaBotonU'> Editar </Button>
+                        &nbsp;
                         <Button as={Link} onClick={ev => onDelete(u)} className="rojoBotonU">Eliminar</Button>
                       </td>
                     </tr>
