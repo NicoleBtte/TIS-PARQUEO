@@ -319,30 +319,30 @@ function ConvocatoriaEditar() {
               </span>
             </div>
             <div className="myform-group">
-              <label htmlFor="fecha_inicio_parqueo">
+              <label htmlFor="fecha_inicio_gestion">
                 Fecha inicio gestion:
               </label>
               <input
-                name="fecha_inicio_parqueo"
+                name="fecha_inicio_gestion"
                 type="date"
                 className="form-control"
-                id="fecha_inicio_parqueo"
+                id="fecha_inicio_gestion"
                 placeholder="Fecha Inicio"
                 min={fecha_fin}
                 onChange={handleOnChangeFechaInicioG}
-                defaultValue={fecha_inicio}
+                defaultValue={fecha_inicio_gestion}
               ></input>
             </div>
             <div className="myform-group">
-              <label htmlFor="fecha_fin_parqueo">Fecha fin gestion:</label>
+              <label htmlFor="fecha_fin_gestion">Fecha fin gestion:</label>
               <input
-                name="fecha_fin_parqueo"
+                name="fecha_fin_gestion"
                 type="date"
                 className="form-control"
-                id="fecha_fin_parqueo"
+                id="fecha_fin_gestion"
                 placeholder="Fecha fin"
                 onChange={handleOnchange}
-                defaultValue={fecha_fin}
+                defaultValue={fecha_fin_gestion}
                 min={minFechaFinG}
               ></input>
               <span className="spanError">
