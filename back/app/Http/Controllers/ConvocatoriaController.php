@@ -170,7 +170,7 @@ class ConvocatoriaController extends Controller
      public function descargarPdfconvocatoria(Request $request){
         $id = $request->idConvocatoria;
         $convocatoria = Convocatoria::findOrFail($id);
-        $file_path = storage_path('app\\public\\pdfsconvocatoria\\'.$convocatoria->pdf_convocatoria);
+        $file_path = storage_path('app/public/pdfsconvocatoria/'.$convocatoria->pdf_convocatoria);
         return response()->download($file_path, $convocatoria->pdf_convocatoria, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'attachment']);

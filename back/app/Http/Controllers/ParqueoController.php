@@ -148,7 +148,7 @@ class ParqueoController extends Controller
     public function verImagen(Request $request){
         $id = $request->idPaqueo;
         $parqueo = Parqueo::findOrFail($id);
-        $file_path = storage_path('app\\public\\mapasparqueo\\' . $parqueo->mapa_parqueo);
+        $file_path = storage_path('app/public/mapasparqueo/' . $parqueo->mapa_parqueo);
         if (!File::exists($file_path)) {
             abort(404);
         }

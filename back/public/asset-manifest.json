@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c571ba34.css",
+    "main.js": "/static/js/main.d7f008ea.js",
+    "static/media/fondo.jpg": "/static/media/fondo.1e50b72da517bfc839e6.jpg",
+    "static/media/parqueoimg.png": "/static/media/parqueoimg.fb03591177c41012a206.png",
+    "static/media/zonaimg.png": "/static/media/zonaimg.ff8d05ed7113f5bbdfc0.png",
+    "index.html": "/index.html",
+    "main.c571ba34.css.map": "/static/css/main.c571ba34.css.map",
+    "main.d7f008ea.js.map": "/static/js/main.d7f008ea.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c571ba34.css",
+    "static/js/main.d7f008ea.js"
+  ]
+}

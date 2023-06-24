@@ -98,7 +98,9 @@ function PagosPage() {
         <Modal.Body>
           <img
             className="w-100"
-            src={"http://localhost:8000/storage/uploads/" + show.imagen}
+            src={
+              "http://catsoft.tis.cs.umss.edu.bo/storage/uploads/" + show.imagen
+            }
             alt=""
           />
         </Modal.Body>

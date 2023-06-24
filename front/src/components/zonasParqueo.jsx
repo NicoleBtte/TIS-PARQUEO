@@ -386,7 +386,7 @@ export default function ZonasPar() {
             <Image
               className="w-100"
               src={
-                "http://localhost:8000/storage/public/mapasparqueo/" +
+                "http://catsoft.tis.cs.umss.edu.bo/storage/public/mapasparqueo/" +
                 parqueoData.mapa_parqueo
               }
             />
