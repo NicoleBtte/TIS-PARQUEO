@@ -12,7 +12,7 @@ class ZonaDeEstacionamientoController extends Controller
 {
     public function index($idParqueo)
     {
-        $zonaDeEstacionamientos = DB::table('zonaestacionamiento')
+        $zonaDeEstacionamientos = DB::table('zonaEstacionamiento')
             ->where('parqueo_idparqueo', $idParqueo)
             ->get();
         //$zonaDeEstacionamientos = ZonaDeEstacionamiento::all();

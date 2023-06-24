@@ -14,18 +14,14 @@ use App\Http\Controllers\EntradasSalidasController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::fallback(function () {
-    return view('index');
-});
 
 /*Route::get('/', function () {
     return view('welcome');
 });*/
 
-
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('login');
-})->name('login');
+})->name('login');*/
 
 /*Route::get('/signin', function () {
     return view('signin');
@@ -33,7 +29,7 @@ Route::get('/', function () {
 
 //Route::post('/', [ClienteController::class, 'store']);
 
-Route::get('/logrado', function() {
+/*Route::get('/logrado', function() {
     return view('logrado');
 })->name('logrado');
 
@@ -55,7 +51,7 @@ Route::get('/fallido', function(){
 
 Route::get('/privado', function(){
     return view('privado');
-})->middleware('auth')->name('privado');
+})->middleware('auth')->name('privado');*/
 
 Route::get('/storage/{path}', function ($path) {
     $pathToFile = storage_path('app/' . $path);
@@ -65,3 +61,7 @@ Route::get('/storage/{path}', function ($path) {
         abort(404);
     }
 })->where('path', '.*');
+
+Route::fallback(function () {
+    return view('index');
+});
